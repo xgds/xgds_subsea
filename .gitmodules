@@ -1,0 +1,51 @@
+[submodule "submodules/geocamUtil"]
+	path = submodules/geocamUtil
+	url = git://github.com/geocam/geocamUtilWeb.git
+[submodule "submodules/xgds_data"]
+	path = submodules/xgds_data
+	url = https://github.com/xgds/xgds_data.git
+[submodule "submodules/xgds_map_server"]
+	path = submodules/xgds_map_server
+	url = https://github.com/xgds/xgds_map_server.git
+[submodule "geocamTrackWeb"]
+	path = geocamTrackWeb
+	url = git://github.com/geocam/geocamTrackWeb.git
+[submodule "submodules/geocamTrackWeb"]
+	path = submodules/geocamTrackWeb
+	url = git://github.com/geocam/geocamTrackWeb.git
+[submodule "submodules/xgds_planner2"]
+	path = submodules/xgds_planner2
+	url = https://github.com/xgds/xgds_planner2.git
+[submodule "submodules/xgds_notes2"]
+	path = submodules/xgds_notes2
+	url = https://github.com/xgds/xgds_notes2.git
+[submodule "submodules/xgds_video"]
+	path = submodules/xgds_video
+	url = https://github.com/xgds/xgds_video.git
+[submodule "submodules/xgds_plot"]
+	path = submodules/xgds_plot
+	url = https://github.com/xgds/xgds_plot.git
+[submodule "submodules/geocamPycroraptor2"]
+	path = submodules/geocamPycroraptor2
+	url = https://github.com/geocam/geocamPycroraptor2.git
+[submodule "submodules/xgds_image"]
+	path = submodules/xgds_image
+	url = https://github.com/xgds/xgds_image.git
+[submodule "submodules/xgds_core"]
+	path = submodules/xgds_core
+	url = https://github.com/xgds/xgds_core.git
+[submodule "submodules/pextant"]
+	path = submodules/pextant
+	url = https://github.com/norheim/pextant.git
+[submodule "submodules/xgds_sample"]
+	path = submodules/xgds_sample
+	url = https://github.com/xgds/xgds_sample
+[submodule "submodules/xgds_instrument"]
+	path = submodules/xgds_instrument
+	url = https://github.com/xgds/xgds_instrument.git
+[submodule "submodules/xgds_status_board"]
+	path = submodules/xgds_status_board
+	url = https://github.com/xgds/xgds_status_board.git
+[submodule "submodules/django_npm_apps"]
+	path = submodules/django_npm_apps
+	url = https://github.com/VWoeltjen/django_npm_apps.git
