@@ -42,4 +42,4 @@
 	url = https://github.com/xgds/xgds_status_board.git
 [submodule "submodules/django_npm_apps"]
 	path = submodules/django_npm_apps
-	url = https://github.com/VWoeltjen/django_npm_apps.git
+	url = https://github.com/xgds/django_npm_apps.git
