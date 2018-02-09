@@ -15,31 +15,3 @@
 #__END_LICENSE__
 
 from django.contrib import admin
-from basaltApp.models import *  # pylint: disable=W0401
-
-class BasaltInstrumentDataProductAdmin(admin.ModelAdmin):
-    raw_id_fields = ("location",)
-
-class BasaltImageSetAdmin(admin.ModelAdmin):
-    raw_id_fields = ("track_position", "exif_position", "user_position")
-
-admin.site.register(BasaltResource)
-admin.site.register(CurrentPosition)
-admin.site.register(PastPosition)
-admin.site.register(EV)
-admin.site.register(BasaltPlanExecution)
-admin.site.register(BasaltSample)
-admin.site.register(DataType)
-admin.site.register(BasaltActiveFlight)
-admin.site.register(BasaltFlight)
-admin.site.register(ScienceInstrument)
-# admin.site.register(AsdDataProduct, BasaltInstrumentDataProductAdmin)
-# admin.site.register(FtirDataProduct, BasaltInstrumentDataProductAdmin)
-# admin.site.register(PxrfDataProduct, BasaltInstrumentDataProductAdmin)
-admin.site.register(FtirSample)
-admin.site.register(AsdSample)
-admin.site.register(BasaltSingleImage)
-admin.site.register(BasaltImageSet, BasaltImageSetAdmin)
-admin.site.register(ActivityStatus)
-admin.site.register(BasaltCondition)
-admin.site.register(BasaltConditionHistory)
