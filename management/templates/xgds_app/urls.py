@@ -1,3 +1,4 @@
+
 #__BEGIN_LICENSE__
 # Copyright (c) 2015, United States Government, as represented by the
 # Administrator of the National Aeronautics and Space Administration.
@@ -14,29 +15,12 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-"""
-basaltApp
-"""
+from django.conf.urls import include, url
 
-__version_info__ = {
-    'major': 0,
-    'minor': 1,
-    'micro': 0,
-    'releaselevel': 'final',
-    'serial': 1
-}
+from xgds_app.register import renderTemplate
 
-
-def get_version():
-    """
-    Return the formatted version information
-    """
-    vers = ["%(major)i.%(minor)i" % __version_info__, ]
-
-    if __version_info__['micro']:
-        vers.append(".%(micro)i" % __version_info__)
-    if __version_info__['releaselevel'] != 'final':
-        vers.append('%(releaselevel)s%(serial)i' % __version_info__)
-    return ''.join(vers)
-
-__version__ = get_version()
+urlpatterns = [url(r'^$', renderTemplate, {'template_name':'xgds_app/index.html'}, 'index'),
+               # Including these in this order ensures that reverse will return the non-rest urls for use in our server
+               url(r'^rest/', include('xgds_app.restUrls')),
+               url('', include('xgds_app.restUrls')),
+           ]

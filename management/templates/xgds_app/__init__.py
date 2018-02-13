@@ -1,4 +1,3 @@
-
 #__BEGIN_LICENSE__
 # Copyright (c) 2015, United States Government, as represented by the
 # Administrator of the National Aeronautics and Space Administration.
@@ -15,12 +14,29 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-from django.conf.urls import include, url
+"""
+xgds_app
+"""
 
-from basaltApp.register import renderTemplate
+__version_info__ = {
+    'major': 0,
+    'minor': 1,
+    'micro': 0,
+    'releaselevel': 'final',
+    'serial': 1
+}
 
-urlpatterns = [url(r'^$', renderTemplate, {'template_name':'basaltApp/index.html'}, 'index'),
-               # Including these in this order ensures that reverse will return the non-rest urls for use in our server
-               url(r'^rest/', include('basaltApp.restUrls')),
-               url('', include('basaltApp.restUrls')),
-           ]
+
+def get_version():
+    """
+    Return the formatted version information
+    """
+    vers = ["%(major)i.%(minor)i" % __version_info__, ]
+
+    if __version_info__['micro']:
+        vers.append(".%(micro)i" % __version_info__)
+    if __version_info__['releaselevel'] != 'final':
+        vers.append('%(releaselevel)s%(serial)i' % __version_info__)
+    return ''.join(vers)
+
+__version__ = get_version()
