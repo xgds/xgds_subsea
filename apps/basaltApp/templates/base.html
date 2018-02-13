@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
-    {% block title %}{% block siteSection %}{% endblock siteSection%} {% block siteTitle %}BASALT{% endblock siteTitle%}{% endblock title%}
+    {% block title %}{% block siteSection %}{% endblock siteSection%} {% block siteTitle %}{{ settings.SITE_TITLE }}{% endblock siteTitle%}{% endblock title%}
     </title>
     
 	{% block cssMain %}
@@ -31,8 +31,8 @@
         <button class="navbar-toggler navbar-toggler-right align-self-center my-2" type="button" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a href="{% url 'live_index' %}" title="xGDS BASALT" class="navbar-brand">
-     			<img src="{% static 'basaltApp/css/logo.png' %}" class="logo" alt="BASALT logo" width="188" height="60"/> <!-- width="150" height="48" > -->
+        <a href="{% url 'live_index' %}" title="{{ settings.SITE_TITLE }}" class="navbar-brand">
+     			<img src="{% static 'basaltApp/css/logo.png' %}" class="logo" alt="{{ settings.SITE_TITLE }} logo" width="188" height="60"/> <!-- width="150" height="48" > -->
      		</a>
         <div class="collapse navbar-collapse flex-column ml-lg-0 ml-3" id="navbarCollapse">
         	<div class="d-flex flex-row justify-content-between">
@@ -49,8 +49,8 @@
 				<li class='nav-item {% currentnav *xgds_sample* %}' >
 					<a class="nav-link {% currentnav *xgds_sample* %}" href="{% url 'xgds_sample_record_edit' %}" title="Sample">Sample</a>
 				</li>
-				<li class='nav-item {% currentnav search_map* basalt_live_objects%}'>
-					<a class="nav-link {% currentnav search_map* basalt_live_objects%}" href="/xgds_map_server/search/Photo" title="Search">Search</a>
+				<li class='nav-item {% currentnav search_map* %}'>
+					<a class="nav-link {% currentnav search_map* %}" href="/xgds_map_server/search/Photo" title="Search">Search</a>
 				</li>
 				<li class='nav-item {% currentnav xgds_data_import %}'>
 					<a class="nav-link {% currentnav xgds_data_import %}" href="{% url 'xgds_data_import' %}" title="Import">Import</a>
