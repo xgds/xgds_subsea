@@ -6,6 +6,12 @@ TO=${1:-xgds_app}
 APPS_DIR=$DIR/../apps
 TEMPLATES_DIR=$DIR/templates
 
+if [ -d "$APPS_DIR/$TO" ]
+then
+    echo "$APPS_DIR/$TO already exists; aborting."
+    exit 0
+fi
+
 cp -r $TEMPLATES_DIR/$FROM $APPS_DIR/$TO
 mv $APPS_DIR/$TO/static/$FROM $APPS_DIR/$TO/static/$TO
 mv $APPS_DIR/$TO/templates/$FROM $APPS_DIR/$TO/templates/$TO
