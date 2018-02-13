@@ -9,4 +9,4 @@ TEMPLATES_DIR=$DIR/templates
 cp -r $TEMPLATES_DIR/$FROM $APPS_DIR/$TO
 mv $APPS_DIR/$TO/static/$FROM $APPS_DIR/$TO/static/$TO
 mv $APPS_DIR/$TO/templates/$FROM $APPS_DIR/$TO/templates/$TO
-grep -l -r $FROM $APPS_DIR/$TO | xargs echo
+grep -l -r $FROM $APPS_DIR/$TO | xargs sed -i '' -e "s/$FROM/$TO/g"
