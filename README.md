@@ -28,3 +28,10 @@ for the site-specific application, including the primary redirect,
 with `xgds_app` used again as a stand-in name.
 
 Finally, replace or fill in `apps/xgds_app` with site-specific content.
+
+# Initializing an installed site
+
+```bash
+./manage.py prepnpm
+./manage.py prep
+```
