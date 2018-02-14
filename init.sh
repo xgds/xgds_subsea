@@ -1,6 +1,9 @@
 #!/bin/bash
 
-DIR=$(dirname $0)
+ORIGINAL_PWD=`pwd`
+cd $(dirname $0)
+
+DIR=`pwd`
 FROM=xgds_app
 TO=${1:-$(basename $DIR)}
 APPS_DIR=$DIR/apps
@@ -16,5 +19,7 @@ cp -r $TEMPLATES_DIR/$FROM $APPS_DIR/$TO
 mv $APPS_DIR/$TO/static/$FROM $APPS_DIR/$TO/static/$TO
 mv $APPS_DIR/$TO/templates/$FROM $APPS_DIR/$TO/templates/$TO
 grep -l -r $FROM $APPS_DIR/$TO | xargs sed -i '' -e "s/$FROM/$TO/g"
+
+cd $ORIGINAL_PWD
 rm $0
 
