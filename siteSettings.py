@@ -433,7 +433,7 @@ COMPASS_CORRECTION =  10
 # XGDS_DATA_MASKED_FIELDS['basaltApp'] = {'MyImageSet': ['user_position',
 #                                                           'creation_time',
 #                                                           ],
-                                        }
+#                                        }
 # XGDS_DATA_EXPAND_RELATED = getOrCreateDict('XGDS_DATA_EXPAND_RELATED')
 # XGDS_DATA_EXPAND_RELATED['xgds_app'] = {'MySample': [('region', 'zone', 'Zone')]}
 
