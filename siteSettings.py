@@ -44,25 +44,23 @@ SECRET_KEY = '***REMOVED***'
 # apps should be listed from "most specific" to "most general".  that
 # way, templates in more specific apps override ones from more general
 # apps.
-INSTALLED_APPS = ['basaltApp',
-
-                  'django_npm_apps',
+INSTALLED_APPS = ['django_npm_apps',
+                  # 'xgds_app'
 
                   # TODO uncomment the submodules that you are including
-                  'xgds_sample',
-                  'xgds_instrument',
-                  'xgds_notes2',
-                  'xgds_planner2',
-                  'xgds_map_server',
-                  'xgds_data',
-                  'xgds_image',
-                  'xgds_video',
-                  'xgds_plot',
-                  'xgds_core',
-                  'xgds_status_board',
-                  'pextant',
-                  'deepzoom',
+                  # 'xgds_sample',
+                  # 'xgds_instrument',
+                  # 'xgds_notes2',
+                  # 'xgds_planner2',
+                  # 'xgds_map_server',
+                  # 'xgds_data',
+                  # 'xgds_image',
+                  # 'xgds_video',
+                  # 'xgds_plot',
+                  # 'xgds_status_board',
+                  # 'xgds_core',
 
+                  'deepzoom',
                   'geocamTrack',
                   'geocamPycroraptor2',
                   'geocamUtil',
@@ -70,7 +68,6 @@ INSTALLED_APPS = ['basaltApp',
                   'taggit',
                   'resumable',
                   'django_markwhat',
-                  'djangobower',
 
                   'dal',
                   'dal_select2',
@@ -125,7 +122,7 @@ MANAGERS = ADMINS
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.contrib.gis.db.backends.mysql', # django.db.backends.mysql',
-#         'NAME': 'xgds_basalt',
+#         'NAME': 'xgds_app',
 #         'USER': 'root',
 #         'PASSWORD': 'xgds',
 #         'HOST': '127.0.0.1',
@@ -212,9 +209,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(PROJ_ROOT, 'apps/basaltApp/templates'),
-            os.path.join(PROJ_ROOT, 'apps/basaltApp/templates/basaltApp'),
-            os.path.join(PROJ_ROOT, 'apps/basaltApp/templates/registration'),
+            # os.path.join(PROJ_ROOT, 'apps/xgds_app/templates'),
+            # os.path.join(PROJ_ROOT, 'apps/xgds_app/templates/xgds_app'),
 
             # Templates for utility scripts
             os.path.join(PROJ_ROOT, 'bin/templates'),
@@ -305,28 +301,6 @@ STATICFILES_FINDERS = (
     'django_npm_apps.finders.NpmAppFinder',
 )
 
-BOWER_COMPONENTS_ROOT = PROJ_ROOT
-
-PIPELINE = {'PIPELINE_ENABLED': True,
-            'JAVASCRIPT':{'simulator': {'source_filenames': ('basaltApp/js/planner/evSimulator.js',
-                                                  ),
-                             'output_filename': 'js/simulator.js',
-                             },
-               'custom_map': {'source_filenames': ('xgds_planner2/js/uploadJson.js',
-                                                   'xgds_map_server/js/map_viewer/olShowMapCoords.js',
-                                                   'xgds_map_server/js/map_viewer/olInitialLayers.js',
-                                                   ),
-                              'output_filename': 'js/custom_map.js',
-                              },
-               },
-            'JS_COMPRESSOR':'pipeline.compressors.yuglify.YuglifyCompressor',
-            'CSS' : XGDS_PLANNER_PIPELINE_CSS,
-            'CSS_COMPRESSOR':'pipeline.compressors.yuglify.YuglifyCompressor',
-            'YUGLIFY_JS_ARGUMENTS': 'mangle:false --terminal',
-            'DISABLE_WRAPPER' :True,
-            }
-
-
 COMPRESS_ENABLED = True
 COMPRESS_CSSTIDY_BINARY = '/usr/bin/csstidy'
 
@@ -364,22 +338,22 @@ if DEBUG_TOOLBAR:
 
 VAR_ROOT = PROJ_ROOT + 'var/'
 
-XGDS_PLANNER_SCHEMAS = {
-    "EV": {
-        "schemaSource": "apps/basaltApp/planner/evPlanSchema.json",
-        "librarySource": "apps/basaltApp/planner/evPlanLibrary.json",
-        "simulatorUrl": "basaltApp/js/planner/evSimulator.js",
-        "simulator": "ev.Simulator",
-    }
-}
+# XGDS_PLANNER_SCHEMAS = {
+#    "EV": {
+#        "schemaSource": "apps/xgds_app/planner/evPlanSchema.json",
+#        "librarySource": "apps/xgds_app/planner/evPlanLibrary.json",
+#        "simulatorUrl": "xgds_app/js/planner/evSimulator.js",
+#        "simulator": "ev.Simulator",
+#    }
+#}
 
-GEOCAM_TRACK_RESOURCE_MODEL = 'basaltApp.BasaltResource'
-GEOCAM_TRACK_RESOURCE_VERBOSE_NAME = 'Asset'
-GEOCAM_TRACK_TRACK_MODEL = 'basaltApp.BasaltTrack'
-GEOCAM_TRACK_TRACK_MONIKIER = 'Actual_Traverse'
-GEOCAM_TRACK_POSITION_MODEL = 'basaltApp.CurrentPosition'
-GEOCAM_TRACK_PAST_POSITION_MODEL = 'basaltApp.PastPosition'
-GEOCAM_TRACK_INTERPOLATE_MAX_SECONDS = 120
+# GEOCAM_TRACK_RESOURCE_MODEL = 'xgds_app.MyResource'
+# GEOCAM_TRACK_RESOURCE_VERBOSE_NAME = 'Asset'
+# GEOCAM_TRACK_TRACK_MODEL = 'xgds_app.MyTrack'
+# GEOCAM_TRACK_TRACK_MONIKIER = 'Actual_Traverse'
+# GEOCAM_TRACK_POSITION_MODEL = 'xgds_app.CurrentPosition'
+# GEOCAM_TRACK_PAST_POSITION_MODEL = 'xgds_app.PastPosition'
+# GEOCAM_TRACK_INTERPOLATE_MAX_SECONDS = 120
 
 # GEOCAM_TRACK_OPS_TIME_ZONE: split days at midnight in the specified time zone
 # TODO must support multiple time zones ...
@@ -389,316 +363,121 @@ COMPASS_EQUIPPED_VEHICLES = []
 # FOR HI IT IS
 COMPASS_CORRECTION =  10
 
-XGDS_SAMPLE_SAMPLE_MODEL = 'basaltApp.BasaltSample'
+# XGDS_SAMPLE_SAMPLE_MODEL = 'xgds_app.MySample'
 
-XGDS_PLANNER2_FLIGHT_MONIKER = "EVA"
-XGDS_PLANNER2_GROUP_FLIGHT_MONIKER = "EVA"
-XGDS_PLANNER2_PLAN_MONIKER = "Planned Traverse"
-XGDS_PLANNER2_STATION_MONIKER = "Waypoint"
-XGDS_PLANNER2_STATION_MONIKER_PLURAL = "Waypoints"
-XGDS_PLANNER2_COMMAND_MONIKER = "Activity"
-XGDS_PLANNER2_COMMAND_MONIKER_PLURAL = "Activities"
-XGDS_PLANNER2_FLIGHT_MODEL = "basaltApp.BasaltFlight"
-XGDS_PLANNER2_GROUP_FLIGHT_MODEL = "basaltApp.BasaltGroupFlight"
-XGDS_PLANNER2_ACTIVE_FLIGHT_MODEL = "basaltApp.BasaltActiveFlight"
+# XGDS_PLANNER2_FLIGHT_MONIKER = "EVA"
+# XGDS_PLANNER2_GROUP_FLIGHT_MONIKER = "EVA"
+# XGDS_PLANNER2_PLAN_MONIKER = "Planned Traverse"
+# XGDS_PLANNER2_STATION_MONIKER = "Waypoint"
+# XGDS_PLANNER2_STATION_MONIKER_PLURAL = "Waypoints"
+# XGDS_PLANNER2_COMMAND_MONIKER = "Activity"
+# XGDS_PLANNER2_COMMAND_MONIKER_PLURAL = "Activities"
+# XGDS_PLANNER2_FLIGHT_MODEL = "xgds_app.MyFlight"
+# XGDS_PLANNER2_GROUP_FLIGHT_MODEL = "xgds_app.MyGroupFlight"
+# XGDS_PLANNER2_ACTIVE_FLIGHT_MODEL = "xgds_app.MyActiveFlight"
 
 #XGDS_PLANNER2_DEFAULT_SITE = ('HIL', 'Hawaii Lava Flows') #'Hawaii Lava Flows'
-XGDS_PLANNER2_DEFAULT_SITE = ('KIL', 'Kilauea') 
 
-XGDS_PLANNER2_SCHEDULE_INCLUDED = True
-XGDS_PLANNER2_SITE_MONIKER = 'Zone'
-XGDS_PLANNER2_PLAN_EXECUTION_MODEL = "basaltApp.BasaltPlanExecution"
+# XGDS_PLANNER2_SCHEDULE_INCLUDED = True
+# XGDS_PLANNER2_SITE_MONIKER = 'Zone'
+# XGDS_PLANNER2_PLAN_EXECUTION_MODEL = "xgds_app.MyPlanExecution"
 
-XGDS_PLANNER2_HANDLEBARS_DIRS = [os.path.join('xgds_planner2', 'templates', 'handlebars'),
-                                 os.path.join('basaltApp', 'templates', 'xgds_planner2'),
-                                 os.path.join('basaltApp', 'templates', 'xgds_sample'),
-                                 os.path.join('xgds_map_server', 'templates', 'handlebars', 'search')]
+# XGDS_PLANNER2_HANDLEBARS_DIRS = [os.path.join('xgds_planner2', 'templates', 'handlebars'),
+                                 # os.path.join('xgds_app', 'templates', 'xgds_planner2'),
+                                 # os.path.join('xgds_app', 'templates', 'xgds_sample'),
+                                 # os.path.join('xgds_map_server', 'templates', 'handlebars', 'search')]
 
-XGDS_PLANNER2_EDITOR_CONTEXT_METHOD = 'basaltApp.views.addToPlannerContext'
-XGDS_PLANNER2_SCHEDULE_EXTRAS_METHOD = 'basaltApp.views.addEVToPlanExecution'
+# XGDS_PLANNER2_EDITOR_CONTEXT_METHOD = 'basaltApp.views.addToPlannerContext'
+# XGDS_PLANNER2_SCHEDULE_EXTRAS_METHOD = 'basaltApp.views.addEVToPlanExecution'
 
-XGDS_PLANNER2_PLOTS = getOrCreateDict('XGDS_PLANNER2_PLOTS')
-XGDS_PLANNER2_PLOTS['Temp'] = 'hi_temp'
+# XGDS_PLANNER2_PLOTS = getOrCreateDict('XGDS_PLANNER2_PLOTS')
+# XGDS_PLANNER2_PLOTS['Temp'] = 'hi_temp'
 
 
 # list of (formatCode, extension, exporterClass)
-XGDS_PLANNER_PLAN_EXPORTERS = (
-    ('xpjson', '.json', 'xgds_planner2.planExporter.XpjsonPlanExporter'),
-    ('bearing_distance', '.bdj', 'xgds_planner2.planExporter.BearingDistanceJsonPlanExporter'),
-    ('kml', '.kml', 'basaltApp.kmlPlanExporter.KmlPlanExporter'),
-    ('pml', '.pml', 'xgds_planner2.pmlPlanExporter.PmlPlanExporter'),
-)
+# XGDS_PLANNER_PLAN_EXPORTERS = (
+#    ('xpjson', '.json', 'xgds_planner2.planExporter.XpjsonPlanExporter'),
+#    ('bearing_distance', '.bdj', 'xgds_planner2.planExporter.BearingDistanceJsonPlanExporter'),
+#    ('kml', '.kml', 'xgds_app.kmlPlanExporter.KmlPlanExporter'),
+#    ('pml', '.pml', 'xgds_planner2.pmlPlanExporter.PmlPlanExporter'),
+# )
 
-XGDS_NOTES_OPS_TIME_ZONE = GEOCAM_TRACK_OPS_TIME_ZONE
-XGDS_NOTES_USER_SESSION_MODEL = 'basaltApp.BasaltUserSession'
-XGDS_NOTES_NOTE_MODEL = 'basaltApp.BasaltNote'
-XGDS_NOTES_TAGGED_NOTE_MODEL = 'basaltApp.BasaltTaggedNote'
-XGDS_NOTES_POPULATE_NOTE_DATA = 'basaltApp.views.populateNoteData'
-XGDS_NOTES_BUILD_NOTES_FORM = 'basaltApp.views.buildNotesForm'
-XGDS_NOTES_TABLE_DEFAULT_COLUMNS = ['creation_time','event_time', 'event_timezone', 'flight_name', 'author_name', 'role_name', 'location_name', 'content', 'tag_names',  'link']
+# XGDS_NOTES_OPS_TIME_ZONE = GEOCAM_TRACK_OPS_TIME_ZONE
+# XGDS_NOTES_USER_SESSION_MODEL = 'xgds_app.MyUserSession'
+# XGDS_NOTES_NOTE_MODEL = 'xgds_app.MyNote'
+# XGDS_NOTES_TAGGED_NOTE_MODEL = 'xgds_app.MyTaggedNote'
+# XGDS_NOTES_POPULATE_NOTE_DATA = 'xgds_app.views.populateNoteData'
+# XGDS_NOTES_BUILD_NOTES_FORM = 'xgds_app.views.buildNotesForm'
+# XGDS_NOTES_TABLE_DEFAULT_COLUMNS = ['creation_time','event_time', 'event_timezone', 'flight_name', 'author_name', 'role_name', 'location_name', 'content', 'tag_names',  'link']
 
-XGDS_SAMPLE_HANDLEBARS_DIR = [os.path.join('xgds_sample', 'templates', 'handlebars')]
-XGDS_SAMPLE_PERM_LINK_PREFIX = "https://basalt.xgds.org"
+# XGDS_SAMPLE_HANDLEBARS_DIR = [os.path.join('xgds_sample', 'templates', 'handlebars')]
+# XGDS_SAMPLE_PERM_LINK_PREFIX = "https://myapp.xgds.org"
 
-XGDS_IMAGE_IMAGE_SET_MODEL = 'basaltApp.BasaltImageSet'
-XGDS_IMAGE_SINGLE_IMAGE_MODEL = 'basaltApp.BasaltSingleImage'
-XGDS_IMAGE_ARROW_ANNOTATION_MODEL = 'basaltApp.ArrowAnnotation'
-XGDS_IMAGE_ELLIPSE_ANNOTATION_MODEL = 'basaltApp.EllipseAnnotation'
-XGDS_IMAGE_RECTANGLE_ANNOTATION_MODEL = 'basaltApp.RectangleAnnotation'
-XGDS_IMAGE_TEXT_ANNOTATION_MODEL = 'basaltApp.TextAnnotation'
+# XGDS_IMAGE_IMAGE_SET_MODEL = 'xgds_app.MyImageSet'
+# XGDS_IMAGE_SINGLE_IMAGE_MODEL = 'xgds_app.MySingleImage'
+# XGDS_IMAGE_ARROW_ANNOTATION_MODEL = 'xgds_app.ArrowAnnotation'
+# XGDS_IMAGE_ELLIPSE_ANNOTATION_MODEL = 'xgds_app.EllipseAnnotation'
+# XGDS_IMAGE_RECTANGLE_ANNOTATION_MODEL = 'xgds_app.RectangleAnnotation'
+# XGDS_IMAGE_TEXT_ANNOTATION_MODEL = 'xgds_app.TextAnnotation'
+# XGDS_IMAGE_DEFAULT_CREATE_DEEPZOOM = True
 
+# XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_app.instrumentDataImporters'
 
-XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'basaltApp.instrumentDataImporters'
-
-GEOCAM_TRACK_RECENT_TIME_FUNCTION = 'basaltApp.views.getCurrentTimeWithDelayCorrection'
+# GEOCAM_TRACK_RECENT_TIME_FUNCTION = 'xgds_app.views.getCurrentTimeWithDelayCorrection'
 
 # Include a dictionary of name to url for imports if you wish to include import functionality
-XGDS_DATA_IMPORTS = getOrCreateDict('XGDS_DATA_IMPORTS')
-# Override generic instrument importer if it's already defined
-if "Science Instruments" in XGDS_DATA_IMPORTS:
-    del XGDS_DATA_IMPORTS["Science Instruments"]
-XGDS_DATA_IMPORTS["FTIR"]= '../../basaltApp/instrumentDataImport/FTIR'
-XGDS_DATA_IMPORTS["ASD"]= '../../basaltApp/instrumentDataImport/ASD'
-XGDS_DATA_IMPORTS["pXRF"]= '../../basaltApp/pXRFDataImport/'
+# XGDS_DATA_IMPORTS = getOrCreateDict('XGDS_DATA_IMPORTS')
+# XGDS_DATA_IMPORTS["Foo"]= '../../xgds_app/instrumentDataImport/Foo'
 
-
-XGDS_IMAGE_DEFAULT_CREATE_DEEPZOOM = True
-
-XGDS_DATA_MASKED_FIELDS = getOrCreateDict('XGDS_DATA_MASKED_FIELDS')
-XGDS_DATA_MASKED_FIELDS['basaltApp'] = {'BasaltImageSet': ['exif_position',
-                                                          'track_position',
-                                                          'user_position', 
-                                                          'modification_time', 
-                                                          'acquisition_timezone',
-                                                          'resource',
-                                                          'deleted',
-                                                          'flight',
-                                                          'shortName',
-                                                          'create_deepzoom',
-                                                          'associated_deepzoom',
-                                                          'rotation_degrees',
-                                                          'creation_time',
-                                                          ],
-                                        'BasaltSample': ['track_position',
-                                                         'user_position', 
-                                                         'creator',
-                                                         'modifier',
-                                                         'creation_time',
-                                                         'collection_timezone',
-                                                         'modification_time', 
-                                                         'year'
-                                                          ],
-                                        'AsdDataProduct': ['manufacturer_data_file',
-                                                           'manufacturer_mime_type',
-                                                           'portable_data_file',
-                                                           'portable_mime_type',
-                                                           'portable_file_format_name',
-                                                           'creation_time',
-                                                           'location'
-                                                           ],
-                                        'PxrfDataProduct': ['manufacturer_data_file',
-                                                            'manufacturer_mime_type',
-                                                            'portable_data_file',
-                                                            'portable_mime_type',
-                                                            'portable_file_format_name',
-                                                            'creation_time',
-                                                            'location'
-                                                            ],
-                                        'FtirDataProduct': ['manufacturer_data_file',
-                                                            'manufacturer_mime_type',
-                                                            'portable_data_file',
-                                                            'portable_mime_type',
-                                                            'portable_file_format_name',
-                                                            'creation_time',
-                                                            'location'
-                                                            ],
-                                        'BasaltTrack': ['uuid',
-                                                        'iconStyle',
-                                                        'lineStyle',
-                                                        'extras',
-                                                        'dataType'],
-                                        'PastPosition':['precisionMeters',
-                                                        'serverTimestamp'],
+# XGDS_DATA_MASKED_FIELDS = getOrCreateDict('XGDS_DATA_MASKED_FIELDS')
+# XGDS_DATA_MASKED_FIELDS['basaltApp'] = {'MyImageSet': ['user_position',
+#                                                           'creation_time',
+#                                                           ],
                                         }
-
-XGDS_DATA_EXPAND_RELATED = getOrCreateDict('XGDS_DATA_EXPAND_RELATED')
-XGDS_DATA_EXPAND_RELATED['basaltApp'] = {'BasaltSample': [('region', 'zone', 'Zone')]}
-
-
-XGDS_VIDEO_GET_ACTIVE_EPISODE = 'basaltApp.views.getActiveEpisode'
-XGDS_VIDEO_GET_EPISODE_FROM_NAME = 'basaltApp.views.getEpisodeFromName'
-XGDS_VIDEO_GET_TIMEZONE_FROM_NAME = 'basaltApp.views.getTimezoneFromFlightName'
-#XGDS_VIDEO_INDEX_FILE_METHOD = 'basaltApp.views.getIndexFileSuffix'
-XGDS_VIDEO_DELAY_AMOUNT_METHOD = 'basaltApp.views.getDelaySeconds'
-XGDS_VIDEO_NOTE_EXTRAS_FUNCTION = 'basaltApp.views.getNoteExtras'
-XGDS_VIDEO_NOTE_FILTER_FUNCTION = 'basaltApp.views.noteFilterFunction'
+# XGDS_DATA_EXPAND_RELATED = getOrCreateDict('XGDS_DATA_EXPAND_RELATED')
+# XGDS_DATA_EXPAND_RELATED['xgds_app'] = {'MySample': [('region', 'zone', 'Zone')]}
 
 
+# XGDS_VIDEO_GET_ACTIVE_EPISODE = 'xgds_app.views.getActiveEpisode'
+# XGDS_VIDEO_GET_EPISODE_FROM_NAME = 'xgds_app.views.getEpisodeFromName'
+# XGDS_VIDEO_GET_TIMEZONE_FROM_NAME = 'xgds_app.views.getTimezoneFromFlightName'
+# XGDS_VIDEO_INDEX_FILE_METHOD = 'xgds_app.views.getIndexFileSuffix'
+# XGDS_VIDEO_DELAY_AMOUNT_METHOD = 'xgds_app.views.getDelaySeconds'
+# XGDS_VIDEO_NOTE_EXTRAS_FUNCTION = 'xgds_app.views.getNoteExtras'
+# XGDS_VIDEO_NOTE_FILTER_FUNCTION = 'xgds_app.views.noteFilterFunction'
 
-RECORDED_VIDEO_DIR_BASE = DATA_ROOT
-RECORDED_VIDEO_URL_BASE = DATA_URL
-
-
-XGDS_MAP_SERVER_JS_MAP = getOrCreateDict('XGDS_MAP_SERVER_JS_MAP')
-try:
-    del XGDS_MAP_SERVER_JS_MAP['Track']
-except:
-    pass
-XGDS_MAP_SERVER_JS_MAP['Actual_Traverse'] = {'ol': 'geocamTrack/js/olActual_TraverseMap.js',
-                                                       'model': GEOCAM_TRACK_TRACK_MODEL,
-                                                       'columns': ['name', 'resource_name', 'type', 'color', 'alpha',  'pk', 'app_label', 'model_type', 'times', 'coords', 'lat', 'DT_RowId'],
-                                                       'hiddenColumns': ['type', 'color', 'alpha', 'pk', 'app_label', 'model_type', 'times', 'coords', 'lat', 'DT_RowId'],
-                                                       'columnTitles': ['Name', 'Resource',''],
-                                                       'searchableColumns': ['name', 'resource_name'],
-                                                       'search_form_class': 'basaltApp.forms.SearchBasaltTrackForm'
-                                                       }
-try:
-    del XGDS_MAP_SERVER_JS_MAP['Position']
-except:
-    pass
-XGDS_MAP_SERVER_JS_MAP['Position'] = {'ol': 'geocamTrack/js/olPositionMap.js',
-                                      'model': GEOCAM_TRACK_PAST_POSITION_MODEL,
-                                      'columns': ['timestamp', 'displayName', 'type', 'lat', 'lon', 'altitude', 'heading', 'pk', 'app_label', 'model_type', 'track_name', 'track_pk', 'track_hexcolor', 'displayName', 'DT_RowId'],
-                                      'hiddenColumns': ['type', 'pk', 'app_label', 'model_type', 'track_pk', 'track_hexcolor', 'displayName', 'DT_RowId'],
-                                      'columnTitles': ['Time', 'TZ', 'Name', 'Latitude', 'Longitude', 'Altitude', 'Heading', 'EVA', ''],
-                                      'searchableColumns': ['displayName', 'timestamp', 'lat', 'lon', 'altitude', 'heading', 'track_name'],
-                                      'search_form_class': 'basaltApp.forms.SearchBasaltPositionForm'}
-
-XGDS_MAP_SERVER_JS_MAP['Photo'] = {'ol': 'xgds_image/js/olImageMap.js',
-                                   'model': XGDS_IMAGE_IMAGE_SET_MODEL,
-                                   'searchableColumns': ['name','description','flight_name', 'author_name'],
-                                   'columns': ['checkbox', 'acquisition_time', 'acquisition_timezone', 'author_name', 'name', 'description', 'thumbnail_image_url',  'pk', 'view_url',
-                                               'camera_name', 'raw_image_url', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'head','flight_name', 'deepzoom_file_url',
-                                               'rotation_degrees', 'originalImageResolutionString', 'originalImageFileSizeMB', 'create_deepzoom','DT_RowId'],
-                                   'hiddenColumns': ['pk', 'view_url', 'camera_name', 'raw_image_url', 'app_label',  'resource_name', 'model_type','type',
-                                                     'lat','lon','alt','head','flight_name', 'deepzoom_file_url', 'rotation_degrees', 
-                                                     'originalImageResolutionString', 'originalImageFileSizeMB', 'create_deepzoom', 'DT_RowId'],
-                                   'unsortableColumns': ['thumbnail_image_url'],
-                                   'columnTitles': ['Time', 'TZ', 'Author', 'Name',  'Description', 'Image'],
-                                   'viewHandlebars': 'xgds_image/templates/handlebars/image-view2.handlebars',
-                                   'viewJS': [EXTERNAL_URL + 'openseadragon/built-openseadragon/openseadragon/openseadragon.min.js',
-                                                EXTERNAL_URL + 'openseadragon/built-openseadragon/openseadragon/openseadragon.js',
-                                                EXTERNAL_URL + 'fabric.js/dist/fabric.min.js',
-                                                EXTERNAL_URL + 'openseadragon-fabricjs-overlay/openseadragon-fabricjs-overlay.js',
-                                                EXTERNAL_URL + 'spectrum-colorpicker/spectrum.js',
-                                                EXTERNAL_URL + 'jquery-fileDownload/src/Scripts/jquery.fileDownload.js',
-                                                STATIC_URL + 'xgds_image/js/imageAnnotation.js',
-                                                STATIC_URL + 'xgds_image/js/imageReview.js' ],
-                                   'viewCss': [STATIC_URL + 'xgds_image/css/xgds_image.css',
-                                               EXTERNAL_URL + 'spectrum/spectrum.css'],
-                                   'viewInitMethods': ['xgds_image.setupImageViewer'],
-                                   'viewResizeMethod': ['xgds_image.resizeImageViewer'],
-                                   'event_time_field': 'acquisition_time',
-                                   'event_timezone_field': 'acquisition_timezone',
-                                   'saveRotationUrl': '/xgds_image/saveRotation/', 
-                                   'getRotationUrl': '/xgds_image/getRotation/',
-                                   'search_form_class': 'basaltApp.forms.SearchBasaltImageSetForm'
-                                   }
-
-# IMPORTANT if you change columns of notes you have to edit map_record_notes.js and change the idsrc index, it should work with pk but it doesn't
-XGDS_MAP_SERVER_JS_MAP['Note'] = {'ol': 'xgds_notes2/js/olNoteMap.js',
-                                  'model': XGDS_NOTES_NOTE_MODEL,
-                                  'columns': ['checkbox', 'event_time', 'event_timezone', 'author_name', 'role_name', 'location_name', 'content', 'tag_names','content_url', 'content_thumbnail_url', 'content_name', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'flight_name','object_type', 'object_id', 'creation_time','show_on_map','pk'],
-                                  'hiddenColumns': ['app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'flight_name', 'content_thumbnail_url', 'content_name', 'object_type', 'object_id', 'creation_time','show_on_map','pk'],
-                                  'searchableColumns': ['name','description','flight_name', 'author_name'],
-                                  'editableColumns':{'content':'text','tag_names':'tagsinput'},
-                                  'unsortableColumns': ['content_url'],
-                                  #[{'label':'Content','name':'content','data':5},
-                                  #                   {'label':'Tags','name':'tag_names','data':6}],
-                                  'columnTitles': ['Time', 'TZ', 'Author', 'Role', 'Location', 'Content', 'Tags', 'Link'],
-                                  'viewHandlebars': 'xgds_notes2/templates/handlebars/note-view.handlebars',
-                                  'viewJS': [STATIC_URL + 'xgds_notes2/js/genericNotesView.js' ],
-                                  'viewInitMethods': ['xgds_notes.initDetailView'],
-                                  'searchInitMethods': ['xgds_notes.initializeInput'],
-                                  'event_time_field': 'event_time',
-                                  'event_timezone_field': 'event_timezone',
-                                  'search_form_class': 'basaltApp.forms.SearchBasaltNoteForm'}
-
-XGDS_MAP_SERVER_JS_MAP[XGDS_SAMPLE_SAMPLE_KEY] = {'ol': 'xgds_sample/js/olSampleMap.js',
-                                                  'model': XGDS_SAMPLE_SAMPLE_MODEL,
-                                                  'searchableColumns': ['name','description','flight_name'],
-                                                  'columns': ['checkbox', 'collection_time', 'collection_timezone', 'name', 'sample_type_name', 'label_number', 'collector_name', 'resource_name', 'thumbnail_image_url', 'region_name', 'pk', 'lat', 'lon', 'alt', 'flight_name', 'app_label', 'model_type', 'type', 'year','number', 'description', 'replicate_name', 'marker_id', 'station_number', 'flir_temperature', 'DT_RowId'],
-                                                  'hiddenColumns': ['thumbnail_image_url', 'region_name', 'pk','lat', 'lon', 'alt', 'flight_name', 'app_label', 'model_type', 'type', 'year','number', 'description', 'replicate_name', 'marker_id', 'station_number', 'flir_temperature', 'DT_RowId'],
-                                                  'columnTitles': ['Time', 'TZ', 'Name', 'Type', 'Label', 'Collector', 'Resource'],
-                                                  'viewHandlebars': 'basaltApp/templates/xgds_sample/sample-view.handlebars',
-                                                  'event_time_field': 'collection_time',
-                                                  'event_timezone_field': 'collection_timezone',
-                                                  'search_form_class': 'basaltApp.forms.SearchBasaltSampleForm',
-                                                  } 
-XGDS_MAP_SERVER_JS_MAP['FTIR'] = {'ol': 'xgds_instrument/js/olFtirDataProduct.js',
-                                  'model': 'basaltApp.FtirDataProduct',
-                                  'columns': ['checkbox', 'acquisition_time', 'acquisition_timezone', 'collector_name', 'name', 'description', 'minerals', 'pk', 'view_url', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'flight_name', 'instrument_name','manufacturer_data_file_url','portable_data_file_url','jsonDataUrl','csvDataUrl', 'ev_name', 'DT_RowId'],
-                                  'hiddenColumns': ['pk', 'view_url', 'app_label', 'model_type','type', 'lat','lon','alt','flight_name','instrument_name','manufacturer_data_file_url','portable_data_file_url','jsonDataUrl','csvDataUrl', 'ev_name','DT_RowId'],
-                                  'columnTitles': ['Time', 'TZ', 'Collector', 'Name', 'Description', 'Minerals'],
-                                  'viewHandlebars': 'basaltApp/templates/xgds_instrument/handlebars/instrument-view.handlebars',
-                                  'viewJS': [EXTERNAL_URL + 'flot/jquery.flot.js',
-                                             EXTERNAL_URL + 'flot-axislabels/jquery.flot.axislabels.js',
-                                             STATIC_URL + 'xgds_instrument/js/instrumentView.js' ],
-                                  'viewInitMethods': ['xgds_instrument.getData'],
-                                  'event_time_field': 'acquisition_time',
-                                  'event_timezone_field': 'acquisition_timezone',
-                                  'plotLabels':['Wave #','Reflectance'],
-                                  'search_form_class': 'basaltApp.forms.SearchFTIRDataForm'
-                                  }
-XGDS_MAP_SERVER_JS_MAP['ASD'] = {'ol': 'xgds_instrument/js/olAsdDataProduct.js',
-                                 'model': 'basaltApp.AsdDataProduct',
-                                 'columns': ['checkbox', 'acquisition_time', 'acquisition_timezone', 'collector_name', 'name', 'description', 'minerals', 'pk', 'view_url', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'flight_name', 'instrument_name','manufacturer_data_file_url','portable_data_file_url','jsonDataUrl','csvDataUrl', 'ev_name', 'DT_RowId'],
-                                 'hiddenColumns': ['pk', 'view_url', 'app_label', 'model_type','type', 'lat','lon','alt','flight_name','instrument_name','manufacturer_data_file_url','portable_data_file_url','jsonDataUrl','csvDataUrl', 'ev_name', 'DT_RowId'],
-                                 'columnTitles': ['Time', 'TZ', 'Collector', 'Name', 'Description', 'Minerals'],
-                                 'viewHandlebars': 'basaltApp/templates/xgds_instrument/handlebars/instrument-view.handlebars',
-                                 'viewJS': [EXTERNAL_URL + 'flot/jquery.flot.js',
-                                            EXTERNAL_URL + 'flot-axislabels/jquery.flot.axislabels.js',
-                                            STATIC_URL + 'xgds_instrument/js/instrumentView.js' ],
-                                 'viewInitMethods': ['xgds_instrument.getData'],
-                                 'event_time_field': 'acquisition_time',
-                                 'event_timezone_field': 'acquisition_timezone',
-                                 'plotLabels':['Wavelength(nm)','Reflectance'],
-                                 'search_form_class': 'basaltApp.forms.SearchASDDataForm'
-                                 }
-
-XGDS_MAP_SERVER_JS_MAP['pXRF'] = {'ol': 'xgds_instrument/js/olPxrfDataProduct.js',
-                                  'model': 'basaltApp.PxrfDataProduct',
-                                  'columns': ['checkbox', 'acquisition_time', 'acquisition_timezone', 'collector_name', 'pretty_fileNumber', 'fillin_total_percent', 'name',  'description', 'label', 'elements', 'pk', 'view_url', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'flight_name', 'instrument_name','manufacturer_data_file_url','portable_data_file_url','element_results_csv_file_url','jsonDataUrl','csvDataUrl', 'ev_name',
-                                              'durationTime', 'ambientTemperature', 'detectorTemperature', 'temperatureUnits', 'validAccumulatedCounts', 'rawAccumulatedCounts',
-                                              'validCountLastPacket', 'rawCountLastPacket', 'liveTime', 'hVDAC', 'hVADC', 'filamentDAC', 'filamentADC', 'pulseLength', 'pulsePeriod', 'filter', 
-                                              'eVperchannel', 'numberofChannels', 'vacuum', 'has_element_percents',
-                                              'DT_RowId'],
-                                  'hiddenColumns': ['label', 'pk', 'view_url', 'app_label', 'model_type','type', 'lat','lon','alt','flight_name','elements','instrument_name','manufacturer_data_file_url','portable_data_file_url', 'element_results_csv_file_url', 'jsonDataUrl','csvDataUrl', 'ev_name',
-                                                    'durationTime', 'ambientTemperature', 'detectorTemperature', 'temperatureUnits', 'validAccumulatedCounts', 'rawAccumulatedCounts',
-                                                    'validCountLastPacket', 'rawCountLastPacket', 'liveTime', 'hVDAC', 'hVADC', 'filamentDAC', 'filamentADC', 'pulseLength', 'pulsePeriod', 'filter', 
-                                                    'eVperchannel', 'numberofChannels', 'vacuum', 'has_element_percents',
-                                                    'DT_RowId'],
-                                  'columnTitles': ['Time', 'TZ', 'Collector', 'File #', 'Total %', 'Name', 'Description'],
-                                  'viewHandlebars': 'basaltApp/templates/xgds_instrument/handlebars/pxrf-view.handlebars',
-                                  'viewJS': [EXTERNAL_URL + 'flot/jquery.flot.js',
-                                             EXTERNAL_URL + 'flot-axislabels/jquery.flot.axislabels.js',
-                                             STATIC_URL + 'xgds_instrument/js/instrumentView.js' ,
-                                             STATIC_URL + 'xgds_instrument/js/pxrfDataView.js' ,
-                                             ],
-                                  'viewInitMethods': ['xgds_instrument.getData'],
-                                  'event_time_field': 'acquisition_time',
-                                  'event_timezone_field': 'acquisition_timezone',
-                                  'plotLabels':['Channel #','Intensity'],
-                                  'search_form_class': 'basaltApp.forms.SearchPXRFDataForm',
-                                  'edit_form_class': 'basaltApp.forms.PxrfInstrumentDataForm',
-                                  }
+# RECORDED_VIDEO_DIR_BASE = DATA_ROOT
+# RECORDED_VIDEO_URL_BASE = DATA_URL
 
 
-BOWER_INSTALLED_APPS = tuple(getOrCreateArray('BOWER_INSTALLED_APPS'))
+# XGDS_MAP_SERVER_JS_MAP = getOrCreateDict('XGDS_MAP_SERVER_JS_MAP')
+# try:
+#     del XGDS_MAP_SERVER_JS_MAP['Track']
+# except:
+#     pass
+# XGDS_MAP_SERVER_JS_MAP['Actual_Traverse'] = {'ol': 'geocamTrack/js/olActual_TraverseMap.js',
+#                                                        'model': GEOCAM_TRACK_TRACK_MODEL,
+#                                                        'columns': ['name', 'resource_name', 'type', 'color', 'alpha',  'pk', 'app_label', 'model_type', 'times', 'coords', 'lat', 'DT_RowId'],
+#                                                        'hiddenColumns': ['type', 'color', 'alpha', 'pk', 'app_label', 'model_type', 'times', 'coords', 'lat', 'DT_RowId'],
+#                                                        'columnTitles': ['Name', 'Resource',''],
+#                                                        'searchableColumns': ['name', 'resource_name'],
+#                                                        'search_form_class': 'xgds_app.forms.SearchTrackForm'
+#                                                        }
+
+# XGDS_MAP_SERVER_DEFAULT_ZOOM = 15
+# XGDS_MAP_SERVER_SITE_MONIKER = 'Region'
+
 
 PYRAPTORD_SERVICE = True
 
-#XGDS_CURRENT_SITEFRAME_ID = 2  # Hawaii Lava Flows siteframe
-XGDS_CURRENT_SITEFRAME_ID = 12  # Kilauea siteframe
-XGDS_CURRENT_REGION_ID = 6 # sample region?
-XGDS_DEFAULT_SAMPLE_TYPE = 2 #'Geology'
-XGDS_CORE_LIVE_INDEX_URL = '/basaltApp/live'
+# XGDS_CURRENT_SITEFRAME_ID = 2  # Hawaii Lava Flows siteframe
+# XGDS_CURRENT_REGION_ID = 6 # sample region?
+# XGDS_DEFAULT_SAMPLE_TYPE = 2 #'Geology'
+# XGDS_CORE_LIVE_INDEX_URL = '/basaltApp/live'
 
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
-XGDS_MAP_SERVER_DEFAULT_ZOOM = 15
-XGDS_MAP_SERVER_SITE_MONIKER = 'Region'
 
 
 def make_key(key, key_prefix, version):
@@ -725,29 +504,26 @@ GEOCAM_UTIL_DATATABLES_EDITOR = False
 GEOCAM_TRACK_URL_PORT = 8181
 
 XGDS_CORE_TEMPLATE_DIRS = getOrCreateDict('XGDS_CORE_TEMPLATE_DIRS')
-XGDS_CORE_TEMPLATE_DIRS[XGDS_SAMPLE_SAMPLE_MODEL] = [os.path.join('xgds_sample', 'templates', 'handlebars')]
-XGDS_CORE_TEMPLATE_DIRS[XGDS_IMAGE_IMAGE_SET_MODEL] = [os.path.join('xgds_image', 'templates', 'handlebars')]
+# XGDS_CORE_TEMPLATE_DIRS[XGDS_SAMPLE_SAMPLE_MODEL] = [os.path.join('xgds_sample', 'templates', 'handlebars')]
+# XGDS_CORE_TEMPLATE_DIRS[XGDS_IMAGE_IMAGE_SET_MODEL] = [os.path.join('xgds_image', 'templates', 'handlebars')]
 
-XGDS_CORE_CONDITION_MODEL = "basaltApp.BasaltCondition"
-XGDS_CORE_CONDITION_HISTORY_MODEL = "basaltApp.BasaltConditionHistory"
+# XGDS_CORE_CONDITION_MODEL = "xgds_app.MyCondition"
+# XGDS_CORE_CONDITION_HISTORY_MODEL = "xgds_app.MyConditionHistory"
 
 XGDS_CORE_REBROADCAST_MAP = getOrCreateDict('XGDS_CORE_REBROADCAST_MAP')
-XGDS_CORE_REBROADCAST_MAP.update({'basaltApp_pastposition':{'modelName':'basaltApp.PastPosition', 'pkColNum':1, 'pkType': 'int'}})
-#XGDS_CORE_REBROADCAST_MAP['basaltApp_basaltconditionhistory'] = 'basaltApp.BasaltConditionHistory'
+#XGDS_CORE_REBROADCAST_MAP.update({'xgds_app_pastposition':{'modelName':'xgds_app.PastPosition', 'pkColNum':1, 'pkType': 'int'}})
 
 XGDS_CORE_TEMPLATE_DEBUG = True
 
-COUCHDB_FILESTORE_NAME = "basalt-file-store"
+# COUCHDB_FILESTORE_NAME = "my-file-store"
 
 JWPLAYER_KEY = '***REMOVED***'
 
-IMAGE_CAPTURE_DIR = os.path.join(DATA_ROOT, 'xgds_video_stills')
+# IMAGE_CAPTURE_DIR = os.path.join(DATA_ROOT, 'xgds_video_stills')
 
-FAVICON_PATH = 'basaltApp/icons/favicon.ico'
+# FAVICON_PATH = 'xgds_app/icons/favicon.ico'
 
 ALLOWED_HOSTS = ['*']
-
-XGDS_SSE_CHANNELS = ['sse', 'EV1', 'EV2', 'SA']
 
 
 # Setup support for proxy headers
@@ -765,17 +541,17 @@ REST_FRAMEWORK = {
     ]
 }
 
-GEOCAM_TRACK_PRELOAD_TRACK_IMAGES = ["/static/basaltApp/icons/ev1_pointer.png", 
-                                     "/static/basaltApp/icons/ev2_pointer.png",
-                                     "/static/basaltApp/icons/ev1_circle.png", 
-                                     "/static/basaltApp/icons/ev2_circle.png",
-                                     "/static/basaltApp/icons/ev1_stop.png", 
-                                     "/static/basaltApp/icons/ev2_stop.png"]
+# GEOCAM_TRACK_PRELOAD_TRACK_IMAGES = ["/static/xgds_app/icons/ev1_pointer.png", 
+#                                      "/static/xgds_app/icons/ev2_pointer.png",
+#                                      "/static/xgds_app/icons/ev1_circle.png", 
+#                                      "/static/xgds_app/icons/ev2_circle.png",
+#                                      "/static/xgds_app/icons/ev1_stop.png", 
+#                                      "/static/xgds_app/icons/ev2_stop.png"]
 
-XGDS_SSE_TRACK_CHANNELS = ['EV1','EV2']
-XGDS_SSE_CONDITION_CHANNELS = XGDS_SSE_TRACK_CHANNELS
-XGDS_SSE_NOTE_CHANNELS = ['EV1', 'EV2', 'SA']
-XGDS_NOTES_CURRENT_MAPPED_FUNCTION = 'basaltApp.views.currentMapNotes'
+# XGDS_SSE_TRACK_CHANNELS = ['EV1','EV2']
+# XGDS_SSE_CONDITION_CHANNELS = XGDS_SSE_TRACK_CHANNELS
+# XGDS_SSE_NOTE_CHANNELS = ['EV1', 'EV2', 'SA']
+# XGDS_NOTES_CURRENT_MAPPED_FUNCTION = 'xgds_app.views.currentMapNotes'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 43200 # 12 hours
