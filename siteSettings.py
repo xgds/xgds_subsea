@@ -39,6 +39,7 @@ SECRET_KEY = '***REMOVED***'
 
 #XGDS_BROWSERIFY = getOrCreateArray('XGDS_BROWSERIFY')
 
+FAVICON_PATH = "xgds_app/icons/favicon.ico"
 
 # from apps.basaltApp.instrumentDataImporters import *
 # apps should be listed from "most specific" to "most general".  that
