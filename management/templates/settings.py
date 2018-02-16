@@ -31,6 +31,8 @@ from siteSettings import *
 # cookie-based authentication mechanism.
 SECRET_KEY = 'SECRET-KEY-HERE'
 
+XGDS_CORE_REDIS = False
+
 # For example, override the database settings:
 #DATABASES = {
 #    'default': {
