@@ -302,6 +302,8 @@ STATICFILES_FINDERS = (
     'django_npm_apps.finders.NpmAppFinder',
 )
 
+PIPELINE = {'PIPELINE_ENABLED': False }
+
 COMPRESS_ENABLED = True
 COMPRESS_CSSTIDY_BINARY = '/usr/bin/csstidy'
 
