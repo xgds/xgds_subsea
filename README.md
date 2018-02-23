@@ -108,6 +108,17 @@ Whenever static files (including front-end dependencies) change:
 ./manage.py prep
 ```
 
+## Configure Apache
+
+When using Apache to serve static files and interface with WSGI,
+create a configuration `/etc/apache2/sites-available/xgds_site.conf`
+and enable it:
+
+```bash
+sudo a2ensite xgds_site
+sudo service apache2 reload
+```
+
 ## Restart Apache
 
 When using Apache to serve static files, restart after each prep:
@@ -115,3 +126,10 @@ When using Apache to serve static files, restart after each prep:
 ```bash
 sudo apachectl restart
 ```
+
+## Access Site
+
+With all of the above complete, you should now be able to navigate to
+your installation in a browser (at https://localhost, for a local 
+installation), log in using the administrator account you created, 
+and see xGDS as you configured it.
