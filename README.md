@@ -11,6 +11,8 @@ cd xgds_site
 ./init.sh
 ```
 
+(Ignore warnings from `sed`.)
+
 The `./init.sh` script will detect your directory name and create a 
 skeleton for site-specific content under `apps/xgds_site_app`. If you want 
 to provide a name explicitly, run as `./init.sh xgds_some_name`.
@@ -35,15 +37,41 @@ A site must be bootstrapped once per installation:
 ./manage.py bootstrap
 ```
 
+You may see errors after bootstrapping completes due to the incomplete 
+configuration of the environment.
+
 This will create local files `settings.py` and `sourceme.sh`.
 These are ignored from `.gitignore` as they will contain information
 specific to the installation which should not be committed back to 
 the repository.
 
+## Create Database
+
+The installation will need a database. For example, to create a 
+mysql database:
+
+```bash
+mysql -u root -p -e "create database xgds_site"
+```
+
 ## Configure
 
 At minimum, `settings.py` must be edited with database information.
-The database will also need to be created.
+For example:
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.mysql',
+        'NAME': 'xgds_site',
+        'USER': 'root',
+        'PASSWORD': '****',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+```
+
 
 ## Source sourceme.sh
 
