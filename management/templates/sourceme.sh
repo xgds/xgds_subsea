@@ -29,4 +29,4 @@ export DJANGO_SCRIPT_NAME='/'
 export PYTHONPATH={{ parentDir }}:{{ appsDir }}:$PYTHONPATH
 
 # You should not need to change this.
-export DJANGO_SETTINGS_MODULE='xgds_basalt.settings'
+export DJANGO_SETTINGS_MODULE='{{ packageName }}.settings'

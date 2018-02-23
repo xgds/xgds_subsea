@@ -162,7 +162,8 @@ def genSourceme(opts):
                  SOURCEME_NAME,
                  dict(virtualEnvDir=os.environ.get('VIRTUALENV', None),
                       parentDir=os.path.dirname(os.path.abspath(os.getcwd())),
-                      appsDir=os.path.abspath('apps')
+                      appsDir=os.path.abspath('apps'),
+                      packageName=os.path.basename(os.getcwd())
                       ))
 
 
