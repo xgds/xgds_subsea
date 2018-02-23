@@ -46,7 +46,7 @@ FAVICON_PATH = "xgds_app/icons/favicon.ico"
 # way, templates in more specific apps override ones from more general
 # apps.
 INSTALLED_APPS = ['django_npm_apps',
-                  'xgds_app'
+                  'xgds_app',
 
                   # TODO uncomment the submodules that you are including
                   # 'xgds_sample',
