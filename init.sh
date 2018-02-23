@@ -5,7 +5,7 @@ cd $(dirname $0)
 
 DIR=`pwd`
 FROM=xgds_app
-TO=${1:-$(basename $DIR)}
+TO=${1:-$(basename $DIR)_app}
 APPS_DIR=$DIR/apps
 TEMPLATES_DIR=$DIR/management/templates
 
