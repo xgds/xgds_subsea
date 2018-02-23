@@ -46,7 +46,7 @@ FAVICON_PATH = "xgds_app/icons/favicon.ico"
 # way, templates in more specific apps override ones from more general
 # apps.
 INSTALLED_APPS = ['django_npm_apps',
-                  # 'xgds_app'
+                  'xgds_app'
 
                   # TODO uncomment the submodules that you are including
                   # 'xgds_sample',
@@ -468,15 +468,15 @@ COMPASS_CORRECTION =  10
 #                                                        }
 
 # XGDS_MAP_SERVER_DEFAULT_ZOOM = 15
-# XGDS_MAP_SERVER_SITE_MONIKER = 'Region'
+XGDS_MAP_SERVER_SITE_MONIKER = 'Region'
 
 
 PYRAPTORD_SERVICE = True
 
-# XGDS_CURRENT_SITEFRAME_ID = 2  # Hawaii Lava Flows siteframe
+XGDS_CURRENT_SITEFRAME_ID = 2  # Hawaii Lava Flows siteframe
 # XGDS_CURRENT_REGION_ID = 6 # sample region?
 # XGDS_DEFAULT_SAMPLE_TYPE = 2 #'Geology'
-# XGDS_CORE_LIVE_INDEX_URL = '/basaltApp/live'
+XGDS_CORE_LIVE_INDEX_URL = '/xgds_app/live'
 
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
