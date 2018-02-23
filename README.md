@@ -25,9 +25,63 @@ installed applications.
 
 Finally, replace or fill in `apps/xgds_site_app` with site-specific content.
 
-# Initializing an installed site
+# Managing a site installation
+
+## Bootstrap
+
+A site must be bootstrapped once per installation:
+
+```bash
+./manage.py bootstrap
+```
+
+This will create local files `settings.py` and `sourceme.sh`.
+These are ignored from `.gitignore` as they will contain information
+specific to the installation which should not be committed back to 
+the repository.
+
+## Configure
+
+At minimum, `settings.py` must be edited with database information.
+The database will also need to be created.
+
+## Source sourceme.sh
+
+Whenever managing this installation, ensure you have the correct 
+environment variables:
+
+```bash
+source sourceme.sh
+```
+
+## Create Administrator
+
+After bootstrapping, an administrator account should be created:
+
+```bash
+./manage.py createsuperuser
+```
+
+## Install Front-end Dependencies
+
+After installation and whenever front-end dependencies are updated:
 
 ```bash
 ./manage.py prepnpm
+```
+
+## Prepare
+
+Whenever static files (including front-end dependencies) change:
+
+```bash
 ./manage.py prep
+```
+
+## Restart Apache
+
+When using Apache to serve static files, restart after each prep:
+
+```bash
+sudo apachectl restart
 ```
