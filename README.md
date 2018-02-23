@@ -84,9 +84,11 @@ source sourceme.sh
 
 ## Create Administrator
 
-After bootstrapping, an administrator account should be created:
+After bootstrapping, an administrator account should be created
+(after applying migrations to ensure tables are up-to-date):
 
 ```bash
+./manage.py migrate
 ./manage.py createsuperuser
 ```
 
