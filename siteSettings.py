@@ -34,19 +34,21 @@ from django.core.urlresolvers import reverse
 from geocamUtil.SettingsUtil import getOrCreateDict, getOrCreateArray, HOSTNAME
 
 
+XGDS_SITE = 'site' # "basalt", "rp", etc
+XGDS_SITE_APP = "xgds_" + XGDS_SITE
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '***REMOVED***'
 
 #XGDS_BROWSERIFY = getOrCreateArray('XGDS_BROWSERIFY')
-
-FAVICON_PATH = "xgds_app/icons/favicon.ico"
+FAVICON_PATH = XGDS_SITE_APP + "/icons/favicon.ico"
 
 # from apps.basaltApp.instrumentDataImporters import *
 # apps should be listed from "most specific" to "most general".  that
 # way, templates in more specific apps override ones from more general
 # apps.
 INSTALLED_APPS = ['django_npm_apps',
-                  'xgds_app',
+                  XGDS_SITE_APP,
 
                   # TODO uncomment the submodules that you are including
                   # 'xgds_sample',
@@ -476,7 +478,7 @@ PYRAPTORD_SERVICE = True
 XGDS_CURRENT_SITEFRAME_ID = 2  # Hawaii Lava Flows siteframe
 # XGDS_CURRENT_REGION_ID = 6 # sample region?
 # XGDS_DEFAULT_SAMPLE_TYPE = 2 #'Geology'
-XGDS_CORE_LIVE_INDEX_URL = '/xgds_app/live'
+XGDS_CORE_LIVE_INDEX_URL = '/' + XGDS_SITE_APP + '/live'
 
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
