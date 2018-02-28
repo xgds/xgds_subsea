@@ -125,7 +125,7 @@ MANAGERS = ADMINS
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.contrib.gis.db.backends.mysql', # django.db.backends.mysql',
-#         'NAME': 'xgds_app',
+#         'NAME': 'xgds_baseline_app',
 #         'USER': 'root',
 #         'PASSWORD': 'xgds',
 #         'HOST': '127.0.0.1',
@@ -212,8 +212,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            # os.path.join(PROJ_ROOT, 'apps/xgds_app/templates'),
-            # os.path.join(PROJ_ROOT, 'apps/xgds_app/templates/xgds_app'),
+            # os.path.join(PROJ_ROOT, 'apps/xgds_baseline_app/templates'),
+            # os.path.join(PROJ_ROOT, 'apps/xgds_baseline_app/templates/xgds_baseline_app'),
 
             # Templates for utility scripts
             os.path.join(PROJ_ROOT, 'bin/templates'),
@@ -345,19 +345,19 @@ VAR_ROOT = PROJ_ROOT + 'var/'
 
 # XGDS_PLANNER_SCHEMAS = {
 #    "EV": {
-#        "schemaSource": "apps/xgds_app/planner/evPlanSchema.json",
-#        "librarySource": "apps/xgds_app/planner/evPlanLibrary.json",
-#        "simulatorUrl": "xgds_app/js/planner/evSimulator.js",
+#        "schemaSource": "apps/xgds_baseline_app/planner/evPlanSchema.json",
+#        "librarySource": "apps/xgds_baseline_app/planner/evPlanLibrary.json",
+#        "simulatorUrl": "xgds_baseline_app/js/planner/evSimulator.js",
 #        "simulator": "ev.Simulator",
 #    }
 #}
 
-# GEOCAM_TRACK_RESOURCE_MODEL = 'xgds_app.MyResource'
+# GEOCAM_TRACK_RESOURCE_MODEL = 'xgds_baseline_app.MyResource'
 # GEOCAM_TRACK_RESOURCE_VERBOSE_NAME = 'Asset'
-# GEOCAM_TRACK_TRACK_MODEL = 'xgds_app.MyTrack'
+# GEOCAM_TRACK_TRACK_MODEL = 'xgds_baseline_app.MyTrack'
 # GEOCAM_TRACK_TRACK_MONIKIER = 'Actual_Traverse'
-# GEOCAM_TRACK_POSITION_MODEL = 'xgds_app.CurrentPosition'
-# GEOCAM_TRACK_PAST_POSITION_MODEL = 'xgds_app.PastPosition'
+# GEOCAM_TRACK_POSITION_MODEL = 'xgds_baseline_app.CurrentPosition'
+# GEOCAM_TRACK_PAST_POSITION_MODEL = 'xgds_baseline_app.PastPosition'
 # GEOCAM_TRACK_INTERPOLATE_MAX_SECONDS = 120
 
 # GEOCAM_TRACK_OPS_TIME_ZONE: split days at midnight in the specified time zone
@@ -368,7 +368,7 @@ COMPASS_EQUIPPED_VEHICLES = []
 # FOR HI IT IS
 COMPASS_CORRECTION =  10
 
-# XGDS_SAMPLE_SAMPLE_MODEL = 'xgds_app.MySample'
+# XGDS_SAMPLE_SAMPLE_MODEL = 'xgds_baseline_app.MySample'
 
 # XGDS_PLANNER2_FLIGHT_MONIKER = "EVA"
 # XGDS_PLANNER2_GROUP_FLIGHT_MONIKER = "EVA"
@@ -377,19 +377,19 @@ COMPASS_CORRECTION =  10
 # XGDS_PLANNER2_STATION_MONIKER_PLURAL = "Waypoints"
 # XGDS_PLANNER2_COMMAND_MONIKER = "Activity"
 # XGDS_PLANNER2_COMMAND_MONIKER_PLURAL = "Activities"
-# XGDS_PLANNER2_FLIGHT_MODEL = "xgds_app.MyFlight"
-# XGDS_PLANNER2_GROUP_FLIGHT_MODEL = "xgds_app.MyGroupFlight"
-# XGDS_PLANNER2_ACTIVE_FLIGHT_MODEL = "xgds_app.MyActiveFlight"
+# XGDS_PLANNER2_FLIGHT_MODEL = "xgds_baseline_app.MyFlight"
+# XGDS_PLANNER2_GROUP_FLIGHT_MODEL = "xgds_baseline_app.MyGroupFlight"
+# XGDS_PLANNER2_ACTIVE_FLIGHT_MODEL = "xgds_baseline_app.MyActiveFlight"
 
 #XGDS_PLANNER2_DEFAULT_SITE = ('HIL', 'Hawaii Lava Flows') #'Hawaii Lava Flows'
 
 # XGDS_PLANNER2_SCHEDULE_INCLUDED = True
 # XGDS_PLANNER2_SITE_MONIKER = 'Zone'
-# XGDS_PLANNER2_PLAN_EXECUTION_MODEL = "xgds_app.MyPlanExecution"
+# XGDS_PLANNER2_PLAN_EXECUTION_MODEL = "xgds_baseline_app.MyPlanExecution"
 
 # XGDS_PLANNER2_HANDLEBARS_DIRS = [os.path.join('xgds_planner2', 'templates', 'handlebars'),
-                                 # os.path.join('xgds_app', 'templates', 'xgds_planner2'),
-                                 # os.path.join('xgds_app', 'templates', 'xgds_sample'),
+                                 # os.path.join('xgds_baseline_app', 'templates', 'xgds_planner2'),
+                                 # os.path.join('xgds_baseline_app', 'templates', 'xgds_sample'),
                                  # os.path.join('xgds_map_server', 'templates', 'handlebars', 'search')]
 
 # XGDS_PLANNER2_EDITOR_CONTEXT_METHOD = 'basaltApp.views.addToPlannerContext'
@@ -403,36 +403,36 @@ COMPASS_CORRECTION =  10
 # XGDS_PLANNER_PLAN_EXPORTERS = (
 #    ('xpjson', '.json', 'xgds_planner2.planExporter.XpjsonPlanExporter'),
 #    ('bearing_distance', '.bdj', 'xgds_planner2.planExporter.BearingDistanceJsonPlanExporter'),
-#    ('kml', '.kml', 'xgds_app.kmlPlanExporter.KmlPlanExporter'),
+#    ('kml', '.kml', 'xgds_baseline_app.kmlPlanExporter.KmlPlanExporter'),
 #    ('pml', '.pml', 'xgds_planner2.pmlPlanExporter.PmlPlanExporter'),
 # )
 
 # XGDS_NOTES_OPS_TIME_ZONE = GEOCAM_TRACK_OPS_TIME_ZONE
-# XGDS_NOTES_USER_SESSION_MODEL = 'xgds_app.MyUserSession'
-# XGDS_NOTES_NOTE_MODEL = 'xgds_app.MyNote'
-# XGDS_NOTES_TAGGED_NOTE_MODEL = 'xgds_app.MyTaggedNote'
-# XGDS_NOTES_POPULATE_NOTE_DATA = 'xgds_app.views.populateNoteData'
-# XGDS_NOTES_BUILD_NOTES_FORM = 'xgds_app.views.buildNotesForm'
+# XGDS_NOTES_USER_SESSION_MODEL = 'xgds_baseline_app.MyUserSession'
+# XGDS_NOTES_NOTE_MODEL = 'xgds_baseline_app.MyNote'
+# XGDS_NOTES_TAGGED_NOTE_MODEL = 'xgds_baseline_app.MyTaggedNote'
+# XGDS_NOTES_POPULATE_NOTE_DATA = 'xgds_baseline_app.views.populateNoteData'
+# XGDS_NOTES_BUILD_NOTES_FORM = 'xgds_baseline_app.views.buildNotesForm'
 # XGDS_NOTES_TABLE_DEFAULT_COLUMNS = ['creation_time','event_time', 'event_timezone', 'flight_name', 'author_name', 'role_name', 'location_name', 'content', 'tag_names',  'link']
 
 # XGDS_SAMPLE_HANDLEBARS_DIR = [os.path.join('xgds_sample', 'templates', 'handlebars')]
 # XGDS_SAMPLE_PERM_LINK_PREFIX = "https://myapp.xgds.org"
 
-# XGDS_IMAGE_IMAGE_SET_MODEL = 'xgds_app.MyImageSet'
-# XGDS_IMAGE_SINGLE_IMAGE_MODEL = 'xgds_app.MySingleImage'
-# XGDS_IMAGE_ARROW_ANNOTATION_MODEL = 'xgds_app.ArrowAnnotation'
-# XGDS_IMAGE_ELLIPSE_ANNOTATION_MODEL = 'xgds_app.EllipseAnnotation'
-# XGDS_IMAGE_RECTANGLE_ANNOTATION_MODEL = 'xgds_app.RectangleAnnotation'
-# XGDS_IMAGE_TEXT_ANNOTATION_MODEL = 'xgds_app.TextAnnotation'
+# XGDS_IMAGE_IMAGE_SET_MODEL = 'xgds_baseline_app.MyImageSet'
+# XGDS_IMAGE_SINGLE_IMAGE_MODEL = 'xgds_baseline_app.MySingleImage'
+# XGDS_IMAGE_ARROW_ANNOTATION_MODEL = 'xgds_baseline_app.ArrowAnnotation'
+# XGDS_IMAGE_ELLIPSE_ANNOTATION_MODEL = 'xgds_baseline_app.EllipseAnnotation'
+# XGDS_IMAGE_RECTANGLE_ANNOTATION_MODEL = 'xgds_baseline_app.RectangleAnnotation'
+# XGDS_IMAGE_TEXT_ANNOTATION_MODEL = 'xgds_baseline_app.TextAnnotation'
 # XGDS_IMAGE_DEFAULT_CREATE_DEEPZOOM = True
 
-# XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_app.instrumentDataImporters'
+# XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_baseline_app.instrumentDataImporters'
 
-# GEOCAM_TRACK_RECENT_TIME_FUNCTION = 'xgds_app.views.getCurrentTimeWithDelayCorrection'
+# GEOCAM_TRACK_RECENT_TIME_FUNCTION = 'xgds_baseline_app.views.getCurrentTimeWithDelayCorrection'
 
 # Include a dictionary of name to url for imports if you wish to include import functionality
 # XGDS_DATA_IMPORTS = getOrCreateDict('XGDS_DATA_IMPORTS')
-# XGDS_DATA_IMPORTS["Foo"]= '../../xgds_app/instrumentDataImport/Foo'
+# XGDS_DATA_IMPORTS["Foo"]= '../../xgds_baseline_app/instrumentDataImport/Foo'
 
 # XGDS_DATA_MASKED_FIELDS = getOrCreateDict('XGDS_DATA_MASKED_FIELDS')
 # XGDS_DATA_MASKED_FIELDS['basaltApp'] = {'MyImageSet': ['user_position',
@@ -440,16 +440,16 @@ COMPASS_CORRECTION =  10
 #                                                           ],
 #                                        }
 # XGDS_DATA_EXPAND_RELATED = getOrCreateDict('XGDS_DATA_EXPAND_RELATED')
-# XGDS_DATA_EXPAND_RELATED['xgds_app'] = {'MySample': [('region', 'zone', 'Zone')]}
+# XGDS_DATA_EXPAND_RELATED['xgds_baseline_app'] = {'MySample': [('region', 'zone', 'Zone')]}
 
 
-# XGDS_VIDEO_GET_ACTIVE_EPISODE = 'xgds_app.views.getActiveEpisode'
-# XGDS_VIDEO_GET_EPISODE_FROM_NAME = 'xgds_app.views.getEpisodeFromName'
-# XGDS_VIDEO_GET_TIMEZONE_FROM_NAME = 'xgds_app.views.getTimezoneFromFlightName'
-# XGDS_VIDEO_INDEX_FILE_METHOD = 'xgds_app.views.getIndexFileSuffix'
-# XGDS_VIDEO_DELAY_AMOUNT_METHOD = 'xgds_app.views.getDelaySeconds'
-# XGDS_VIDEO_NOTE_EXTRAS_FUNCTION = 'xgds_app.views.getNoteExtras'
-# XGDS_VIDEO_NOTE_FILTER_FUNCTION = 'xgds_app.views.noteFilterFunction'
+# XGDS_VIDEO_GET_ACTIVE_EPISODE = 'xgds_baseline_app.views.getActiveEpisode'
+# XGDS_VIDEO_GET_EPISODE_FROM_NAME = 'xgds_baseline_app.views.getEpisodeFromName'
+# XGDS_VIDEO_GET_TIMEZONE_FROM_NAME = 'xgds_baseline_app.views.getTimezoneFromFlightName'
+# XGDS_VIDEO_INDEX_FILE_METHOD = 'xgds_baseline_app.views.getIndexFileSuffix'
+# XGDS_VIDEO_DELAY_AMOUNT_METHOD = 'xgds_baseline_app.views.getDelaySeconds'
+# XGDS_VIDEO_NOTE_EXTRAS_FUNCTION = 'xgds_baseline_app.views.getNoteExtras'
+# XGDS_VIDEO_NOTE_FILTER_FUNCTION = 'xgds_baseline_app.views.noteFilterFunction'
 
 # RECORDED_VIDEO_DIR_BASE = DATA_ROOT
 # RECORDED_VIDEO_URL_BASE = DATA_URL
@@ -466,7 +466,7 @@ COMPASS_CORRECTION =  10
 #                                                        'hiddenColumns': ['type', 'color', 'alpha', 'pk', 'app_label', 'model_type', 'times', 'coords', 'lat', 'DT_RowId'],
 #                                                        'columnTitles': ['Name', 'Resource',''],
 #                                                        'searchableColumns': ['name', 'resource_name'],
-#                                                        'search_form_class': 'xgds_app.forms.SearchTrackForm'
+#                                                        'search_form_class': 'xgds_baseline_app.forms.SearchTrackForm'
 #                                                        }
 
 # XGDS_MAP_SERVER_DEFAULT_ZOOM = 15
@@ -498,7 +498,7 @@ CACHES = {
 }
 
 # FILE_UPLOAD_TEMP_DIR = os.path.join(DATA_ROOT, XGDS_MAP_SERVER_GEOTIFF_SUBDIR, 'temp')
-#ZEROMQ_PORTS = PROJ_ROOT + 'apps/xgds_app/ports.json'
+#ZEROMQ_PORTS = PROJ_ROOT + 'apps/xgds_baseline_app/ports.json'
 
 
 USE_TZ = True
@@ -512,11 +512,11 @@ XGDS_CORE_TEMPLATE_DIRS = getOrCreateDict('XGDS_CORE_TEMPLATE_DIRS')
 # XGDS_CORE_TEMPLATE_DIRS[XGDS_SAMPLE_SAMPLE_MODEL] = [os.path.join('xgds_sample', 'templates', 'handlebars')]
 # XGDS_CORE_TEMPLATE_DIRS[XGDS_IMAGE_IMAGE_SET_MODEL] = [os.path.join('xgds_image', 'templates', 'handlebars')]
 
-# XGDS_CORE_CONDITION_MODEL = "xgds_app.MyCondition"
-# XGDS_CORE_CONDITION_HISTORY_MODEL = "xgds_app.MyConditionHistory"
+# XGDS_CORE_CONDITION_MODEL = "xgds_baseline_app.MyCondition"
+# XGDS_CORE_CONDITION_HISTORY_MODEL = "xgds_baseline_app.MyConditionHistory"
 
 XGDS_CORE_REBROADCAST_MAP = getOrCreateDict('XGDS_CORE_REBROADCAST_MAP')
-#XGDS_CORE_REBROADCAST_MAP.update({'xgds_app_pastposition':{'modelName':'xgds_app.PastPosition', 'pkColNum':1, 'pkType': 'int'}})
+#XGDS_CORE_REBROADCAST_MAP.update({'xgds_baseline_app_pastposition':{'modelName':'xgds_baseline_app.PastPosition', 'pkColNum':1, 'pkType': 'int'}})
 
 XGDS_CORE_TEMPLATE_DEBUG = True
 
@@ -544,17 +544,17 @@ REST_FRAMEWORK = {
     ]
 }
 
-# GEOCAM_TRACK_PRELOAD_TRACK_IMAGES = ["/static/xgds_app/icons/ev1_pointer.png", 
-#                                      "/static/xgds_app/icons/ev2_pointer.png",
-#                                      "/static/xgds_app/icons/ev1_circle.png", 
-#                                      "/static/xgds_app/icons/ev2_circle.png",
-#                                      "/static/xgds_app/icons/ev1_stop.png", 
-#                                      "/static/xgds_app/icons/ev2_stop.png"]
+# GEOCAM_TRACK_PRELOAD_TRACK_IMAGES = ["/static/xgds_baseline_app/icons/ev1_pointer.png", 
+#                                      "/static/xgds_baseline_app/icons/ev2_pointer.png",
+#                                      "/static/xgds_baseline_app/icons/ev1_circle.png", 
+#                                      "/static/xgds_baseline_app/icons/ev2_circle.png",
+#                                      "/static/xgds_baseline_app/icons/ev1_stop.png", 
+#                                      "/static/xgds_baseline_app/icons/ev2_stop.png"]
 
 # XGDS_SSE_TRACK_CHANNELS = ['EV1','EV2']
 # XGDS_SSE_CONDITION_CHANNELS = XGDS_SSE_TRACK_CHANNELS
 # XGDS_SSE_NOTE_CHANNELS = ['EV1', 'EV2', 'SA']
-# XGDS_NOTES_CURRENT_MAPPED_FUNCTION = 'xgds_app.views.currentMapNotes'
+# XGDS_NOTES_CURRENT_MAPPED_FUNCTION = 'xgds_baseline_app.views.currentMapNotes'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 43200 # 12 hours

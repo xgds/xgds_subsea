@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% load pipeline %}
+{% load static %}
+{% load help_button %}
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+    {% block title %}{% block siteSection %}{% endblock siteSection%} {% block siteTitle %}{{ settings.SITE_TITLE }}{% endblock siteTitle%}{% endblock title%}
+    </title>
+    
+	{% block cssMain %}
+    <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+    {% endblock cssMain %}
+    
+    {% block cssExtras %}
+    {% endblock cssExtras %}
+  	{% block headExtras %}
+  	{% endblock headExtras%}
+  </head>
+ 
+  <body>
+  {% load nav %}
+  {% block nav %}
+  	<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary ">
+    <div class="container" id="mainNavbar">
+        <button class="navbar-toggler navbar-toggler-right align-self-center my-2" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a href="{% url 'live_index' %}" title="{{ settings.SITE_TITLE }}" class="navbar-brand">
+     			<img src="{% static 'xgds_core/css/logo.png' %}" class="logo" alt="{{ settings.SITE_TITLE }} logo" width="188" height="60"/> <!-- width="150" height="48" > -->
+     		</a>
+        <div class="collapse navbar-collapse flex-column ml-lg-0 ml-3" id="navbarCollapse">
+        	<div class="d-flex flex-row justify-content-between">
+            <ul class="navbar-nav ">
+            </ul>
+            	<div></div>
+	            <div class="mt-1">
+	            {% if user.is_authenticated %}
+	                 <a class="btn btn-primary btn btn-primary" href="/apache_logout/"  title="Logout">Logout&nbsp;&nbsp;{{ user.first_name }}</a>
+	            {% else %} 
+	                <a class="btn btn-primary btn btn-primary" href="{{ login_url_with_next }}"title="Login">Login</a>
+	            {% endif %} 
+	            <a href="{% url 'email_feedback' %}" class='btn btn-primary fa fa-envelope' role='button'></a>
+	            {% help_button help_content_path title %}
+	            <span class='btn alert-danger' id="connected_div" style="visibility:hidden;">
+	            	<span class="fa fa-bolt" id="connected" style="min-width:1rem;"></span>
+	            </span>
+	            </div>
+            </div>
+            
+            <div class="subnav">
+				<ul class="nav nav-tabs">
+				{% block sitemenu-content-secondary %}
+				
+                <li class="nav-item">
+                    &nbsp;
+                </li>
+                {% endblock sitemenu-content-secondary %}
+            	</ul>
+            </div>
+            
+        </div>
+    </div>
+</nav>
+	{% endblock nav %}
+  
+  <div class="container-fluid">
+  {% block contents %}
+  {% block content %}
+  {% endblock content %}
+  {% endblock contents %}
+  
+  {% block footer %}
+  <div class="fixed-bottom container-fluid bg-primary d-flex justify-content-between py-2 ">
+  			<a href="https://ti.arc.nasa.gov/tech/asr/intelligent-robotics/" target="_blank" title="IRG" >
+    			<img src="{% static 'bootstrap/img/irg.png'%}" alt="IRG logo" height="30px"/>
+    		</a>
+    		<div class="d-flex align-items-center">
+	    		<strong class="text-primary-inverse ">
+	    			<a href="https:/www.xgds.org" target="_blank" title="xGDS" class="text-primary-inverse">
+	    				<strong>Powered by xGDS</strong>
+	    			</a>
+	    		</strong>
+	    	</div>
+    		<a href="http://www.nasa.gov" title="NASA" target="_blank">
+    			<img src="{% static 'bootstrap/img/meatball.png' %}"  alt="NASA logo" height="30px" />
+    		</a>
+	</div>
+  {% endblock footer %}
+  </div>
+  
+  {% block prescripts %}
+	<script type="text/javascript">
+         var useOWATracking = {{settings.INCLUDE_OWA_TRACKING|yesno:"true,false"}};
+         var owaUrlFromTemplate = "{{ settings.OWA_SITE_URL }}";
+         var owaSiteIdFromTemplate = "{{ settings.OWA_SITE_ID }}";
+        </script>
+  {% endblock prescripts %}
+	
+    {% block scripts %}
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="{{ EXTERNAL_URL }}underscore/underscore-min.js"></script>
+	<script src="{{ EXTERNAL_URL }}jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="{% static 'xgds_core/js/jqueryUtils.js' %}"></script>
+	<script src="{% static 'xgds_core/js/helpPopup.js' %}"></script>
+	<script src="{{ EXTERNAL_URL }}tether/dist/js/tether.min.js"></script>
+	<script src="{{ EXTERNAL_URL }}bootstrap/dist/js/bootstrap.min.js"></script>
+        {% if settings.INCLUDE_OWA_TRACKING %}
+          <script src="{% static 'xgds_core/js/owaTrackingInclude.js' %}"></script>
+        {%  endif  %}
+    {% endblock scripts %}
+    
+    {% block postscripts %}
+	{% endblock postscripts %}
+	
+	<script type="text/javascript">
+      {% block jsSetVars %}
+      {% endblock jsSetVars %}
+
+      {% block jsInit %}
+      {% endblock jsInit %}
+    </script>
+	
+  </body>
+</html>
