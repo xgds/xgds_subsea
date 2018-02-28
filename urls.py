@@ -25,9 +25,9 @@ admin.autodiscover()
 
 urlpatterns = [url(r'^admin/', include(admin.site.urls)),
                url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-               url(r'^$', RedirectView.as_view(url=settings.SCRIPT_NAME + 'xgds/', permanent=False),{}),
+               url(r'^$', RedirectView.as_view(url=settings.SCRIPT_NAME + settings.XGDS_SITE_APP + '/', permanent=False),{}),
                url(r'^accounts/', include('xgds_core.registerUrls')),
-               url(r'^xgds/', include(settings.XGDS_SITE_APP + '.urls')),
+               url(r'^' + re.escape(settings.XGDS_SITE_APP + '/'), include(settings.XGDS_SITE_APP + '.urls')),
                url(r'^favicon\.ico$', RedirectView.as_view(url='/static/' + settings.FAVICON_PATH, permanent=True), {'readOnly': True}),
                #url(r'^xgds_sample/', include('xgds_sample.urls')),
                url(r'^pycroraptor/', include('geocamPycroraptor2.urls')),
