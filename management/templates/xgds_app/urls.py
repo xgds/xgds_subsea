@@ -18,9 +18,10 @@
 from django.conf.urls import include, url
 
 from xgds_core.register import renderTemplate
+import restUrls
 
 urlpatterns = [url(r'^$', renderTemplate, {'template_name':'xgds_app/index.html'}, 'index'),
                # Including these in this order ensures that reverse will return the non-rest urls for use in our server
-               url(r'^rest/', include('xgds_app.restUrls')),
-               url('', include('xgds_app.restUrls')),
+               url(r'^rest/', include(restUrls)),
+               url('', include(restUrls)),
            ]

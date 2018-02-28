@@ -31,7 +31,7 @@ management/appCommands/prep.py command for each app (if it exists).
 from django.core.management.base import NoArgsCommand
 
 class Command(NoArgsCommand):
-    help = 'Prep xgds_app'
+    help = 'Prep'
 
     def handle(self, *args, **options):
         # put your code here

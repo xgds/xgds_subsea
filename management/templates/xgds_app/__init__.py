@@ -14,10 +14,6 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-"""
-xgds_app
-"""
-
 __version_info__ = {
     'major': 0,
     'minor': 1,
