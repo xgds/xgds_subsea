@@ -11,8 +11,8 @@ cd xgds_site/apps
 mv xgds_baseline_app xgds_site_app
 ```
 
-Next, edit `siteSettings.py` and specify the `XGDS_SITE_NAME` (which would be
-"site" in the above example) and perform any configuration needed for the
+Next, edit `siteSettings.py` and specify the `XGDS_SITE_APP` (which would be
+"xgds_site_app" in the above example) and perform any configuration needed for the
 new site. In particular, uncomment any xGDS apps under `INSTALLED_APPS`
 that will be used. Many apps will also have related
 configuration variables to uncomment and supply below. Variable names are
