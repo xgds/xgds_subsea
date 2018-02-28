@@ -34,8 +34,7 @@ from django.core.urlresolvers import reverse
 from geocamUtil.SettingsUtil import getOrCreateDict, getOrCreateArray, HOSTNAME
 
 
-XGDS_SITE = 'baseline' # "basalt", "rp", etc
-XGDS_SITE_APP = "xgds_" + XGDS_SITE + "_app"
+XGDS_SITE_APP = "xgds_baseline_app" # xgds_yoursitehere_app
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '***REMOVED***'
