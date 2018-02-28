@@ -7,18 +7,14 @@ To initialize a new site-specific repository `xgds_site`:
 
 ```bash
 git clone https://github.com/xgds/xgds_baseline.git xgds_site
-cd xgds_site
-./init.sh
+cd xgds_site/apps
+mv xgds_baseline_app xgds_site_app
 ```
 
-(Ignore warnings from `sed`.)
-
-The `./init.sh` script will detect your directory name and create a 
-skeleton for site-specific content under `apps/xgds_site_app`. If you want 
-to provide a name explicitly, run as `./init.sh xgds_some_name`.
-
-Next, edit `siteSettings.py`. In particular, uncomment any `INSTALLED_APPS`
-that will be needed for the new site. Many apps will also have related 
+Next, edit `siteSettings.py` and specify the `XGDS_SITE_NAME` (which would be
+"site" in the above example) and perform any configuration needed for the
+new site. In particular, uncomment any xGDS apps under `INSTALLED_APPS`
+that will be used. Many apps will also have related
 configuration variables to uncomment and supply below. Variable names are
 generally prefixed with the name of the app to which they pertain.
 
