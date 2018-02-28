@@ -41,7 +41,7 @@ XGDS_SITE_APP = "xgds_" + XGDS_SITE
 SECRET_KEY = '***REMOVED***'
 
 #XGDS_BROWSERIFY = getOrCreateArray('XGDS_BROWSERIFY')
-FAVICON_PATH = XGDS_SITE_APP + "/icons/favicon.ico"
+FAVICON_PATH = "xgds_core/icons/favicon.ico"
 
 # from apps.basaltApp.instrumentDataImporters import *
 # apps should be listed from "most specific" to "most general".  that
@@ -525,8 +525,6 @@ XGDS_CORE_TEMPLATE_DEBUG = True
 JWPLAYER_KEY = '***REMOVED***'
 
 # IMAGE_CAPTURE_DIR = os.path.join(DATA_ROOT, 'xgds_video_stills')
-
-# FAVICON_PATH = 'xgds_app/icons/favicon.ico'
 
 ALLOWED_HOSTS = ['*']
 
