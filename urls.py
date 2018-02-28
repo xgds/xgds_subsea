@@ -21,6 +21,7 @@ from django.contrib import auth
 from django.views.generic import RedirectView, TemplateView
 
 from django.contrib import admin
+import re
 admin.autodiscover()
 
 urlpatterns = [url(r'^admin/', include(admin.site.urls)),
