@@ -35,7 +35,7 @@ from geocamUtil.SettingsUtil import getOrCreateDict, getOrCreateArray, HOSTNAME
 
 
 XGDS_SITE = 'site' # "basalt", "rp", etc
-XGDS_SITE_APP = "xgds_" + XGDS_SITE
+XGDS_SITE_APP = "xgds_" + XGDS_SITE + "_app"
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '***REMOVED***'
