@@ -23,6 +23,12 @@ installed applications.
 
 Finally, replace or fill in `apps/xgds_site_app` with site-specific content.
 
+# Provisioning a site
+
+The [ansible-provision](https://github.com/xgds/ansible-provision) project
+contains an [Ansible](https://www.ansible.com/) script and instructions,
+and may be used to provision a site forked from baseline.
+
 # Managing a site installation
 
 ## Bootstrap
