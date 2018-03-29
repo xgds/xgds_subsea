@@ -305,6 +305,25 @@ STATICFILES_FINDERS = (
 
 PIPELINE = {'PIPELINE_ENABLED': False }
 
+# TODO if you are using the planner, create your plan library and schema and pipeline them to single files.
+# PIPELINE = {'PIPELINE_ENABLED': True,
+#             'JAVASCRIPT':{'simulator': {'source_filenames': ('xgds_yoursitename_app/js/planner/yourvehicleSimulator.js'),
+#                              'output_filename': 'js/simulator.js',
+#                              },
+#                'custom_map': {'source_filenames': ('xgds_planner2/js/uploadJson.js',
+#                                                    'xgds_map_server/js/map_viewer/olShowMapCoords.js',
+#                                                    'xgds_map_server/js/map_viewer/olInitialLayers.js',
+#                                                    ),
+#                               'output_filename': 'js/custom_map.js',
+#                               },
+#                },
+#             'JS_COMPRESSOR':'pipeline.compressors.yuglify.YuglifyCompressor',
+#             'CSS' : XGDS_PLANNER_PIPELINE_CSS,
+#             'CSS_COMPRESSOR':'pipeline.compressors.yuglify.YuglifyCompressor',
+#             'YUGLIFY_JS_ARGUMENTS': 'mangle:false --terminal',
+#             'DISABLE_WRAPPER' :True,
+#             }
+
 COMPRESS_ENABLED = True
 COMPRESS_CSSTIDY_BINARY = '/usr/bin/csstidy'
 
