@@ -23,6 +23,14 @@ installed applications.
 
 Finally, replace or fill in `apps/xgds_site_app` with site-specific content.
 
+Then you should create your git repository.  For example, if it is on github:
+
+First create the repository manually, make sure it is empty:
+https://help.github.com/articles/creating-a-new-repository/
+
+git remote set-url origin https://github.com/mygitusername/xgds_site.git
+git push -u origin master
+
 # Provisioning a site
 
 The [ansible-provision](https://github.com/xgds/ansible-provision) project
