@@ -519,7 +519,8 @@ XGDS_CORE_REBROADCAST_MAP = getOrCreateDict('XGDS_CORE_REBROADCAST_MAP')
 
 XGDS_CORE_TEMPLATE_DEBUG = True
 
-# COUCHDB_FILESTORE_NAME = "my-file-store"
+# TODO uncomment the below and replace sitename with your sitename without xgds_
+# COUCHDB_FILESTORE_NAME = "sitename-file-store"
 
 JWPLAYER_KEY = '***REMOVED***'
 
