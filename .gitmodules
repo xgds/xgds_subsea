@@ -6,10 +6,10 @@
 	url = https://github.com/xgds/xgds_map_server.git
 [submodule "geocamTrackWeb"]
 	path = geocamTrackWeb
-	url = git://github.com/geocam/geocamTrackWeb.git
+	url = https://github.com/geocam/geocamTrackWeb.git
 [submodule "submodules/geocamTrackWeb"]
 	path = submodules/geocamTrackWeb
-	url = git://github.com/geocam/geocamTrackWeb.git
+	url = https://github.com/geocam/geocamTrackWeb.git
 [submodule "submodules/xgds_planner2"]
 	path = submodules/xgds_planner2
 	url = https://github.com/xgds/xgds_planner2.git

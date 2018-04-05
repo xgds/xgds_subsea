@@ -37,6 +37,37 @@
         <div class="collapse navbar-collapse flex-column ml-lg-0 ml-3" id="navbarCollapse">
         	<div class="d-flex flex-row justify-content-between">
             <ul class="navbar-nav ">
+                <!-- TODO CUSTOMIZE THE TOP NAVIGATION -->
+                <li class='nav-item {% currentnav map* xgds_map_server* %}'>
+					<a class="nav-link {% currentnav map* xgds_map_server* %}" href="{% url 'map' %}" title="Map">Map</a>
+				</li>
+				<li class='nav-item {% currentnav planner2* *video* %}'>
+					<a class="nav-link {% currentnav planner2* *video* %}" href="{% url 'planner2_flownFlights' %}" title="{{ settings.XGDS_PLANNER2_FLIGHT_MONIKER }}">{{ settings.XGDS_PLANNER2_FLIGHT_MONIKER }}</a>
+				</li>
+				<li class='nav-item {% currentnav *note* %}'>
+					<a class="nav-link {% currentnav *note* %}" href="{% url 'search_xgds_notes_map' %}" title="{{ settings.XGDS_NOTES_MONIKER }}">{{ settings.XGDS_NOTES_MONIKER }}</a>
+				</li>
+				<li class='nav-item {% currentnav *xgds_sample* %}' >
+					<a class="nav-link {% currentnav *xgds_sample* %}" href="{% url 'xgds_sample_record_edit' %}" title="Sample">Sample</a>
+				</li>
+				<li class='nav-item {% currentnav search_map* basalt_live_objects%}'>
+					<a class="nav-link {% currentnav search_map* basalt_live_objects%}" href="/xgds_map_server/search/Photo" title="Search">Search</a>
+				</li>
+				<li class='nav-item {% currentnav xgds_data_import %}'>
+					<a class="nav-link {% currentnav xgds_data_import %}" href="{% url 'xgds_data_import' %}" title="Import">Import</a>
+				</li>
+				{% if settings.GEOCAM_UTIL_LIVE_MODE %}
+				<li class='nav-item {% currentnav *tatus* %}'>
+	            	<a class="nav-link {% currentnav *tatus* %}" href="{% url 'xgds_status_board_showSubsystemStatus' %}">Status</a>
+	            </li>
+	            {% endif %}
+	            {% if settings.NOTEBOOK_URL %}
+	            <li class='nav-item'>
+	              <a href="{{ settings.NOTEBOOK_URL }}"
+	                 title="Notebook" target="_notebook" class="nav-link">
+	                Notebook</a>
+	            </li>
+	            {% endif %}
             </ul>
             	<div></div>
 	            <div class="mt-1">

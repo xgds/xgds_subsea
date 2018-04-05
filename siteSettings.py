@@ -85,7 +85,7 @@ INSTALLED_APPS = ['django_npm_apps',
                   'django.contrib.staticfiles',
                   ]
 
-for app in INSTALLED_APPS:
+for app in reversed(INSTALLED_APPS):
     try:
         appSettings = importlib.import_module(app + ".defaultSettings")
         for key, val in vars(appSettings).iteritems():
@@ -211,8 +211,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            # os.path.join(PROJ_ROOT, 'apps/xgds_baseline_app/templates'),
-            # os.path.join(PROJ_ROOT, 'apps/xgds_baseline_app/templates/xgds_baseline_app'),
+            os.path.join(PROJ_ROOT, 'apps', XGDS_SITE_APP, 'templates'),
+            os.path.join(PROJ_ROOT, 'apps', XGDS_SITE_APP, 'templates', XGDS_SITE_APP),
+            os.path.join(PROJ_ROOT, 'apps/xgds_core/templates/registration'),
+
 
             # Templates for utility scripts
             os.path.join(PROJ_ROOT, 'bin/templates'),
@@ -303,26 +305,19 @@ STATICFILES_FINDERS = (
     'django_npm_apps.finders.NpmAppFinder',
 )
 
-PIPELINE = {'PIPELINE_ENABLED': False }
+# SET UP PIPELINE
+PIPELINE = getOrCreateDict('PIPELINE')
+PIPELINE['PIPELINE_ENABLED'] = True
+PIPELINE['JS_COMPRESSOR'] = 'pipeline.compressors.yuglify.YuglifyCompressor'
+PIPELINE['CSS_COMPRESSOR'] = 'pipeline.compressors.yuglify.YuglifyCompressor'
+PIPELINE['YUGLIFY_JS_ARGUMENTS'] = 'mangle:false --terminal'
+PIPELINE['DISABLE_WRAPPER'] = True
 
-# TODO if you are using the planner, create your plan library and schema and pipeline them to single files.
-# PIPELINE = {'PIPELINE_ENABLED': True,
-#             'JAVASCRIPT':{'simulator': {'source_filenames': ('xgds_yoursitename_app/js/planner/yourvehicleSimulator.js'),
-#                              'output_filename': 'js/simulator.js',
-#                              },
-#                'custom_map': {'source_filenames': ('xgds_planner2/js/uploadJson.js',
-#                                                    'xgds_map_server/js/map_viewer/olShowMapCoords.js',
-#                                                    'xgds_map_server/js/map_viewer/olInitialLayers.js',
-#                                                    ),
-#                               'output_filename': 'js/custom_map.js',
-#                               },
-#                },
-#             'JS_COMPRESSOR':'pipeline.compressors.yuglify.YuglifyCompressor',
-#             'CSS' : XGDS_PLANNER_PIPELINE_CSS,
-#             'CSS_COMPRESSOR':'pipeline.compressors.yuglify.YuglifyCompressor',
-#             'YUGLIFY_JS_ARGUMENTS': 'mangle:false --terminal',
-#             'DISABLE_WRAPPER' :True,
-#             }
+#TODO if you are using planner, include something like this:
+PIPELINE['JAVASCRIPT'] = getOrCreateDict('PIPELINE.JAVASCRIPT')
+# PIPELINE['JAVASCRIPT']['simulator'] = {'source_filenames': ('xgds_yoursitename_app/js/planner/yourvehicleSimulator.js'),
+#                                                             'output_filename': 'js/simulator.js',
+#                                                             }
 
 COMPRESS_ENABLED = True
 COMPRESS_CSSTIDY_BINARY = '/usr/bin/csstidy'
