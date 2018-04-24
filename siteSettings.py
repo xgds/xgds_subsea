@@ -395,10 +395,6 @@ GEOCAM_UTIL_LIVE_MODE = False
 GEOCAM_UTIL_DATATABLES_EDITOR = False
 GEOCAM_TRACK_URL_PORT = 8181
 
-XGDS_CORE_TEMPLATE_DIRS = getOrCreateDict('XGDS_CORE_TEMPLATE_DIRS')
-# XGDS_CORE_TEMPLATE_DIRS[XGDS_SAMPLE_SAMPLE_MODEL] = [os.path.join('xgds_sample', 'templates', 'handlebars')]
-# XGDS_CORE_TEMPLATE_DIRS[XGDS_IMAGE_IMAGE_SET_MODEL] = [os.path.join('xgds_image', 'templates', 'handlebars')]
-
 # While you are modifying handlebars templates, this should be true.  Once they have been loaded
 # once they will be cached and you can set this to false.
 XGDS_CORE_TEMPLATE_DEBUG = True
@@ -424,18 +420,6 @@ REST_FRAMEWORK = {
          'rest_framework.permissions.IsAuthenticated',
     ]
 }
-
-# GEOCAM_TRACK_PRELOAD_TRACK_IMAGES = ["/static/xgds_baseline_app/icons/ev1_pointer.png", 
-#                                      "/static/xgds_baseline_app/icons/ev2_pointer.png",
-#                                      "/static/xgds_baseline_app/icons/ev1_circle.png", 
-#                                      "/static/xgds_baseline_app/icons/ev2_circle.png",
-#                                      "/static/xgds_baseline_app/icons/ev1_stop.png", 
-#                                      "/static/xgds_baseline_app/icons/ev2_stop.png"]
-
-# XGDS_SSE_TRACK_CHANNELS = ['EV1','EV2']
-# XGDS_SSE_CONDITION_CHANNELS = XGDS_SSE_TRACK_CHANNELS
-# XGDS_SSE_NOTE_CHANNELS = ['EV1', 'EV2', 'SA']
-# XGDS_NOTES_CURRENT_MAPPED_FUNCTION = 'xgds_baseline_app.views.currentMapNotes'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 43200 # 12 hours
