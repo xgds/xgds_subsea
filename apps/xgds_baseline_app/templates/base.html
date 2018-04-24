@@ -42,7 +42,7 @@
 					<a class="nav-link {% currentnav map* xgds_map_server* %}" href="{% url 'map' %}" title="Map">Map</a>
 				</li>
 				<li class='nav-item {% currentnav planner2* *video* %}'>
-					<a class="nav-link {% currentnav planner2* *video* %}" href="{% url 'planner2_flownFlights' %}" title="{{ settings.XGDS_PLANNER2_FLIGHT_MONIKER }}">{{ settings.XGDS_PLANNER2_FLIGHT_MONIKER }}</a>
+					<a class="nav-link {% currentnav planner2* *video* %}" href="{% url 'planner2_flownFlights' %}" title="{{ settings.XGDS_PLANNER_FLIGHT_MONIKER }}">{{ settings.XGDS_PLANNER_FLIGHT_MONIKER }}</a>
 				</li>
 				<li class='nav-item {% currentnav *note* %}'>
 					<a class="nav-link {% currentnav *note* %}" href="{% url 'search_xgds_notes_map' %}" title="{{ settings.XGDS_NOTES_MONIKER }}">{{ settings.XGDS_NOTES_MONIKER }}</a>

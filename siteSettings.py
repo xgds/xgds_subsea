@@ -36,6 +36,8 @@ from geocamUtil.SettingsUtil import getOrCreateDict, getOrCreateArray, HOSTNAME
 
 XGDS_SITE_APP = "xgds_baseline_app" # xgds_yoursitehere_app
 
+SITE_TITLE = 'xGDS'  # the name of your research project, your brand
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '***REMOVED***'
 
@@ -52,17 +54,17 @@ INSTALLED_APPS = ['django_npm_apps',
                   # TODO uncomment the submodules that you are including
                   # 'xgds_sample',
                   # 'xgds_instrument',
-                  # 'xgds_notes2',
-                  # 'xgds_planner2',
-                  'xgds_map_server',
-                  # 'xgds_data',
+                  'xgds_planner2',
                   # 'xgds_image',
                   # 'xgds_video',
                   # 'xgds_plot',
                   # 'xgds_status_board',
+                  'xgds_notes2',
+                  'xgds_map_server',
+                  'xgds_data',
                   'xgds_core',
 
-                  'deepzoom',
+                  'deepzoom',  # needed for xgds_image
                   'geocamTrack',
                   'geocamPycroraptor2',
                   'geocamUtil',
@@ -120,30 +122,12 @@ ADMINS = (
 )
 MANAGERS = ADMINS
 
-# Databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.mysql', # django.db.backends.mysql',
-#         'NAME': 'xgds_baseline_app',
-#         'USER': 'root',
-#         'PASSWORD': 'xgds',
-#         'HOST': '127.0.0.1',
-#         'PORT': '3306',
-#     }
-# }
-
-#
-# If you want to use Bing Maps for a baselayer instead of open street map,
-# get an API key from https://www.bingmapsportal.com, and override the
-# declaration below in settings.py
-XGDS_MAP_SERVER_MAP_API_KEY = ""
-
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'US/Hawaii'
+TIME_ZONE = 'America/Los_Angeles'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -186,22 +170,6 @@ MEDIA_ROOT = DATA_ROOT
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = DATA_URL
 
-#  This is the directory appended to MEDIA_ROOT for storing generated deep zooms.
-#  If defined, but not physically created, the directory will be created for you.
-#  If not defined, the following default directory name will be used:
-DEEPZOOM_ROOT = 'xgds_image/deepzoom_images/'
-
-#  These are the keyword arguments used to initialize the deep zoom creator:
-#  'tile_size', 'tile_overlap', 'tile_format', 'image_quality', 'resize_filter'.
-#  They strike a good (maybe best?) balance between image fidelity and file size.
-#  If not defined the following default values will be used:
-DEEPZOOM_PARAMS = {'tile_size': 256,
-                    'tile_overlap': 1,
-                    'tile_format': "jpg",
-                    'image_quality': 1.0,
-                    'resize_filter': "antialias"}
-
-
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
@@ -214,7 +182,6 @@ TEMPLATES = [
             os.path.join(PROJ_ROOT, 'apps', XGDS_SITE_APP, 'templates'),
             os.path.join(PROJ_ROOT, 'apps', XGDS_SITE_APP, 'templates', XGDS_SITE_APP),
             os.path.join(PROJ_ROOT, 'apps/xgds_core/templates/registration'),
-
 
             # Templates for utility scripts
             os.path.join(PROJ_ROOT, 'bin/templates'),
@@ -259,9 +226,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.RemoteUserMiddleware',
-
-#    'reversion.middleware.RevisionMiddleware',
-    #'geocamUtil.middleware.SecurityMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
@@ -275,13 +239,6 @@ ROOT_URLCONF = 'urls'
 #TODO probably can delete the below 2 lines
 LOGIN_URL = SCRIPT_NAME + 'accounts/login/'
 LOGIN_REDIRECT_URL = '/'
-
-GEOCAM_UTIL_INSTALLER_USE_SYMLINKS = True
-GEOCAM_UTIL_SECURITY_ENABLED = not USING_DJANGO_DEV_SERVER
-GEOCAM_UTIL_SECURITY_SSL_REQUIRED_BY_DEFAULT = False
-GEOCAM_UTIL_SECURITY_REQUIRE_ENCRYPTED_PASSWORDS = False
-
-GEOCAM_UTIL_SECURITY_LOGIN_REQUIRED_BY_DEFAULT = 'write'
 
 # This is an optional setting but if you don't have it enabled then the map server and the xgds_data won't work
 XGDS_DATA_LOG_ENABLED = True
@@ -356,69 +313,12 @@ if DEBUG_TOOLBAR:
 
 VAR_ROOT = PROJ_ROOT + 'var/'
 
-# XGDS_PLANNER_SCHEMAS = {
-#    "EV": {
-#        "schemaSource": "apps/xgds_baseline_app/planner/evPlanSchema.json",
-#        "librarySource": "apps/xgds_baseline_app/planner/evPlanLibrary.json",
-#        "simulatorUrl": "xgds_baseline_app/js/planner/evSimulator.js",
-#        "simulator": "ev.Simulator",
-#    }
-#}
-
-# GEOCAM_TRACK_RESOURCE_MODEL = 'xgds_baseline_app.MyResource'
-# GEOCAM_TRACK_RESOURCE_VERBOSE_NAME = 'Asset'
-# GEOCAM_TRACK_TRACK_MODEL = 'xgds_baseline_app.MyTrack'
-# GEOCAM_TRACK_TRACK_MONIKIER = 'Actual_Traverse'
-# GEOCAM_TRACK_POSITION_MODEL = 'xgds_baseline_app.CurrentPosition'
-# GEOCAM_TRACK_PAST_POSITION_MODEL = 'xgds_baseline_app.PastPosition'
-# GEOCAM_TRACK_INTERPOLATE_MAX_SECONDS = 120
-
-# GEOCAM_TRACK_OPS_TIME_ZONE: split days at midnight in the specified time zone
-# TODO must support multiple time zones ...
 GEOCAM_TRACK_OPS_TIME_ZONE = TIME_ZONE
 
 COMPASS_EQUIPPED_VEHICLES = []
 # FOR HI IT IS
 COMPASS_CORRECTION =  10
 
-# XGDS_SAMPLE_SAMPLE_MODEL = 'xgds_baseline_app.MySample'
-
-# XGDS_PLANNER2_FLIGHT_MONIKER = "EVA"
-# XGDS_PLANNER2_GROUP_FLIGHT_MONIKER = "EVA"
-# XGDS_PLANNER2_PLAN_MONIKER = "Planned Traverse"
-# XGDS_PLANNER2_STATION_MONIKER = "Waypoint"
-# XGDS_PLANNER2_STATION_MONIKER_PLURAL = "Waypoints"
-# XGDS_PLANNER2_COMMAND_MONIKER = "Activity"
-# XGDS_PLANNER2_COMMAND_MONIKER_PLURAL = "Activities"
-# XGDS_PLANNER2_FLIGHT_MODEL = "xgds_baseline_app.MyFlight"
-# XGDS_PLANNER2_GROUP_FLIGHT_MODEL = "xgds_baseline_app.MyGroupFlight"
-# XGDS_PLANNER2_ACTIVE_FLIGHT_MODEL = "xgds_baseline_app.MyActiveFlight"
-
-#XGDS_PLANNER2_DEFAULT_SITE = ('HIL', 'Hawaii Lava Flows') #'Hawaii Lava Flows'
-
-# XGDS_PLANNER2_SCHEDULE_INCLUDED = True
-# XGDS_PLANNER2_SITE_MONIKER = 'Zone'
-# XGDS_PLANNER2_PLAN_EXECUTION_MODEL = "xgds_baseline_app.MyPlanExecution"
-
-# XGDS_PLANNER2_HANDLEBARS_DIRS = [os.path.join('xgds_planner2', 'templates', 'handlebars'),
-                                 # os.path.join('xgds_baseline_app', 'templates', 'xgds_planner2'),
-                                 # os.path.join('xgds_baseline_app', 'templates', 'xgds_sample'),
-                                 # os.path.join('xgds_map_server', 'templates', 'handlebars', 'search')]
-
-# XGDS_PLANNER2_EDITOR_CONTEXT_METHOD = 'basaltApp.views.addToPlannerContext'
-# XGDS_PLANNER2_SCHEDULE_EXTRAS_METHOD = 'basaltApp.views.addEVToPlanExecution'
-
-# XGDS_PLANNER2_PLOTS = getOrCreateDict('XGDS_PLANNER2_PLOTS')
-# XGDS_PLANNER2_PLOTS['Temp'] = 'hi_temp'
-
-
-# list of (formatCode, extension, exporterClass)
-# XGDS_PLANNER_PLAN_EXPORTERS = (
-#    ('xpjson', '.json', 'xgds_planner2.planExporter.XpjsonPlanExporter'),
-#    ('bearing_distance', '.bdj', 'xgds_planner2.planExporter.BearingDistanceJsonPlanExporter'),
-#    ('kml', '.kml', 'xgds_baseline_app.kmlPlanExporter.KmlPlanExporter'),
-#    ('pml', '.pml', 'xgds_planner2.pmlPlanExporter.PmlPlanExporter'),
-# )
 
 # XGDS_NOTES_OPS_TIME_ZONE = GEOCAM_TRACK_OPS_TIME_ZONE
 # XGDS_NOTES_USER_SESSION_MODEL = 'xgds_baseline_app.MyUserSession'
@@ -431,13 +331,6 @@ COMPASS_CORRECTION =  10
 # XGDS_SAMPLE_HANDLEBARS_DIR = [os.path.join('xgds_sample', 'templates', 'handlebars')]
 # XGDS_SAMPLE_PERM_LINK_PREFIX = "https://myapp.xgds.org"
 
-# XGDS_IMAGE_IMAGE_SET_MODEL = 'xgds_baseline_app.MyImageSet'
-# XGDS_IMAGE_SINGLE_IMAGE_MODEL = 'xgds_baseline_app.MySingleImage'
-# XGDS_IMAGE_ARROW_ANNOTATION_MODEL = 'xgds_baseline_app.ArrowAnnotation'
-# XGDS_IMAGE_ELLIPSE_ANNOTATION_MODEL = 'xgds_baseline_app.EllipseAnnotation'
-# XGDS_IMAGE_RECTANGLE_ANNOTATION_MODEL = 'xgds_baseline_app.RectangleAnnotation'
-# XGDS_IMAGE_TEXT_ANNOTATION_MODEL = 'xgds_baseline_app.TextAnnotation'
-# XGDS_IMAGE_DEFAULT_CREATE_DEEPZOOM = True
 
 # XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_baseline_app.instrumentDataImporters'
 
@@ -468,29 +361,11 @@ COMPASS_CORRECTION =  10
 # RECORDED_VIDEO_URL_BASE = DATA_URL
 
 
-# XGDS_MAP_SERVER_JS_MAP = getOrCreateDict('XGDS_MAP_SERVER_JS_MAP')
-# try:
-#     del XGDS_MAP_SERVER_JS_MAP['Track']
-# except:
-#     pass
-# XGDS_MAP_SERVER_JS_MAP['Actual_Traverse'] = {'ol': 'geocamTrack/js/olActual_TraverseMap.js',
-#                                                        'model': GEOCAM_TRACK_TRACK_MODEL,
-#                                                        'columns': ['name', 'resource_name', 'type', 'color', 'alpha',  'pk', 'app_label', 'model_type', 'times', 'coords', 'lat', 'DT_RowId'],
-#                                                        'hiddenColumns': ['type', 'color', 'alpha', 'pk', 'app_label', 'model_type', 'times', 'coords', 'lat', 'DT_RowId'],
-#                                                        'columnTitles': ['Name', 'Resource',''],
-#                                                        'searchableColumns': ['name', 'resource_name'],
-#                                                        'search_form_class': 'xgds_baseline_app.forms.SearchTrackForm'
-#                                                        }
-
-# XGDS_MAP_SERVER_DEFAULT_ZOOM = 15
-XGDS_MAP_SERVER_SITE_MONIKER = 'Region'
-
 
 PYRAPTORD_SERVICE = True
 
-XGDS_CURRENT_SITEFRAME_ID = 2  # Hawaii Lava Flows siteframe
-# XGDS_CURRENT_REGION_ID = 6 # sample region?
-# XGDS_DEFAULT_SAMPLE_TYPE = 2 #'Geology'
+XGDS_CURRENT_SITEFRAME_ID = 1  # Set this to your siteframe; this will probably be NASA Ames
+
 XGDS_CORE_LIVE_INDEX_URL = '/' + XGDS_SITE_APP + '/live'
 
 
