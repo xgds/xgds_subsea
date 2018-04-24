@@ -320,14 +320,6 @@ COMPASS_EQUIPPED_VEHICLES = []
 COMPASS_CORRECTION =  10
 
 
-# XGDS_NOTES_OPS_TIME_ZONE = GEOCAM_TRACK_OPS_TIME_ZONE
-# XGDS_NOTES_USER_SESSION_MODEL = 'xgds_baseline_app.MyUserSession'
-# XGDS_NOTES_NOTE_MODEL = 'xgds_baseline_app.MyNote'
-# XGDS_NOTES_TAGGED_NOTE_MODEL = 'xgds_baseline_app.MyTaggedNote'
-# XGDS_NOTES_POPULATE_NOTE_DATA = 'xgds_baseline_app.views.populateNoteData'
-# XGDS_NOTES_BUILD_NOTES_FORM = 'xgds_baseline_app.views.buildNotesForm'
-# XGDS_NOTES_TABLE_DEFAULT_COLUMNS = ['creation_time','event_time', 'event_timezone', 'flight_name', 'author_name', 'role_name', 'location_name', 'content', 'tag_names',  'link']
-
 # XGDS_SAMPLE_HANDLEBARS_DIR = [os.path.join('xgds_sample', 'templates', 'handlebars')]
 # XGDS_SAMPLE_PERM_LINK_PREFIX = "https://myapp.xgds.org"
 
