@@ -244,10 +244,17 @@ LOGIN_REDIRECT_URL = '/'
 XGDS_DATA_LOG_ENABLED = True
 
 # email settings
+# EMAIL_HOST="email.arc.nasa.gov"
+# EMAIL_PORT=25
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = '/tmp/xgds_messages'
 EMAIL_SUBJECT_PREFIX = '[xGDS] '
 SERVER_EMAIL = 'noreply@xgds.org'
+
+# MANAGERS = (
+#     # Addresses listed here will get notification when a new user requests an account
+#     ('First Last', 'username@sample.com'),
+# )
 
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
@@ -392,20 +399,13 @@ XGDS_CORE_TEMPLATE_DIRS = getOrCreateDict('XGDS_CORE_TEMPLATE_DIRS')
 # XGDS_CORE_TEMPLATE_DIRS[XGDS_SAMPLE_SAMPLE_MODEL] = [os.path.join('xgds_sample', 'templates', 'handlebars')]
 # XGDS_CORE_TEMPLATE_DIRS[XGDS_IMAGE_IMAGE_SET_MODEL] = [os.path.join('xgds_image', 'templates', 'handlebars')]
 
-# XGDS_CORE_CONDITION_MODEL = "xgds_baseline_app.MyCondition"
-# XGDS_CORE_CONDITION_HISTORY_MODEL = "xgds_baseline_app.MyConditionHistory"
-
-XGDS_CORE_REBROADCAST_MAP = getOrCreateDict('XGDS_CORE_REBROADCAST_MAP')
-#XGDS_CORE_REBROADCAST_MAP.update({'xgds_baseline_app_pastposition':{'modelName':'xgds_baseline_app.PastPosition', 'pkColNum':1, 'pkType': 'int'}})
-
+# While you are modifying handlebars templates, this should be true.  Once they have been loaded
+# once they will be cached and you can set this to false.
 XGDS_CORE_TEMPLATE_DEBUG = True
 
-# TODO uncomment the below and replace sitename with your sitename without xgds_
-# COUCHDB_FILESTORE_NAME = "sitename-file-store"
 
 JWPLAYER_KEY = '***REMOVED***'
 
-# IMAGE_CAPTURE_DIR = os.path.join(DATA_ROOT, 'xgds_video_stills')
 
 ALLOWED_HOSTS = ['*']
 
