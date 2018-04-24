@@ -320,7 +320,7 @@ COMPASS_EQUIPPED_VEHICLES = []
 COMPASS_CORRECTION =  10
 
 
-# XGDS_SAMPLE_HANDLEBARS_DIR = [os.path.join('xgds_sample', 'templates', 'handlebars')]
+# Update this if you are using xgds_sample, to put a permanent link in the qr codes to a url.
 # XGDS_SAMPLE_PERM_LINK_PREFIX = "https://myapp.xgds.org"
 
 
