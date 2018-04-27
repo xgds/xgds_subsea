@@ -41,7 +41,6 @@ SITE_TITLE = 'xGDS'  # the name of your research project, your brand
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '***REMOVED***'
 
-#XGDS_BROWSERIFY = getOrCreateArray('XGDS_BROWSERIFY')
 FAVICON_PATH = "xgds_core/icons/favicon.ico"
 
 # from apps.basaltApp.instrumentDataImporters import *
@@ -61,7 +60,6 @@ INSTALLED_APPS = ['django_npm_apps',
                   # 'xgds_status_board',
                   'xgds_notes2',
                   'xgds_map_server',
-                  'xgds_data',
                   'xgds_core',
 
                   'deepzoom',  # needed for xgds_image
@@ -239,9 +237,6 @@ ROOT_URLCONF = 'urls'
 #TODO probably can delete the below 2 lines
 LOGIN_URL = SCRIPT_NAME + 'accounts/login/'
 LOGIN_REDIRECT_URL = '/'
-
-# This is an optional setting but if you don't have it enabled then the map server and the xgds_data won't work
-XGDS_DATA_LOG_ENABLED = True
 
 # email settings
 # EMAIL_HOST="email.arc.nasa.gov"

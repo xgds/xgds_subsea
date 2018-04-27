@@ -43,6 +43,3 @@
 [submodule "submodules/django_npm_apps"]
 	path = submodules/django_npm_apps
 	url = https://github.com/xgds/django_npm_apps.git
-[submodule "submodules/xgds_data"]
-	path = submodules/xgds_data
-	url = https://github.com/xgds/xgds_data.git
