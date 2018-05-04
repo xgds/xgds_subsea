@@ -274,14 +274,8 @@ PIPELINE['CSS_COMPRESSOR'] = 'pipeline.compressors.yuglify.YuglifyCompressor'
 PIPELINE['YUGLIFY_JS_ARGUMENTS'] = 'mangle:false --terminal'
 PIPELINE['DISABLE_WRAPPER'] = True
 
-#TODO if you are using planner, include something like this:
-PIPELINE['JAVASCRIPT'] = getOrCreateDict('PIPELINE.JAVASCRIPT')
-# PIPELINE['JAVASCRIPT']['simulator'] = {'source_filenames': ('xgds_yoursitename_app/js/planner/yourvehicleSimulator.js'),
-#                                                             'output_filename': 'js/simulator.js',
-#                                                             }
-
-COMPRESS_ENABLED = True
-COMPRESS_CSSTIDY_BINARY = '/usr/bin/csstidy'
+COMPRESS_ENABLED = False  # TODO this does not yet work for some reason
+#COMPRESS_CSSTIDY_BINARY = '/usr/bin/csstidy'
 
 # PIPELINE_COMPILERS = ()
 
@@ -327,10 +321,7 @@ COMPASS_CORRECTION =  10
 # Update this if you are using xgds_sample, to put a permanent link in the qr codes to a url.
 # XGDS_SAMPLE_PERM_LINK_PREFIX = "https://myapp.xgds.org"
 
-
 # XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_baseline_app.instrumentDataImporters'
-
-# GEOCAM_TRACK_RECENT_TIME_FUNCTION = 'xgds_baseline_app.views.getCurrentTimeWithDelayCorrection'
 
 
 # XGDS_VIDEO_GET_ACTIVE_EPISODE = 'xgds_baseline_app.views.getActiveEpisode'
