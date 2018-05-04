@@ -43,6 +43,8 @@ SECRET_KEY = '***REMOVED***'
 
 FAVICON_PATH = "xgds_core/icons/favicon.ico"
 
+COUCHDB_FILESTORE_NAME = "xgds-file-store" # you may want to customize this to be something like yoursite-file-store
+
 # from apps.basaltApp.instrumentDataImporters import *
 # apps should be listed from "most specific" to "most general".  that
 # way, templates in more specific apps override ones from more general
@@ -329,18 +331,6 @@ COMPASS_CORRECTION =  10
 # XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_baseline_app.instrumentDataImporters'
 
 # GEOCAM_TRACK_RECENT_TIME_FUNCTION = 'xgds_baseline_app.views.getCurrentTimeWithDelayCorrection'
-
-# Include a dictionary of name to url for imports if you wish to include import functionality
-# XGDS_DATA_IMPORTS = getOrCreateDict('XGDS_DATA_IMPORTS')
-# XGDS_DATA_IMPORTS["Foo"]= '../../xgds_baseline_app/instrumentDataImport/Foo'
-
-# XGDS_DATA_MASKED_FIELDS = getOrCreateDict('XGDS_DATA_MASKED_FIELDS')
-# XGDS_DATA_MASKED_FIELDS['basaltApp'] = {'MyImageSet': ['user_position',
-#                                                           'creation_time',
-#                                                           ],
-#                                        }
-# XGDS_DATA_EXPAND_RELATED = getOrCreateDict('XGDS_DATA_EXPAND_RELATED')
-# XGDS_DATA_EXPAND_RELATED['xgds_baseline_app'] = {'MySample': [('region', 'zone', 'Zone')]}
 
 
 # XGDS_VIDEO_GET_ACTIVE_EPISODE = 'xgds_baseline_app.views.getActiveEpisode'
