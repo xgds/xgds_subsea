@@ -60,10 +60,10 @@ INSTALLED_APPS = ['django_npm_apps',
                   # 'xgds_status_board',
                   'xgds_notes2',
                   'xgds_map_server',
-                  'xgds_core',
 
                   'deepzoom',  # needed for xgds_image
                   'geocamTrack',
+                  'xgds_core',
                   'geocamPycroraptor2',
                   'geocamUtil',
                   'pipeline',
