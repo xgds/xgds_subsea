@@ -35,7 +35,8 @@ git push -u origin master
 
 The [ansible-provision](https://github.com/xgds/ansible-provision) project
 contains an [Ansible](https://www.ansible.com/) script and instructions,
-and may be used to provision a site forked from baseline.
+and may be used to provision a site forked from baseline.  Specifically follow instructions here:
+**To build a new docker image for a specific xgds**
 
 # Managing a site installation
 
