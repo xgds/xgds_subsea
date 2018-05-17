@@ -31,7 +31,7 @@
         <button class="navbar-toggler navbar-toggler-right align-self-center my-2" type="button" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a href="{% url 'live_index' %}" title="{{ settings.SITE_TITLE }}" class="navbar-brand">
+        <a href="{% if settings.GEOCAM_UTIL_LIVE_MODE %}{% url 'live_index' %}{% else %}{%  url 'index' %}{% endif %}" title="{{ settings.SITE_TITLE }}" class="navbar-brand">
      			<img src="{% static 'xgds_core/css/logo.png' %}" class="logo" alt="{{ settings.SITE_TITLE }} logo" width="188" height="60"/> <!-- width="150" height="48" > -->
      		</a>
         <div class="collapse navbar-collapse flex-column ml-lg-0 ml-3" id="navbarCollapse">

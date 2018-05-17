@@ -182,6 +182,7 @@ TEMPLATES = [
             os.path.join(PROJ_ROOT, 'apps', XGDS_SITE_APP, 'templates'),
             os.path.join(PROJ_ROOT, 'apps', XGDS_SITE_APP, 'templates', XGDS_SITE_APP),
             os.path.join(PROJ_ROOT, 'apps/xgds_core/templates/registration'),
+            STATIC_ROOT,
 
             # Templates for utility scripts
             os.path.join(PROJ_ROOT, 'bin/templates'),
