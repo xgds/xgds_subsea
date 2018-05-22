@@ -4,9 +4,6 @@
 [submodule "submodules/xgds_map_server"]
 	path = submodules/xgds_map_server
 	url = https://github.com/xgds/xgds_map_server.git
-[submodule "geocamTrackWeb"]
-	path = geocamTrackWeb
-	url = https://github.com/geocam/geocamTrackWeb.git
 [submodule "submodules/geocamTrackWeb"]
 	path = submodules/geocamTrackWeb
 	url = https://github.com/geocam/geocamTrackWeb.git
@@ -43,3 +40,6 @@
 [submodule "submodules/django_npm_apps"]
 	path = submodules/django_npm_apps
 	url = https://github.com/xgds/django_npm_apps.git
+[submodule "submodules/xgds_timeseries"]
+	path = submodules/xgds_timeseries
+	url = https://github.com/xgds/xgds_timeseries.git

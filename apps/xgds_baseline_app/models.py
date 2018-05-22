@@ -16,3 +16,4 @@
 from __future__ import unicode_literals
 
 from django.db import models
+import xgds_timeseries.models as xgds_timeseries
