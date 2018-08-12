@@ -34,7 +34,7 @@ from django.core.urlresolvers import reverse
 from geocamUtil.SettingsUtil import getOrCreateDict, getOrCreateArray, HOSTNAME
 
 
-XGDS_SITE_APP = "xgds_baseline_app" # xgds_yoursitehere_app
+XGDS_SITE_APP = "xgds_subsea_app"
 
 SITE_TITLE = 'xGDS'  # the name of your research project, your brand
 
@@ -43,7 +43,7 @@ SECRET_KEY = '***REMOVED***'
 
 FAVICON_PATH = "xgds_core/icons/favicon.ico"
 
-COUCHDB_FILESTORE_NAME = "xgds-file-store" # you may want to customize this to be something like yoursite-file-store
+COUCHDB_FILESTORE_NAME = "subsea-file-store" # you may want to customize this to be something like yoursite-file-store
 
 # from apps.basaltApp.instrumentDataImporters import *
 # apps should be listed from "most specific" to "most general".  that
@@ -53,11 +53,11 @@ INSTALLED_APPS = ['django_npm_apps',
                   XGDS_SITE_APP,
 
                   # TODO uncomment the submodules that you are including
-                  # 'xgds_sample',
-                  # 'xgds_instrument',
+                  'xgds_sample',
+                  'xgds_instrument',
                   'xgds_planner2',
-                  # 'xgds_image',
-                  # 'xgds_video',
+                  'xgds_image',
+                  'xgds_video',
                   # 'xgds_plot',
                   # 'xgds_status_board',
                   'xgds_notes2',
@@ -321,9 +321,9 @@ COMPASS_CORRECTION =  10
 
 
 # Update this if you are using xgds_sample, to put a permanent link in the qr codes to a url.
-# XGDS_SAMPLE_PERM_LINK_PREFIX = "https://myapp.xgds.org"
+XGDS_SAMPLE_PERM_LINK_PREFIX = "https://subsea.xgds.org"
 
-# XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_baseline_app.instrumentDataImporters'
+XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_subsea_app.instrumentDataImporters'
 
 
 # XGDS_VIDEO_GET_ACTIVE_EPISODE = 'xgds_baseline_app.views.getActiveEpisode'
@@ -362,7 +362,7 @@ CACHES = {
     }
 }
 
-# FILE_UPLOAD_TEMP_DIR = os.path.join(DATA_ROOT, XGDS_MAP_SERVER_GEOTIFF_SUBDIR, 'temp')
+FILE_UPLOAD_TEMP_DIR = os.path.join(DATA_ROOT, XGDS_MAP_SERVER_GEOTIFF_SUBDIR, 'temp')
 #ZEROMQ_PORTS = PROJ_ROOT + 'apps/xgds_baseline_app/ports.json'
 
 
