@@ -22,9 +22,11 @@ getopts "a:" addropt
 sshport=222
 
 if [ "$OPTARG" ]; then
-    address="$OPTARG:"
+    address="$OPTARG"
     sshport=22
    shift $((OPTIND - 1))
+else
+   address="127.0.0.1"
 fi
 
 if [ $# -lt 2 -o $addropt = "?" -a $OPTIND -eq 2 ]; then
@@ -44,7 +46,7 @@ if [ $# -eq 2 ]; then
   echo "Starting *without* data container or mapping host source to docker."
   echo "Container name: $container_name"
   echo "Image name: $image_name"
-  docker run -t -d --name $container_name --hostname $container_name -p ${address}80:80 -p ${address}3306:3306 -p ${address}7500:7500  -p ${address}${sshport}:22 -p ${address}443:443 -p ${address}3001:3001 -p ${address}5000:5000 -p ${address}5984:5984 -p ${address}8080:8080 -p ${address}8181:8181 -p ${address}9090:9090 -p ${address}9191:9191 $image_name
+  docker run -t -d --name $container_name --hostname $container_name -p ${address}:80:80 -p ${address}:3306:3306 -p ${address}:7500:7500  -p ${address}:${sshport}:22 -p ${address}:443:443 -p ${address}:3001:3001 -p ${address}:5000:5000 -p ${address}:5984:5984 -p ${address}:8080:8080 -p ${address}:8181:8181 -p ${address}:9090:9090 -p ${address}:9191:9191 $image_name
 fi
 
 if [ $# -eq 3 ]; then
@@ -52,7 +54,7 @@ if [ $# -eq 3 ]; then
   echo "Container name: $container_name"
   echo "Data store container: $data_store_name"
   echo "Image name: $image_name"
-  docker run -t -d --volumes-from $data_store_name --name $container_name --hostname $container_name -p ${address}80:80 -p ${address}3306:3306 -p ${address}7500:7500  -p ${address}${sshport}:22 -p ${address}443:443 -p ${address}3001:3001 -p ${address}5000:5000 -p ${address}5984:5984 -p ${address}8080:8080 -p ${address}8181:8181 -p ${address}9090:9090 -p ${address}9191:9191 $image_name
+  docker run -t -d --volumes-from $data_store_name --name $container_name --hostname $container_name -p ${address}:80:80 -p ${address}:3306:3306 -p ${address}:7500:7500  -p ${address}:${sshport}:22 -p ${address}:443:443 -p ${address}:3001:3001 -p ${address}:5000:5000 -p ${address}:5984:5984 -p ${address}:8080:8080 -p ${address}:8181:8181 -p ${address}:9090:9090 -p ${address}:9191:9191 $image_name
 fi
 
 if [ $# -gt 3 ]; then
@@ -70,5 +72,5 @@ if [ -n "$dir_mappings" ]; then
   echo "Data store container: $data_store_name"
   echo "Image name: $image_name"
   echo "Source mappings: $dir_mappings"
-  docker run -t -d $dir_mappings --volumes-from $data_store_name --name $container_name --hostname $container_name -p ${address}80:80 -p ${address}3306:3306 -p ${address}7500:7500  -p ${address}${sshport}:22 -p ${address}443:443 -p ${address}3001:3001 -p ${address}5000:5000 -p ${address}5984:5984 -p ${address}8080:8080 -p ${address}8181:8181 -p ${address}9090:9090 -p ${address}9191:9191 $image_name
+  docker run -t -d $dir_mappings --volumes-from $data_store_name --name $container_name --hostname $container_name -p ${address}:80:80 -p ${address}:3306:3306 -p ${address}:7500:7500  -p ${address}:${sshport}:22 -p ${address}:443:443 -p ${address}:3001:3001 -p ${address}:5000:5000 -p ${address}:5984:5984 -p ${address}:8080:8080 -p ${address}:8181:8181 -p ${address}:9090:9090 -p ${address}:9191:9191 $image_name
 fi
