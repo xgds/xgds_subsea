@@ -36,7 +36,7 @@ from geocamUtil.SettingsUtil import getOrCreateDict, getOrCreateArray, HOSTNAME
 
 XGDS_SITE_APP = "xgds_subsea_app"
 
-SITE_TITLE = 'xGDS'  # the name of your research project, your brand
+SITE_TITLE = 'SUBSEA'  # the name of your research project, your brand
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '***REMOVED***'
