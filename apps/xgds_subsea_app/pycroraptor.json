@@ -1,0 +1,12 @@
+{
+    "PORTS": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/ports.json",
+    "LOG_DIR": "/home/xgds/xgds_subsea/data/pyraptord",
+    "LOG_FILE":"pyraptord_${unique}.txt",
+
+    "SERVICES": {
+
+    },
+    "GROUPS": {
+        "startup": []
+    }
+}
