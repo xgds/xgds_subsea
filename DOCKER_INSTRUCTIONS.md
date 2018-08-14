@@ -68,10 +68,6 @@
    docker start xgds-subsea
    ```
 
-1. Access xGDS server
-   * http://localhost
-   * username and password are both xgds
-
 1. Log into the docker container
    * password is xgds
 
@@ -86,9 +82,17 @@
 
    This should open a new terminal where you are successfully ssh-ed in
 
+1. Patch missing files from within the docker container (do this only once)
+   * There are 2 files within the docker container that should be copied to your xgds_subsea directory.  They are in ~/saveme.
+   * then restart web server (see next step)
+
 1. Restarting web server (from within docker container):
    * sudo apachectl restart
      * sudo password will be xgds
+
+1. Access xGDS server
+   * http://localhost
+   * username and password are both xgds
 
 1. Seeing apache log (from within docker container):
    * sudo tail -f -n 100 /var/log/apache2/error.log
