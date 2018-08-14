@@ -39,11 +39,11 @@
    *Note:* This creates a persistent docker container for the xGDS home directory and database storage.  You generally do *not* want to delete this container unless things are so messed up that you need to start over.
 
 1. Check out the source code on your local computer:
-  * cd \<path to xgds_subsea source container directory on your host>\
-  * git clone https://github.com/xgds/xgds_subsea
-  * cd xgds_subsea
-  * git submodule init
-  * git submodule update
+   * cd \<path to xgds_subsea source container directory on your host>\
+   * git clone https://github.com/xgds/xgds_subsea
+   * cd xgds_subsea
+   * git submodule init
+   * git submodule update
 
 ##### Running and using your Docker container
 1. Check if your Docker container is running:
