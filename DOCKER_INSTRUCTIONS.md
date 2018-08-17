@@ -15,17 +15,17 @@
    Strongly recommend installing and using kitematic to allow easy management of docker containers, ports and volumes.
 
 1. Download xGDS SUBSEA Docker Container and Load it
-   * download https://xgds.org/downloads/https://xgds.org/downloads/xgds_subsea_20180814.tar.bz2, don't unzip it, and
+   * download https://xgds.org/downloads/https://xgds.org/downloads/xgds_subsea_20180817.tar.bz2, don't unzip it, and
 
 1. Load container data into Docker
 
 	```
-	docker load -i xgds_subsea_20180814.tar.bz2
+	docker load -i xgds_subsea_20180817.tar.bz2
 	```
 	Or just load from stdin:
 
 	```
-	docker load < xgds_subsea_20180814.tar.bz2
+	docker load < xgds_subsea_20180817.tar.bz2
 	```
 
 	Once you have loaded it into Docker, it is safe to delete the zipped file
@@ -33,7 +33,7 @@
 1. Create Docker data storage container/volume
 
    ```
-   docker create -v /var -v /home/xgds -v /etc -v /usr/local --name subsea-data-store xgds-subsea:20180814A /bin/true
+   docker create -v /var -v /home/xgds -v /etc -v /usr/local --name subsea-data-store subsea:20180817 /bin/true
    ```
 
    *Note:* This creates a persistent docker container for the xGDS home directory and database storage.  You generally do *not* want to delete this container unless things are so messed up that you need to start over.
@@ -54,12 +54,12 @@
 
 1. If xgds-subsea is not already in the list, and you *do* have source code checked out on your host, do the following:
    * cd \<path to xgds_subsea source on your host>\
-   * ./run-new-container.sh xgds-subsea xgds-subsea:20180814A subsea-data-store /<path to xgds_subsea source on your host>/xgds_subsea:/home/xgds/xgds_subsea
+   * ./run-new-container.sh xgds-subsea subsea:20180817 subsea-data-store /<path to xgds_subsea source on your host>/xgds_subsea:/home/xgds/xgds_subsea
 
 1. If xgds-subsea is not already in the list, and you do *not* have source code checked out on your host, just run it (PROBABLY SKIP THIS STEP):
 
    ```
-   docker run -t -d --volumes-from subsea-data-store --name xgds-subsea -p 80:80 -p 3306:3306 -p 7500:7500  -p 222:22 -p 443:443 -p 3001:3001 -p 5000:5000 -p 5984:5984 -p 8080:8080 -p 8181:8181 -p 9090:9090 -p 9191:9191 xgds-subsea:20180814A
+   docker run -t -d --volumes-from subsea-data-store --name xgds-subsea -p 80:80 -p 3306:3306 -p 7500:7500  -p 222:22 -p 443:443 -p 3001:3001 -p 5000:5000 -p 5984:5984 -p 8080:8080 -p 8181:8181 -p 9090:9090 -p 9191:9191 subsea:20180817
    ```
 
 1. If it is there, but *status* shows "exited" or "created" rather than "Up..." , start it:
@@ -177,7 +177,7 @@ If you already have your docker container set up but need to pull new source cod
    ```
    docker rm xgds-subsea
    docker rm subsea-data-store
-   docker rmi xgds-subsea
+   docker rmi <imagename>
    docker volume prune
    ```
    Confirm that you *do* want to prune unused volumes
