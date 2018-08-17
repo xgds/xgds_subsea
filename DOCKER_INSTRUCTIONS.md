@@ -15,7 +15,7 @@
    Strongly recommend installing and using kitematic to allow easy management of docker containers, ports and volumes.
 
 1. Download xGDS SUBSEA Docker Container and Load it
-   * download https://xgds.org/downloads/https://xgds.org/downloads/xgds_subsea_20180817.tar.bz2, don't unzip it, and
+   * download https://xgds.org/downloads/xgds_subsea_20180817.tar.bz2, don't unzip it, and
 
 1. Load container data into Docker
 
