@@ -1,0 +1,29 @@
+# This file defines how telemetry files are to be identified and
+# paired with a process that can import the file
+
+# Top-level directory to look for incoming files
+
+# Registry of regex patterns to look for and what to do when files match them
+registry:
+  - name: 'capture'
+    filepath_pattern: 'raw/capture/capture_.*/*\.tif'
+    from: 'filename'
+    regex: '\w+_(\d+)\.tif'
+    format: 'dateparser'
+  - name: 'datalog'
+    filepath_pattern: 'raw/datalog/*\.*'
+    from: 'csv'
+    column_number: 1
+    delimiter: '\t'
+    format: 'iso8601'
+#  - name: 'chatlog' # TODO make this work
+#    filepath_pattern: 'raw/chatlog/*/*/*\.html'
+#    from: 'text'
+#    format: 'dateparser' #08/31/2017 05:09:39 AM
+  - name: 'eventlog'
+    filepath_pattern: 'processed/eventlog/by-dive/.*\.txt'
+    from: 'csv'
+    delimiter: '\t'
+    column_number: 1
+    format: 'iso8601'
+

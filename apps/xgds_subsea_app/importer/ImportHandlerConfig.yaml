@@ -1,0 +1,186 @@
+# This file defines how telemetry files are to be identified and
+# paired with a process that can import the file
+
+# Top-level directory to look for incoming files
+import_path: '/home/xgds/xgds_braille/data/incoming'
+
+# Registry of regex patterns to look for and what to do when files match them
+registry:
+  - name: 'KRex Track'
+    filepath_pattern: '[\d\.]+_RODO.csv'
+    importer: '/home/xgds/xgds_braille/apps/geocamTrack/importer/trackImportRunner.py'
+    arguments: '-o 10T -i %(filename)s -c /home/xgds/xgds_braille/apps/xgds_braille_app/importer/KRex2_PastPosition.yaml -v KRex2'
+    timeout: 300
+    order: 1
+    auth: false
+  - name: 'Processed KRex Track'
+    filepath_pattern: 'MAPS/localizations_xgds.txt'
+    importer: '/home/xgds/xgds_braille/apps/geocamTrack/importer/trackImportRunner.py'
+    arguments: '-o 10T -i %(filename)s -c /home/xgds/xgds_braille/apps/xgds_braille_app/importer/KRex2_PastPosition.yaml -v KRex2'
+    timeout: 300
+    order: 1
+    auth: false
+  - name: 'KRex Wall Distance'
+    filepath_pattern: 'MAPS/distances\.txt'
+    importer: '/home/xgds/xgds_braille/apps/xgds_core/importer/csvImportRunner.py'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_braille/apps/xgds_braille_app/importer/KRex2_Distance.yaml -v KRex2'
+    timeout: 300
+    order: 2
+    auth: false
+  - name: 'Instrument Platform Tilt'
+    filepath_pattern: 'TILT/[\d\-\.]+_TILT\.csv'
+    importer: '/home/xgds/xgds_braille/apps/xgds_core/importer/csvImportRunner.py'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_braille/apps/xgds_braille_app/importer/KRex2_Tilt.yaml -v KRex2'
+    timeout: 300
+    order: 2
+    auth: false
+  - name: 'Lights'
+    filepath_pattern: 'LGHT/[\d\-\.]+_LGHT\.csv'
+    importer: '/home/xgds/xgds_braille/apps/xgds_core/importer/csvImportRunner.py'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_braille/apps/xgds_braille_app/importer/KRex2_Light.yaml -v KRex2'
+    timeout: 300
+    order: 2
+    auth: false
+  - name: 'Cave wall mosaic'
+    filepath_pattern: 'MAPS/ply_list_drg_(side|top)(_xgds)*.tif'
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/import_image.py'
+    arguments: '--camera WallCam %(filename)s'
+    timeout: 300
+    order: 3
+    auth: true
+#  - name: 'GeoTiff Map Layer'
+#    filepath_pattern: 'MAPS/ply_list_drg_top\.tif'
+#    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/import_map.py'
+#    arguments: '%(filename)s'
+#    timeout: 300
+#    order: 2
+#    auth: true
+  - name: '3D Mapping image files'
+    filepath_pattern: 'MAPS/[\d\-\.]+_(pc|\d+)\.jpg$'
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/import_image.py'
+    arguments: '--camera WallCam %(filename)s'
+    timeout: 300
+    order: 3
+    auth: true
+  - name: 'NIRVSS Spectrometer'
+    filepath_pattern: 'NRVS/[\d]*_NRVS_[LS]W.*\.csv'
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/importNirvssSpectra.py'
+    timeout: 600
+    order: 4
+    auth: false
+  - name: 'NIRVSS Spectrometer'
+    filepath_pattern: 'NRVS/NIRVSS_[LS]W[\d\w_]*\.csv'
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/importNirvssSpectra.py'
+    timeout: 600
+    order: 4
+    auth: false
+  - name: 'NIRVSS DOC'
+    filepath_pattern: 'NRVD/DOC[\dx_OFF]*\.png$'
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/importDocImage.py'
+    timeout: 300
+    order: 4
+    auth: true
+  - name: 'SLR Stereo - Left'
+    filepath_pattern: 'SLRL/[\d\-\.]+_SLRL_.+\.(?i)(JPE?G)$'
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/import_image.py'
+    arguments: '--serial LEFT %(filename)s'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'SLR Stereo - Right'
+    filepath_pattern: 'SLRR/[\d\-\.]+_SLRR_.+\.(?i)(JPE?G)$'
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/import_image.py'
+    arguments: '--serial RIGHT %(filename)s'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: '3D Mapping mesh'
+    filepath_pattern: 'MAPS/[\d\-\.]+_pc_mesh\.ply'
+    ignore: true
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/import_file.py'
+    arguments: '--instrument WallCam %(filename)s'
+    timeout: 300
+    order: 6
+    auth: true
+  - name: '3D Mapping point cloud'
+    filepath_pattern: 'MAPS/[\d\-\.]+_(pc|sfm)\.txt'
+    ignore: true
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/import_file.py'
+    arguments: '--instrument WallCam %(filename)s'
+    timeout: 300
+    order: 7
+    auth: true
+  - name: 'NavCam'
+    # there are too many and they are useless
+    filepath_pattern: 'NAV[LR]/RPCam(0|1)-\d+\.\d+\.tiff$'
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/import_image.py'
+    arguments: '--camera NAV %(filename)s'
+    timeout: 300
+    order: 3
+    auth: true
+    ignore: true
+  - name: 'RGBD Camera'
+    filepath_pattern: 'r-[\d\.]+\.ppm'
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/import_image.py'
+    arguments: '--camera RGBD %(filename)s'
+    timeout: 300
+    order: 3
+    auth: true
+  - name: 'RGBD PointCloud'
+    filepath_pattern: 'd-[\d\.]+\.pcd'
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/dummy_importer.py'
+    arguments: '--rgbdpc %(filename)s'
+    timeout: 300
+    order: 5
+  - name: 'RGBD Depth'
+    filepath_pattern: 'd-[\d\.]+\.pgm'
+    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/import_image.py'
+    arguments: '--camera RGBD %(filename)s'
+    timeout: 300
+    order: 11
+    auth: true
+  - name: 'Resource forks'
+    filepath_pattern: '/\._'
+    ignore: true
+  - name: 'Emacs backups'
+    filepath_pattern: '~$'
+    ignore: true
+  - name: 'DS Store'
+    filepath_pattern: '/\.?_?DS_Store'
+    ignore: true
+  - name: 'DSLR Raw file'
+    filepath_pattern: 'SLR./[\d\w]*\.(?i)(CR)2$'
+    ignore: true
+  - name: 'WallCam raw data'
+    filepath_pattern: 'wallcam_pcds/[\d\.]*\.pcd'
+    ignore: true
+  - name: 'CeilCam raw data'
+    filepath_pattern: 'ceilcam_pcds/[\d\.]*\.pcd'
+    ignore: true
+  - name: 'Mapping files we should ignore'
+    filepath_pattern: 'graph_xyzrpy.jpg'
+    ignore: true
+  - name: 'Mapping files we should ignore'
+    filepath_pattern: 'localizations_ixyzm.txt'
+    ignore: true
+  - name: 'Mapping files we should ignore'
+    filepath_pattern: 'localizations_xyz.txt'
+    ignore: true
+  - name: 'Debug map'
+    filepath_pattern: 'MAPS/ply_list_drg_(side|top)_xgds.tif'
+    ignore: true
+  - name: 'ROS bag file'
+    filepath_pattern: '.*\.bag'
+    ignore: true
+  - name: 'RTI DDS log file'
+    filepath_pattern: 'rtiLog'
+    ignore: true
+  - name: 'Mapping match debug file'
+    filepath_pattern: 'MAPS/[\d\._]+_match\.(?i)(txt|jpg)'
+    ignore: true
+  - name: 'Mapping transform debug file'
+    filepath_pattern: 'MAPS/[\d\.]+_transform.txt'
+    ignore: true
+  - name: 'Mapping output debug file'
+    filepath_pattern: 'MAPS/[pointplytransformation]+_list.txt'
+    ignore: true
