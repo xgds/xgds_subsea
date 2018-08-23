@@ -1,0 +1,29 @@
+[
+  {
+        "pk": 2,
+        "model": "xgds_core.vehicle",
+        "fields": {
+            "name": "Hercules",
+            "type": "ROV",
+            "primary": true
+        }
+    },
+  {
+        "pk": 3,
+        "model": "xgds_core.vehicle",
+        "fields": {
+            "name": "Argus",
+            "type": "ROV",
+            "primary": true
+        }
+    },
+  {
+        "pk": 4,
+        "model": "xgds_core.vehicle",
+        "fields": {
+            "name": "Ship",
+            "type": "Ship",
+            "primary": true
+        }
+    }
+]
