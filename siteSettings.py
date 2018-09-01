@@ -401,3 +401,14 @@ REST_FRAMEWORK = {
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 43200 # 12 hours
+
+XGDS_PLANNER_PLAN_EXPORTERS = (
+    ('xpjson', '.json', 'xgds_planner2.planExporter.XpjsonPlanExporter'),
+    ('bearing_distance', '.bdj', 'xgds_planner2.planExporter.BearingDistanceJsonPlanExporter'),
+    ('kml', '.kml', 'xgds_planner2.kmlPlanExporter.KmlPlanExporter'),
+    ('stats', '-stats.json', 'xgds_planner2.statsPlanExporter.StatsPlanExporter'),
+    ('tgt', '.tgt', 'xgds_subsea_app.tgtPlanExporter.TgtPlanExporter'),
+)
+
+XGDS_CORE_FLIGHT_MONIKER = "Dive"
+XGDS_CORE_GROUP_FLIGHT_MONIKER = "Dive"

@@ -1,0 +1,14 @@
+# This file describes the distance from the cave wall
+name: KRex2.Tillt
+class: xgds_braille_app.InstrumentPlatformTilt
+superclass: xgds_timeseries.TimeSeriesModel
+extension: csv
+delimiter: ","
+flight_required: true
+stateful: true
+fields:
+  timestamp:
+    type: unixtime_int_microsecond
+  tilt:
+    type : float
+    units : degrees
