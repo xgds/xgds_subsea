@@ -17,24 +17,19 @@
 from datetime import datetime
 
 from xgds_planner2.planExporter import TreeWalkPlanExporter
-from xgds_planner2 import xpjson
-from xgds_planner2.models import getPlanSchema
-
 from geocamUtil.ProjUtil import get_projection, ll_to_utm
+
+SEPARATOR = ' '
 
 
 class TgtPlanExporter(TreeWalkPlanExporter):
     """
-    Exports stations as space separated target strings
+    Exports a plan as tgt targets for Hypack
     """
     label = 'tgt'
     content_type = 'text/csv'
 
     def __init__(self):
-        self.csvWriter = None
-
-        self.separator = " "
-
         # set the times
         self.utc_now = datetime.utcnow()
         self.hms = self.utc_now.strftime('%H:%M:%S')
@@ -42,9 +37,9 @@ class TgtPlanExporter(TreeWalkPlanExporter):
 
         self.utm_zone = ''
         self.projection = None
+        self.south = False
 
     def initPlan(self, plan, context):
-        self.south = False
         if plan.site.alternateCrs:
             zone_number = plan.site.alternateCrs['properties']['zone']
             zone_letter = plan.site.alternateCrs['properties']['zoneLetter']
@@ -70,9 +65,11 @@ class TgtPlanExporter(TreeWalkPlanExporter):
         if not notes:
             notes = ""
 
-        result = 'GPT "%s" %.2f %.2f 0.00 %.11f %.11f %s %s 0.00 0.00 0 0 0.00 "%s" "SY(POSGEN03,0)" 0.0\n' % \
-                 (name, easting, northing, lat, lon, self.hms, self.mdy, notes)
-
+        result = 'GPT%s"%s"%s%.2f%s%.2f%s0.00%s%.11f%s%.11f%s%s%s%s%s0.00%s0.00%s0%s0%s0.00%s"%s"%s"SY(POSGEN03,0)"%s0.0\n' % \
+                 (SEPARATOR, name, SEPARATOR, easting, SEPARATOR, northing, SEPARATOR, SEPARATOR,
+                  lat, SEPARATOR, lon, SEPARATOR, self.hms, SEPARATOR, self.mdy, SEPARATOR,
+                  SEPARATOR, SEPARATOR, SEPARATOR, SEPARATOR, SEPARATOR,
+                  notes, SEPARATOR, SEPARATOR)
         return result
 
     def transformSegment(self, segment, tsequence, context):

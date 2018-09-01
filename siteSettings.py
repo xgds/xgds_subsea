@@ -408,6 +408,7 @@ XGDS_PLANNER_PLAN_EXPORTERS = (
     ('kml', '.kml', 'xgds_planner2.kmlPlanExporter.KmlPlanExporter'),
     ('stats', '-stats.json', 'xgds_planner2.statsPlanExporter.StatsPlanExporter'),
     ('tgt', '.tgt', 'xgds_subsea_app.tgtPlanExporter.TgtPlanExporter'),
+    ('line', '.csv', 'xgds_subsea_app.linePlanExporter.LinePlanExporter'),
 )
 
 XGDS_CORE_FLIGHT_MONIKER = "Dive"

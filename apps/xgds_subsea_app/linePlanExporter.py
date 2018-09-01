@@ -14,135 +14,35 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-import csv
-
 from xgds_planner2.planExporter import TreeWalkPlanExporter
-from xgds_planner2 import xpjson
-from xgds_planner2.statsPlanExporter import getDistanceMeters, norm2
+
+SEPARATOR = ' '
 
 
-def shortPos(latOrLon):
-    return float('%.6f' % latOrLon)
-
-
-def timeHm(total):
-    hoursf = total / 3600.0
-    hours = int(hoursf)
-    minutesf = (hoursf - hours) * 60
-    minutes = round(minutesf)
-
-    return '%d:%02d' % (hours, minutes)
-
-
-class CsvPlanExporter(TreeWalkPlanExporter):
+class LinePlanExporter(TreeWalkPlanExporter):
     """
-    Exports plan as CSV string.
+    Exports plan as a line file for Hypack.  This is a csv file
     """
-    label = 'CSV'
+    label = 'line'
     content_type = 'text/csv'
 
-    def __init__(self):
-        self.lengthMeters = 0
-        self.totalDuration = 0
-        self.csvWriter = None
-        self.lengths = []
-
-    def getCsvRecord(self, rec):
-        result = []
-        for name, displayName, value in rec:
-            if displayName.startswith('*') or name == 'plan':
-                continue
-            result.append((name, displayName, value))
-        return result
-
-    def getCsvWriter(self, out):
-        if not self.csvWriter:
-            self.csvWriter = csv.writer(out, quoting=csv.QUOTE_NONNUMERIC)
-        return self.csvWriter
-
-    def writeRecCsv(self, out, rec, doWriteHeader):
-        csvWriter = self.getCsvWriter(out)
-        csvRec = self.getCsvRecord(rec)
-        if doWriteHeader:
-            csvWriter.writerow([f[1] for f in csvRec])
-        csvWriter.writerow([f[2] for f in csvRec])
-
     def transformStation(self, station, tsequence, context):
-        distMeters = 0
-        if context.prevStation:
-            distMeters = getDistanceMeters(context.prevStation.geometry['coordinates'],
-                                           context.nextStation.geometry['coordinates'])
-        self.lengths.append(distMeters)
-        self.lengthMeters += distMeters
-
-        lon, lat = station.geometry['coordinates']
-        name = station.name
-        if not name:
-            name = station.id
-        stationRecord = (('number', 'Waypoint number',
-                          context.stationIndex),
-                         ('name', 'Name',
-                          name),
-                         ('lat', 'Latitude',
-                          shortPos(lat)),
-                         ('lon', 'Longitude',
-                          shortPos(lon)),
-                         ('duration', 'Duration of waypoint (H:M)',
-                          timeHm(cpt.durationSeconds)),
-                         ('cumulativeDuration', 'Time so far (H:M)',
-                          timeHm(cpt.cumulativeDurationSeconds)),
-                         ('cumulativeDistance', 'Distance so far (meters)',
-                          self.lengthMeters),
-                         ('notes', 'Notes',
-                          station.notes))
-        self.writeRecCsv(out, stationRecord, context.stationIndex == 0)
+        return None
 
     def transformSegment(self, segment, tsequence, context):
-        pass
 
-    def exportPlanInternal(self, plan, context):
-        index = 0
-        tsequence = []
-        for elt in plan.get("sequence", []):
-            ctx = context.copy()
-            ctx.stationIndex = index
-            if elt.type == 'Station':
-                ctx.parent = ctx.station = elt
-                tsequence.append(self.exportStation(elt, ctx))
+        name = segment.name
+        if not name:
+            name = segment.id
+        lon1, lat1 = context.prevStation.geometry['coordinates']
+        lon2, lat2 = context.nextStation.geometry['coordinates']
 
-            if elt.type == 'Station':
-                index += 1
+        result = "%s%s%.11f%s%.11f%s%.11f%s%.11f\n" % (name, SEPARATOR, lat1, SEPARATOR, lon1, SEPARATOR,
+                                                       lat2, SEPARATOR, lon2)
+        return result
 
-        return self.transformPlan(plan, tsequence, context)
+    def transformPlan(self, plan, tsequence, context):
+        first_row = "Name%sStartLat%sStartLon%sEndLat%sEndLon\n" % (SEPARATOR, SEPARATOR, SEPARATOR, SEPARATOR)
+        tsequence.insert(0, first_row)
+        return tsequence
 
-    def test():
-        schema = xpjson.loadDocument(xpjson.EXAMPLE_PLAN_SCHEMA_PATH)
-        plan = xpjson.loadDocument(xpjson.EXAMPLE_PLAN_PATH, schema=schema)
-        exporter = CsvPlanExporter()
-        open('/tmp/foo.csv', 'wb').write(exporter.exportPlan(plan, schema))
-
-# OLD SHIT
-
-
-def writeSegmentsCsv(out, pstruct):
-    out.write('SEGMENTS:\n')
-    csvWriter = getCsvWriter(out)
-    for i in xrange(len(pstruct.segmentList)):
-        writeRecCsv(csvWriter, getSegmentRecord(pstruct, i), i == 0)
-
-
-def writeTargetsCsv(out, pstruct):
-    # backward compatible
-    if pstruct.targets is None:
-        pstruct.targets = {}
-
-    out.write('TARGETS:\n')
-    csvWriter = getCsvWriter(out)
-    for i, tgtId in enumerate(pstruct.targets.iterkeys()):
-        writeRecCsv(csvWriter, getTargetRecord(pstruct, tgtId), i == 0)
-
-
-def writePlanCsv(request, out, pstruct):
-    writePointsCsv(out, pstruct)
-    writeSegmentsCsv(out, pstruct)
-    writeTargetsCsv(out, pstruct)
