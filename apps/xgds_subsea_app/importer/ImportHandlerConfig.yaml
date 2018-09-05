@@ -7,34 +7,40 @@ import_path: '/home/xgds/xgds_subsea/data/incoming'
 # Registry of regex patterns to look for and what to do when files match them
 registry:
 #  - name: 'nav_split'
+# # I am pretty sure that the file parsing is a one step process, so if this is going to generate
+# # new files it will have to also process them directly.
 #    filepath_pattern: '[\d\.]+raw/datalog/.*\.NAV'
-#    importer: '/home/xgds/xgds_braille/apps/xgds_braille_app/importer/navPreprocessor.py'
+#    importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/navPreprocessor.py'
 #    timeout: 300
 #    order: 1
 #    auth: false
   - name: 'capture'
     filepath_pattern: '[\d\.]+raw/capture/capture_.*/*\.tif'
-    importer: '/home/xgds/xgds_braille/apps/xgds_image/importer/import_image.py'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
     timeout: 300
     order: 5
     auth: true
   - name: 'tempprobe'
     filepath_pattern: '[\d\.]+raw/datalog/.*\.TEM'
-    importer: '/home/xgds/xgds_braille/apps/xgds_core/importer/csvImportRunner.py'
-    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/tempprobe.yaml'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/TempProbe.yaml'
     timeout: 300
     order: 2
     auth: false
-  - name: 'chatlog' # TODO IMPLEMENT
+    ignore: true
+  - name: 'chatlog_html' # ALWAYS SKIP
     filepath_pattern: '[\d\.]+/raw/chatlog/.*/.*/.*\.html'
-    importer: '/home/xgds/xgds_braille/apps/xgds_notes/importer/import_notes.py'
+    ignore: true
+  - name: 'chatlog' # TODO IMPLEMENT
+    filepath_pattern: '[\d\.]+/processed/eventlog/by-dive/all_chatlog_.*\.txt'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_notes/importer/import_notes.py'
     timeout: 300
     order: 2
     auth: false
     ignore: true
   - name: 'eventlog' # TODO IMPLEMENT
-    filepath_pattern: '[\d\.]+/processed/eventlog/by-dive/.*\.txt'
-    importer: '/home/xgds/xgds_braille/apps/xgds_notes/importer/import_notes.py'
+    filepath_pattern: '[\d\.]+/processed/eventlog/by-dive/all_eventlog_.*\.txt'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_notes/importer/import_notes.py'
     timeout: 300
     order: 2
     auth: false
