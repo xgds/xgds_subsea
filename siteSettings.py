@@ -128,7 +128,7 @@ MANAGERS = ADMINS
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = 'Etc/UTC'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -341,7 +341,7 @@ XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_subsea_app.instrumentDataImporters'
 
 PYRAPTORD_SERVICE = True
 
-XGDS_CURRENT_SITEFRAME_ID = 1  # Set this to your siteframe; this will probably be NASA Ames
+XGDS_CURRENT_SITEFRAME_ID = 2  # Currently Lo'ihi
 
 XGDS_CORE_LIVE_INDEX_URL = '/' + XGDS_SITE_APP + '/live'
 
@@ -408,7 +408,7 @@ XGDS_PLANNER_PLAN_EXPORTERS = (
     ('kml', '.kml', 'xgds_planner2.kmlPlanExporter.KmlPlanExporter'),
     ('stats', '-stats.json', 'xgds_planner2.statsPlanExporter.StatsPlanExporter'),
     ('tgt', '.tgt', 'xgds_subsea_app.tgtPlanExporter.TgtPlanExporter'),
-    ('line', '.csv', 'xgds_subsea_app.linePlanExporter.LinePlanExporter'),
+    ('lnw', '.lnw', 'xgds_subsea_app.linePlanExporter.LinePlanExporter'),
 )
 
 XGDS_CORE_FLIGHT_MONIKER = "Dive"

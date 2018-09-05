@@ -29,15 +29,17 @@ class TgtPlanExporter(TreeWalkPlanExporter):
     label = 'tgt'
     content_type = 'text/csv'
 
+    utm_zone = ''
+    projection = None
+    south = False
+
     def __init__(self):
         # set the times
         self.utc_now = datetime.utcnow()
         self.hms = self.utc_now.strftime('%H:%M:%S')
         self.mdy = self.utc_now.strftime('%m/%d/%Y')
 
-        self.utm_zone = ''
-        self.projection = None
-        self.south = False
+
 
     def initPlan(self, plan, context):
         if plan.site.alternateCrs:

@@ -15,34 +15,58 @@
 #__END_LICENSE__
 
 from xgds_planner2.planExporter import TreeWalkPlanExporter
+from geocamUtil.ProjUtil import get_projection, ll_to_utm
 
-SEPARATOR = ' '
-
+# LNS 1
+# LIN 3
+# PTS 257646.53 2094241.01
+# PTS 258825.98 2088972.79
+# PTS 252378.32 2087321.56
+# LNN 1
+# EOL
 
 class LinePlanExporter(TreeWalkPlanExporter):
     """
     Exports plan as a line file for Hypack.  This is a csv file
     """
-    label = 'line'
+    label = 'lnw'
     content_type = 'text/csv'
 
+    utm_zone = ''
+    projection = None
+    south = False
+
+    def initPlan(self, plan, context):
+        if plan.site.alternateCrs:
+            zone_number = plan.site.alternateCrs['properties']['zone']
+            zone_letter = plan.site.alternateCrs['properties']['zoneLetter']
+
+            self.utm_zone = '%s%s' % (zone_number, zone_letter)
+
+            if zone_letter:
+                if zone_letter < 'N':
+                    self.south = True
+
+        self.projection = get_projection(self.utm_zone, self.south)
+
     def transformStation(self, station, tsequence, context):
-        return None
-
-    def transformSegment(self, segment, tsequence, context):
-
-        name = segment.name
+        name = station.name
         if not name:
-            name = segment.id
-        lon1, lat1 = context.prevStation.geometry['coordinates']
-        lon2, lat2 = context.nextStation.geometry['coordinates']
+            name = station.id
 
-        result = "%s%s%.11f%s%.11f%s%.11f%s%.11f\n" % (name, SEPARATOR, lat1, SEPARATOR, lon1, SEPARATOR,
-                                                       lat2, SEPARATOR, lon2)
+        lon, lat = station.geometry['coordinates']
+        easting, northing = ll_to_utm(lon, lat, self.projection)
+
+        result = "PTS %.2f %.2f\n" % (easting, northing)
+
         return result
 
+    def transformSegment(self, segment, tsequence, context):
+        return None
+
     def transformPlan(self, plan, tsequence, context):
-        first_row = "Name%sStartLat%sStartLon%sEndLat%sEndLon\n" % (SEPARATOR, SEPARATOR, SEPARATOR, SEPARATOR)
-        tsequence.insert(0, first_row)
+        header ="LNS 1\nLIN %d\n" % len(tsequence)
+        tsequence.insert(0, header)
+        tsequence.append("LNN %s\nEOL" % plan.name)
         return tsequence
 
