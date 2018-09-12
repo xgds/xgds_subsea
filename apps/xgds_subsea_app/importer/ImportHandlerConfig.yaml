@@ -26,15 +26,81 @@ registry:
     timeout: 300
     order: 4
     auth: false
-  - name: 'capture'
-    filepath_pattern: '[\d\.]+raw/capture/capture_.*/*\.tif'
+  - name: 'raw capture hercules'
+    filepath_pattern: '[\d\.]+/raw/capture/capture_(\d{8})/cam1_\d{14}.tif'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    arguments: '-c Hercules'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'raw capture argus'
+    filepath_pattern: '[\d\.]+/raw/capture/capture_(\d{8})/cam2_\d{14}.tif'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    arguments: '-c Argus'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'raw acoustic mbes screenshots'
+    filepath_pattern: '[\d\.]+/raw/acoustic/mbes/screenshots/\d{8}_\d{4}.*.[png|JPG]'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
     timeout: 300
     order: 5
     auth: true
+  - name: 'raw acoustic screengrabs'
+    filepath_pattern: '[\d\.]+/raw/acoustic/ScreenGrabs/\d{8}_\d{4}.*.png'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'capture pngs hercules'
+    filepath_pattern: '[\d\.]+/processed/capture_pngs/capture_(\d{8})/cam1_[\d]{14}.png'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    arguments: '-c Hercules'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'capture pngs argus'
+    filepath_pattern: '[\d\.]+/processed/capture_pngs/capture_(\d{8})/cam2_[\d]{14}.png'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    arguments: '-c Argus'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'capture highlights'
+    filepath_pattern: '[\d\.]+/processed/capture_highlights/(cam1)_[\d]{14}.*.png'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'capture highlights'
+    filepath_pattern: '[\d\.]+/processed/capture_highlights/.*/(cam[12])_[\d]{14}.png'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'capture highlights'
+    filepath_pattern: '[\d\.]+/processed/capture_highlights/.*/[\d]{8}_[\d]{4}.*.png'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'capture highlights'
+    filepath_pattern: '[\d\.]+/processed/capture_highlights/.*/[\d]{8}_[\d]{4}.*.JPG'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'samples labphotos'
+    filepath_pattern: '[\d\.]+/processed/samples/.*/labphotos/DSCN[\d]{4}.JPG'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'DS_Store'
+    filepath_pattern: '.*/\.DS_Store'
     ignore: true
   - name: 'tempprobe'
-    filepath_pattern: '[\d\.]+raw/datalog/.*\.TEM'
+    filepath_pattern: '[\d\.]+/raw/datalog/.*\.TEM'
     importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
     arguments: '-s -i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/TempProbe.yaml'
     timeout: 300
