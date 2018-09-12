@@ -2,7 +2,7 @@
 # paired with a process that can import the file
 
 # Top-level directory to look for incoming files, this is overridden if the import handler is called with a path
-import_path: '/home/xgds/xgds_subsea/data/incoming'
+import_path: '/home/xgds/xgds_subsea/data/incoming/NA087'
 
 # Registry of regex patterns to look for and what to do when files match them
 registry:
@@ -20,6 +20,7 @@ registry:
     timeout: 300
     order: 5
     auth: true
+    ignore: true
   - name: 'tempprobe'
     filepath_pattern: '[\d\.]+raw/datalog/.*\.TEM'
     importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
@@ -27,7 +28,6 @@ registry:
     timeout: 300
     order: 2
     auth: false
-    ignore: true
   - name: 'chatlog_html' # ALWAYS SKIP
     filepath_pattern: '[\d\.]+/raw/chatlog/.*/.*/.*\.html'
     ignore: true

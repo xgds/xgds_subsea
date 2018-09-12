@@ -4,7 +4,7 @@ class: xgds_subsea_app.TempProbe
 superclass: xgds_timeseries.TimeSeriesModel
 extension: TEM
 delimiter: \t
-flight_required: true
+# flight_required: true
 fields:
   col_1:
     skip: true
@@ -15,4 +15,4 @@ fields:
   temperature:
     type: float
     regex: (\d+\.\d+)C
-    units: celsius
+    units: Celsius
