@@ -24,7 +24,7 @@ registry:
   - name: 'tempprobe'
     filepath_pattern: '[\d\.]+raw/datalog/.*\.TEM'
     importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
-    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/TempProbe.yaml'
+    arguments: '-s -i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/TempProbe.yaml'
     timeout: 300
     order: 2
     auth: false
