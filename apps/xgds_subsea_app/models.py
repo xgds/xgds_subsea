@@ -16,28 +16,6 @@
 from __future__ import unicode_literals
 
 from django.db import models
-import xgds_timeseries.models as xgds_timeseries
 
+from yamlModels import *
 
-class TempProbe(xgds_timeseries.TimeSeriesModel):
-    """
-    This is an auto-generated Django model created from a
-    YAML specifications using ./apps/xgds_core/importer/yamlModelBuilder.py
-    and YAML file ./apps/xgds_subsea_app/importer/TempProbe.yaml
-    """
-
-    timestamp = models.DateTimeField(db_index=True, null=False, blank=False)
-    temperature = models.FloatField(null=True, blank=True)
-    flight = models.ForeignKey('xgds_core.Flight', on_delete=models.SET_NULL, blank=True, null=True)
-
-    title = 'Temp Probe'
-    channel_descriptions = {
-                            'temperature': xgds_timeseries.ChannelDescription('Temperature', units='Celsius'),
-                            }
-
-    @classmethod
-    def get_channel_names(cls):
-        return ['temperature', ]
-
-    def __unicode__(self):
-        return "%s: %f" % (self.timestamp.isoformat(), self.temperature)
