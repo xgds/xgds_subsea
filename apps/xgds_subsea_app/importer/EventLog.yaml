@@ -1,0 +1,52 @@
+# This file describes the values from the temperature probe
+name: EventLog
+class: xgds_notes2.LocatedNote
+extension: txt
+delimiter: \t
+# flight_required: true
+fields:
+  col_1:
+    skip: true
+  event_time:
+    type: iso8601
+  col_3:
+    skip: true
+  col_4:
+    skip: true
+  col_5:
+    skip: true
+  event_type:
+    type: string
+  cruise:
+    skip: true
+  author_name:
+    type: string
+    regex: AUTHOR:([\w]+)
+  group_flight_name:
+    type: string
+    regex: DIVENUMBER:(H[\d]+)
+  site:
+    skip: true
+  vehicle:
+    skip: true
+  key_value_1:
+    # can have TYPE, SAMPLEID, DESCRIPTION
+    type: key_value
+  key_value_2:
+    # can have OBSERVATIONS, LENGTH, TYPE
+    type: key_value
+  key_value_3:
+    # can have DESCRIPTION, MARKER
+    type: key_value
+  key_value_4:
+    # can have RATING:#
+    type: key_value
+  key_value_5:
+    # only found for DATA / MULTIBEAMLINE
+    type: key_value
+  key_value_6:
+    # only found for DATA / MULTIBEAMLINE
+    type: key_value
+  key_value_7:
+    # only found for DATA / MULTIBEAMLINE
+    type: key_value
