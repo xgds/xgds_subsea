@@ -74,7 +74,7 @@ def create_dives(filename):
 
         for vehicle in vehicles:
             f = Flight()
-            f.name = '%s %s' % (vehicle.name, row['dive'])
+            f.name = '%s_%s' % (row['dive'], vehicle.name)
             f.vehicle = vehicle
             f.start_time = start_time
             f.end_time = end_time

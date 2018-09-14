@@ -2,7 +2,7 @@
 # paired with a process that can import the file
 
 # Top-level directory to look for incoming files, this is overridden if the import handler is called with a path
-import_path: '/home/xgds/xgds_subsea/data/incoming/NA095'
+import_path: '/home/xgds/xgds_subsea/data/incoming/NA100'
 
 # Registry of regex patterns to look for and what to do when files match them
 registry:
@@ -19,6 +19,13 @@ registry:
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/create_dives.py'
     timeout: 300
     order: 1
+  - name: 'event log'
+    filepath_pattern: 'processed/eventlog/by-dive/all_eventlog_.*\.txt'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/eventLogCsvImportRunner.py'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/EventLog.yaml'
+    timeout: 300
+    order: 4
+    auth: false
   - name: 'capture'
     filepath_pattern: '[\d\.]+raw/capture/capture_.*/*\.tif'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
@@ -31,20 +38,13 @@ registry:
     importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
     arguments: '-s -i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/TempProbe.yaml'
     timeout: 300
-    order: 2
+    order: 3
     auth: false
   - name: 'chatlog_html' # ALWAYS SKIP
     filepath_pattern: '[\d\.]+/raw/chatlog/.*/.*/.*\.html'
     ignore: true
   - name: 'chatlog' # TODO IMPLEMENT
     filepath_pattern: '[\d\.]+/processed/eventlog/by-dive/all_chatlog_.*\.txt'
-    importer: '/home/xgds/xgds_subsea/apps/xgds_notes/importer/import_notes.py'
-    timeout: 300
-    order: 2
-    auth: false
-    ignore: true
-  - name: 'eventlog' # TODO IMPLEMENT
-    filepath_pattern: '[\d\.]+/processed/eventlog/by-dive/all_eventlog_.*\.txt'
     importer: '/home/xgds/xgds_subsea/apps/xgds_notes/importer/import_notes.py'
     timeout: 300
     order: 2
