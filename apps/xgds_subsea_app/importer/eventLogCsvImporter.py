@@ -408,10 +408,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 item.tags.clear()
                 item.tags.add(*new_note_tags)
 
-                try:
-                    print 'UPDATED: %s ' % str(item)
-                except:
-                    pass
+                print 'UPDATED: %s ' % str(item)
                 item.save()
 
 
