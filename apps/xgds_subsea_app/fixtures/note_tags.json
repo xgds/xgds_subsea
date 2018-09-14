@@ -1,0 +1,600 @@
+[
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 5,
+    "fields": {
+        "path": "0002",
+        "depth": 1,
+        "numchild": 5,
+        "name": "EventLog",
+        "slug": "eventlog",
+        "abbreviation": "EVL",
+        "description": "Root tag for tags indicating import from Event Log OET software"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 6,
+    "fields": {
+        "path": "00020003",
+        "depth": 2,
+        "numchild": 4,
+        "name": "DiveStatus",
+        "slug": "divestatus",
+        "abbreviation": "DS",
+        "description": "Dive Status from EventLog"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 7,
+    "fields": {
+        "path": "00020001",
+        "depth": 2,
+        "numchild": 4,
+        "name": "AudioVideo",
+        "slug": "audiovideo",
+        "abbreviation": "AV",
+        "description": "Audio Video from EventLog"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 8,
+    "fields": {
+        "path": "00020006",
+        "depth": 2,
+        "numchild": 0,
+        "name": "Objective",
+        "slug": "objective",
+        "abbreviation": "OBJ",
+        "description": "Objective from EventLog"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 9,
+    "fields": {
+        "path": "0008",
+        "depth": 1,
+        "numchild": 0,
+        "name": "Trash",
+        "slug": "trash",
+        "abbreviation": "TRASH",
+        "description": "Trash from EventLog"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 10,
+    "fields": {
+        "path": "00020002",
+        "depth": 2,
+        "numchild": 0,
+        "name": "Data",
+        "slug": "data",
+        "abbreviation": "DATA",
+        "description": "Data from EventLog"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 12,
+    "fields": {
+        "path": "00050001",
+        "depth": 2,
+        "numchild": 0,
+        "name": "MultibeamLine",
+        "slug": "multibeamline",
+        "abbreviation": "MBL",
+        "description": "Multibeam Line event from event log"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 13,
+    "fields": {
+        "path": "00020004",
+        "depth": 2,
+        "numchild": 8,
+        "name": "Engineering",
+        "slug": "engineering",
+        "abbreviation": "ENG",
+        "description": "Engineering event from Event Log"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 14,
+    "fields": {
+        "path": "000200030001",
+        "depth": 3,
+        "numchild": 0,
+        "name": "InWater",
+        "slug": "inwater",
+        "abbreviation": "INWATER",
+        "description": "DiveStatus in water"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 15,
+    "fields": {
+        "path": "000200030002",
+        "depth": 3,
+        "numchild": 0,
+        "name": "OffBottom",
+        "slug": "offbottom",
+        "abbreviation": "OFFBOT",
+        "description": "Dive status off bottom"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 16,
+    "fields": {
+        "path": "000200030003",
+        "depth": 3,
+        "numchild": 0,
+        "name": "OnBottom",
+        "slug": "onbottom",
+        "abbreviation": "ONBOT",
+        "description": "Dive status on bottom"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 17,
+    "fields": {
+        "path": "000200030004",
+        "depth": 3,
+        "numchild": 0,
+        "name": "OnDeck",
+        "slug": "ondeck",
+        "abbreviation": "ONDECK",
+        "description": "Dive Status on deck"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 18,
+    "fields": {
+        "path": "000200040007",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Repair",
+        "slug": "repair",
+        "abbreviation": "REPAIR",
+        "description": "Engineering type repair"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 19,
+    "fields": {
+        "path": "000200040002",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Decommission",
+        "slug": "decommission",
+        "abbreviation": "DECOM",
+        "description": "Engineering type"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 20,
+    "fields": {
+        "path": "000200040003",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Failure",
+        "slug": "failure",
+        "abbreviation": "FAILURE",
+        "description": "Engineering type"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 21,
+    "fields": {
+        "path": "000200040004",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Install",
+        "slug": "install",
+        "abbreviation": "INST",
+        "description": "Engineering type"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 22,
+    "fields": {
+        "path": "000200040001",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Communications",
+        "slug": "communications",
+        "abbreviation": "COMMS",
+        "description": "Engineering system"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 23,
+    "fields": {
+        "path": "000200040005",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Logging",
+        "slug": "logging",
+        "abbreviation": "LOG",
+        "description": "Engineering system"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 24,
+    "fields": {
+        "path": "000200040008",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Vehicle",
+        "slug": "vehicle",
+        "abbreviation": "VEH",
+        "description": "Engineering system"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 25,
+    "fields": {
+        "path": "000200040006",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Other",
+        "slug": "other",
+        "abbreviation": "OTH",
+        "description": "Engineering system"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 26,
+    "fields": {
+        "path": "0001",
+        "depth": 1,
+        "numchild": 0,
+        "name": "Biology",
+        "slug": "biology",
+        "abbreviation": "BIO",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 27,
+    "fields": {
+        "path": "0003",
+        "depth": 1,
+        "numchild": 0,
+        "name": "Geology",
+        "slug": "geology",
+        "abbreviation": "GEO",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 28,
+    "fields": {
+        "path": "0005",
+        "depth": 1,
+        "numchild": 1,
+        "name": "Mapping",
+        "slug": "mapping",
+        "abbreviation": "MAP",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 29,
+    "fields": {
+        "path": "0006",
+        "depth": 1,
+        "numchild": 5,
+        "name": "Sample",
+        "slug": "sample",
+        "abbreviation": "SAM",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 30,
+    "fields": {
+        "path": "00060003",
+        "depth": 2,
+        "numchild": 0,
+        "name": "PushCore",
+        "slug": "pushcore",
+        "abbreviation": "CORE",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 31,
+    "fields": {
+        "path": "00060004",
+        "depth": 2,
+        "numchild": 0,
+        "name": "ROVGrab",
+        "slug": "rovgrab",
+        "abbreviation": "GRAB",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 32,
+    "fields": {
+        "path": "00060002",
+        "depth": 2,
+        "numchild": 0,
+        "name": "Niskin",
+        "slug": "niskin",
+        "abbreviation": "NISKIN",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 33,
+    "fields": {
+        "path": "00060001",
+        "depth": 2,
+        "numchild": 0,
+        "name": "IGT",
+        "slug": "igt",
+        "abbreviation": "IGT",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 34,
+    "fields": {
+        "path": "00060005",
+        "depth": 2,
+        "numchild": 0,
+        "name": "SUPR",
+        "slug": "supr",
+        "abbreviation": "SUPR",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 35,
+    "fields": {
+        "path": "0007",
+        "depth": 1,
+        "numchild": 5,
+        "name": "Timing",
+        "slug": "timing",
+        "abbreviation": "TIME",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 36,
+    "fields": {
+        "path": "00070004",
+        "depth": 2,
+        "numchild": 0,
+        "name": "Start",
+        "slug": "start",
+        "abbreviation": "START",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 37,
+    "fields": {
+        "path": "00070001",
+        "depth": 2,
+        "numchild": 0,
+        "name": "End",
+        "slug": "end",
+        "abbreviation": "END",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 38,
+    "fields": {
+        "path": "00070002",
+        "depth": 2,
+        "numchild": 0,
+        "name": "Pause",
+        "slug": "pause",
+        "abbreviation": "PAUSE",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 39,
+    "fields": {
+        "path": "00070005",
+        "depth": 2,
+        "numchild": 0,
+        "name": "Stop",
+        "slug": "stop",
+        "abbreviation": "STOP",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 40,
+    "fields": {
+        "path": "00070003",
+        "depth": 2,
+        "numchild": 0,
+        "name": "Restart",
+        "slug": "restart",
+        "abbreviation": "RESTART",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 41,
+    "fields": {
+        "path": "0004",
+        "depth": 1,
+        "numchild": 3,
+        "name": "Instrument",
+        "slug": "instrument",
+        "abbreviation": "INST",
+        "description": "Instrument category"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 42,
+    "fields": {
+        "path": "000400030002",
+        "depth": 3,
+        "numchild": 0,
+        "name": "TempProbe",
+        "slug": "tempprobe",
+        "abbreviation": "TPROBE",
+        "description": "Temperature Probe"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 43,
+    "fields": {
+        "path": "00040002",
+        "depth": 2,
+        "numchild": 0,
+        "name": "O2S",
+        "slug": "o2s",
+        "abbreviation": "O2S",
+        "description": "Oxygen Saturation"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 44,
+    "fields": {
+        "path": "00040001",
+        "depth": 2,
+        "numchild": 0,
+        "name": "CTD",
+        "slug": "ctd",
+        "abbreviation": "CTD",
+        "description": "Conductivity, Temperature and Depth"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 45,
+    "fields": {
+        "path": "000400030001",
+        "depth": 3,
+        "numchild": 0,
+        "name": "TempIGT",
+        "slug": "tempigt",
+        "abbreviation": "TIGT",
+        "description": "Temperature Probe on IGT"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 46,
+    "fields": {
+        "path": "000400030003",
+        "depth": 3,
+        "numchild": 0,
+        "name": "TempSUPR",
+        "slug": "tempsupr",
+        "abbreviation": "TSUPR",
+        "description": "Temperature probe on the SUPR"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 47,
+    "fields": {
+        "path": "000200010001",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Rating1",
+        "slug": "rating1",
+        "abbreviation": "R1",
+        "description": "Audio Video rating 1"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 48,
+    "fields": {
+        "path": "000200010002",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Rating2",
+        "slug": "rating2",
+        "abbreviation": "R2",
+        "description": "Audio Video rating 2"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 49,
+    "fields": {
+        "path": "000200010003",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Rating3",
+        "slug": "rating3",
+        "abbreviation": "R3",
+        "description": "AudioVideo rating 3"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 50,
+    "fields": {
+        "path": "000200010004",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Rating4",
+        "slug": "rating4",
+        "abbreviation": "R4",
+        "description": "AudioVideo rating 4"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 51,
+    "fields": {
+        "path": "00040003",
+        "depth": 2,
+        "numchild": 3,
+        "name": "Temperature",
+        "slug": "temperature",
+        "abbreviation": "TEMP",
+        "description": "Parent for all tempprobe types"
+    }
+}
+]

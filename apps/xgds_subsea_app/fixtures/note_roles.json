@@ -1,0 +1,58 @@
+[
+{
+    "model": "xgds_notes2.role",
+    "pk": 1,
+    "fields": {
+        "value": "GENERAL_POST",
+        "display_name": "General Post Ops"
+    }
+},
+{
+    "model": "xgds_notes2.role",
+    "pk": 2,
+    "fields": {
+        "value": "SCIENTIST_POST",
+        "display_name": "Scientist Post Ops"
+    }
+},
+{
+    "model": "xgds_notes2.role",
+    "pk": 3,
+    "fields": {
+        "value": "DATA_LOGGER",
+        "display_name": "Data Logger"
+    }
+},
+{
+    "model": "xgds_notes2.role",
+    "pk": 4,
+    "fields": {
+        "value": "NAVIGATOR",
+        "display_name": "Navigator"
+    }
+},
+{
+    "model": "xgds_notes2.role",
+    "pk": 5,
+    "fields": {
+        "value": "SCIENCE_COMMUNICATION_FELLOW",
+        "display_name": "Science Communication Fellow"
+    }
+},
+{
+    "model": "xgds_notes2.role",
+    "pk": 6,
+    "fields": {
+        "value": "SCIENTIST",
+        "display_name": "Scientist"
+    }
+},
+{
+    "model": "xgds_notes2.role",
+    "pk": 7,
+    "fields": {
+        "value": "OBSERVER",
+        "display_name": "Observer"
+    }
+}
+]

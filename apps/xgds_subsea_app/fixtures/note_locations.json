@@ -1,0 +1,26 @@
+[
+{
+    "model": "xgds_notes2.location",
+    "pk": 1,
+    "fields": {
+        "value": "REMOTE",
+        "display_name": "Remote"
+    }
+},
+{
+    "model": "xgds_notes2.location",
+    "pk": 2,
+    "fields": {
+        "value": "SHIP",
+        "display_name": "Ship"
+    }
+},
+{
+    "model": "xgds_notes2.location",
+    "pk": 3,
+    "fields": {
+        "value": "ISC",
+        "display_name": "Inner Space Center"
+    }
+}
+]
