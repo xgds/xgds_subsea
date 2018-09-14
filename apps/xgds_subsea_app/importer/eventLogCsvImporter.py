@@ -214,7 +214,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
         return result
 
-
     def clean_author(self, row):
         """
         Updates the row by looking up the correct author id by the name
@@ -362,27 +361,57 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         the_model = LocatedNote
         new_models = []
         rows = []
-        note_tags = []
 
         try:
             self.reset_csv()
             for row in self.csv_reader:
                 row = self.update_row(row)
                 if row:
-                    new_note_tags = row['tag']
-                    note_tags.append(new_note_tags)
-                    del row['tag']
                     rows.append(row)
                     if not self.replace:
+                        # Create the note and the tags.  Because the tags cannot be created until the note exists,
+                        # we have to do this one at a time.
+                        new_note_tags = row['tag']
+                        del row['tag']
                         new_note = the_model(**row)
                         new_note.save()
-                        new_note.tags.add(*(new_note_tags))
+                        new_note.tags.add(*new_note_tags)
                         new_models.append(new_note)
             if self.replace:
-                #TODO what do we do with the tagged notes?
                 self.update_stored_data(the_model, rows)
             self.handle_last_row(row)
         finally:
             self.csv_file.close()
         return new_models
+
+    def update_stored_data(self, the_model, rows):
+        """
+        # search for matching data based on each row, and update it.
+        :param the_model: the model we are working with
+        :param rows: the cleaned up rows we are working with
+        :return:
+        """
+        for row in rows:
+            filter_dict = {self.config['timefield_default']: row[self.config['timefield_default']]}
+            if self.flight:
+                filter_dict['flight'] = self.flight
+
+            found = the_model.objects.filter(**filter_dict)
+            if found.count() != 1:
+                print "ERROR: DID NOT FIND MATCH FOR %s" % str(row[self.config['timefield_default']])
+            else:
+                item = found[0]
+                new_note_tags = row['tag']
+                del row['tag']
+                for key, value in row.iteritems():
+                    setattr(item, key, value)
+                item.tags.clear()
+                item.tags.add(*new_note_tags)
+
+                try:
+                    print 'UPDATED: %s ' % str(item)
+                except:
+                    pass
+                item.save()
+
 
