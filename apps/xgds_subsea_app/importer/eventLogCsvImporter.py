@@ -52,7 +52,7 @@ def clean_append(part_1, part_2):
     return part_2
 
 
-def sanitize(row):
+def remove_empty_keys(row):
     """
     Remove all unneccessary things from the dictionary
     :param row:
@@ -209,7 +209,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         result = self.clean_key_values(result)
         if result:
             result = self.clean_author(result)
-            result = sanitize(result)
+            result = remove_empty_keys(result)
             result['location'] = self.ship_location
 
         return result
