@@ -27,8 +27,8 @@ fields:
     regex: DIVENUMBER:(H[\d]+)
   site:
     skip: true
-  vehicle:
-    skip: true
+  vehicle_name:
+    type: key_value
   key_value_1:
     # can have TYPE, SAMPLEID, DESCRIPTION
     type: key_value

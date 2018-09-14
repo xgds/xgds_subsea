@@ -20,6 +20,153 @@ from xgds_core.FlightUtils import lookup_flight
 from xgds_notes2.models import LocatedNote, HierarchichalTag, TaggedNote, Role, Location
 
 
+def clean_key_value(dictionary):
+    """
+    Return a tuple including the key and value string replacing underscores with spaces
+    :param dictionary: should have one entry
+    :return: None if it is NaN, or the cleaned value string
+    """
+    if not dictionary:
+        return None, None
+    if not isinstance(dictionary, dict):
+        return None, None
+    key = dictionary.keys()[0]
+    value_string = dictionary.values()[0]
+    if value_string == 'NaN':
+        return key, None
+    value_string = value_string.replace('_', ' ')
+    return key, value_string
+
+
+def clean_append(part_1, part_2):
+    """
+    Safely append 2 parts together, handling None
+    :param part_1: 
+    :param part_2: 
+    :return: 
+    """
+    if part_1:
+        if part_2:
+            return part_1 + part_2
+        return part_1
+    return part_2
+
+
+def sanitize(row):
+    """
+    Remove all unneccessary things from the dictionary
+    :param row:
+    :return:
+    """
+    if None in row:
+        del row[None]
+    return row
+
+
+def append_key_value(content, key, value):
+    """
+    Safely append the key/value as a separate line to the content
+    :param content:
+    :param key:
+    :param value:
+    :return: new content
+    """
+    if value and key:
+        if content:
+            return '%s\n%s: %s' % (content, key, value)
+        return '%s: %s' % (key, value)
+    return content
+
+
+def add_notes_tag(row, value):
+    if not value:
+        return
+    if 'Trash' in value:
+        add_tag(row, 'Trash')
+    elif 'Biology' in value:
+        add_tag(row, 'Biology')
+    elif 'Geology' in value:
+        add_tag(row, 'Geology')
+    elif 'T-ROV' in value:
+        add_tag(row, 'TempProbe')
+    elif 'T-IGT' in value:
+        add_tag(row, 'TempIGT')
+    elif 'T-SUPR' in value:
+        add_tag(row, 'TempSUPR')
+
+
+def add_sample_type_tag(row, value):
+    """
+    Add the sample specific type tags
+    :param row:
+    :param value:
+    :return:
+    """
+    if not value:
+        return
+    if 'SUPR' in value:
+        add_tag(row, 'SUPR')
+    elif 'IGT' in value:
+        add_tag(row, 'IGT')
+    elif 'ROVG' in value:
+        add_tag(row, 'ROVGrab')
+    elif 'ROVPC' in value:
+        add_tag(row, 'PushCore')
+    elif 'Niskin' in value:
+        add_tag(row, 'Niskin')
+
+
+def add_divestatus_tag(row, value):
+    """
+    Add the divestatus specific type tags
+    :param row:
+    :param value:
+    :return:
+    """
+    if not value:
+        return
+    if 'onbottom' in value:
+        add_tag(row, 'OnBottom')
+    elif 'offbottom' in value:
+        add_tag(row, 'OffBottom')
+    elif 'inwater' in value:
+        add_tag(row, 'InWater')
+    elif 'ondeck' in value:
+        add_tag(row, 'OnDeck')
+
+
+def add_audiovideo_rating_tag(row, value):
+    """
+    Add the rating tags for audiovideo
+    TODO figure out what all the ratings can be
+    :param row:
+    :param value:
+    :return:
+    """
+    if not value:
+        return
+    add_tag(row, 'Rating' + value)
+
+
+def add_tag(row, tag_key, capitalize=False):
+    """
+    Looks up the correct tag based on the row, and appends it to the list of tags
+    :param row:
+    :param tag_key: the tag key (string of tag) to add
+    :param capitalize: True to initial cap the tag key
+    :return: the updated row
+    """
+    if not tag_key:
+        return
+    if 'tag' not in row:
+        row['tag'] = []
+    if capitalize:
+        tag_key = tag_key.capitalize()
+    if tag_key not in row['tag']:
+        row['tag'].append(tag_key)
+    return row
+
+
 class EventLogCsvImporter(csvImporter.CsvImporter):
     """
     Utilities for loading event log files from files such as <cruise>/processed/eventlog/by-dive/all_eventlog_<DIVE>.txt
@@ -31,20 +178,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
     navigator_user = getUserByUsername('navigator')
     scf_user = getUserByUsername('scf')
 
-    # tags = {}
-    # tags['EVENTLOG'] = HierarchichalTag.objects.get(name='EventLog')
-    # tags['OBJECTIVE'] = HierarchichalTag.objects.get(name='Objective')
-    # tags['SAMPLE'] = HierarchichalTag.objects.get(name='Sample')
-    # tags['AUDIOVIDEO'] = HierarchichalTag.objects.get(name='AudioVideo')
-    # tags['DIVESTATUS'] = HierarchichalTag.objects.get(name='DiveStatus')
-    # tags['TRASH'] = HierarchichalTag.objects.get(name='Trash')
-    # tags['ENGINEERING'] = HierarchichalTag.objects.get(name='Engineering')
-    # tags['MULTIBEAMLINE'] = HierarchichalTag.objects.get(name='MultibeamLine')
-
-    roles = {}
-    roles['NAVIGATOR'] = Role.objects.get(value='NAVIGATOR')
-    roles['SCF'] = Role.objects.get(value='SCIENCE_COMMUNICATION_FELLOW')
-    roles['DATA_LOGGER'] = Role.objects.get(value='DATA_LOGGER')
+    roles = {'NAVIGATOR': Role.objects.get(value='NAVIGATOR'),
+             'SCF': Role.objects.get(value='SCIENCE_COMMUNICATION_FELLOW'),
+             'DATA_LOGGER': Role.objects.get(value='DATA_LOGGER')}
 
     ship_location = Location.objects.get(value='SHIP')
 
@@ -73,21 +209,11 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         result = self.clean_key_values(result)
         if result:
             result = self.clean_author(result)
-            result = self.clean_flight(result)
-            result = self.sanitize(result)
+            result = sanitize(result)
             result['location'] = self.ship_location
 
         return result
 
-    def sanitize(self, row):
-        """
-        Remove all unneccessary things from the dictionary
-        :param row:
-        :return:
-        """
-        if None in row:
-            del row[None]
-        return row
 
     def clean_author(self, row):
         """
@@ -121,115 +247,98 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
         return row
 
-    def clean_flight(self, row):
+    def clean_flight(self, row, vehicle_name=None):
         """
         Updates the row by looking up the correct flight id by the name.
         Hardcoding to Hercules vehicle
         :param row:
         :return: the updated row
         """
-        flight_name = row['group_flight_name'] + '_' + self.vehicle.name
+        if not vehicle_name:
+            key, rvn = clean_key_value(row['vehicle_name'])
+            if rvn == 'Argus':
+                vehicle_name = rvn
+            elif 'Herc' in rvn:
+                vehicle_name = 'Hercules'
+            else:
+                print 'INVALID VEHICLE, DEFAULTING TO HERCULES %s' % rvn
+            if not vehicle_name:
+                vehicle_name = self.vehicle.name
+        flight_name = row['group_flight_name'] + '_' + vehicle_name
         row['flight'] = lookup_flight(flight_name)
         del row['group_flight_name']
+        del row['vehicle_name']
         return row
-
-    def clean_key_value(self, dictionary):
-        """
-        Return a tuple including the key and value string replacing underscores with spaces
-        :param dictionary: should have one entry
-        :return: None if it is NaN, or the cleaned value string
-        """
-        if not dictionary:
-            return None, None
-        if not isinstance(dictionary, dict):
-            return None, None
-        key = dictionary.keys()[0]
-        value_string = dictionary.values()[0]
-        if value_string == 'NaN':
-            return key, None
-        value_string = value_string.replace('_', ' ')
-        return key, value_string
-
-    def clean_append(self, part_1, part_2):
-        if part_1:
-            if part_2:
-                return part_1 + part_2
-            return part_1
-        return part_2
-
-    def append_key_value(self, content, key, value):
-        """
-        Safely append the key/value as a separate line to the content
-        :param content:
-        :param key:
-        :param value:
-        :return: new content
-        """
-        if value and key:
-            if content:
-                return '%s\n%s: %s' % (content, key, value)
-            return '%s: %s' % (key, value)
-        return content
-
 
     def clean_key_values(self, row):
         """
         Cleans the key/value pairs.
+        This is including setting up the note content, tags and flight.
         :param row:
         :return: the updated row
         """
-        key_1, value_1 = self.clean_key_value(row['key_value_1'])
-        key_2, value_2 = self.clean_key_value(row['key_value_2'])
-        key_3, value_3 = self.clean_key_value(row['key_value_3'])
+        key_1, value_1 = clean_key_value(row['key_value_1'])
+        key_2, value_2 = clean_key_value(row['key_value_2'])
+        key_3, value_3 = clean_key_value(row['key_value_3'])
 
+        flight_set = False
         event_type = row['event_type']
         if event_type == 'NOTES':
             row['content'] = value_2
-            if value_1:
-                prefix = '%s: %s\n' % (key_1, value_1)
-                row['content'] = self.clean_append(prefix, row['content'])
             if value_3:
                 prefix = '%s: %s\n' % (key_3, value_3)
-                row['content'] = self.clean_append(prefix, row['content'])
-            if value_1 and value_1 == 'TRASH':
-                self.add_tag(row, 'Trash')
+                row['content'] = clean_append(prefix, row['content'])
+            add_notes_tag(row, value_1)
         elif event_type == 'SAMPLE':
-            row['content'] = '%s: %s\n%s: %s\n %s' % (key_1, value_1, key_2, value_2, value_3)
-            self.add_tag(row, 'Sample')
+            row['content'] = '%s: %s\n%s' % (key_1, value_1, value_3)
+            add_tag(row, 'Sample')
+            add_sample_type_tag(row, value_2)
         elif event_type == 'DIVESTATUS':
             row['content'] = value_1
-            self.add_tag(row, 'DiveStatus')
+            add_tag(row, 'DiveStatus')
+            add_divestatus_tag(row, value_1)
         elif event_type == 'OBJECTIVE':
             row['content'] = value_1
-            self.add_tag(row, 'Objective')
-        elif event_type == 'ENGINEERING':
-            row['content'] = '%s: %s\n%s: %s\n %s' % (key_1, value_1, key_2, value_2, value_3)
-            self.add_tag(row, 'Engineering')
+            add_tag(row, 'Objective')
+        elif event_type == 'ENGEVENT':
+            row['content'] = value_3
+            add_tag(row, 'Engineering')
+            add_tag(row, value_1, capitalize=True)
+            add_tag(row, value_2, capitalize=True)
         elif event_type == 'AUDIOVIDEO':
-            key_4, value_4 = self.clean_key_value(row['key_value_4'])
-            row['content'] = '%s: %s\n%s: %s\n %s' % (key_2, value_2, key_4, value_4, value_1)
-            self.add_tag(row, 'AudioVideo')
+            if value_3:
+                if 'Herc/Argus' not in value_3:
+                    if 'argus' in value_3.lower():
+                        row = self.clean_flight(row, 'Argus')
+                        flight_set = True
+
+            key_4, value_4 = clean_key_value(row['key_value_4'])
+            row['content'] = '%s: %s\n %s' % (key_2, value_2, value_1)
+            add_tag(row, 'AudioVideo')
+            add_audiovideo_rating_tag(row, value_4)
         elif event_type == 'DATA':
 
-            key_4, value_4 = self.clean_key_value(row['key_value_4'])
-            key_5, value_5 = self.clean_key_value(row['key_value_5'])
-            key_6, value_6 = self.clean_key_value(row['key_value_6'])
-            key_7, value_7 = self.clean_key_value(row['key_value_7'])
+            key_4, value_4 = clean_key_value(row['key_value_4'])
+            key_5, value_5 = clean_key_value(row['key_value_5'])
+            key_6, value_6 = clean_key_value(row['key_value_6'])
+            key_7, value_7 = clean_key_value(row['key_value_7'])
 
-            content = self.append_key_value(None, key_1, value_1)
-            content = self.append_key_value(None, key_2, value_2)
-            content = self.append_key_value(None, key_3, value_3)
-            content = self.append_key_value(None, key_4, value_4)
-            content = self.append_key_value(None, key_5, value_5)
-            content = self.append_key_value(None, key_6, value_6)
-            content = self.append_key_value(None, key_7, value_7)
+            content = append_key_value(None, key_1, value_1)
+            content = append_key_value(content, key_2, value_2)
+            content = append_key_value(content, key_3, value_3)
+            content = append_key_value(content, key_4, value_4)
+            content = append_key_value(content, key_5, value_5)
+            content = append_key_value(content, key_6, value_6)
+            content = append_key_value(content, key_7, value_7)
             row['content'] = content
-            self.add_tag(row, 'MultibeamLine')
+            add_tag(row, 'MultibeamLine')
 
         else:
             print '*** UNKONWN EVENT TYPE ** %s' % event_type
 
-        self.add_tag(row, 'EventLog')
+        add_tag(row, 'EventLog')
+        if not flight_set:
+            row = self.clean_flight(row)
 
         del row['key_value_1']
         del row['key_value_2']
@@ -240,18 +349,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         del row['key_value_7']
         del row['event_type']
 
-        return row
-
-    def add_tag(self, row, tag_key):
-        """
-        Looks up the correct tag based on the row, and appends it to the list of tags
-        :param row:
-        :return: the updated row
-        """
-        if 'tag' not in row:
-            row['tag'] = []
-        if tag_key not in row['tag']:
-            row['tag'].append(tag_key)
         return row
 
     def load_csv(self):
@@ -280,17 +377,10 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                         new_note = the_model(**row)
                         new_note.save()
                         new_note.tags.add(*(new_note_tags))
-                        # new_models.append(the_model(**row))
-            if not self.replace:
-                pass
-                # the_model.objects.bulk_create(new_models)
-                # for i, note in enumerate(new_models):
-                    # tn = TaggedNote(tag=tags[i], content_object=note)
-                    # tagged_notes.append(tn)
-                # TaggedNote.objects.bulk_create(tagged_notes)
-            else:
-                self.update_stored_data(the_model, rows)
+                        new_models.append(new_note)
+            if self.replace:
                 #TODO what do we do with the tagged notes?
+                self.update_stored_data(the_model, rows)
             self.handle_last_row(row)
         finally:
             self.csv_file.close()
