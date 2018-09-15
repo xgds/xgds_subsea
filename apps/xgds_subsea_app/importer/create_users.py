@@ -30,7 +30,7 @@ def username_exists(username):
     return len(existing_users) > 0
 
 
-def create_users(xml_filename, test=False):
+def create_users(xml_filename, test_mode=False):
     """
     Import OET cruise record XML file and create django auth users from the list of participants
     :param filename: the name of the XML file
@@ -69,9 +69,12 @@ def create_users(xml_filename, test=False):
         new_user.password = "*"
         new_user.is_active = False
         new_user.is_superuser = False
-        new_user.save()
-        print 'Created user', new_user.username, '(%s)' % ' '.join(parts)
-        num_created += 1
+        if test_mode:
+            print 'TEST MODE: Skipping actual account creation for %s' % new_user
+        else:
+            new_user.save()
+            print 'Created user', new_user.username, '(%s)' % name
+            num_created += 1
 
     return num_created
 
@@ -82,5 +85,5 @@ if __name__ == '__main__':
 
     opts, args = parser.parse_args()
     cruise_record = args[0]
-    created = create_users(cruise_record, test=opts.test)
+    created = create_users(cruise_record, test_mode=opts.test)
     print 'Created %d users' % created
