@@ -31,7 +31,7 @@
     "fields": {
         "path": "00020001",
         "depth": 2,
-        "numchild": 4,
+        "numchild": 6,
         "name": "AudioVideo",
         "slug": "audiovideo",
         "abbreviation": "AV",
@@ -536,7 +536,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 47,
     "fields": {
-        "path": "000200010001",
+        "path": "000200010002",
         "depth": 3,
         "numchild": 0,
         "name": "Rating1",
@@ -549,7 +549,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 48,
     "fields": {
-        "path": "000200010002",
+        "path": "000200010003",
         "depth": 3,
         "numchild": 0,
         "name": "Rating2",
@@ -562,7 +562,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 49,
     "fields": {
-        "path": "000200010003",
+        "path": "000200010004",
         "depth": 3,
         "numchild": 0,
         "name": "Rating3",
@@ -575,7 +575,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 50,
     "fields": {
-        "path": "000200010004",
+        "path": "000200010005",
         "depth": 3,
         "numchild": 0,
         "name": "Rating4",
@@ -595,6 +595,32 @@
         "slug": "temperature",
         "abbreviation": "TEMP",
         "description": "Parent for all tempprobe types"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 52,
+    "fields": {
+        "path": "000200010001",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Rating0",
+        "slug": "rating0",
+        "abbreviation": "R0",
+        "description": "Audio Video rating 0"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 53,
+    "fields": {
+        "path": "000200010006",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Rating5",
+        "slug": "rating5",
+        "abbreviation": "R5",
+        "description": "Audio Video rating 5"
     }
 }
 ]
