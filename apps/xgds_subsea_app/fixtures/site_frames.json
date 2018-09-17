@@ -1,1 +1,21 @@
-[{"model": "geocamUtil.siteframe", "pk": 2, "fields": {"name": "Loihi", "displayName": "L\u014d'ihi", "east0": 262733.0, "north0": 2092286.0, "zone": "5Q", "zoneNumber": 5, "south": false, "axes": "ENU", "north": "1", "timezone": "Etc/UTC", "projCode": "EPSG:2782", "projString": "+proj=utm +zone=5 +ellps=WGS84 +datum=WGS84 +units=m +no_defs", "projUnits": "m"}}]
+[
+  {
+    "model": "geocamUtil.siteframe",
+    "pk": 2,
+    "fields": {
+      "name": "Loihi",
+      "displayName": "L\u014d'ihi",
+      "east0": 262733.0,
+      "north0": 2092286.0,
+      "zone": "5Q",
+      "zoneNumber": 5,
+      "south": false,
+      "axes": "ENU",
+      "north": "1",
+      "timezone": "Etc/UTC",
+      "projCode": "EPSG:2782",
+      "projString": "+proj=utm +zone=5 +ellps=WGS84 +datum=WGS84 +units=m +no_defs",
+      "projUnits": "m"
+    }
+  }
+]

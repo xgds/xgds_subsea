@@ -1,1 +1,67 @@
-[{"model": "xgds_image.camera", "pk": 1, "fields": {"notes": "Screen captures off of the Hercules main video feed", "type": "screen_capture", "extras": "{}", "primary": false, "serial": "HERC", "name": "Hercules", "heading_offset_degrees": 0.0}}, {"model": "xgds_image.camera", "pk": 2, "fields": {"notes": "Screen captures off of the Argus main video feed", "type": "screen_capture", "extras": "{}", "primary": false, "serial": "ARGUS", "name": "Argus", "heading_offset_degrees": 0.0}}, {"model": "xgds_image.camera", "pk": 3, "fields": {"notes": "Edited screen captures originally from Hercules", "type": "edited", "extras": "{}", "primary": false, "serial": "HERC_EDITED", "name": "Hercules Edited", "heading_offset_degrees": 0.0}}, {"model": "xgds_image.camera", "pk": 4, "fields": {"notes": "Edited screen captures from Argus", "type": "edited", "extras": "{}", "primary": false, "serial": "ARGUS_EDITED", "name": "Argus Edited", "heading_offset_degrees": 0.0}}, {"model": "xgds_image.camera", "pk": 5, "fields": {"notes": "MISO GoPro", "type": "go_pro", "extras": "{}", "primary": false, "serial": "MISO", "name": "Miso", "heading_offset_degrees": 0.0}}]
+[
+  {
+    "model": "xgds_image.camera",
+    "pk": 1,
+    "fields": {
+      "notes": "Screen captures off of the Hercules main video feed",
+      "type": "screen_capture",
+      "extras": "{}",
+      "primary": false,
+      "serial": "HERC",
+      "name": "Hercules",
+      "heading_offset_degrees": 0.0
+    }
+  },
+  {
+    "model": "xgds_image.camera",
+    "pk": 2,
+    "fields": {
+      "notes": "Screen captures off of the Argus main video feed",
+      "type": "screen_capture",
+      "extras": "{}",
+      "primary": false,
+      "serial": "ARGUS",
+      "name": "Argus",
+      "heading_offset_degrees": 0.0
+    }
+  },
+  {
+    "model": "xgds_image.camera",
+    "pk": 3,
+    "fields": {
+      "notes": "Edited screen captures originally from Hercules",
+      "type": "edited",
+      "extras": "{}",
+      "primary": false,
+      "serial": "HERC_EDITED",
+      "name": "Hercules Edited",
+      "heading_offset_degrees": 0.0
+    }
+  },
+  {
+    "model": "xgds_image.camera",
+    "pk": 4,
+    "fields": {
+      "notes": "Edited screen captures from Argus",
+      "type": "edited",
+      "extras": "{}",
+      "primary": false,
+      "serial": "ARGUS_EDITED",
+      "name": "Argus Edited",
+      "heading_offset_degrees": 0.0
+    }
+  },
+  {
+    "model": "xgds_image.camera",
+    "pk": 5,
+    "fields": {
+      "notes": "MISO GoPro",
+      "type": "go_pro",
+      "extras": "{}",
+      "primary": false,
+      "serial": "MISO",
+      "name": "Miso",
+      "heading_offset_degrees": 0.0
+    }
+  }
+]

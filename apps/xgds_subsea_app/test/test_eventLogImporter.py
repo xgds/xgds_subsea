@@ -157,7 +157,7 @@ class eventLogImporterTest(TestCase):
         :return:
         """
         importer = EventLogCsvImporter('/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/EventLog.yaml',
-                                       '/home/xgds/xgds_subsea/apps/xgds_subsea_app/tests/test_files/eventlog.txt',
+                                       '/home/xgds/xgds_subsea/apps/xgds_subsea_app/test/test_files/eventlog.txt',
                                        force=False,
                                        replace=False,
                                        skip_bad=True)
