@@ -2,7 +2,7 @@
 # paired with a process that can import the file
 
 # Top-level directory to look for incoming files, this is overridden if the import handler is called with a path
-import_path: '/home/xgds/xgds_subsea/data/incoming/NA100'
+import_path: '/home/xgds/xgds_subsea/data/incoming/NA087'\
 
 # Registry of regex patterns to look for and what to do when files match them
 registry:
@@ -29,20 +29,21 @@ registry:
   - name: 'raw capture hercules'
     filepath_pattern: '[\d\.]+/raw/capture/capture_(\d{8})/cam1_\d{14}.tif'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
-    arguments: '-c Hercules'
+    arguments: '-c Hercules -t dateparser -r "cam1_(\d+).tif"'
     timeout: 300
     order: 5
     auth: true
   - name: 'raw capture argus'
     filepath_pattern: '[\d\.]+/raw/capture/capture_(\d{8})/cam2_\d{14}.tif'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
-    arguments: '-c Argus'
+    arguments: '-c Argus -t dateparser -r "cam2_(\d+).tif"'
     timeout: 300
     order: 5
     auth: true
   - name: 'raw acoustic mbes screenshots'
     filepath_pattern: '[\d\.]+/raw/acoustic/mbes/screenshots/\d{8}_\d{4}.*.[png|JPG]'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    arguments: '-c Argus -t dateparser -r "cam2_(\d+).tif"'
     timeout: 300
     order: 5
     auth: true
