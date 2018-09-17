@@ -76,6 +76,79 @@ class xgds_subsea_appTest(TestCase):
         result = append_key_value('A', 'B', 'C')
         self.assertEqual(result, 'A\nB: C')
 
+    def test_add_tag(self):
+        row = {}
+        add_tag(row, None)
+        self.assertFalse('tag' in row)
+        add_tag(row, 'lower')
+        self.assertTrue('tag' in row)
+        self.assertTrue('lower' in row['tag'])
+        add_tag(row, 'capitalize', True)
+        self.assertTrue('Capitalize' in row['tag'])
+        pass
+
+    def test_add_notes_tag(self):
+        row = {}
+        add_notes_tag(row, None)
+        self.assertFalse('tag' in row)
+        add_notes_tag(row, 'Trash')
+        self.assertTrue('Trash' in row['tag'])
+        add_notes_tag(row, 'Biology')
+        self.assertTrue('Biology' in row['tag'])
+        add_notes_tag(row, 'Geology')
+        self.assertTrue('Geology' in row['tag'])
+        add_notes_tag(row, 'T-ROV')
+        self.assertTrue('TempProbe' in row['tag'])
+        add_notes_tag(row, 'T-IGT')
+        self.assertTrue('TempIGT' in row['tag'])
+        add_notes_tag(row, 'T-SUPR')
+        self.assertTrue('TempSUPR' in row['tag'])
+
+    def test_add_sample_type_tag(self):
+        row = {}
+        add_sample_type_tag(row, None)
+        self.assertFalse('tag' in row)
+        add_sample_type_tag(row, 'SUPR')
+        self.assertTrue('SUPR' in row['tag'])
+        add_sample_type_tag(row, 'IGT')
+        self.assertTrue('IGT' in row['tag'])
+        add_sample_type_tag(row, 'ROVG')
+        self.assertTrue('ROVGrab' in row['tag'])
+        add_sample_type_tag(row, 'ROVPC')
+        self.assertTrue('PushCore' in row['tag'])
+        add_sample_type_tag(row, 'Niskin')
+        self.assertTrue('Niskin' in row['tag'])
+
+    def test_add_divestatus_tag(self):
+        row = {}
+        add_divestatus_tag(row, None)
+        self.assertFalse('tag' in row)
+        add_divestatus_tag(row, 'onbottom')
+        self.assertTrue('OnBottom' in row['tag'])
+        add_divestatus_tag(row, 'offbottom')
+        self.assertTrue('OffBottom' in row['tag'])
+        add_divestatus_tag(row, 'inwater')
+        self.assertTrue('InWater' in row['tag'])
+        add_divestatus_tag(row, 'ondeck')
+        self.assertTrue('OnDeck' in row['tag'])
+
+    def test_add_audiovideo_rating_tag(self):
+        row = {}
+        add_audiovideo_rating_tag(row, None)
+        self.assertFalse('tag' in row)
+        add_audiovideo_rating_tag(row, '0')
+        self.assertTrue('Rating0' in row['tag'])
+        add_audiovideo_rating_tag(row, 1)
+        self.assertTrue('Rating1' in row['tag'])
+        add_audiovideo_rating_tag(row, 2)
+        self.assertTrue('Rating2' in row['tag'])
+        add_audiovideo_rating_tag(row, 3)
+        self.assertTrue('Rating3' in row['tag'])
+        add_audiovideo_rating_tag(row, 4)
+        self.assertTrue('Rating4' in row['tag'])
+        add_audiovideo_rating_tag(row, 5)
+        self.assertTrue('Rating5' in row['tag'])
+
 
 
 

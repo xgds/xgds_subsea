@@ -145,7 +145,7 @@ def add_audiovideo_rating_tag(row, value):
     """
     if not value:
         return
-    add_tag(row, 'Rating' + value)
+    add_tag(row, 'Rating' + str(value))
 
 
 def add_tag(row, tag_key, capitalize=False):
