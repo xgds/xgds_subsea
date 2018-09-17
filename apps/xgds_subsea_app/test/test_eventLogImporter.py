@@ -23,7 +23,9 @@ from django.http import HttpResponseForbidden, Http404, JsonResponse
 from xgds_subsea_app.importer.eventLogCsvImporter import *
 
 
-class xgds_subsea_appTest(TestCase):
+class eventLogImporterTest(TestCase):
+
+    fixtures = ['initial_data.json', 'users.json', 'note_locations.json', 'note_roles.json', 'note_tags.json']
 
     """
     Tests for the eventLogCsvImporter
@@ -149,6 +151,19 @@ class xgds_subsea_appTest(TestCase):
         add_audiovideo_rating_tag(row, 5)
         self.assertTrue('Rating5' in row['tag'])
 
+    def test_load_csv(self):
+        """
+        Actually test loading a csv file into a database
+        :return:
+        """
+        importer = EventLogCsvImporter('/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/EventLog.yaml',
+                                       '/home/xgds/xgds_subsea/apps/xgds_subsea_app/tests/test_files/eventlog.txt',
+                                       force=False,
+                                       replace=False,
+                                       skip_bad=True)
+        result = importer.load_csv()
+        # Should show the number of records imported
+        self.assertEqual(len(result), 37)
 
 
 
