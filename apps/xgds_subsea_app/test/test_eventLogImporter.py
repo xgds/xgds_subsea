@@ -21,6 +21,9 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseForbidden, Http404, JsonResponse
 
 from xgds_subsea_app.importer.eventLogCsvImporter import *
+from xgds_notes2.models import HierarchichalTag, LocatedNote
+
+from django.contrib.auth.models import User
 
 
 class eventLogImporterTest(TestCase):
@@ -156,6 +159,7 @@ class eventLogImporterTest(TestCase):
         Actually test loading a csv file into a database
         :return:
         """
+
         importer = EventLogCsvImporter('/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/EventLog.yaml',
                                        '/home/xgds/xgds_subsea/apps/xgds_subsea_app/test/test_files/eventlog.txt',
                                        force=False,
