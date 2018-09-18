@@ -25,12 +25,34 @@ from django.contrib.auth.models import User
 import json
 from geocamUtil.xml2json import xml2struct
 
+
+def user_exists(first_name,last_name):
+    existing_users = User.objects.filter(first_name=first_name, last_name=last_name)
+    return len(existing_users) > 0
+
+
 def username_exists(username):
     existing_users = User.objects.filter(username=username)
     return len(existing_users) > 0
 
 
-def create_users(xml_filename, test_mode=False):
+def get_new_username_from_name(namestr):
+    parts = namestr.split()
+    first_name = parts[0]
+    last_name = parts[-1]
+    # Username is first initial plus last name in lower case
+    username = first_name[0].lower() + last_name.lower()
+
+    if username_exists(username):
+        user_uniquifier = 1
+        while username_exists(username):
+            username = first_name[0].lower() + last_name.lower() + '%s' % user_uniquifier
+            user_uniquifier += 1
+
+    return username
+
+
+def create_users(xml_filename, test_mode=False, verbose=False):
     """
     Import OET cruise record XML file and create django auth users from the list of participants
     :param filename: the name of the XML file
@@ -42,25 +64,14 @@ def create_users(xml_filename, test_mode=False):
     participant_list = cruise_record['oet:oetcruise']['r2r:cruise']['r2r:cruiseParticipants']['r2r:cruiseParticipant']
     names = [participant['r2r:cruiseParticipantName']['text'] for participant in participant_list]
     for name in names:
-        parts = name.split()
-        first_name = parts[0]
-        last_name = parts[-1]
-        # Username is first initial plus last name in lower case
-        username = first_name[0].lower() + last_name.lower()
-        existing_users = User.objects.filter(first_name=first_name,last_name=last_name)
-        if len(existing_users)>0:
-            print 'This user already exists:'
-            for u in existing_users:
-                print '    ', u.username, '(%s)' % name
+        first_name = name.split()[0]
+        last_name = name.split()[-1]
+        if user_exists(first_name,last_name):
+            if verbose:
+                print 'User named "%s %s" already exists' % (first_name,last_name)
             continue
 
-        if username_exists(username):
-            user_uniquifier = 1
-            while username_exists(username):
-                print 'Username %s is already in use' % username
-                username = first_name[0].lower() + last_name.lower() + '%s' % user_uniquifier
-                user_uniquifier += 1
-
+        username = get_new_username_from_name(name)
         # Now we should have a unique username and a need to create the user
         new_user = User()
         new_user.first_name = first_name
@@ -73,7 +84,8 @@ def create_users(xml_filename, test_mode=False):
             print 'TEST MODE: Skipping actual account creation for %s' % new_user
         else:
             new_user.save()
-            print 'Created user', new_user.username, '(%s)' % name
+            if verbose:
+                print 'Created user', new_user.username, '(%s)' % name
             num_created += 1
 
     return num_created
@@ -82,8 +94,10 @@ def create_users(xml_filename, test_mode=False):
 if __name__ == '__main__':
     parser = optparse.OptionParser('usage: %prog')
     parser.add_option('-t', '--test', action="store_true", default=False, help='run in test mode, do not create users')
+    parser.add_option('-v', '--verbose', action="store_true", default=False, help='verbose mode')
 
     opts, args = parser.parse_args()
     cruise_record = args[0]
-    created = create_users(cruise_record, test_mode=opts.test)
-    print 'Created %d users' % created
+    created = create_users(cruise_record, test_mode=opts.test, verbose=opts.verbose)
+    if opts.verbose:
+        print 'Created %d users' % created

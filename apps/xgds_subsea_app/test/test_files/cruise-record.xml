@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<?xml-model href="https://external.oceanexplorationtrust.org/oetds/fileMeta/schema/1.0/oet-cruise.xsd"?>
+<!--   xmlns:r2r="http://schema.rvdata.us/catalog/1.0"  -->
+<oet:oetcruise xmlns:oet="https://external.oceanexplorationtrust.org/oetds/fileMeta/schema/1.0" xmlns:r2r="http://schema.rvdata.us/catalog/1.0">
+	<r2r:cruise>
+		<r2r:provenance>
+			<r2r:contactPerson>Manager</r2r:contactPerson>
+			<r2r:contactEmail>inactive@oet.org</r2r:contactEmail>
+			<r2r:contactOrganization>org.oceanexplorationtrust</r2r:contactOrganization>
+			<r2r:timeOfLastEdit>2018-08-17T03:27:00Z</r2r:timeOfLastEdit>
+		</r2r:provenance>
+		<r2r:cruiseIdentifier>NAnnn</r2r:cruiseIdentifier>
+		<r2r:cruiseTitle>Seamount Mapping</r2r:cruiseTitle>
+		<r2r:cruiseType>Operational</r2r:cruiseType>
+		<r2r:cruiseDepartDate>2018-08-06</r2r:cruiseDepartDate>
+		<r2r:cruiseDepartPort>Sidney, BC</r2r:cruiseDepartPort>
+		<r2r:cruiseArriveDate>2018-08-20</r2r:cruiseArriveDate>
+		<r2r:cruiseArrivePort>100027</r2r:cruiseArrivePort>
+		<r2r:cruiseFunder>gov.noaa</r2r:cruiseFunder>
+		<r2r:vesselICESCode>NAUTILUS</r2r:vesselICESCode>
+		<r2r:vesselOperator>org.oceanexplorationtrust</r2r:vesselOperator>
+		<r2r:vesselScheduler>org.oceanexplorationtrust</r2r:vesselScheduler>
+		<r2r:cruiseParticipants>
+			<r2r:cruiseParticipant>
+				<r2r:cruiseParticipantName>Janet van Dyne</r2r:cruiseParticipantName>
+				<r2r:cruiseParticipantInstitution>org.oceanexplorationtrust</r2r:cruiseParticipantInstitution>
+				<r2r:cruiseParticipantRole>Expedition Leader</r2r:cruiseParticipantRole>
+			</r2r:cruiseParticipant>
+			<r2r:cruiseParticipant>
+				<r2r:cruiseParticipantName>Peter Parker</r2r:cruiseParticipantName>
+				<r2r:cruiseParticipantInstitution>org.oceanexplorationtrust</r2r:cruiseParticipantInstitution>
+				<r2r:cruiseParticipantRole>Captain</r2r:cruiseParticipantRole>
+			</r2r:cruiseParticipant>
+			<r2r:cruiseParticipant>
+				<r2r:cruiseParticipantName>Bruce Wayne</r2r:cruiseParticipantName>
+				<r2r:cruiseParticipantInstitution>org.oceanexplorationtrust</r2r:cruiseParticipantInstitution>
+				<r2r:cruiseParticipantRole>Mapping Coordinator</r2r:cruiseParticipantRole>
+			</r2r:cruiseParticipant>
+		</r2r:cruiseParticipants>
+	
+	</r2r:cruise>
+	<oet:authorization>
+		<oet:publicDomain>true</oet:publicDomain>
+		<oet:protectedBoundary>
+			<oet:areaID></oet:areaID>
+			<oet:authorizingOrganization>org.oceanexplorationtrust</oet:authorizingOrganization>
+			<oet:contactPerson>Manager</oet:contactPerson>
+			<oet:contactEmail>inactive@oet.org</oet:contactEmail>
+			<oet:shape>
+				<oet:shapename>polygon</oet:shapename>
+				<oet:coordinateList>
+					<oet:coordinate></oet:coordinate>
+					<oet:coordinate></oet:coordinate>
+					<oet:coordinate></oet:coordinate>
+				</oet:coordinateList>
+			</oet:shape>
+		</oet:protectedBoundary>
+	</oet:authorization>
+	<oet:fileStructureMap>data-map.xml</oet:fileStructureMap>
+</oet:oetcruise>
