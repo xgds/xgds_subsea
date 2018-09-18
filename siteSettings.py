@@ -107,7 +107,7 @@ if USING_DJANGO_DEV_SERVER:
 
 
 DEBUG = True
-# TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DEBUG = DEBUG
 
     
 PROJ_ROOT = os.path.abspath(os.path.dirname(__file__))
