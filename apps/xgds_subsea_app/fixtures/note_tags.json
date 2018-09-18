@@ -3,9 +3,9 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 5,
     "fields": {
-        "path": "0002",
+        "path": "0003",
         "depth": 1,
-        "numchild": 5,
+        "numchild": 4,
         "name": "EventLog",
         "slug": "eventlog",
         "abbreviation": "EVL",
@@ -16,7 +16,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 6,
     "fields": {
-        "path": "00020003",
+        "path": "00030003",
         "depth": 2,
         "numchild": 4,
         "name": "DiveStatus",
@@ -29,7 +29,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 7,
     "fields": {
-        "path": "00020001",
+        "path": "00030001",
         "depth": 2,
         "numchild": 6,
         "name": "AudioVideo",
@@ -42,8 +42,8 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 8,
     "fields": {
-        "path": "00020006",
-        "depth": 2,
+        "path": "0007",
+        "depth": 1,
         "numchild": 0,
         "name": "Objective",
         "slug": "objective",
@@ -55,7 +55,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 9,
     "fields": {
-        "path": "0008",
+        "path": "000A",
         "depth": 1,
         "numchild": 0,
         "name": "Trash",
@@ -66,23 +66,10 @@
 },
 {
     "model": "xgds_notes2.hierarchichaltag",
-    "pk": 10,
-    "fields": {
-        "path": "00020002",
-        "depth": 2,
-        "numchild": 0,
-        "name": "Data",
-        "slug": "data",
-        "abbreviation": "DATA",
-        "description": "Data from EventLog"
-    }
-},
-{
-    "model": "xgds_notes2.hierarchichaltag",
     "pk": 12,
     "fields": {
-        "path": "00050001",
-        "depth": 2,
+        "path": "000300050001",
+        "depth": 3,
         "numchild": 0,
         "name": "MultibeamLine",
         "slug": "multibeamline",
@@ -94,7 +81,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 13,
     "fields": {
-        "path": "00020004",
+        "path": "00030004",
         "depth": 2,
         "numchild": 8,
         "name": "Engineering",
@@ -107,7 +94,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 14,
     "fields": {
-        "path": "000200030001",
+        "path": "000300030001",
         "depth": 3,
         "numchild": 0,
         "name": "InWater",
@@ -120,7 +107,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 15,
     "fields": {
-        "path": "000200030002",
+        "path": "000300030002",
         "depth": 3,
         "numchild": 0,
         "name": "OffBottom",
@@ -133,7 +120,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 16,
     "fields": {
-        "path": "000200030003",
+        "path": "000300030003",
         "depth": 3,
         "numchild": 0,
         "name": "OnBottom",
@@ -146,7 +133,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 17,
     "fields": {
-        "path": "000200030004",
+        "path": "000300030004",
         "depth": 3,
         "numchild": 0,
         "name": "OnDeck",
@@ -159,7 +146,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 18,
     "fields": {
-        "path": "000200040007",
+        "path": "000300040007",
         "depth": 3,
         "numchild": 0,
         "name": "Repair",
@@ -172,7 +159,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 19,
     "fields": {
-        "path": "000200040002",
+        "path": "000300040002",
         "depth": 3,
         "numchild": 0,
         "name": "Decommission",
@@ -185,7 +172,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 20,
     "fields": {
-        "path": "000200040003",
+        "path": "000300040003",
         "depth": 3,
         "numchild": 0,
         "name": "Failure",
@@ -198,7 +185,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 21,
     "fields": {
-        "path": "000200040004",
+        "path": "000300040004",
         "depth": 3,
         "numchild": 0,
         "name": "Install",
@@ -211,7 +198,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 22,
     "fields": {
-        "path": "000200040001",
+        "path": "000300040001",
         "depth": 3,
         "numchild": 0,
         "name": "Communications",
@@ -224,7 +211,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 23,
     "fields": {
-        "path": "000200040005",
+        "path": "000300040005",
         "depth": 3,
         "numchild": 0,
         "name": "Logging",
@@ -237,7 +224,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 24,
     "fields": {
-        "path": "000200040008",
+        "path": "000300040008",
         "depth": 3,
         "numchild": 0,
         "name": "Vehicle",
@@ -250,7 +237,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 25,
     "fields": {
-        "path": "000200040006",
+        "path": "000300040006",
         "depth": 3,
         "numchild": 0,
         "name": "Other",
@@ -276,7 +263,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 27,
     "fields": {
-        "path": "0003",
+        "path": "0004",
         "depth": 1,
         "numchild": 0,
         "name": "Geology",
@@ -289,9 +276,9 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 28,
     "fields": {
-        "path": "0005",
-        "depth": 1,
-        "numchild": 1,
+        "path": "00030005",
+        "depth": 2,
+        "numchild": 2,
         "name": "Mapping",
         "slug": "mapping",
         "abbreviation": "MAP",
@@ -302,7 +289,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 29,
     "fields": {
-        "path": "0006",
+        "path": "0008",
         "depth": 1,
         "numchild": 5,
         "name": "Sample",
@@ -315,7 +302,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 30,
     "fields": {
-        "path": "00060003",
+        "path": "00080003",
         "depth": 2,
         "numchild": 0,
         "name": "PushCore",
@@ -328,7 +315,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 31,
     "fields": {
-        "path": "00060004",
+        "path": "00080004",
         "depth": 2,
         "numchild": 0,
         "name": "ROVGrab",
@@ -341,7 +328,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 32,
     "fields": {
-        "path": "00060002",
+        "path": "00080002",
         "depth": 2,
         "numchild": 0,
         "name": "Niskin",
@@ -354,7 +341,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 33,
     "fields": {
-        "path": "00060001",
+        "path": "00080001",
         "depth": 2,
         "numchild": 0,
         "name": "IGT",
@@ -367,7 +354,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 34,
     "fields": {
-        "path": "00060005",
+        "path": "00080005",
         "depth": 2,
         "numchild": 0,
         "name": "SUPR",
@@ -380,7 +367,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 35,
     "fields": {
-        "path": "0007",
+        "path": "0009",
         "depth": 1,
         "numchild": 5,
         "name": "Timing",
@@ -393,7 +380,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 36,
     "fields": {
-        "path": "00070004",
+        "path": "00090004",
         "depth": 2,
         "numchild": 0,
         "name": "Start",
@@ -406,7 +393,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 37,
     "fields": {
-        "path": "00070001",
+        "path": "00090001",
         "depth": 2,
         "numchild": 0,
         "name": "End",
@@ -419,7 +406,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 38,
     "fields": {
-        "path": "00070002",
+        "path": "00090002",
         "depth": 2,
         "numchild": 0,
         "name": "Pause",
@@ -432,7 +419,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 39,
     "fields": {
-        "path": "00070005",
+        "path": "00090005",
         "depth": 2,
         "numchild": 0,
         "name": "Stop",
@@ -445,12 +432,12 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 40,
     "fields": {
-        "path": "00070003",
+        "path": "00090003",
         "depth": 2,
         "numchild": 0,
-        "name": "Restart",
+        "name": "Resume",
         "slug": "restart",
-        "abbreviation": "RESTART",
+        "abbreviation": "RESUME",
         "description": ""
     }
 },
@@ -458,7 +445,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 41,
     "fields": {
-        "path": "0004",
+        "path": "0005",
         "depth": 1,
         "numchild": 3,
         "name": "Instrument",
@@ -471,7 +458,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 42,
     "fields": {
-        "path": "000400030002",
+        "path": "000500030002",
         "depth": 3,
         "numchild": 0,
         "name": "TempProbe",
@@ -484,7 +471,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 43,
     "fields": {
-        "path": "00040002",
+        "path": "00050002",
         "depth": 2,
         "numchild": 0,
         "name": "O2S",
@@ -497,7 +484,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 44,
     "fields": {
-        "path": "00040001",
+        "path": "00050001",
         "depth": 2,
         "numchild": 0,
         "name": "CTD",
@@ -510,7 +497,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 45,
     "fields": {
-        "path": "000400030001",
+        "path": "000500030001",
         "depth": 3,
         "numchild": 0,
         "name": "TempIGT",
@@ -523,7 +510,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 46,
     "fields": {
-        "path": "000400030003",
+        "path": "000500030003",
         "depth": 3,
         "numchild": 0,
         "name": "TempSUPR",
@@ -536,7 +523,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 47,
     "fields": {
-        "path": "000200010002",
+        "path": "000300010002",
         "depth": 3,
         "numchild": 0,
         "name": "Rating1",
@@ -549,7 +536,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 48,
     "fields": {
-        "path": "000200010003",
+        "path": "000300010003",
         "depth": 3,
         "numchild": 0,
         "name": "Rating2",
@@ -562,7 +549,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 49,
     "fields": {
-        "path": "000200010004",
+        "path": "000300010004",
         "depth": 3,
         "numchild": 0,
         "name": "Rating3",
@@ -575,7 +562,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 50,
     "fields": {
-        "path": "000200010005",
+        "path": "000300010005",
         "depth": 3,
         "numchild": 0,
         "name": "Rating4",
@@ -588,7 +575,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 51,
     "fields": {
-        "path": "00040003",
+        "path": "00050003",
         "depth": 2,
         "numchild": 3,
         "name": "Temperature",
@@ -601,7 +588,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 52,
     "fields": {
-        "path": "000200010001",
+        "path": "000300010001",
         "depth": 3,
         "numchild": 0,
         "name": "Rating0",
@@ -614,13 +601,78 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 53,
     "fields": {
-        "path": "000200010006",
+        "path": "000300010006",
         "depth": 3,
         "numchild": 0,
         "name": "Rating5",
         "slug": "rating5",
         "abbreviation": "R5",
         "description": "Audio Video rating 5"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 54,
+    "fields": {
+        "path": "0002",
+        "depth": 1,
+        "numchild": 3,
+        "name": "Data",
+        "slug": "data",
+        "abbreviation": "DATA",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 55,
+    "fields": {
+        "path": "00020003",
+        "depth": 2,
+        "numchild": 0,
+        "name": "Min",
+        "slug": "min",
+        "abbreviation": "MIN",
+        "description": "Minimum"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 56,
+    "fields": {
+        "path": "00020002",
+        "depth": 2,
+        "numchild": 0,
+        "name": "Max",
+        "slug": "max",
+        "abbreviation": "MAX",
+        "description": "Maximum"
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 57,
+    "fields": {
+        "path": "00020001",
+        "depth": 2,
+        "numchild": 0,
+        "name": "Average",
+        "slug": "average",
+        "abbreviation": "AVG",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 59,
+    "fields": {
+        "path": "000300050002",
+        "depth": 3,
+        "numchild": 0,
+        "name": "Profiles",
+        "slug": "profiles",
+        "abbreviation": "PROFILES",
+        "description": ""
     }
 }
 ]
