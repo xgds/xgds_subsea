@@ -27,3 +27,5 @@ pyraptord
 pysrc
 ssl
 db_dumps
+.coverage
+htmlcov
