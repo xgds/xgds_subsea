@@ -22,6 +22,7 @@ registry:
   - name: 'cruise record XML'
     filepath_pattern: 'metadata/cruise-record.xml'
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/create_users.py'
+    arguments: '-v'
     timeout: 300
     order: 2
   - name: 'event log'
