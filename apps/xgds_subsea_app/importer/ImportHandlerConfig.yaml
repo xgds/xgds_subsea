@@ -2,7 +2,7 @@
 # paired with a process that can import the file
 
 # Top-level directory to look for incoming files, this is overridden if the import handler is called with a path
-import_path: '/home/xgds/xgds_subsea/data/incoming/NA087'
+import_path: '/home/xgds/xgds_subsea/data/incoming'
 
 # Registry of regex patterns to look for and what to do when files match them
 registry:
@@ -19,6 +19,11 @@ registry:
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/create_dives.py'
     timeout: 300
     order: 1
+  - name: 'cruise record XML'
+    filepath_pattern: 'metadata/cruise-record.xml'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/create_users.py'
+    timeout: 300
+    order: 2
   - name: 'event log'
     filepath_pattern: 'processed/eventlog/by-dive/all_eventlog_H\d{4}.*\.txt'
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/eventLogCsvImportRunner.py'
