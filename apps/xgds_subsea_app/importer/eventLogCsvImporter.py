@@ -14,6 +14,7 @@
 # specific language governing permissions and limitations under the License.
 # __END_LICENSE__
 
+import traceback
 from geocamUtil.UserUtil import getUserByUsername, getUserByNames
 from xgds_core.importer import csvImporter
 from xgds_core.FlightUtils import lookup_flight
@@ -60,6 +61,8 @@ def remove_empty_keys(row):
     """
     if None in row:
         del row[None]
+    if '' in row:
+        del row['']
     return row
 
 
@@ -71,7 +74,7 @@ def append_key_value(content, key, value):
     :param value:
     :return: new content
     """
-    if value and key:
+    if key and value:
         if content:
             return '%s\n%s: %s' % (content, key, value)
         return '%s: %s' % (key, value)
@@ -79,8 +82,14 @@ def append_key_value(content, key, value):
 
 
 def add_notes_tag(row, value):
+    """
+    Appends the correct tag value to the row
+    :param row:
+    :param value:
+    :return: True if added, False otherwise, "NO VALUE" if no value
+    """
     if not value:
-        return
+        return "NO VALUE"
     if 'Trash' in value:
         add_tag(row, 'Trash')
     elif 'Biology' in value:
@@ -93,6 +102,11 @@ def add_notes_tag(row, value):
         add_tag(row, 'TempIGT')
     elif 'T-SUPR' in value:
         add_tag(row, 'TempSUPR')
+    elif 'Other' in value:
+        add_tag(row, 'Other')
+    else:
+        return False
+    return True
 
 
 def add_sample_type_tag(row, value):
@@ -100,10 +114,10 @@ def add_sample_type_tag(row, value):
     Add the sample specific type tags
     :param row:
     :param value:
-    :return:
+    :return: True if added, False otherwise, "NO VALUE" if no value
     """
     if not value:
-        return
+        return "NO VALUE"
     if 'SUPR' in value:
         add_tag(row, 'SUPR')
     elif 'IGT' in value:
@@ -114,6 +128,9 @@ def add_sample_type_tag(row, value):
         add_tag(row, 'PushCore')
     elif 'Niskin' in value:
         add_tag(row, 'Niskin')
+    else:
+        return False
+    return True
 
 
 def add_divestatus_tag(row, value):
@@ -121,10 +138,10 @@ def add_divestatus_tag(row, value):
     Add the divestatus specific type tags
     :param row:
     :param value:
-    :return:
+    :return: True if added, False otherwise, "NO VALUE" if no value
     """
     if not value:
-        return
+        return "NO VALUE"
     if 'onbottom' in value:
         add_tag(row, 'OnBottom')
     elif 'offbottom' in value:
@@ -133,6 +150,9 @@ def add_divestatus_tag(row, value):
         add_tag(row, 'InWater')
     elif 'ondeck' in value:
         add_tag(row, 'OnDeck')
+    else:
+        return False
+    return True
 
 
 def add_audiovideo_rating_tag(row, value):
@@ -141,11 +161,60 @@ def add_audiovideo_rating_tag(row, value):
     TODO figure out what all the ratings can be
     :param row:
     :param value:
-    :return:
+    :return: True if valid tag was made, False otherwise, "NO VALUE" if no value
     """
     if not value:
-        return
-    add_tag(row, 'Rating' + str(value))
+        return "NO VALUE"
+    try:
+        int_val = int(value)
+        if 0 <= int_val <= 5:
+            add_tag(row, 'Rating' + str(value))
+            return True
+        else:
+            return False
+    except:
+        return False
+
+
+def add_timing_or_data_tag(row, value):
+    """
+    Add tags for timing (start/end/pause/restart etc) or data (average, min, max)
+    :param row:
+    :param value:
+    :return: True if tag added, False otherwise, "NO VALUE" if no value
+    """
+    if not value:
+        return "NO VALUE"
+    tag_added = False
+    lower_value = value.lower()
+    if 'min' in lower_value:
+        add_tag(row, 'Min')
+        tag_added = True
+    if 'max' in lower_value:
+        add_tag(row, 'Max')
+        tag_added = True
+    if ('avg' or 'average') in lower_value:
+        add_tag(row, 'Average')
+        tag_added = True
+    if 'end' in lower_value:
+        add_tag(row, 'End')
+        tag_added = True
+    if 'start' in lower_value:
+        if 'restart' in lower_value:
+            add_tag(row, 'Resume')
+        else:
+            add_tag(row, 'Start')
+        tag_added = True
+    if 'pause' in lower_value:
+        add_tag(row, 'Pause')
+        tag_added = True
+    if 'resume' in lower_value:
+        add_tag(row, 'Resume')
+        tag_added = True
+    if 'stop' in lower_value:
+        add_tag(row, 'Stop')
+        tag_added = True
+    return tag_added
 
 
 def add_tag(row, tag_key, capitalize=False):
@@ -209,10 +278,21 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         result = self.clean_key_values(result)
         if result:
             result = self.clean_author(result)
+            result = self.clean_site(result)
             result = remove_empty_keys(result)
             result['location'] = self.ship_location
 
         return result
+
+    def clean_site(self, row):
+        """
+        Updates the row based on the site
+        :param row:
+        :return:
+        """
+        #TODO handle
+        del row['site']
+        return row
 
     def clean_author(self, row):
         """
@@ -227,7 +307,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             row['role'] = self.roles['NAVIGATOR']
             row['author'] = self.navigator_user
         elif author_name.lower() == 'default_scf_user':
-            row['role'] = self.roles['SCIENCE_COMMUNICATION_FELLOW']
+            row['role'] = self.roles['SCF']
             row['author'] = self.scf_user
         else:
             row['role'] = self.roles['DATA_LOGGER']
@@ -236,7 +316,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 try:
                     row['author'] = getUserByNames(splits[0], splits[1])
                 except:
-                    # TODO will we ever be in this state?
+                    # TODO This happend for NA100 due to errors in cruise-record.xml
+                    print 'COULD NOT FIND USER FOR %s' % author_name
                     pass
 
         if 'author' not in row:
@@ -285,25 +366,41 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         if event_type == 'NOTES':
             row['content'] = value_2
             if value_3:
+                add_timing_or_data_tag(row, value_3)
                 prefix = '%s: %s\n' % (key_3, value_3)
                 row['content'] = clean_append(prefix, row['content'])
-            add_notes_tag(row, value_1)
+            tag_added = add_notes_tag(row, value_1)
+            if not tag_added:
+                print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_1, str(row))
+                row['content'] = '%s\n%s: %s' % (row['content'], key_1, value_1)
         elif event_type == 'SAMPLE':
             row['content'] = '%s: %s\n%s' % (key_1, value_1, value_3)
             add_tag(row, 'Sample')
-            add_sample_type_tag(row, value_2)
+            tag_added = add_sample_type_tag(row, value_2)
+            if not tag_added:
+                print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_2, str(row))
+                row['content'] = '%s\n%s: %s' % (row['content'], key_2, value_2)
         elif event_type == 'DIVESTATUS':
             row['content'] = value_1
             add_tag(row, 'DiveStatus')
-            add_divestatus_tag(row, value_1)
+            tag_added = add_divestatus_tag(row, value_1)
+            if not tag_added:
+                print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_1, str(row))
+                row['content'] = '%s\n%s: %s' % (row['content'], key_1, value_1)
         elif event_type == 'OBJECTIVE':
             row['content'] = value_1
             add_tag(row, 'Objective')
         elif event_type == 'ENGEVENT':
             row['content'] = value_3
             add_tag(row, 'Engineering')
-            add_tag(row, value_1, capitalize=True)
-            add_tag(row, value_2, capitalize=True)
+            tag_added = add_tag(row, value_1, capitalize=True)
+            if not tag_added:
+                print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_1, str(row))
+                row['content'] = '%s\n%s: %s' % (row['content'], key_1, value_1)
+            tag_added = add_tag(row, value_2, capitalize=True)
+            if not tag_added:
+                print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_2, str(row))
+                row['content'] = '%s\n%s: %s' % (row['content'], key_2, value_2)
         elif event_type == 'AUDIOVIDEO':
             if value_3:
                 if 'Herc/Argus' not in value_3:
@@ -314,14 +411,44 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             key_4, value_4 = clean_key_value(row['key_value_4'])
             row['content'] = '%s: %s\n %s' % (key_2, value_2, value_1)
             add_tag(row, 'AudioVideo')
-            add_audiovideo_rating_tag(row, value_4)
+            tag_added = add_audiovideo_rating_tag(row, value_4)
+            if not tag_added:
+                print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_4, str(row))
+                row['content'] = '%s\nRATING: %s' % (row['content'], value_4)
         elif event_type == 'DATA':
-
             key_4, value_4 = clean_key_value(row['key_value_4'])
             key_5, value_5 = clean_key_value(row['key_value_5'])
             key_6, value_6 = clean_key_value(row['key_value_6'])
             key_7, value_7 = clean_key_value(row['key_value_7'])
+            key_8, value_8 = clean_key_value(row['key_value_8'])
 
+            # 1 EVENT
+            # TIME
+            # 3 EVENTLOG
+            # 4 DATA
+            # task_type PROFILES
+            # event_type DATA
+            # cruise CRUISEID:NA100
+            # author AUTHOR:Navigator
+            # group_flight_name DIVENUMBER:H1705
+            # site SITE:Loihi_Summit
+            # vehicle VEHICLE:Hercules / Argus
+            # key_value_1 SURVEYNAME:NaN
+            # key_value_2 FILENAME:NA100_20180828_2213_00023_XBT.edf
+            # key_value_3 STARTLAT:19.20593302N
+            # key_value_4 STARTLON:154.97059658W
+            # kv5 ENDLAT:19.20593302N
+            # kv6 ENDLON:154.97059658W
+            # kv7 TOTALDEPTH:760
+            # kv8 NOTES:NaN
+            # tail NaN
+
+            if row['task_type'] == 'MULTIBEAMLINE':
+                add_tag(row, 'MultibeamLine')
+            elif row['task_type'] == 'PROFILES':
+                add_tag(row, 'Profiles')
+            else:
+                print 'UNKOWN DATA TASK TYPE %s: %s' % (row['task_type'], str(row))
             content = append_key_value(None, key_1, value_1)
             content = append_key_value(content, key_2, value_2)
             content = append_key_value(content, key_3, value_3)
@@ -329,8 +456,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             content = append_key_value(content, key_5, value_5)
             content = append_key_value(content, key_6, value_6)
             content = append_key_value(content, key_7, value_7)
+            content = append_key_value(content, key_8, value_8)
             row['content'] = content
-            add_tag(row, 'MultibeamLine')
 
         else:
             print '*** UNKONWN EVENT TYPE ** %s' % event_type
@@ -346,7 +473,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         del row['key_value_5']
         del row['key_value_6']
         del row['key_value_7']
+        del row['key_value_8']
         del row['event_type']
+        del row['task_type']
 
         return row
 
@@ -371,12 +500,18 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                     if not self.replace:
                         # Create the note and the tags.  Because the tags cannot be created until the note exists,
                         # we have to do this one at a time.
-                        new_note_tags = row['tag']
-                        del row['tag']
-                        new_note = the_model(**row)
-                        new_note.save()
-                        new_note.tags.add(*new_note_tags)
-                        new_models.append(new_note)
+                        try:
+                            new_note_tags = row['tag']
+                            del row['tag']
+                            new_note = the_model(**row)
+                            new_note.save()
+                            new_note.tags.add(*new_note_tags)
+                            new_models.append(new_note)
+                        except Exception as e:
+                            traceback.print_exc()
+                            print new_note_tags
+                            print row
+                            raise e
             if self.replace:
                 self.update_stored_data(the_model, rows)
             self.handle_last_row(row)
