@@ -169,6 +169,35 @@ class eventLogImporterTest(TestCase):
         # Should show the number of records imported
         self.assertEqual(len(result), 37)
 
+        sampleTag = HierarchichalTag.objects.get(name='sample')
+        self.assertEqual(sampleTag.xgds_notes2_taggednote_related.count(), 11)
+        igtTag = HierarchichalTag.objects.get(name='IGT')
+        self.assertEqual(igtTag.xgds_notes2_taggednote_related.count(), 2)
+        suprTag = HierarchichalTag.objects.get(name='SUPR')
+        self.assertEqual(suprTag.xgds_notes2_taggednote_related.count(), 8)
+        grabTag = HierarchichalTag.objects.get(name='ROVGrab')
+        self.assertEqual(grabTag.xgds_notes2_taggednote_related.count(), 1)
+
+        diveStatusTag = HierarchichalTag.objects.get(name='DiveStatus')
+        self.assertEqual(diveStatusTag.xgds_notes2_taggednote_related.count(), 6)
+
+        audioVideoTag = HierarchichalTag.objects.get(name='AudioVideo')
+        self.assertEqual(audioVideoTag.xgds_notes2_taggednote_related.count(), 3)
+
+        engineeringTag = HierarchichalTag.objects.get(name='Engineering')
+        self.assertEqual(engineeringTag.xgds_notes2_taggednote_related.count(), 1)
+
+        eventLogTag = HierarchichalTag.objects.get(name='EventLog')
+        self.assertEqual(eventLogTag.xgds_notes2_taggednote_related.count(), 37)
+
+        self.assertEqual(result[0].content, 'inwater')
+        self.assertTrue('inwater' in result[0].content)
+        self.assertTrue('inwater' in result[0].tags.slugs())
+        self.assertEqual(result[0].tags.count(), 3)
+
+        self.assertEqual(result[1].content, 'Argus in water')
+
+
 
 
 
