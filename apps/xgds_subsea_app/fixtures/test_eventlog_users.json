@@ -1,0 +1,57 @@
+[
+  {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+      "password": "*",
+      "last_login": null,
+      "username": "bmarcks",
+      "first_name": "Basia",
+      "last_name": "Marcks"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.user",
+    "fields": {
+      "password": "*",
+      "last_login": null,
+      "username": "jwoodman",
+      "first_name": "Jenny",
+      "last_name": "Woodman"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "auth.user",
+    "fields": {
+      "password": "*",
+      "last_login": null,
+      "username": "lmarsh",
+      "first_name": "Leigh",
+      "last_name": "Marsh"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "auth.user",
+    "fields": {
+      "password": "*",
+      "last_login": null,
+      "username": "mlubetkin",
+      "first_name": "Megan",
+      "last_name": "Lubetkin"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "auth.user",
+    "fields": {
+      "password": "*",
+      "last_login": null,
+      "username": "nraineault",
+      "first_name": "Nicole",
+      "last_name": "Raineault"
+    }
+  }
+]
