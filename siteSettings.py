@@ -415,3 +415,21 @@ XGDS_CORE_FLIGHT_MONIKER = "Dive"
 XGDS_CORE_GROUP_FLIGHT_MONIKER = "Dive"
 XGDS_CORE_DEFAULT_VEHICLE_PK = 2  # Hercules
 
+XGDS_MAP_SERVER_JS_MAP = getOrCreateDict('XGDS_MAP_SERVER_JS_MAP')
+XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_NOTE_MONIKER] = {'ol': 'xgds_notes2/js/olNoteMap.js',
+                                                   'model': XGDS_NOTES_NOTE_MODEL,
+                                                   'columns': ['checkbox', 'event_time', 'author_name', 'content', 'tag_names','content_url', 'content_thumbnail_url', 'content_name', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'flight_name','object_type', 'object_id', 'creation_time','show_on_map', 'role_name', 'location_name', 'event_timezone',  'pk'],
+                                                   'hiddenColumns': ['app_label', 'model_type', 'type', 'event_timezone', 'lat', 'lon', 'alt', 'role_name', 'location_name', 'flight_name', 'content_thumbnail_url', 'content_name', 'object_type', 'object_id', 'creation_time','show_on_map','pk'],
+                                                   'searchableColumns': ['name','description','flight_name', 'author_name', 'role_name', 'location_name',],
+                                                   'editableColumns':{'content':'text','tag_names':'tagsinput'},
+                                                   'unsortableColumns': ['content_url'],
+                                                   #[{'label':'Content','name':'content','data':5},
+                                                   #                   {'label':'Tags','name':'tag_names','data':6}],
+                                                   'columnTitles': ['Time', 'Author', 'Content', 'Tags', 'Link'],
+                                                   'viewHandlebars': 'xgds_notes2/templates/handlebars/note-view.handlebars',
+                                                   'viewJS': [STATIC_URL + 'xgds_notes2/js/genericNotesView.js' ],
+                                                   'viewInitMethods': ['xgds_notes.initDetailView'],
+                                                   'searchInitMethods': ['xgds_notes.initializeInput'],
+                                                   'event_time_field': 'event_time',
+                                                   'event_timezone_field': 'event_timezone',
+                                                   'search_form_class': 'xgds_notes2.forms.SearchNoteForm'}
