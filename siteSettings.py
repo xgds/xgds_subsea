@@ -107,7 +107,8 @@ if USING_DJANGO_DEV_SERVER:
 
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+# TEMPLATE_DEBUG was deprecated in Django 1.8 and moved inside TEMPLATES dictionary
+# TEMPLATE_DEBUG = DEBUG
 
     
 PROJ_ROOT = os.path.abspath(os.path.dirname(__file__))
