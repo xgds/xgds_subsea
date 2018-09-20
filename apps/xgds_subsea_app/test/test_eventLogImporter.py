@@ -28,7 +28,8 @@ from django.contrib.auth.models import User
 
 class eventLogImporterTest(TestCase):
 
-    fixtures = ['initial_data.json', 'users.json', 'note_locations.json', 'note_roles.json', 'note_tags.json']
+    fixtures = ['initial_data.json', 'users.json', 'note_locations.json', 'note_roles.json', 'note_tags.json', \
+                'test_eventlog_users.json']
 
     """
     Tests for the eventLogCsvImporter
