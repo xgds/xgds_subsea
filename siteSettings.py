@@ -41,7 +41,7 @@ SITE_TITLE = 'SUBSEA'  # the name of your research project, your brand
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '***REMOVED***'
 
-FAVICON_PATH = "xgds_core/icons/favicon.ico"
+FAVICON_PATH = "xgds_subsea/images/favicon.ico"
 
 COUCHDB_FILESTORE_NAME = "subsea-file-store" # you may want to customize this to be something like yoursite-file-store
 
