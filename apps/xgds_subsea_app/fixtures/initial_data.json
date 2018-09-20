@@ -21,7 +21,7 @@
         "pk": 4,
         "model": "xgds_core.vehicle",
         "fields": {
-            "name": "Ship",
+            "name": "Nautilus",
             "type": "Ship",
             "primary": true
         }

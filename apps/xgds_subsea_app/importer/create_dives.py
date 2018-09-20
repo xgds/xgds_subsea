@@ -42,7 +42,7 @@ def create_dives(filename):
 
     vehicles = [Vehicle.objects.filter(name='Hercules')[0],
                 Vehicle.objects.filter(name='Argus')[0],
-                Vehicle.objects.filter(name='Ship')[0]]
+                Vehicle.objects.filter(name='Nautilus')[0]]
 
     reader = DictReader(open(filename, 'r'), delimiter='\t')
     for row in reader:
