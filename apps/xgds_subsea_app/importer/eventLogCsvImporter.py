@@ -15,10 +15,15 @@
 # __END_LICENSE__
 
 import traceback
+
+from django.conf import settings
+from django.utils import timezone
 from geocamUtil.UserUtil import getUserByUsername, getUserByNames
+from geocamUtil.models import SiteFrame
 from xgds_core.importer import csvImporter
 from xgds_core.FlightUtils import lookup_flight
 from xgds_notes2.models import LocatedNote, HierarchichalTag, TaggedNote, Role, Location
+from xgds_map_server.models import Place
 
 
 def clean_key_value(dictionary):
@@ -246,6 +251,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
     datalogger_user = getUserByUsername('datalogger')
     navigator_user = getUserByUsername('navigator')
     scf_user = getUserByUsername('scf')
+    xgds_user = getUserByUsername('xgds')
 
     roles = {'NAVIGATOR': Role.objects.get(value='NAVIGATOR'),
              'SCF': Role.objects.get(value='SCIENCE_COMMUNICATION_FELLOW'),
@@ -290,8 +296,20 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         :param row:
         :return:
         """
-        #TODO handle
-        del row['site']
+        if 'site' in row:
+            key, site_string = clean_key_value(row['site'])
+            if site_string:
+                site_string = site_string.replace('_',' ')
+                try:
+                    place = Place.objects.get(name=site_string)
+                except:
+                    # create a new place
+                    place = Place(name=site_string, creator=self.xgds_user,
+                                  creation_time=timezone.now(),
+                                  region=SiteFrame.objects.get(pk=settings.XGDS_CURRENT_SITEFRAME_ID))
+                    Place.add_root(instance=place)
+                row['place'] = place
+            del row['site']
         return row
 
     def clean_author(self, row):
@@ -462,9 +480,11 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         else:
             print '*** UNKONWN EVENT TYPE ** %s' % event_type
 
-        add_tag(row, 'EventLog')
         if not flight_set:
             row = self.clean_flight(row)
+
+        if 'tag' in row and not row['tag']:
+            del row['tag']
 
         del row['key_value_1']
         del row['key_value_2']
@@ -501,11 +521,15 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                         # Create the note and the tags.  Because the tags cannot be created until the note exists,
                         # we have to do this one at a time.
                         try:
-                            new_note_tags = row['tag']
-                            del row['tag']
+                            has_tag = False
+                            if 'tag' in row:
+                                has_tag = True
+                                new_note_tags = row['tag']
+                                del row['tag']
                             new_note = the_model(**row)
                             new_note.save()
-                            new_note.tags.add(*new_note_tags)
+                            if has_tag:
+                                new_note.tags.add(*new_note_tags)
                             new_models.append(new_note)
                         except Exception as e:
                             traceback.print_exc()
@@ -536,12 +560,16 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 print "ERROR: DID NOT FIND MATCH FOR %s" % str(row[self.config['timefield_default']])
             else:
                 item = found[0]
-                new_note_tags = row['tag']
-                del row['tag']
+                has_tag = False
+                if 'tag' in row:
+                    has_tag = True
+                    new_note_tags = row['tag']
+                    del row['tag']
                 for key, value in row.iteritems():
                     setattr(item, key, value)
                 item.tags.clear()
-                item.tags.add(*new_note_tags)
+                if has_tag:
+                    item.tags.add(*new_note_tags)
 
                 print 'UPDATED: %s ' % str(item)
                 item.save()
