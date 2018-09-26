@@ -356,7 +356,7 @@
     "fields": {
         "path": "00080005",
         "depth": 2,
-        "numchild": 0,
+        "numchild": 2,
         "name": "SUPR",
         "slug": "supr",
         "abbreviation": "SUPR",
@@ -672,6 +672,32 @@
         "name": "Profiles",
         "slug": "profiles",
         "abbreviation": "PROFILES",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 60,
+    "fields": {
+        "path": "000800050001",
+        "depth": 3,
+        "numchild": 0,
+        "name": "SUPR-1",
+        "slug": "supr-1",
+        "abbreviation": "SUPR1",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 61,
+    "fields": {
+        "path": "000800050002",
+        "depth": 3,
+        "numchild": 0,
+        "name": "SUPR-2",
+        "slug": "supr-2",
+        "abbreviation": "SUPR2",
         "description": ""
     }
 }

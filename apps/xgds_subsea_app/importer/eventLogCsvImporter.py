@@ -15,15 +15,19 @@
 # __END_LICENSE__
 
 import traceback
-
+import re
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.utils import timezone
+from django.contrib.contenttypes.models import ContentType
+
 from geocamUtil.UserUtil import getUserByUsername, getUserByNames
 from geocamUtil.models import SiteFrame
 from xgds_core.importer import csvImporter
 from xgds_core.FlightUtils import lookup_flight
 from xgds_notes2.models import LocatedNote, HierarchichalTag, TaggedNote, Role, Location
 from xgds_map_server.models import Place
+from xgds_sample.models import Sample, SampleType, Label
 
 
 def clean_key_value(dictionary):
@@ -123,8 +127,10 @@ def add_sample_type_tag(row, value):
     """
     if not value:
         return "NO VALUE"
-    if 'SUPR' in value:
-        add_tag(row, 'SUPR')
+    if 'SUPR-1' in value:
+        add_tag(row, 'SUPR-1')
+    elif 'SUPR-2' in value:
+        add_tag(row, 'SUPR-2')
     elif 'IGT' in value:
         add_tag(row, 'IGT')
     elif 'ROVG' in value:
@@ -251,6 +257,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
     datalogger_user = getUserByUsername('datalogger')
     navigator_user = getUserByUsername('navigator')
     scf_user = getUserByUsername('scf')
+    herc_user = getUserByUsername('herc')
     xgds_user = getUserByUsername('xgds')
 
     roles = {'NAVIGATOR': Role.objects.get(value='NAVIGATOR'),
@@ -258,6 +265,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
              'DATA_LOGGER': Role.objects.get(value='DATA_LOGGER')}
 
     ship_location = Location.objects.get(value='SHIP')
+
+    sample_content_type = ContentType.objects.get_for_model(Sample)
 
     def check_data_exists(self, row):
         """
@@ -281,10 +290,10 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         """
         result = super(EventLogCsvImporter, self).update_row(row)
 
+        result = self.clean_site(result)
         result = self.clean_key_values(result)
         if result:
             result = self.clean_author(result)
-            result = self.clean_site(result)
             result = remove_empty_keys(result)
             result['location'] = self.ship_location
 
@@ -392,9 +401,12 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_1, str(row))
                 row['content'] = '%s\n%s: %s' % (row['content'], key_1, value_1)
         elif event_type == 'SAMPLE':
+            tag_added = add_sample_type_tag(row, value_2)
+            sample_data = self.populate_sample_data(row, value_1, value_3)
+            if sample_data:
+                row['sample_data'] = sample_data
             row['content'] = '%s: %s\n%s' % (key_1, value_1, value_3)
             add_tag(row, 'Sample')
-            tag_added = add_sample_type_tag(row, value_2)
             if not tag_added:
                 print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_2, str(row))
                 row['content'] = '%s\n%s: %s' % (row['content'], key_2, value_2)
@@ -499,6 +511,58 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
         return row
 
+    def populate_sample_data(self, row, name, description):
+
+        """
+        Since samples are created in the event log and we have already parsed the information, 
+        we will create a dictionary with information to create the sample here
+        :return: the dictionary of sample data
+        """
+        found_sample = None
+        try:
+            found_sample = Sample.objects.get(name=name)
+            if not self.replace:
+                raise 'Sample already exists and replace not specified %s' % name
+        except ObjectDoesNotExist:
+            pass
+        sample_type = None
+        if 'tag' in row and row['tag']:
+            try:
+                sample_type = SampleType.objects.get(value=row['tag'][0])
+                print 'sample type %s' % row['tag'][0]
+            except:
+                print 'sample type %s NOT FOUND' % row['tag'][0]
+        else:
+            print 'SAVING SAMPLE WITH NO TYPE %s' % name
+        right_now = timezone.now()
+
+        place = None
+        if 'place' in row:
+            place = row['place']
+        sample_data = {'name': name,
+                       'sample_type': sample_type,
+                       'place': place,
+                       # 'track_position': None,
+                       'collector': self.herc_user,
+                       'collection_time': row['event_time'],
+                       'collection_timezone': settings.TIME_ZONE,
+                       'modification_time': right_now,
+                       'description': description,
+                       }
+        if not found_sample:
+            name_match = re.search('NA(\d*)[-|\s](\d*)', name)
+            sample_label_string = ""
+            sample_label_number = None
+            for n in name_match.groups():
+                sample_label_string += n
+            if sample_label_string:
+                sample_label_number = int(sample_label_string)
+            sample_data['sample_label_number'] = sample_label_number
+        else:
+            sample_data['sample_label_number'] = found_sample.label.number
+
+        return sample_data
+
     def load_csv(self):
         """
         Load the CSV file according to the self.configuration, and store the values in the database using the
@@ -506,38 +570,57 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         Warning: the model's save method will not be called as we are using bulk_create.
         :return: the newly created models, which may be an empty list
         """
-
         the_model = LocatedNote
         new_models = []
-        rows = []
+        # rows = []
 
         try:
             self.reset_csv()
             for row in self.csv_reader:
                 row = self.update_row(row)
                 if row:
-                    rows.append(row)
-                    if not self.replace:
-                        # Create the note and the tags.  Because the tags cannot be created until the note exists,
-                        # we have to do this one at a time.
-                        try:
-                            has_tag = False
-                            if 'tag' in row:
-                                has_tag = True
-                                new_note_tags = row['tag']
-                                del row['tag']
-                            new_note = the_model(**row)
-                            new_note.save()
-                            if has_tag:
-                                new_note.tags.add(*new_note_tags)
-                            new_models.append(new_note)
-                        except Exception as e:
-                            traceback.print_exc()
-                            print new_note_tags
-                            print row
-                            raise e
-            if self.replace:
-                self.update_stored_data(the_model, rows)
+                    # rows.append(row)
+                    # Create the note and the tags.  Because the tags cannot be created until the note exists,
+                    # we have to do this one at a time.
+                    try:
+                        has_tag = False
+                        if 'tag' in row:
+                            has_tag = True
+                            new_note_tags = row['tag']
+                            del row['tag']
+                        if 'sample_data' in row:
+                            # This is a sample; create it and set the foreign key
+                            sample_data = row['sample_data']
+                            del row['sample_data']
+                            label, created = Label.objects.get_or_create(number=sample_data['sample_label_number'])
+                            # print 'LABEL IS %d %d' % (label.number, label.pk)
+                            del sample_data['sample_label_number']
+                            sample_data['label'] = label
+                            if created:
+                                sample_data['creation_time'] = sample_data['modification_time']
+                            sample_data['flight'] = row['flight']
+                            # TODO set sample position here
+                            sample, sample_created = Sample.objects.update_or_create(**sample_data)
+                            # set the generic foreign key on the note
+                            row['content_type'] = self.sample_content_type
+                            row['object_id'] = sample.pk
+
+                        if self.replace:
+                            new_note, note_created = the_model.objects.update_or_create(**row)
+                        else:
+                            new_note = the_model.objects.create(**row)
+
+                        if has_tag:
+                            new_note.tags.clear()
+                            new_note.tags.add(*new_note_tags)
+                        new_models.append(new_note)
+                    except Exception as e:
+                        traceback.print_exc()
+                        print new_note_tags
+                        print row
+                        raise e
+            # if self.replace:
+            #     self.update_stored_data(the_model, rows)
             self.handle_last_row(row)
         finally:
             self.csv_file.close()
