@@ -18,6 +18,7 @@ import traceback
 import re
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
+from django.db.utils import IntegrityError
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 
@@ -127,17 +128,19 @@ def add_sample_type_tag(row, value):
     """
     if not value:
         return "NO VALUE"
-    if 'SUPR-1' in value:
-        add_tag(row, 'SUPR-1')
-    elif 'SUPR-2' in value:
-        add_tag(row, 'SUPR-2')
-    elif 'IGT' in value:
+    lower_value = value.lower()
+    if 'supr' in lower_value:
+        if '1' in lower_value:
+            add_tag(row, 'SUPR-1')
+        elif '2' in lower_value:
+            add_tag(row, 'SUPR-2')
+    elif 'igt' in lower_value:
         add_tag(row, 'IGT')
-    elif 'ROVG' in value:
+    elif 'rovg' in lower_value:
         add_tag(row, 'ROVGrab')
-    elif 'ROVPC' in value:
+    elif 'rovpc' in lower_value:
         add_tag(row, 'PushCore')
-    elif 'Niskin' in value:
+    elif 'niskin' in lower_value:
         add_tag(row, 'Niskin')
     else:
         return False
@@ -529,7 +532,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         if 'tag' in row and row['tag']:
             try:
                 sample_type = SampleType.objects.get(value=row['tag'][0])
-                print 'sample type %s' % row['tag'][0]
             except:
                 print 'sample type %s NOT FOUND' % row['tag'][0]
         else:
@@ -593,17 +595,25 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                             sample_data = row['sample_data']
                             del row['sample_data']
                             label, created = Label.objects.get_or_create(number=sample_data['sample_label_number'])
-                            # print 'LABEL IS %d %d' % (label.number, label.pk)
                             del sample_data['sample_label_number']
                             sample_data['label'] = label
                             if created:
                                 sample_data['creation_time'] = sample_data['modification_time']
                             sample_data['flight'] = row['flight']
                             # TODO set sample position here
-                            sample, sample_created = Sample.objects.update_or_create(**sample_data)
+                            try:
+                                sample = Sample.objects.create(**sample_data)
+                            except Exception as e:
+                                # This sample already existed, update it instead.
+                                sample_filter = Sample.objects.filter(name=sample_data['name'], label=label)
+                                sample_filter.update(**sample_data)
+                                sample = sample_filter[0]
+                                print 'UPDATED SAMPLE %s' % sample_data['name']
+
                             # set the generic foreign key on the note
-                            row['content_type'] = self.sample_content_type
-                            row['object_id'] = sample.pk
+                            if sample:
+                                row['content_type'] = self.sample_content_type
+                                row['object_id'] = sample.pk
 
                         if self.replace:
                             new_note, note_created = the_model.objects.update_or_create(**row)
