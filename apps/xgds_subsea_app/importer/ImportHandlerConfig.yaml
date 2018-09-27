@@ -22,9 +22,33 @@ registry:
   - name: 'cruise record XML'
     filepath_pattern: 'metadata/cruise-record.xml'
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/create_users.py'
-    arguments: '-v'
+    arguments: '-v %(filename)s'
     timeout: 300
     order: 2
+  - name: 'Nautilus NAV'
+    filepath_pattern: 'processed/dive_reports/(?P<flight>H\d{4})/sampled/H\d{4}\.NAV\.PV\.sampled\.tsv'
+    importer: '/home/xgds/xgds_subsea/apps/geocamTrack/importer/trackImportRunner.py'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/NAV.yaml -v Nautilus -f %(flight)s_Nautilus'
+    timeout: 300
+    order: 3
+    auth: false
+  - name: 'Hercules NAV'
+    filepath_pattern: 'processed/dive_reports/(?P<flight>H\d{4})/sampled/H\d{4}\.NAV\.M1\.sampled\.tsv'
+    importer: '/home/xgds/xgds_subsea/apps/geocamTrack/importer/trackImportRunner.py'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/NAV.yaml -v Hercules -f %(flight)s_Hercules'
+    timeout: 300
+    order: 3
+    auth: false
+  - name: 'Argus NAV'
+    filepath_pattern: 'processed/dive_reports/(?P<flight>H\d{4})/sampled/H\d{4}\.NAV\.M2\.sampled\.tsv'
+    importer: '/home/xgds/xgds_subsea/apps/geocamTrack/importer/trackImportRunner.py'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/NAV.yaml -v Argus -f %(flight)s_Argus'
+    timeout: 300
+    order: 3
+    auth: false
+  - name: 'ECHO NAV'
+    filepath_pattern: 'processed/dive_reports/H\d{4}/sampled/H\d{4}\.NAV\.M3\.sampled\.tsv'
+    ignore: true
   - name: 'event log'
     filepath_pattern: 'processed/eventlog/by-dive/all_eventlog_H\d{4}.*\.txt'
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/eventLogCsvImportRunner.py'
@@ -32,68 +56,73 @@ registry:
     timeout: 300
     order: 4
     auth: false
-  - name: 'raw capture hercules'
-    filepath_pattern: '[\d\.]+/raw/capture/capture_(\d{8})/cam1_\d{14}.tif'
-    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
-    arguments: '-c Hercules -t dateparser -r "cam1_(\d+).tif"'
-    timeout: 300
-    order: 5
-    auth: true
-  - name: 'raw capture argus'
-    filepath_pattern: '[\d\.]+/raw/capture/capture_(\d{8})/cam2_\d{14}.tif'
-    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
-    arguments: '-c Argus -t dateparser -r "cam2_(\d+).tif"'
-    timeout: 300
-    order: 5
-    auth: true
   - name: 'raw acoustic mbes screenshots'
     filepath_pattern: '[\d\.]+/raw/acoustic/mbes/screenshots/\d{8}_\d{4}.*.[png|JPG]'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
-    arguments: '-c Argus -t dateparser -r "cam2_(\d+).tif"'
+    arguments: '-c Acoustic -t dateparser -r "(\d{8})_(\d{4}).*.[png|JPG]"'
     timeout: 300
     order: 5
     auth: true
   - name: 'raw acoustic screengrabs'
     filepath_pattern: '[\d\.]+/raw/acoustic/ScreenGrabs/\d{8}_\d{4}.*.png'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    arguments: '-c Acoustic -t dateparser -r "(\d{8})_(\d{4}).*.png"'
     timeout: 300
     order: 5
     auth: true
   - name: 'capture pngs hercules'
     filepath_pattern: '[\d\.]+/processed/capture_pngs/capture_(\d{8})/cam1_[\d]{14}.png'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
-    arguments: '-c Hercules'
+    arguments: '-c Hercules -t dateparser -r "cam1_(\d+).png"'
     timeout: 300
     order: 5
     auth: true
   - name: 'capture pngs argus'
     filepath_pattern: '[\d\.]+/processed/capture_pngs/capture_(\d{8})/cam2_[\d]{14}.png'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
-    arguments: '-c Argus'
+    arguments: '-c Argus -t dateparser -r "cam2_(\d+).png"'
     timeout: 300
     order: 5
     auth: true
-  - name: 'capture highlights'
-    filepath_pattern: '[\d\.]+/processed/capture_highlights/(cam1)_[\d]{14}.*.png'
+  - name: 'capture highlights top level herc'
+    filepath_pattern: '[\d\.]+/processed/capture_highlights/cam1_[\d]{14}.*.png'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    arguments: '-c Hercules -t dateparser -r "cam1_(\d+).*.png"'
     timeout: 300
     order: 5
     auth: true
-  - name: 'capture highlights'
-    filepath_pattern: '[\d\.]+/processed/capture_highlights/.*/(cam[12])_[\d]{14}.png'
+  - name: 'capture highlights top level argus?'
+    filepath_pattern: '[\d\.]+/processed/capture_highlights/cam2_[\d]{14}.*.png'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    arguments: '-c Argus -t dateparser -r "cam2_(\d+).*.png"'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'capture highlights herc'
+    filepath_pattern: '[\d\.]+/processed/capture_highlights/.*/cam1_[\d]{14}.*.png'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    arguments: '-c Hercules -t dateparser -r "cam1_([\d]{14}).*.png"'
+    timeout: 300
+    order: 5
+    auth: true
+  - name: 'capture highlights argus'
+    filepath_pattern: '[\d\.]+/processed/capture_highlights/.*/cam2_[\d]{14}.*.png'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    arguments: '-c Argus -t dateparser -r "cam2_([\d]{14}).*.png"'
     timeout: 300
     order: 5
     auth: true
   - name: 'capture highlights'
     filepath_pattern: '[\d\.]+/processed/capture_highlights/.*/[\d]{8}_[\d]{4}.*.png'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    arguments: '-t dateparser -r  "(\d{8})_(\d{4}).*.png"'
     timeout: 300
     order: 5
     auth: true
   - name: 'capture highlights'
     filepath_pattern: '[\d\.]+/processed/capture_highlights/.*/[\d]{8}_[\d]{4}.*.JPG'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
+    arguments: '-t dateparser -r  "(\d{8})_(\d{4}).*.JPG"'
     timeout: 300
     order: 5
     auth: true
