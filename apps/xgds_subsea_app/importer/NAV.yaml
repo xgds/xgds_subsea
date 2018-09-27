@@ -1,0 +1,16 @@
+# This file describes the values from the NAV file
+name: NAV
+class: geocamTrack.PastResourcePoseDepth
+extension: tsv
+delimiter: '\t'
+flight_required: true
+fields:
+  timestamp:
+    type: iso8601
+  latitude:
+    type: float
+  longitude:
+    type: float
+  depth:
+    type: float
+    units: meters
