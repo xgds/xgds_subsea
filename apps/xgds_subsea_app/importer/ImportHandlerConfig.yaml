@@ -32,20 +32,6 @@ registry:
     timeout: 300
     order: 4
     auth: false
-  - name: 'raw capture hercules'
-    filepath_pattern: '[\d\.]+/raw/capture/capture_(\d{8})/cam1_\d{14}.tif'
-    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
-    arguments: '-c Hercules -t dateparser -r "cam1_(\d+).tif"'
-    timeout: 300
-    order: 5
-    auth: true
-  - name: 'raw capture argus'
-    filepath_pattern: '[\d\.]+/raw/capture/capture_(\d{8})/cam2_\d{14}.tif'
-    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
-    arguments: '-c Argus -t dateparser -r "cam2_(\d+).tif"'
-    timeout: 300
-    order: 5
-    auth: true
   - name: 'raw acoustic mbes screenshots'
     filepath_pattern: '[\d\.]+/raw/acoustic/mbes/screenshots/\d{8}_\d{4}.*.[png|JPG]'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
