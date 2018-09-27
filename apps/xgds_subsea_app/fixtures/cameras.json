@@ -63,5 +63,18 @@
         "name": "Miso",
         "heading_offset_degrees": 0.0
     }
+},
+{
+    "model": "xgds_image.camera",
+    "pk": 6,
+    "fields": {
+        "notes": "",
+        "type": "screen_grab",
+        "extras": "{}",
+        "primary": false,
+        "serial": "ACOUSTIC",
+        "name": "Acoustic",
+        "heading_offset_degrees": 0.0
+    }
 }
 ]
