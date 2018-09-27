@@ -441,3 +441,15 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_NOTE_MONIKER] = {'ol': 'xgds_notes2/js/olNoteM
                                                    'event_time_field': 'event_time',
                                                    'event_timezone_field': 'event_timezone',
                                                    'search_form_class': 'xgds_notes2.forms.SearchNoteForm'}
+
+XGDS_MAP_SERVER_JS_MAP[XGDS_SAMPLE_SAMPLE_KEY] = {'ol': 'xgds_sample/js/olSampleMap.js',
+                                                  'model': XGDS_SAMPLE_SAMPLE_MODEL,
+                                                  'searchableColumns': ['name','description','flight_name', 'sample_type'],
+                                                  'columns': ['checkbox', 'collection_time', 'name', 'sample_type_name', 'place_name', 'label_number', 'collector_name', 'vehicle_name', 'thumbnail_image_url',  'pk', 'lat', 'lon', 'alt', 'flight_name', 'app_label', 'model_type', 'type', 'description', 'collection_timezone', 'DT_RowId'],
+                                                  'hiddenColumns': ['thumbnail_image_url', 'collection_timezone', 'pk', 'lat', 'lon', 'alt', 'label_number', 'collector_name', 'flight_name', 'vehicle_name', 'app_label', 'model_type', 'type', 'description',  'DT_RowId'],
+                                                  'columnTitles': ['Time', 'Name', 'Type', 'Site',],
+                                                  'viewHandlebars': 'xgds_subsea_app/templates/handlebars/sample-view.handlebars',
+                                                  'event_time_field': 'collection_time',
+                                                  'event_timezone_field': 'collection_timezone',
+                                                  'search_form_class': 'xgds_sample.forms.SearchSampleForm',
+                                                  }
