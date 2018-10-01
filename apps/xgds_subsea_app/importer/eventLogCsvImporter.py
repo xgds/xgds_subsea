@@ -24,6 +24,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from geocamUtil.UserUtil import getUserByUsername, getUserByNames
 from geocamUtil.models import SiteFrame
+from geocamTrack.utils import getClosestPosition
 from xgds_core.importer import csvImporter
 from xgds_core.FlightUtils import lookup_flight
 from xgds_notes2.models import LocatedNote, HierarchichalTag, TaggedNote, Role, Location
@@ -172,7 +173,6 @@ def add_divestatus_tag(row, value):
 def add_audiovideo_rating_tag(row, value):
     """
     Add the rating tags for audiovideo
-    TODO figure out what all the ratings can be
     :param row:
     :param value:
     :return: True if valid tag was made, False otherwise, "NO VALUE" if no value
@@ -495,7 +495,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         else:
             print '*** UNKONWN EVENT TYPE ** %s' % event_type
 
-        if not flight_set:
+        if not flight_set or not row['flight']:
             row = self.clean_flight(row)
 
         if 'tag' in row and not row['tag']:
@@ -586,6 +586,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                     # we have to do this one at a time.
                     try:
                         has_tag = False
+                        found_position = None
                         if 'tag' in row:
                             has_tag = True
                             new_note_tags = row['tag']
@@ -599,8 +600,13 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                             sample_data['label'] = label
                             if created:
                                 sample_data['creation_time'] = sample_data['modification_time']
+                                # assume the time of the sample will not change; look up position here
+                                found_position = getClosestPosition(track=row['flight'].track, timestamp=sample_data['collection_time'])
+                                if found_position:
+                                    sample_data['track_position_id'] = found_position.id
+                                else:
+                                    print 'NO POSITION FOUND FOR TIME %s' % str(sample_data['collection_time'])
                             sample_data['flight'] = row['flight']
-                            # TODO set sample position here
                             try:
                                 sample = Sample.objects.create(**sample_data)
                             except Exception as e:
@@ -614,6 +620,15 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                             if sample:
                                 row['content_type'] = self.sample_content_type
                                 row['object_id'] = sample.pk
+
+                        if not found_position:
+                            found_position = getClosestPosition(track=row['flight'].track,
+                                                                timestamp=row['event_time'])
+
+                        if found_position:
+                            row['position_id'] = found_position.id
+                        else:
+                            print 'NO POSITION FOUND FOR TIME %s' % str(row['event_time'])
 
                         if self.replace:
                             new_note, note_created = the_model.objects.update_or_create(**row)
