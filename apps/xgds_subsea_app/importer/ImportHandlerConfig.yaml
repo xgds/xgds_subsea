@@ -139,6 +139,13 @@ registry:
     timeout: 300
     order: 3
     auth: false
+  - name: 'o2s'
+    filepath_pattern: '[\d\.]+/processed/dive_reports/.*/sampled/H[\d]{4}.O2S.sampled.tsv'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/O2S.yaml'
+    timeout: 300
+    order: 2
+    auth: false
   - name: 'chatlog_html' # ALWAYS SKIP
     filepath_pattern: '[\d\.]+/raw/chatlog/.*/.*/.*\.html'
     ignore: true
