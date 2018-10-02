@@ -1,0 +1,19 @@
+# This file describes Oxygen values
+name: O2
+class: xgds_subsea_app.O2Sat
+superclass: xgds_timeseries.TimeSeriesModel
+extension: tsv
+delimiter: \t
+# flight_required: true
+fields:
+  timestamp:
+    type: iso8601
+  oxygen_concentration:
+    type: float
+    units: microMolar
+  oxygen_saturation:
+    type: float
+    units: percent
+  temperature:
+    type: float
+    units: Celsius

@@ -42,3 +42,29 @@ class TempProbe(xgds_timeseries.TimeSeriesModel):
         return "%s: %s" % (self.timestamp.isoformat(), str(self.temperature))
 
 
+
+class O2Sat(xgds_timeseries.TimeSeriesModel):
+    """
+    This is an auto-generated Django model created from a
+    YAML specifications using ./apps/xgds_core/importer/yamlModelBuilder.py
+    and YAML file ./apps/xgds_subsea_app/importer/O2S.yaml
+    """
+
+    timestamp = models.DateTimeField(db_index=True, null=False, blank=False)
+    oxygen_concentration = models.FloatField(null=True, blank=True)
+    oxygen_saturation = models.FloatField(null=True, blank=True)
+    temperature = models.FloatField(null=True, blank=True)
+
+    title = 'O2Sat'
+    channel_descriptions = {
+                            'oxygen_concentration': xgds_timeseries.ChannelDescription('Oxygen Concentration', units='microMolar'),
+                            'oxygen_saturation': xgds_timeseries.ChannelDescription('Oxygen Saturation', units='percent'),
+                            'temperature': xgds_timeseries.ChannelDescription('Temperature', units='Celsius'),
+                            }
+
+    @classmethod
+    def get_channel_names(cls):
+        return ['oxygen_concentration', 'oxygen_saturation', 'temperature', ]
+
+    def __unicode__(self):
+        return "%s: %s %s %s" % (self.timestamp.isoformat(), str(self.oxygen_concentration), str(self.oxygen_saturation), str(self.temperature))
