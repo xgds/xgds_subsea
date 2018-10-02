@@ -1,0 +1,26 @@
+# This file describes the values from the temperature probe
+name: SciChat
+class: xgds_notes2.LocatedMessage
+extension: txt
+delimiter: \t
+fields:
+  col_1:
+    skip: true
+  event_time:
+    type: iso8601
+  col_3:
+    skip: true
+  col_4:
+    skip: true
+  col_5:
+    skip: true
+  col_6:
+    skip: true
+  col_7:
+    skip: true
+  col_8:
+    skip: true
+  author_name:
+    type: string
+  content:
+    type: string

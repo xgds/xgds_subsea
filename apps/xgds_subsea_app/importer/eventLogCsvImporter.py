@@ -254,12 +254,12 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
     """
     Utilities for loading event log files from files such as <cruise>/processed/eventlog/by-dive/all_eventlog_<DIVE>.txt
     This will create notes with references to the correct users, roles, locations and tags.
-    It will skip sample creation, as samples are recorded separately
+    It will also do sample creation, as samples are recorded through the event log.
     """
 
     datalogger_user = getUserByUsername('datalogger')
     navigator_user = getUserByUsername('navigator')
-    scf_user = getUserByUsername('scf')
+    scf_user = getUserByUsername('scicommfellow')
     herc_user = getUserByUsername('herc')
     xgds_user = getUserByUsername('xgds')
 

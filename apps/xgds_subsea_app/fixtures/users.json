@@ -4,17 +4,12 @@
     "pk": 10,
     "fields": {
         "password": "*",
-        "last_login": null,
         "is_superuser": false,
         "username": "camera",
         "first_name": "Some",
         "last_name": "Camera",
-        "email": "",
         "is_staff": false,
-        "is_active": false,
-        "date_joined": "2018-08-14T14:31:20.100Z",
-        "groups": [],
-        "user_permissions": []
+        "is_active": false
     }
 },
 {
@@ -22,17 +17,12 @@
     "pk": 11,
     "fields": {
         "password": "*",
-        "last_login": null,
         "is_superuser": false,
         "username": "navigator",
         "first_name": "Navigator",
         "last_name": "Navigator",
-        "email": "",
         "is_staff": false,
-        "is_active": false,
-        "date_joined": "2018-09-13T03:45:26Z",
-        "groups": [],
-        "user_permissions": []
+        "is_active": false
     }
 },
 {
@@ -40,17 +30,12 @@
     "pk": 12,
     "fields": {
         "password": "*",
-        "last_login": null,
         "is_superuser": false,
         "username": "datalogger",
         "first_name": "Data",
         "last_name": "Logger",
-        "email": "",
         "is_staff": false,
-        "is_active": false,
-        "date_joined": "2018-09-13T03:45:54Z",
-        "groups": [],
-        "user_permissions": []
+        "is_active": false
     }
 },
 {
@@ -58,17 +43,12 @@
     "pk": 13,
     "fields": {
         "password": "*",
-        "last_login": null,
         "is_superuser": false,
-        "username": "scf",
+        "username": "scicommfellow",
         "first_name": "Science",
         "last_name": "Communication Fellow",
-        "email": "",
         "is_staff": false,
-        "is_active": false,
-        "date_joined": "2018-09-13T18:42:20Z",
-        "groups": [],
-        "user_permissions": []
+        "is_active": false
     }
 },
     {
@@ -76,17 +56,12 @@
     "pk": 14,
     "fields": {
         "password": "*",
-        "last_login": null,
         "is_superuser": false,
-        "username": "herc",
-        "first_name": "ROV",
-        "last_name": "Hercules",
-        "email": "",
+        "username": "chief",
+        "first_name": "Chief",
+        "last_name": "Sci",
         "is_staff": false,
-        "is_active": false,
-        "date_joined": "2018-09-13T18:42:20Z",
-        "groups": [],
-        "user_permissions": []
+        "is_active": false
     }
 },
     {
@@ -94,17 +69,38 @@
     "pk": 15,
     "fields": {
         "password": "*",
-        "last_login": null,
+        "is_superuser": false,
+        "username": "science",
+        "first_name": "Science",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": false
+    }
+},
+    {
+    "model": "auth.user",
+    "pk": 20,
+    "fields": {
+        "password": "*",
+        "is_superuser": false,
+        "username": "herc",
+        "first_name": "ROV",
+        "last_name": "Hercules",
+        "is_staff": false,
+        "is_active": false
+    }
+},
+    {
+    "model": "auth.user",
+    "pk": 21,
+    "fields": {
+        "password": "*",
         "is_superuser": false,
         "username": "argus",
         "first_name": "ROV",
         "last_name": "Argus",
-        "email": "",
         "is_staff": false,
-        "is_active": false,
-        "date_joined": "2018-09-13T18:42:20Z",
-        "groups": [],
-        "user_permissions": []
+        "is_active": false
     }
 }
 ]
