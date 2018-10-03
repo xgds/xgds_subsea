@@ -1056,5 +1056,43 @@
         "value": "SUPR-2",
         "display_name": "SUPR 2"
     }
-}
+},
+  {"pk":"mg2", "model":"xgds_map_server.MapGroup", "fields":
+	{"name":"Dives",
+	"description":"Root for all of the dives on the xGDS server",
+    "parent": "mg1"}
+},
+  {
+        "pk": "maplink_completed_dives",
+        "model": "xgds_map_server.MapLink",
+        "fields": {
+                "creator": "xgds",
+                "name": "Completed",
+                "description": "Completed dive data.  Do not select this node; expand and select its children.",
+                "childNodesUrl": "/xgds_core/completedFlightsTreeNodes",
+                "parent": "mg2"
+        }
+    },
+    {
+        "pk": "maplink_active_dives",
+        "model": "xgds_map_server.MapLink",
+        "fields": {
+                "creator": "xgds",
+                "name": "Active",
+                "description": "Active dive data.  Do not select this node; expand and select its children.",
+                "childNodesUrl": "/xgds_core/activeFlightsTreeNodes$",
+                "parent": "mg2"
+        }
+    },
+    {
+        "pk": "maplink_plans",
+        "model": "xgds_map_server.MapLink",
+        "fields": {
+                "creator": "xgds",
+                "name": " Plans",
+                "description": "All saved plans",
+                "childNodesUrl": "/xgds_planner2/plansTreeNodes",
+                "parent": "mg1"
+        }
+    }
 ]
