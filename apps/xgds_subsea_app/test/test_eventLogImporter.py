@@ -18,6 +18,7 @@ from django.test import TestCase
 
 from xgds_subsea_app.importer.eventLogCsvImporter import *
 from xgds_notes2.models import HierarchichalTag, LocatedNote
+from xgds_sample.models import Sample, Label
 
 
 class eventLogImporterTest(TestCase):
@@ -249,6 +250,20 @@ class eventLogImporterTest(TestCase):
         self.assertEqual(result[0].tags.count(), 2)
 
         self.assertEqual(result[1].content, 'Argus in water')
+
+        samples = Sample.objects.all()
+        self.assertEqual(samples.count(), 11)
+        self.assertEqual(samples[0].name, 'NA100-001')
+        self.assertEqual(samples[0].label.number, 100001)
+
+        igtsamples = Sample.objects.filter(sample_type__pk=1)
+        self.assertEqual(igtsamples.count(), 2)
+
+        grabsamples = Sample.objects.filter(sample_type__pk=4)
+        self.assertEqual(grabsamples.count(), 1)
+
+        suprsamples = Sample.objects.filter(sample_type__pk=5)
+        self.assertEqual(suprsamples.count(), 8)
 
 
 
