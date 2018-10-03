@@ -647,8 +647,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                         print new_note_tags
                         print row
                         raise e
-            # if self.replace:
-            #     self.update_stored_data(the_model, rows)
             self.handle_last_row(row)
         finally:
             self.csv_file.close()
