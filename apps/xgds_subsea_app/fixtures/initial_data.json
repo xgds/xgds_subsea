@@ -1008,5 +1008,53 @@
         "is_staff": false,
         "is_active": false
     }
+},
+    {
+    "model": "xgds_sample.sampletype",
+    "pk": 1,
+    "fields": {
+        "value": "IGT",
+        "display_name": "IGT"
+    }
+},
+{
+    "model": "xgds_sample.sampletype",
+    "pk": 2,
+    "fields": {
+        "value": "NISKIN",
+        "display_name": "Niskin"
+    }
+},
+{
+    "model": "xgds_sample.sampletype",
+    "pk": 3,
+    "fields": {
+        "value": "PushCore",
+        "display_name": "Push Core"
+    }
+},
+{
+    "model": "xgds_sample.sampletype",
+    "pk": 4,
+    "fields": {
+        "value": "ROVGrab",
+        "display_name": "ROV Grab"
+    }
+},
+{
+    "model": "xgds_sample.sampletype",
+    "pk": 5,
+    "fields": {
+        "value": "SUPR-1",
+        "display_name": "SUPR 1"
+    }
+},
+{
+    "model": "xgds_sample.sampletype",
+    "pk": 6,
+    "fields": {
+        "value": "SUPR-2",
+        "display_name": "SUPR 2"
+    }
 }
 ]

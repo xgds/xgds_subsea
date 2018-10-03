@@ -1,0 +1,40 @@
+CHAT	2018-08-29T09:56:28.372Z	CHAT	1535536588	241	29Aug2018	09:56:28	CHAT	datalogger	test
+CHAT	2018-08-29T10:02:10.888Z	CHAT	1535536930	241	29Aug2018	10:02:10	CHAT	ChiefSci	In the water and headed down
+CHAT	2018-08-29T10:42:12.532Z	CHAT	1535539332	241	29Aug2018	10:42:12	CHAT	UserOne	Good morning world
+CHAT	2018-08-29T11:22:07.109Z	CHAT	1535541727	241	29Aug2018	11:22:07	CHAT	SecondPerson	The rest of teh ISC team is on console
+CHAT	2018-08-29T11:53:20.990Z	CHAT	1535543600	241	29Aug2018	11:53:20	CHAT	QuattroFour	Lovely chimlets.
+CHAT	2018-08-29T11:54:14.043Z	CHAT	1535543654	241	29Aug2018	11:54:14	CHAT	UserOne	Can someone tell me who &quot;Science&quot; is on the chat list? we cant figure it out here at ISC.
+CHAT	2018-08-29T11:54:43.396Z	CHAT	1535543683	241	29Aug2018	11:54:43	CHAT	SixPerson	Is there going to be a pH probe with the temperature probe?
+CHAT	2018-08-29T11:56:07.708Z	CHAT	1535543767	241	29Aug2018	11:56:07	CHAT	Science	that is the name of the console to the right of Sci1; it is logged into scichat with no specific name associated 
+CHAT	2018-08-29T12:16:07.267Z	CHAT	1535544967	241	29Aug2018	12:16:07	CHAT	GuestFive	Hi Chripin, Dave here, those chimneys are very difficult to sample intact, but we may have some fragments, it would be interesting to do some more morhphological analysis
+CHAT	2018-08-29T14:46:39.025Z	CHAT	1535553999	241	29Aug2018	14:46:39	CHAT	Science	we ended up with around 400 ml/min on filter 2
+CHAT	2018-08-29T14:46:50.824Z	CHAT	1535554010	241	29Aug2018	14:46:50	CHAT	Science	and have a similar number on filter 3 so far
+CHAT	2018-08-29T15:26:10.355Z	CHAT	1535556370	241	29Aug2018	15:26:10	CHAT	Science	(for log purposes: note &quot;Science&quot; = Elizabeth from 14:10 on)
+CHAT	2018-08-29T15:56:43.226Z	CHAT	1535558203	241	29Aug2018	15:56:43	CHAT	Science	600ml/min
+CHAT	2018-08-29T15:57:13.206Z	CHAT	1535558233	241	29Aug2018	15:57:13	CHAT	Science	call it at 10L?
+CHAT	2018-08-29T16:39:15.392Z	CHAT	1535560755	241	29Aug2018	16:39:15	CHAT	SevenScientist	SKN jaggedridge
+CHAT	2018-08-29T20:28:49.513Z	CHAT	1535574529	241	29Aug2018	20:28:49	CHAT	NumberThree	Opaepele loihi!  wee shrimp that come in and out of view
+CHAT	2018-08-29T20:55:51.078Z	CHAT	1535576151	241	29Aug2018	20:55:51	CHAT	ChiefSci	chimlets on the rock outcrop
+CHAT	2018-08-29T20:58:03.934Z	CHAT	1535576283	241	29Aug2018	20:58:03	CHAT	SecondPerson	Darlene: Dave E is probably the person to ask. There are a variety of options mineralogically, and he have the best read on the locally viable populations
+CHAT	2018-08-29T20:58:54.780Z	CHAT	1535576334	241	29Aug2018	20:58:54	CHAT	NumberThree	Dave did you scrape any of that &quot;White&quot; precipitate off the walls the last time you were here?
+CHAT	2018-08-29T21:00:56.699Z	CHAT	1535576456	241	29Aug2018	21:00:56	CHAT	SixPerson	Dave might have look  to those white deposits. Seems that it could be pyrrohtite, an iron sulfur. It could be interessting because there is still question around the fate of the sulfur
+CHAT	2018-08-29T21:29:00.387Z	CHAT	1535578140	241	29Aug2018	21:29:00	CHAT	ChiefSci	:D
+CHAT	2018-08-29T21:33:34.490Z	CHAT	1535578414	241	29Aug2018	21:33:34	CHAT	Science	Sorry all - just heard that weather isnt great right now - should be OK for dive tomorrow but they might ask us to come up early
+CHAT	2018-08-29T21:33:47.894Z	CHAT	1535578427	241	29Aug2018	21:33:47	CHAT	NumberThree	Copy
+CHAT	2018-08-29T21:34:04.692Z	CHAT	1535578444	241	29Aug2018	21:34:04	CHAT	Science	So I think it best we head straight to Mkr 2 to check it out now and then se if we can explore more after that
+CHAT	2018-08-29T21:34:34.534Z	CHAT	1535578474	241	29Aug2018	21:34:34	CHAT	NumberThree	Shannon - thanks for that explanation - appreciate you weighing in - as you can read I have questions, and zero answers. Well, i can certainly make up answers but yours are so much better
+CHAT	2018-08-29T21:34:53.293Z	CHAT	1535578493	241	29Aug2018	21:34:53	CHAT	ChiefSci	transitioned to talus area devoid of orange mat
+CHAT	2018-08-29T21:35:10.030Z	CHAT	1535578510	241	29Aug2018	21:35:10	CHAT	NumberThree	Whats our depth?
+CHAT	2018-08-29T21:35:29.750Z	CHAT	1535578529	241	29Aug2018	21:35:29	CHAT	ChiefSci	1284 m no
+CHAT	2018-08-29T21:35:35.375Z	CHAT	1535578535	241	29Aug2018	21:35:35	CHAT	ChiefSci	now
+CHAT	2018-08-29T21:36:29.341Z	CHAT	1535578589	241	29Aug2018	21:36:29	CHAT	SecondPerson	SKN rubble
+CHAT	2018-08-29T21:40:38.464Z	CHAT	1535578838	241	29Aug2018	21:40:38	CHAT	NumberThree	Hey Shannon that looks like more grey layered &quot;stuff&quot; - shuld we mark this area?
+CHAT	2018-08-29T21:40:59.807Z	CHAT	1535578859	241	29Aug2018	21:40:59	CHAT	SecondPerson	SKN blockysand
+CHAT	2018-08-29T21:48:21.247Z	CHAT	1535579301	241	29Aug2018	21:48:21	CHAT	SecondPerson	SKN rubble
+CHAT	2018-08-29T21:49:04.191Z	CHAT	1535579344	241	29Aug2018	21:49:04	CHAT	SecondPerson	Darlene: let;s not worry about it
+CHAT	2018-08-29T21:51:19.633Z	CHAT	1535579479	241	29Aug2018	21:51:19	CHAT	ChiefSci	about 100 m from marker 2, over lots of smaller talus
+CHAT	2018-08-29T21:51:40.763Z	CHAT	1535579500	241	29Aug2018	21:51:40	CHAT	SevenScientist	SKN rubble
+CHAT	2018-08-29T21:53:26.055Z	CHAT	1535579606	241	29Aug2018	21:53:26	CHAT	ChiefSci	ship is drifting west—DP issue
+CHAT	2018-08-29T21:55:33.846Z	CHAT	1535579733	241	29Aug2018	21:55:33	CHAT	ChiefSci	vehicles off bottom while we try to regain ships ability to hold position
+CHAT	2018-08-29T22:13:16.704Z	CHAT	1535580796	241	29Aug2018	22:13:16	CHAT	ChiefSci	Sorry all - recovery time because weather is getting windier.  Expectation is that conditions will improve again sufficiently to dive on time for next dive - but we need to get the vehicles on deck now to make sure all is safe as weather passes through its worst point then improves again.
+CHAT	2018-08-29T22:13:29.233Z	CHAT	1535580809	241	29Aug2018	22:13:29	CHAT	ChiefSci	Shopuld be on deck around 14h00 local time.

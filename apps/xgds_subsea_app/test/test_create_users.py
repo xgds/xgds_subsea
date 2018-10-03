@@ -33,19 +33,6 @@ class TestCreateUsers(TestCase):
     Tests for create_users.py
     """
 
-    def test_user_exists(self):
-        self.assertTrue(user_exists('Bob', 'Wayne'))
-        self.assertFalse(user_exists('Bruce', 'Wayne'))
-
-    def test_username_exists(self):
-        self.assertTrue(username_exists('bwayne'))
-        self.assertFalse(username_exists('ckent'))
-
-    def test_generate_username(self):
-        self.assertEqual('bwayne1', get_new_username_from_name('Bruce', 'Wayne'))
-        self.assertEqual('pparker', get_new_username_from_name('Peter', 'Parker'))
-        self.assertEqual('jdyne', get_new_username_from_name('Janet', 'van Dyne'))
-
     def test_create_users(self):
         created = create_users('apps/xgds_subsea_app/test/test_files/cruise-record.xml')
         self.assertEqual(3, created) # should have created 3 new users
@@ -54,4 +41,4 @@ class TestCreateUsers(TestCase):
         assert(user_exists('Peter', 'Parker'))
         assert(username_exists('bwayne'))
         assert(username_exists('bwayne1'))
-        assert(username_exists('jdyne'))
+        assert(username_exists('jvandyne'))

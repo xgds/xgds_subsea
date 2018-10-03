@@ -29,3 +29,4 @@ ssl
 db_dumps
 .coverage
 htmlcov
+TempImportHandlerConfig.yaml

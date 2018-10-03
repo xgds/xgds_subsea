@@ -56,6 +56,13 @@ registry:
     timeout: 300
     order: 4
     auth: false
+  - name: 'science chat'
+    filepath_pattern: 'processed/eventlog/by-day/all_chatlog_\d{8}\.txt'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/sciChatCsvImportRunner.py'
+    arguments: '-i %(filename)s -r -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/SciChat.yaml'
+    timeout: 300
+    order: 4
+    auth: false
   - name: 'raw acoustic mbes screenshots'
     filepath_pattern: '[\d\.]+/raw/acoustic/mbes/screenshots/\d{8}_\d{4}.*.[png|JPG]'
     importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'

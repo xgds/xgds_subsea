@@ -17,9 +17,50 @@
 import re
 
 from geocamUtil.UserUtil import getUserByUsername, getUserByNames, create_user
-from geocamTrack.utils import getClosestPosition
 from xgds_core.importer import csvImporter
 from xgds_core.FlightUtils import getFlight, get_default_vehicle
+
+
+def clean_author(row):
+    """
+    Updates the row by looking up the correct author id by the name
+    Also figure out the role based on the author.  Defaults to DATA_LOGGER
+    :param row:
+    :return: the updated row
+    """
+    if 'author_name' not in row:
+        raise KeyError("Row does not contain author_name %s" % str(row))
+
+    author_name = row['author_name']
+    if not author_name:
+        raise AssertionError("Author name is empty %s" % str(row))
+
+    author = None
+
+    split_name = re.sub('([a-z])([A-Z])', r'\1 \2', author_name).split()
+    if len(split_name) == 1:
+        last_name = ""
+    else:
+        last_name = "".join(split_name[1:])
+
+    # try the split name
+    if len(split_name) > 1:
+        author = getUserByNames(split_name[0], last_name)
+
+    if not author:
+        # try the username
+        author = getUserByUsername(author_name)
+
+    if not author:
+        author = create_user(split_name[0], last_name)
+
+    if author:
+        row['author'] = author
+        del row['author_name']
+    else:
+        raise "Problem creating user for %s" % author_name
+
+    return row
 
 
 class SciChatCsvImporter(csvImporter.CsvImporter):
@@ -37,58 +78,10 @@ class SciChatCsvImporter(csvImporter.CsvImporter):
         :return: the updated row, with timestamps and defaults
         """
         result = super(SciChatCsvImporter, self).update_row(row)
-        result = self.clean_author(result)
+        result = clean_author(result)
         result = self.clean_flight(result)
-        result = self.lookup_position(result)
+        result = csvImporter.lookup_position(result, timestamp_key='event_time', position_found_key='position_found')
         return result
-
-    def lookup_position(self, row):
-        track=None
-        if row['flight']:
-            track = row['flight'].track
-        found_position = getClosestPosition(track=track,
-                                            timestamp=row['event_time'])
-
-        if found_position:
-            row['position_id'] = found_position.id
-        else:
-            print 'NO POSITION FOUND FOR TIME %s' % str(row['event_time'])
-        return row
-
-    def clean_author(self, row):
-        """
-        Updates the row by looking up the correct author id by the name
-        Also figure out the role based on the author.  Defaults to DATA_LOGGER
-        :param row:
-        :return: the updated row
-        """
-        author_name = row['author_name']
-        author = None
-
-        split_name = re.sub('([a-z])([A-Z])', r'\1 \2', author_name).split()
-        if len(split_name) == 1:
-            last_name = ""
-        else:
-            last_name = "".join(split_name[1:])
-
-        # try the split name
-        if len(split_name) > 1:
-            author = getUserByNames(split_name[0], last_name)
-
-        if not author:
-            # try the username
-            author = getUserByUsername(author_name)
-
-        if not author:
-            author = create_user(split_name[0], last_name)
-
-        if author:
-            row['author'] = author
-            del row['author_name']
-        else:
-            raise "Problem creating user for %s" % author_name
-
-        return row
 
     def clean_flight(self, row):
         """

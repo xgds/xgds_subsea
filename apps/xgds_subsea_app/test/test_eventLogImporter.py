@@ -14,22 +14,16 @@
 # specific language governing permissions and limitations under the License.
 # __END_LICENSE__
 
-import json
-from django.db import models
 from django.test import TestCase
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseForbidden, Http404, JsonResponse
 
 from xgds_subsea_app.importer.eventLogCsvImporter import *
 from xgds_notes2.models import HierarchichalTag, LocatedNote
-
-from django.contrib.auth.models import User
 
 
 class eventLogImporterTest(TestCase):
 
     fixtures = ['initial_data.json', 'users.json', 'note_locations.json', 'note_roles.json', 'note_tags.json', \
-                'test_eventlog_users.json']
+                'test_eventlog_users.json', ]
 
     """
     Tests for the eventLogCsvImporter
@@ -61,9 +55,10 @@ class eventLogImporterTest(TestCase):
 
     def test_remove_empty_keys(self):
         dictionary = {'test': 1,
-                      None: 2}
-        self.assertEqual(len(dictionary.keys()), 2)
-        result = remove_empty_keys(dictionary)
+                      None: 2,
+                      '': 3}
+        self.assertEqual(len(dictionary.keys()), 3)
+        dictionary = remove_empty_keys(dictionary)
         self.assertEqual(len(dictionary.keys()), 1)
 
     def test_append_key_value(self):
@@ -91,7 +86,6 @@ class eventLogImporterTest(TestCase):
         self.assertTrue('lower' in row['tag'])
         add_tag(row, 'capitalize', True)
         self.assertTrue('Capitalize' in row['tag'])
-        pass
 
     def test_add_notes_tag(self):
         row = {}
@@ -109,13 +103,17 @@ class eventLogImporterTest(TestCase):
         self.assertTrue('TempIGT' in row['tag'])
         add_notes_tag(row, 'T-SUPR')
         self.assertTrue('TempSUPR' in row['tag'])
+        add_notes_tag(row, 'Other')
+        self.assertTrue('Other' in row['tag'])
 
     def test_add_sample_type_tag(self):
         row = {}
         add_sample_type_tag(row, None)
         self.assertFalse('tag' in row)
-        add_sample_type_tag(row, 'SUPR')
-        self.assertTrue('SUPR' in row['tag'])
+        add_sample_type_tag(row, 'SUPR-1')
+        self.assertTrue('SUPR-1' in row['tag'])
+        add_sample_type_tag(row, 'SUPR2')
+        self.assertTrue('SUPR-2' in row['tag'])
         add_sample_type_tag(row, 'IGT')
         self.assertTrue('IGT' in row['tag'])
         add_sample_type_tag(row, 'ROVG')
@@ -123,6 +121,12 @@ class eventLogImporterTest(TestCase):
         add_sample_type_tag(row, 'ROVPC')
         self.assertTrue('PushCore' in row['tag'])
         add_sample_type_tag(row, 'Niskin')
+        self.assertTrue('Niskin' in row['tag'])
+        row = {}
+        add_sample_type_tag(row, 'NISKINS')
+        self.assertTrue('Niskin' in row['tag'])
+        row = {}
+        add_sample_type_tag(row, 'NISKIN')
         self.assertTrue('Niskin' in row['tag'])
 
     def test_add_divestatus_tag(self):
@@ -140,20 +144,71 @@ class eventLogImporterTest(TestCase):
 
     def test_add_audiovideo_rating_tag(self):
         row = {}
-        add_audiovideo_rating_tag(row, None)
+        result = add_audiovideo_rating_tag(row, None)
         self.assertFalse('tag' in row)
-        add_audiovideo_rating_tag(row, '0')
+        self.assertEqual(result, 'NO VALUE')
+        result = add_audiovideo_rating_tag(row, '0')
         self.assertTrue('Rating0' in row['tag'])
-        add_audiovideo_rating_tag(row, 1)
+        self.assertTrue(result)
+        result = add_audiovideo_rating_tag(row, 1)
         self.assertTrue('Rating1' in row['tag'])
-        add_audiovideo_rating_tag(row, 2)
+        self.assertTrue(result)
+        result = add_audiovideo_rating_tag(row, 2)
         self.assertTrue('Rating2' in row['tag'])
-        add_audiovideo_rating_tag(row, 3)
+        self.assertTrue(result)
+        result = add_audiovideo_rating_tag(row, 3)
         self.assertTrue('Rating3' in row['tag'])
-        add_audiovideo_rating_tag(row, 4)
+        self.assertTrue(result)
+        result = add_audiovideo_rating_tag(row, 4)
         self.assertTrue('Rating4' in row['tag'])
-        add_audiovideo_rating_tag(row, 5)
+        self.assertTrue(result)
+        result = add_audiovideo_rating_tag(row, 5)
         self.assertTrue('Rating5' in row['tag'])
+        self.assertTrue(result)
+        result = add_audiovideo_rating_tag(row, 6)
+        self.assertFalse('Rating6' in row['tag'])
+        self.assertFalse(result)
+        result = add_audiovideo_rating_tag(row, 1.5)
+        self.assertFalse('Rating1.5' in row['tag'])
+        self.assertFalse(result)
+
+
+    def test_add_timing_data_tag(self):
+        row = {}
+        result = add_timing_or_data_tag(row, None)
+        self.assertEqual(result, "NO VALUE")
+        result = add_timing_or_data_tag(row, "MIN")
+        self.assertTrue('Min' in row['tag'])
+        self.assertTrue(result)
+        result = add_timing_or_data_tag(row, "max")
+        self.assertTrue('Max' in row['tag'])
+        self.assertTrue(result)
+        result = add_timing_or_data_tag(row, "avg")
+        self.assertTrue('Average' in row['tag'])
+        self.assertTrue(result)
+        row = {}
+        result = add_timing_or_data_tag(row, "average")
+        self.assertTrue('Average' in row['tag'])
+        self.assertTrue(result)
+        result = add_timing_or_data_tag(row, "end")
+        self.assertTrue('End' in row['tag'])
+        self.assertTrue(result)
+        result = add_timing_or_data_tag(row, "start")
+        self.assertTrue('Start' in row['tag'])
+        self.assertTrue(result)
+        result = add_timing_or_data_tag(row, "restart")
+        self.assertTrue('Resume' in row['tag'])
+        self.assertTrue(result)
+        result = add_timing_or_data_tag(row, "pause")
+        self.assertTrue('Pause' in row['tag'])
+        self.assertTrue(result)
+        row = {}
+        result = add_timing_or_data_tag(row, "resume")
+        self.assertTrue('Resume' in row['tag'])
+        self.assertTrue(result)
+        result = add_timing_or_data_tag(row, "stop")
+        self.assertTrue('Stop' in row['tag'])
+        self.assertTrue(result)
 
     def test_load_csv(self):
         """
@@ -174,7 +229,7 @@ class eventLogImporterTest(TestCase):
         self.assertEqual(sampleTag.xgds_notes2_taggednote_related.count(), 11)
         igtTag = HierarchichalTag.objects.get(name='IGT')
         self.assertEqual(igtTag.xgds_notes2_taggednote_related.count(), 2)
-        suprTag = HierarchichalTag.objects.get(name='SUPR')
+        suprTag = HierarchichalTag.objects.get(name='SUPR-1')
         self.assertEqual(suprTag.xgds_notes2_taggednote_related.count(), 8)
         grabTag = HierarchichalTag.objects.get(name='ROVGrab')
         self.assertEqual(grabTag.xgds_notes2_taggednote_related.count(), 1)
@@ -188,13 +243,10 @@ class eventLogImporterTest(TestCase):
         engineeringTag = HierarchichalTag.objects.get(name='Engineering')
         self.assertEqual(engineeringTag.xgds_notes2_taggednote_related.count(), 1)
 
-        eventLogTag = HierarchichalTag.objects.get(name='EventLog')
-        self.assertEqual(eventLogTag.xgds_notes2_taggednote_related.count(), 37)
-
         self.assertEqual(result[0].content, 'inwater')
         self.assertTrue('inwater' in result[0].content)
         self.assertTrue('inwater' in result[0].tags.slugs())
-        self.assertEqual(result[0].tags.count(), 3)
+        self.assertEqual(result[0].tags.count(), 2)
 
         self.assertEqual(result[1].content, 'Argus in water')
 

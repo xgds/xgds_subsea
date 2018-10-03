@@ -181,8 +181,11 @@ def add_audiovideo_rating_tag(row, value):
         return "NO VALUE"
     try:
         int_val = int(value)
+        if str(int_val) != str(value):
+            return False
+
         if 0 <= int_val <= 5:
-            add_tag(row, 'Rating' + str(value))
+            add_tag(row, 'Rating' + str(int_val))
             return True
         else:
             return False
@@ -207,7 +210,7 @@ def add_timing_or_data_tag(row, value):
     if 'max' in lower_value:
         add_tag(row, 'Max')
         tag_added = True
-    if ('avg' or 'average') in lower_value:
+    if 'avg' or 'average' in lower_value:
         add_tag(row, 'Average')
         tag_added = True
     if 'end' in lower_value:
@@ -586,7 +589,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                     # we have to do this one at a time.
                     try:
                         has_tag = False
-                        found_position = None
+                        found_position_id = None
                         if 'tag' in row:
                             has_tag = True
                             new_note_tags = row['tag']
@@ -598,15 +601,19 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                             label, created = Label.objects.get_or_create(number=sample_data['sample_label_number'])
                             del sample_data['sample_label_number']
                             sample_data['label'] = label
+                            sample_data['flight'] = row['flight']
                             if created:
                                 sample_data['creation_time'] = sample_data['modification_time']
                                 # assume the time of the sample will not change; look up position here
-                                found_position = getClosestPosition(track=row['flight'].track, timestamp=sample_data['collection_time'])
-                                if found_position:
-                                    sample_data['track_position_id'] = found_position.id
+                                sample_data = csvImporter.lookup_position(sample_data, timestamp_key='collection_time',
+                                                                          position_id_key='track_position_id')
+                                if 'track_position_id' in sample_data:
+                                    found_position_id = sample_data['track_position_id']
+                                    row['position_id'] = found_position_id
+                                    row['position_found'] = True
                                 else:
-                                    print 'NO POSITION FOUND FOR TIME %s' % str(sample_data['collection_time'])
-                            sample_data['flight'] = row['flight']
+                                    row['position_found'] = False
+
                             try:
                                 sample = Sample.objects.create(**sample_data)
                             except Exception as e:
@@ -621,14 +628,10 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                                 row['content_type'] = self.sample_content_type
                                 row['object_id'] = sample.pk
 
-                        if not found_position:
-                            found_position = getClosestPosition(track=row['flight'].track,
-                                                                timestamp=row['event_time'])
-
-                        if found_position:
-                            row['position_id'] = found_position.id
-                        else:
-                            print 'NO POSITION FOUND FOR TIME %s' % str(row['event_time'])
+                        if not found_position_id:
+                            row = csvImporter.lookup_position(row, timestamp_key='event_time',
+                                                              position_id_key='position_id',
+                                                              position_found_key='position_found')
 
                         if self.replace:
                             new_note, note_created = the_model.objects.update_or_create(**row)
