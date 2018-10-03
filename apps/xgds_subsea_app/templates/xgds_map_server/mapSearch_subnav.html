@@ -1,7 +1,8 @@
 {% block sitemenu-content-secondary %}
 {% load nav %}
         <!-- TODO update this subnav with searchable model types -->
-		<li class="nav-item {% if modelName == 'Photo' %}active{% endif %}"><a class="nav-link {% if modelName == 'Photo' %}active{% endif %}" href="{% url 'search_map_object' 'Photo'%}">{{settings.XGDS_IMAGE_IMAGE_SET_MONIKER}}</a></li>
-		<li class="nav-item {% if modelName == 'Note' %}active{% endif %}"><a class="nav-link {% if modelName == 'Note' %}active{% endif %}" href="{% url 'search_xgds_notes_map' %}">{{ settings.XGDS_NOTES_MONIKER }}</a></li>
-		<li class="nav-item {% if modelName == 'Sample' %}active{% endif %}"><a class="nav-link {% if modelName == 'Sample' %}active{% endif %}" href="{% url 'search_map_object' 'Sample' %}">Sample</a></li>
+		<li class="nav-item {% if modelName == settings.XGDS_IMAGE_IMAGE_MODEL_NAME %}active{% endif %}"><a class="nav-link {% if modelName == settings.XGDS_IMAGE_IMAGE_MODEL_NAME %}active{% endif %}" href="{% url 'search_map_object' settings.XGDS_IMAGE_IMAGE_MODEL_NAME %}">{{settings.XGDS_IMAGE_IMAGE_SET_MONIKER}}</a></li>
+		<li class="nav-item {% if modelName == settings.XGDS_NOTES_MODEL_NAME %}active{% endif %}"><a class="nav-link {% if modelName == settings.XGDS_NOTES_MODEL_NAME %}active{% endif %}" href="{% url 'search_xgds_notes_map' %}">{{ settings.XGDS_NOTES_MONIKER }}</a></li>
+		<li class="nav-item {% if modelName == settings.XGDS_NOTES_MESSAGE_MODEL_NAME %}active{% endif %}"><a class="nav-link {% if modelName == settings.XGDS_NOTES_MESSAGE_MODEL_NAME %}active{% endif %}" href="{% url 'search_map_object' settings.XGDS_NOTES_MESSAGE_MODEL_NAME %}">{{ settings.XGDS_NOTES_MESSAGES_MONIKER }}</a></li>
+		<li class="nav-item {% if modelName == settings.XGDS_SAMPLE_SAMPLE_KEY %}active{% endif %}"><a class="nav-link {% if modelName == settings.XGDS_SAMPLE_SAMPLE_KEY %}active{% endif %}" href="{% url 'search_map_object' settings.XGDS_SAMPLE_SAMPLE_KEY %}">{{settings.XGDS_SAMPLE_SAMPLE_MONIKER}}</a></li>
 {% endblock %}

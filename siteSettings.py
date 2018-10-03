@@ -422,10 +422,10 @@ XGDS_CORE_GROUP_FLIGHT_MONIKER = "Dive"
 XGDS_CORE_DEFAULT_VEHICLE_PK = 2  # Hercules
 XGDS_NOTES_NOTE_MONIKER = 'Event'
 XGDS_NOTES_MONIKER = 'Event Log'
+XGDS_NOTES_MESSAGES_MONIKER = 'Science Chat'
 
 XGDS_MAP_SERVER_SITE_MONIKER = 'Region'
 XGDS_MAP_SERVER_PLACE_MONIKER = 'Site'
-
 
 
 XGDS_MAP_SERVER_JS_MAP = getOrCreateDict('XGDS_MAP_SERVER_JS_MAP')
@@ -436,8 +436,6 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_NOTE_MONIKER] = {'ol': 'xgds_notes2/js/olNoteM
                                                    'searchableColumns': ['name', 'description', 'flight_name', 'author_name', 'role_name', 'location_name',],
                                                    'editableColumns':{'content':'text','tag_names':'tagsinput'},
                                                    'unsortableColumns': ['content_url'],
-                                                   #[{'label':'Content','name':'content','data':5},
-                                                   #                   {'label':'Tags','name':'tag_names','data':6}],
                                                    'columnTitles': ['Time', 'Author', 'Content', 'Tags', 'Link'],
                                                    'viewHandlebars': 'xgds_notes2/templates/handlebars/note-view.handlebars',
                                                    'viewJS': [STATIC_URL + 'xgds_notes2/js/genericNotesView.js' ],
@@ -446,6 +444,18 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_NOTE_MONIKER] = {'ol': 'xgds_notes2/js/olNoteM
                                                    'event_time_field': 'event_time',
                                                    'event_timezone_field': 'event_timezone',
                                                    'search_form_class': 'xgds_notes2.forms.SearchNoteForm'}
+
+XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MESSAGE_MONIKER] = {'ol': 'xgds_notes2/js/olMessageMap.js',
+                                                   'model': XGDS_NOTES_MESSAGE_MODEL,
+                                                   'columns': ['checkbox', 'event_time', 'author_name', 'content', 'lat', 'lon', 'alt', 'flight_name', 'app_label', 'model_type', 'type', 'event_timezone', 'pk'],
+                                                   'hiddenColumns': ['app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'flight_name', 'event_timezone', 'pk'],
+                                                   'searchableColumns': ['content','flight_name', 'author_name', ],
+                                                   'editableColumns':{'content':'text'},
+                                                   'columnTitles': ['Time', 'Author', 'Content',],
+                                                   'viewHandlebars': 'xgds_notes2/templates/handlebars/message-view.handlebars',
+                                                   'event_time_field': 'event_time',
+                                                   'event_timezone_field': 'event_timezone',
+                                                   'search_form_class': 'xgds_notes2.forms.SearchMessageForm'}
 
 XGDS_MAP_SERVER_JS_MAP[XGDS_SAMPLE_SAMPLE_KEY] = {'ol': 'xgds_sample/js/olSampleMap.js',
                                                   'model': XGDS_SAMPLE_SAMPLE_MODEL,
