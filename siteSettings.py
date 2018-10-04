@@ -420,6 +420,7 @@ XGDS_PLANNER_PLAN_EXPORTERS = (
 XGDS_CORE_FLIGHT_MONIKER = "Dive"
 XGDS_CORE_GROUP_FLIGHT_MONIKER = "Dive"
 XGDS_CORE_DEFAULT_VEHICLE_PK = 2  # Hercules
+XGDS_NOTES_MODEL_NAME = 'Event'
 XGDS_NOTES_NOTE_MONIKER = 'Event'
 XGDS_NOTES_MONIKER = 'Event Log'
 XGDS_NOTES_MESSAGES_MONIKER = 'Science Chat'
@@ -429,7 +430,7 @@ XGDS_MAP_SERVER_PLACE_MONIKER = 'Site'
 
 
 XGDS_MAP_SERVER_JS_MAP = getOrCreateDict('XGDS_MAP_SERVER_JS_MAP')
-XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_NOTE_MONIKER] = {'ol': 'xgds_notes2/js/olNoteMap.js',
+XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MODEL_NAME] = {'ol': 'xgds_notes2/js/olNoteMap.js',
                                                    'model': XGDS_NOTES_NOTE_MODEL,
                                                    'columns': ['checkbox', 'event_time', 'author_name', 'content', 'tag_names', 'content_url', 'content_thumbnail_url', 'content_name', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'depth', 'flight_name', 'object_type', 'object_id', 'creation_time','show_on_map', 'role_name', 'location_name', 'event_timezone',  'pk'],
                                                    'hiddenColumns': ['app_label', 'model_type', 'type', 'event_timezone', 'lat', 'lon', 'alt', 'depth', 'role_name', 'location_name', 'flight_name', 'content_thumbnail_url', 'content_name', 'object_type', 'object_id', 'creation_time','show_on_map','pk'],
@@ -445,7 +446,7 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_NOTE_MONIKER] = {'ol': 'xgds_notes2/js/olNoteM
                                                    'event_timezone_field': 'event_timezone',
                                                    'search_form_class': 'xgds_notes2.forms.SearchNoteForm'}
 
-XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MESSAGE_MONIKER] = {'ol': 'xgds_notes2/js/olMessageMap.js',
+XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MESSAGE_MODEL_NAME] = {'ol': 'xgds_notes2/js/olMessageMap.js',
                                                    'model': XGDS_NOTES_MESSAGE_MODEL,
                                                    'columns': ['checkbox', 'event_time', 'author_name', 'content', 'lat', 'lon', 'alt', 'flight_name', 'app_label', 'model_type', 'type', 'event_timezone', 'pk'],
                                                    'hiddenColumns': ['app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'flight_name', 'event_timezone', 'pk'],
