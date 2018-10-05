@@ -291,7 +291,7 @@
     "fields": {
         "path": "0008",
         "depth": 1,
-        "numchild": 5,
+        "numchild": 6,
         "name": "Sample",
         "slug": "sample",
         "abbreviation": "SAM",
@@ -354,7 +354,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 34,
     "fields": {
-        "path": "00080005",
+        "path": "00080006",
         "depth": 2,
         "numchild": 2,
         "name": "SUPR",
@@ -679,7 +679,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 60,
     "fields": {
-        "path": "000800050001",
+        "path": "000800060001",
         "depth": 3,
         "numchild": 0,
         "name": "SUPR-1",
@@ -692,12 +692,25 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 61,
     "fields": {
-        "path": "000800050002",
+        "path": "000800060002",
         "depth": 3,
         "numchild": 0,
         "name": "SUPR-2",
         "slug": "supr-2",
         "abbreviation": "SUPR2",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 62,
+    "fields": {
+        "path": "00080005",
+        "depth": 2,
+        "numchild": 0,
+        "name": "Scoop",
+        "slug": "scoop",
+        "abbreviation": "SCOOP",
         "description": ""
     }
 }

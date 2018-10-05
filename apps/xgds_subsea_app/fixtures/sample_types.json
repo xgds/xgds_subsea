@@ -11,7 +11,7 @@
     "model": "xgds_sample.sampletype",
     "pk": 2,
     "fields": {
-        "value": "NISKIN",
+        "value": "Niskin",
         "display_name": "Niskin"
     }
 },
@@ -45,6 +45,14 @@
     "fields": {
         "value": "SUPR-2",
         "display_name": "SUPR 2"
+    }
+},
+{
+    "model": "xgds_sample.sampletype",
+    "pk": 7,
+    "fields": {
+        "value": "Scoop",
+        "display_name": "Scoop"
     }
 }
 ]

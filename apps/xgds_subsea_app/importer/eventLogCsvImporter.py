@@ -143,6 +143,8 @@ def add_sample_type_tag(row, value):
         add_tag(row, 'PushCore')
     elif 'niskin' in lower_value:
         add_tag(row, 'Niskin')
+    elif 'scoop' in lower_value:
+        add_tag(row, 'Scoop')
     else:
         return False
     return True

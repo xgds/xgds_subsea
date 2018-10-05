@@ -1,891 +1,904 @@
 [
   {
-        "pk": 2,
-        "model": "xgds_core.vehicle",
-        "fields": {
-            "name": "Hercules",
-            "type": "ROV",
-            "primary": true
-        }
-    },
+    "pk": 2,
+    "model": "xgds_core.vehicle",
+    "fields": {
+      "name": "Hercules",
+      "type": "ROV",
+      "primary": true
+    }
+  },
   {
-        "pk": 3,
-        "model": "xgds_core.vehicle",
-        "fields": {
-            "name": "Argus",
-            "type": "ROV",
-            "primary": true
-        }
-    },
+    "pk": 3,
+    "model": "xgds_core.vehicle",
+    "fields": {
+      "name": "Argus",
+      "type": "ROV",
+      "primary": true
+    }
+  },
   {
-        "pk": 4,
-        "model": "xgds_core.vehicle",
-        "fields": {
-            "name": "Nautilus",
-            "type": "Ship",
-            "primary": true
-        }
-    },
+    "pk": 4,
+    "model": "xgds_core.vehicle",
+    "fields": {
+      "name": "Nautilus",
+      "type": "Ship",
+      "primary": true
+    }
+  },
   {
     "model": "xgds_image.camera",
     "pk": 1,
     "fields": {
-        "notes": "Screen captures off of the Hercules main video feed",
-        "type": "screen_capture",
-        "extras": "{}",
-        "primary": false,
-        "serial": "HERC",
-        "name": "Hercules",
-        "heading_offset_degrees": 0.0
+      "notes": "Screen captures off of the Hercules main video feed",
+      "type": "screen_capture",
+      "extras": "{}",
+      "primary": false,
+      "serial": "HERC",
+      "name": "Hercules",
+      "heading_offset_degrees": 0.0
     }
-},
-{
+  },
+  {
     "model": "xgds_image.camera",
     "pk": 2,
     "fields": {
-        "notes": "Screen captures off of the Argus main video feed",
-        "type": "screen_capture",
-        "extras": "{}",
-        "primary": false,
-        "serial": "ARGUS",
-        "name": "Argus",
-        "heading_offset_degrees": 0.0
+      "notes": "Screen captures off of the Argus main video feed",
+      "type": "screen_capture",
+      "extras": "{}",
+      "primary": false,
+      "serial": "ARGUS",
+      "name": "Argus",
+      "heading_offset_degrees": 0.0
     }
-},
-{
+  },
+  {
     "model": "xgds_image.camera",
     "pk": 3,
     "fields": {
-        "notes": "Edited screen captures originally from Hercules",
-        "type": "edited",
-        "extras": "{}",
-        "primary": false,
-        "serial": "HERC_EDITED",
-        "name": "Hercules Edited",
-        "heading_offset_degrees": 0.0
+      "notes": "Edited screen captures originally from Hercules",
+      "type": "edited",
+      "extras": "{}",
+      "primary": false,
+      "serial": "HERC_EDITED",
+      "name": "Hercules Edited",
+      "heading_offset_degrees": 0.0
     }
-},
-{
+  },
+  {
     "model": "xgds_image.camera",
     "pk": 4,
     "fields": {
-        "notes": "Edited screen captures from Argus",
-        "type": "edited",
-        "extras": "{}",
-        "primary": false,
-        "serial": "ARGUS_EDITED",
-        "name": "Argus Edited",
-        "heading_offset_degrees": 0.0
+      "notes": "Edited screen captures from Argus",
+      "type": "edited",
+      "extras": "{}",
+      "primary": false,
+      "serial": "ARGUS_EDITED",
+      "name": "Argus Edited",
+      "heading_offset_degrees": 0.0
     }
-},
-{
+  },
+  {
     "model": "xgds_image.camera",
     "pk": 5,
     "fields": {
-        "notes": "MISO GoPro",
-        "type": "go_pro",
-        "extras": "{}",
-        "primary": false,
-        "serial": "MISO",
-        "name": "Miso",
-        "heading_offset_degrees": 0.0
+      "notes": "MISO GoPro",
+      "type": "go_pro",
+      "extras": "{}",
+      "primary": false,
+      "serial": "MISO",
+      "name": "Miso",
+      "heading_offset_degrees": 0.0
     }
-},
-{
+  },
+  {
     "model": "xgds_image.camera",
     "pk": 6,
     "fields": {
-        "notes": "",
-        "type": "screen_grab",
-        "extras": "{}",
-        "primary": false,
-        "serial": "ACOUSTIC",
-        "name": "Acoustic",
-        "heading_offset_degrees": 0.0
+      "notes": "",
+      "type": "screen_grab",
+      "extras": "{}",
+      "primary": false,
+      "serial": "ACOUSTIC",
+      "name": "Acoustic",
+      "heading_offset_degrees": 0.0
     }
-},
+  },
   {
     "model": "xgds_notes2.location",
     "pk": 1,
     "fields": {
-        "value": "REMOTE",
-        "display_name": "Remote"
+      "value": "REMOTE",
+      "display_name": "Remote"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.location",
     "pk": 2,
     "fields": {
-        "value": "SHIP",
-        "display_name": "Ship"
+      "value": "SHIP",
+      "display_name": "Ship"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.location",
     "pk": 3,
     "fields": {
-        "value": "ISC",
-        "display_name": "Inner Space Center"
+      "value": "ISC",
+      "display_name": "Inner Space Center"
     }
-},
+  },
   {
     "model": "xgds_notes2.role",
     "pk": 1,
     "fields": {
-        "value": "GENERAL_POST",
-        "display_name": "General Post Ops"
+      "value": "GENERAL_POST",
+      "display_name": "General Post Ops"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.role",
     "pk": 2,
     "fields": {
-        "value": "SCIENTIST_POST",
-        "display_name": "Scientist Post Ops"
+      "value": "SCIENTIST_POST",
+      "display_name": "Scientist Post Ops"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.role",
     "pk": 3,
     "fields": {
-        "value": "DATA_LOGGER",
-        "display_name": "Data Logger"
+      "value": "DATA_LOGGER",
+      "display_name": "Data Logger"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.role",
     "pk": 4,
     "fields": {
-        "value": "NAVIGATOR",
-        "display_name": "Navigator"
+      "value": "NAVIGATOR",
+      "display_name": "Navigator"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.role",
     "pk": 5,
     "fields": {
-        "value": "SCIENCE_COMMUNICATION_FELLOW",
-        "display_name": "Science Communication Fellow"
+      "value": "SCIENCE_COMMUNICATION_FELLOW",
+      "display_name": "Science Communication Fellow"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.role",
     "pk": 6,
     "fields": {
-        "value": "SCIENTIST",
-        "display_name": "Scientist"
+      "value": "SCIENTIST",
+      "display_name": "Scientist"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.role",
     "pk": 7,
     "fields": {
-        "value": "OBSERVER",
-        "display_name": "Observer"
+      "value": "OBSERVER",
+      "display_name": "Observer"
     }
-},
+  },
   {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 5,
     "fields": {
-        "path": "0003",
-        "depth": 1,
-        "numchild": 4,
-        "name": "EventLog",
-        "slug": "eventlog",
-        "abbreviation": "EVL",
-        "description": "Root tag for tags indicating import from Event Log OET software"
+      "path": "0003",
+      "depth": 1,
+      "numchild": 4,
+      "name": "EventLog",
+      "slug": "eventlog",
+      "abbreviation": "EVL",
+      "description": "Root tag for tags indicating import from Event Log OET software"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 6,
     "fields": {
-        "path": "00030003",
-        "depth": 2,
-        "numchild": 4,
-        "name": "DiveStatus",
-        "slug": "divestatus",
-        "abbreviation": "DS",
-        "description": "Dive Status from EventLog"
+      "path": "00030003",
+      "depth": 2,
+      "numchild": 4,
+      "name": "DiveStatus",
+      "slug": "divestatus",
+      "abbreviation": "DS",
+      "description": "Dive Status from EventLog"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 7,
     "fields": {
-        "path": "00030001",
-        "depth": 2,
-        "numchild": 6,
-        "name": "AudioVideo",
-        "slug": "audiovideo",
-        "abbreviation": "AV",
-        "description": "Audio Video from EventLog"
+      "path": "00030001",
+      "depth": 2,
+      "numchild": 6,
+      "name": "AudioVideo",
+      "slug": "audiovideo",
+      "abbreviation": "AV",
+      "description": "Audio Video from EventLog"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 8,
     "fields": {
-        "path": "0007",
-        "depth": 1,
-        "numchild": 0,
-        "name": "Objective",
-        "slug": "objective",
-        "abbreviation": "OBJ",
-        "description": "Objective from EventLog"
+      "path": "0007",
+      "depth": 1,
+      "numchild": 0,
+      "name": "Objective",
+      "slug": "objective",
+      "abbreviation": "OBJ",
+      "description": "Objective from EventLog"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 9,
     "fields": {
-        "path": "000A",
-        "depth": 1,
-        "numchild": 0,
-        "name": "Trash",
-        "slug": "trash",
-        "abbreviation": "TRASH",
-        "description": "Trash from EventLog"
+      "path": "000A",
+      "depth": 1,
+      "numchild": 0,
+      "name": "Trash",
+      "slug": "trash",
+      "abbreviation": "TRASH",
+      "description": "Trash from EventLog"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 12,
     "fields": {
-        "path": "000300050001",
-        "depth": 3,
-        "numchild": 0,
-        "name": "MultibeamLine",
-        "slug": "multibeamline",
-        "abbreviation": "MBL",
-        "description": "Multibeam Line event from event log"
+      "path": "000300050001",
+      "depth": 3,
+      "numchild": 0,
+      "name": "MultibeamLine",
+      "slug": "multibeamline",
+      "abbreviation": "MBL",
+      "description": "Multibeam Line event from event log"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 13,
     "fields": {
-        "path": "00030004",
-        "depth": 2,
-        "numchild": 8,
-        "name": "Engineering",
-        "slug": "engineering",
-        "abbreviation": "ENG",
-        "description": "Engineering event from Event Log"
+      "path": "00030004",
+      "depth": 2,
+      "numchild": 8,
+      "name": "Engineering",
+      "slug": "engineering",
+      "abbreviation": "ENG",
+      "description": "Engineering event from Event Log"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 14,
     "fields": {
-        "path": "000300030001",
-        "depth": 3,
-        "numchild": 0,
-        "name": "InWater",
-        "slug": "inwater",
-        "abbreviation": "INWATER",
-        "description": "DiveStatus in water"
+      "path": "000300030001",
+      "depth": 3,
+      "numchild": 0,
+      "name": "InWater",
+      "slug": "inwater",
+      "abbreviation": "INWATER",
+      "description": "DiveStatus in water"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 15,
     "fields": {
-        "path": "000300030002",
-        "depth": 3,
-        "numchild": 0,
-        "name": "OffBottom",
-        "slug": "offbottom",
-        "abbreviation": "OFFBOT",
-        "description": "Dive status off bottom"
+      "path": "000300030002",
+      "depth": 3,
+      "numchild": 0,
+      "name": "OffBottom",
+      "slug": "offbottom",
+      "abbreviation": "OFFBOT",
+      "description": "Dive status off bottom"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 16,
     "fields": {
-        "path": "000300030003",
-        "depth": 3,
-        "numchild": 0,
-        "name": "OnBottom",
-        "slug": "onbottom",
-        "abbreviation": "ONBOT",
-        "description": "Dive status on bottom"
+      "path": "000300030003",
+      "depth": 3,
+      "numchild": 0,
+      "name": "OnBottom",
+      "slug": "onbottom",
+      "abbreviation": "ONBOT",
+      "description": "Dive status on bottom"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 17,
     "fields": {
-        "path": "000300030004",
-        "depth": 3,
-        "numchild": 0,
-        "name": "OnDeck",
-        "slug": "ondeck",
-        "abbreviation": "ONDECK",
-        "description": "Dive Status on deck"
+      "path": "000300030004",
+      "depth": 3,
+      "numchild": 0,
+      "name": "OnDeck",
+      "slug": "ondeck",
+      "abbreviation": "ONDECK",
+      "description": "Dive Status on deck"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 18,
     "fields": {
-        "path": "000300040007",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Repair",
-        "slug": "repair",
-        "abbreviation": "REPAIR",
-        "description": "Engineering type repair"
+      "path": "000300040007",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Repair",
+      "slug": "repair",
+      "abbreviation": "REPAIR",
+      "description": "Engineering type repair"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 19,
     "fields": {
-        "path": "000300040002",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Decommission",
-        "slug": "decommission",
-        "abbreviation": "DECOM",
-        "description": "Engineering type"
+      "path": "000300040002",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Decommission",
+      "slug": "decommission",
+      "abbreviation": "DECOM",
+      "description": "Engineering type"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 20,
     "fields": {
-        "path": "000300040003",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Failure",
-        "slug": "failure",
-        "abbreviation": "FAILURE",
-        "description": "Engineering type"
+      "path": "000300040003",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Failure",
+      "slug": "failure",
+      "abbreviation": "FAILURE",
+      "description": "Engineering type"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 21,
     "fields": {
-        "path": "000300040004",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Install",
-        "slug": "install",
-        "abbreviation": "INST",
-        "description": "Engineering type"
+      "path": "000300040004",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Install",
+      "slug": "install",
+      "abbreviation": "INST",
+      "description": "Engineering type"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 22,
     "fields": {
-        "path": "000300040001",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Communications",
-        "slug": "communications",
-        "abbreviation": "COMMS",
-        "description": "Engineering system"
+      "path": "000300040001",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Communications",
+      "slug": "communications",
+      "abbreviation": "COMMS",
+      "description": "Engineering system"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 23,
     "fields": {
-        "path": "000300040005",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Logging",
-        "slug": "logging",
-        "abbreviation": "LOG",
-        "description": "Engineering system"
+      "path": "000300040005",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Logging",
+      "slug": "logging",
+      "abbreviation": "LOG",
+      "description": "Engineering system"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 24,
     "fields": {
-        "path": "000300040008",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Vehicle",
-        "slug": "vehicle",
-        "abbreviation": "VEH",
-        "description": "Engineering system"
+      "path": "000300040008",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Vehicle",
+      "slug": "vehicle",
+      "abbreviation": "VEH",
+      "description": "Engineering system"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 25,
     "fields": {
-        "path": "000300040006",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Other",
-        "slug": "other",
-        "abbreviation": "OTH",
-        "description": "Engineering system"
+      "path": "000300040006",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Other",
+      "slug": "other",
+      "abbreviation": "OTH",
+      "description": "Engineering system"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 26,
     "fields": {
-        "path": "0001",
-        "depth": 1,
-        "numchild": 0,
-        "name": "Biology",
-        "slug": "biology",
-        "abbreviation": "BIO",
-        "description": ""
+      "path": "0001",
+      "depth": 1,
+      "numchild": 0,
+      "name": "Biology",
+      "slug": "biology",
+      "abbreviation": "BIO",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 27,
     "fields": {
-        "path": "0004",
-        "depth": 1,
-        "numchild": 0,
-        "name": "Geology",
-        "slug": "geology",
-        "abbreviation": "GEO",
-        "description": ""
+      "path": "0004",
+      "depth": 1,
+      "numchild": 0,
+      "name": "Geology",
+      "slug": "geology",
+      "abbreviation": "GEO",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 28,
     "fields": {
-        "path": "00030005",
-        "depth": 2,
-        "numchild": 2,
-        "name": "Mapping",
-        "slug": "mapping",
-        "abbreviation": "MAP",
-        "description": ""
+      "path": "00030005",
+      "depth": 2,
+      "numchild": 2,
+      "name": "Mapping",
+      "slug": "mapping",
+      "abbreviation": "MAP",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 29,
     "fields": {
-        "path": "0008",
-        "depth": 1,
-        "numchild": 5,
-        "name": "Sample",
-        "slug": "sample",
-        "abbreviation": "SAM",
-        "description": ""
+      "path": "0008",
+      "depth": 1,
+      "numchild": 6,
+      "name": "Sample",
+      "slug": "sample",
+      "abbreviation": "SAM",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 30,
     "fields": {
-        "path": "00080003",
-        "depth": 2,
-        "numchild": 0,
-        "name": "PushCore",
-        "slug": "pushcore",
-        "abbreviation": "CORE",
-        "description": ""
+      "path": "00080003",
+      "depth": 2,
+      "numchild": 0,
+      "name": "PushCore",
+      "slug": "pushcore",
+      "abbreviation": "CORE",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 31,
     "fields": {
-        "path": "00080004",
-        "depth": 2,
-        "numchild": 0,
-        "name": "ROVGrab",
-        "slug": "rovgrab",
-        "abbreviation": "GRAB",
-        "description": ""
+      "path": "00080004",
+      "depth": 2,
+      "numchild": 0,
+      "name": "ROVGrab",
+      "slug": "rovgrab",
+      "abbreviation": "GRAB",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 32,
     "fields": {
-        "path": "00080002",
-        "depth": 2,
-        "numchild": 0,
-        "name": "Niskin",
-        "slug": "niskin",
-        "abbreviation": "NISKIN",
-        "description": ""
+      "path": "00080002",
+      "depth": 2,
+      "numchild": 0,
+      "name": "Niskin",
+      "slug": "niskin",
+      "abbreviation": "NISKIN",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 33,
     "fields": {
-        "path": "00080001",
-        "depth": 2,
-        "numchild": 0,
-        "name": "IGT",
-        "slug": "igt",
-        "abbreviation": "IGT",
-        "description": ""
+      "path": "00080001",
+      "depth": 2,
+      "numchild": 0,
+      "name": "IGT",
+      "slug": "igt",
+      "abbreviation": "IGT",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 34,
     "fields": {
-        "path": "00080005",
-        "depth": 2,
-        "numchild": 2,
-        "name": "SUPR",
-        "slug": "supr",
-        "abbreviation": "SUPR",
-        "description": ""
+      "path": "00080006",
+      "depth": 2,
+      "numchild": 2,
+      "name": "SUPR",
+      "slug": "supr",
+      "abbreviation": "SUPR",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 35,
     "fields": {
-        "path": "0009",
-        "depth": 1,
-        "numchild": 5,
-        "name": "Timing",
-        "slug": "timing",
-        "abbreviation": "TIME",
-        "description": ""
+      "path": "0009",
+      "depth": 1,
+      "numchild": 5,
+      "name": "Timing",
+      "slug": "timing",
+      "abbreviation": "TIME",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 36,
     "fields": {
-        "path": "00090004",
-        "depth": 2,
-        "numchild": 0,
-        "name": "Start",
-        "slug": "start",
-        "abbreviation": "START",
-        "description": ""
+      "path": "00090004",
+      "depth": 2,
+      "numchild": 0,
+      "name": "Start",
+      "slug": "start",
+      "abbreviation": "START",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 37,
     "fields": {
-        "path": "00090001",
-        "depth": 2,
-        "numchild": 0,
-        "name": "End",
-        "slug": "end",
-        "abbreviation": "END",
-        "description": ""
+      "path": "00090001",
+      "depth": 2,
+      "numchild": 0,
+      "name": "End",
+      "slug": "end",
+      "abbreviation": "END",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 38,
     "fields": {
-        "path": "00090002",
-        "depth": 2,
-        "numchild": 0,
-        "name": "Pause",
-        "slug": "pause",
-        "abbreviation": "PAUSE",
-        "description": ""
+      "path": "00090002",
+      "depth": 2,
+      "numchild": 0,
+      "name": "Pause",
+      "slug": "pause",
+      "abbreviation": "PAUSE",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 39,
     "fields": {
-        "path": "00090005",
-        "depth": 2,
-        "numchild": 0,
-        "name": "Stop",
-        "slug": "stop",
-        "abbreviation": "STOP",
-        "description": ""
+      "path": "00090005",
+      "depth": 2,
+      "numchild": 0,
+      "name": "Stop",
+      "slug": "stop",
+      "abbreviation": "STOP",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 40,
     "fields": {
-        "path": "00090003",
-        "depth": 2,
-        "numchild": 0,
-        "name": "Resume",
-        "slug": "restart",
-        "abbreviation": "RESUME",
-        "description": ""
+      "path": "00090003",
+      "depth": 2,
+      "numchild": 0,
+      "name": "Resume",
+      "slug": "restart",
+      "abbreviation": "RESUME",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 41,
     "fields": {
-        "path": "0005",
-        "depth": 1,
-        "numchild": 3,
-        "name": "Instrument",
-        "slug": "instrument",
-        "abbreviation": "INST",
-        "description": "Instrument category"
+      "path": "0005",
+      "depth": 1,
+      "numchild": 3,
+      "name": "Instrument",
+      "slug": "instrument",
+      "abbreviation": "INST",
+      "description": "Instrument category"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 42,
     "fields": {
-        "path": "000500030002",
-        "depth": 3,
-        "numchild": 0,
-        "name": "TempProbe",
-        "slug": "tempprobe",
-        "abbreviation": "TPROBE",
-        "description": "Temperature Probe"
+      "path": "000500030002",
+      "depth": 3,
+      "numchild": 0,
+      "name": "TempProbe",
+      "slug": "tempprobe",
+      "abbreviation": "TPROBE",
+      "description": "Temperature Probe"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 43,
     "fields": {
-        "path": "00050002",
-        "depth": 2,
-        "numchild": 0,
-        "name": "O2S",
-        "slug": "o2s",
-        "abbreviation": "O2S",
-        "description": "Oxygen Saturation"
+      "path": "00050002",
+      "depth": 2,
+      "numchild": 0,
+      "name": "O2S",
+      "slug": "o2s",
+      "abbreviation": "O2S",
+      "description": "Oxygen Saturation"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 44,
     "fields": {
-        "path": "00050001",
-        "depth": 2,
-        "numchild": 0,
-        "name": "CTD",
-        "slug": "ctd",
-        "abbreviation": "CTD",
-        "description": "Conductivity, Temperature and Depth"
+      "path": "00050001",
+      "depth": 2,
+      "numchild": 0,
+      "name": "CTD",
+      "slug": "ctd",
+      "abbreviation": "CTD",
+      "description": "Conductivity, Temperature and Depth"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 45,
     "fields": {
-        "path": "000500030001",
-        "depth": 3,
-        "numchild": 0,
-        "name": "TempIGT",
-        "slug": "tempigt",
-        "abbreviation": "TIGT",
-        "description": "Temperature Probe on IGT"
+      "path": "000500030001",
+      "depth": 3,
+      "numchild": 0,
+      "name": "TempIGT",
+      "slug": "tempigt",
+      "abbreviation": "TIGT",
+      "description": "Temperature Probe on IGT"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 46,
     "fields": {
-        "path": "000500030003",
-        "depth": 3,
-        "numchild": 0,
-        "name": "TempSUPR",
-        "slug": "tempsupr",
-        "abbreviation": "TSUPR",
-        "description": "Temperature probe on the SUPR"
+      "path": "000500030003",
+      "depth": 3,
+      "numchild": 0,
+      "name": "TempSUPR",
+      "slug": "tempsupr",
+      "abbreviation": "TSUPR",
+      "description": "Temperature probe on the SUPR"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 47,
     "fields": {
-        "path": "000300010002",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Rating1",
-        "slug": "rating1",
-        "abbreviation": "R1",
-        "description": "Audio Video rating 1"
+      "path": "000300010002",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Rating1",
+      "slug": "rating1",
+      "abbreviation": "R1",
+      "description": "Audio Video rating 1"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 48,
     "fields": {
-        "path": "000300010003",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Rating2",
-        "slug": "rating2",
-        "abbreviation": "R2",
-        "description": "Audio Video rating 2"
+      "path": "000300010003",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Rating2",
+      "slug": "rating2",
+      "abbreviation": "R2",
+      "description": "Audio Video rating 2"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 49,
     "fields": {
-        "path": "000300010004",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Rating3",
-        "slug": "rating3",
-        "abbreviation": "R3",
-        "description": "AudioVideo rating 3"
+      "path": "000300010004",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Rating3",
+      "slug": "rating3",
+      "abbreviation": "R3",
+      "description": "AudioVideo rating 3"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 50,
     "fields": {
-        "path": "000300010005",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Rating4",
-        "slug": "rating4",
-        "abbreviation": "R4",
-        "description": "AudioVideo rating 4"
+      "path": "000300010005",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Rating4",
+      "slug": "rating4",
+      "abbreviation": "R4",
+      "description": "AudioVideo rating 4"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 51,
     "fields": {
-        "path": "00050003",
-        "depth": 2,
-        "numchild": 3,
-        "name": "Temperature",
-        "slug": "temperature",
-        "abbreviation": "TEMP",
-        "description": "Parent for all tempprobe types"
+      "path": "00050003",
+      "depth": 2,
+      "numchild": 3,
+      "name": "Temperature",
+      "slug": "temperature",
+      "abbreviation": "TEMP",
+      "description": "Parent for all tempprobe types"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 52,
     "fields": {
-        "path": "000300010001",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Rating0",
-        "slug": "rating0",
-        "abbreviation": "R0",
-        "description": "Audio Video rating 0"
+      "path": "000300010001",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Rating0",
+      "slug": "rating0",
+      "abbreviation": "R0",
+      "description": "Audio Video rating 0"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 53,
     "fields": {
-        "path": "000300010006",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Rating5",
-        "slug": "rating5",
-        "abbreviation": "R5",
-        "description": "Audio Video rating 5"
+      "path": "000300010006",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Rating5",
+      "slug": "rating5",
+      "abbreviation": "R5",
+      "description": "Audio Video rating 5"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 54,
     "fields": {
-        "path": "0002",
-        "depth": 1,
-        "numchild": 3,
-        "name": "Data",
-        "slug": "data",
-        "abbreviation": "DATA",
-        "description": ""
+      "path": "0002",
+      "depth": 1,
+      "numchild": 3,
+      "name": "Data",
+      "slug": "data",
+      "abbreviation": "DATA",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 55,
     "fields": {
-        "path": "00020003",
-        "depth": 2,
-        "numchild": 0,
-        "name": "Min",
-        "slug": "min",
-        "abbreviation": "MIN",
-        "description": "Minimum"
+      "path": "00020003",
+      "depth": 2,
+      "numchild": 0,
+      "name": "Min",
+      "slug": "min",
+      "abbreviation": "MIN",
+      "description": "Minimum"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 56,
     "fields": {
-        "path": "00020002",
-        "depth": 2,
-        "numchild": 0,
-        "name": "Max",
-        "slug": "max",
-        "abbreviation": "MAX",
-        "description": "Maximum"
+      "path": "00020002",
+      "depth": 2,
+      "numchild": 0,
+      "name": "Max",
+      "slug": "max",
+      "abbreviation": "MAX",
+      "description": "Maximum"
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 57,
     "fields": {
-        "path": "00020001",
-        "depth": 2,
-        "numchild": 0,
-        "name": "Average",
-        "slug": "average",
-        "abbreviation": "AVG",
-        "description": ""
+      "path": "00020001",
+      "depth": 2,
+      "numchild": 0,
+      "name": "Average",
+      "slug": "average",
+      "abbreviation": "AVG",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 59,
     "fields": {
-        "path": "000300050002",
-        "depth": 3,
-        "numchild": 0,
-        "name": "Profiles",
-        "slug": "profiles",
-        "abbreviation": "PROFILES",
-        "description": ""
+      "path": "000300050002",
+      "depth": 3,
+      "numchild": 0,
+      "name": "Profiles",
+      "slug": "profiles",
+      "abbreviation": "PROFILES",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 60,
     "fields": {
-        "path": "000800050001",
-        "depth": 3,
-        "numchild": 0,
-        "name": "SUPR-1",
-        "slug": "supr-1",
-        "abbreviation": "SUPR1",
-        "description": ""
+      "path": "000800060001",
+      "depth": 3,
+      "numchild": 0,
+      "name": "SUPR-1",
+      "slug": "supr-1",
+      "abbreviation": "SUPR1",
+      "description": ""
     }
-},
-{
+  },
+  {
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 61,
     "fields": {
-        "path": "000800050002",
-        "depth": 3,
-        "numchild": 0,
-        "name": "SUPR-2",
-        "slug": "supr-2",
-        "abbreviation": "SUPR2",
-        "description": ""
+      "path": "000800060002",
+      "depth": 3,
+      "numchild": 0,
+      "name": "SUPR-2",
+      "slug": "supr-2",
+      "abbreviation": "SUPR2",
+      "description": ""
     }
-},
+  },
+  {
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 62,
+    "fields": {
+      "path": "00080005",
+      "depth": 2,
+      "numchild": 0,
+      "name": "Scoop",
+      "slug": "scoop",
+      "abbreviation": "SCOOP",
+      "description": ""
+    }
+  },
   {
     "model": "geocamUtil.siteframe",
     "pk": 2,
@@ -905,269 +918,277 @@
       "projUnits": "m"
     }
   },
-{
+  {
     "model": "auth.user",
     "pk": 10,
     "fields": {
-        "password": "*",
-        "is_superuser": false,
-        "username": "camera",
-        "first_name": "Some",
-        "last_name": "Camera",
-        "is_staff": false,
-        "is_active": false
+      "password": "*",
+      "is_superuser": false,
+      "username": "camera",
+      "first_name": "Some",
+      "last_name": "Camera",
+      "is_staff": false,
+      "is_active": false
     }
-},
-{
+  },
+  {
     "model": "auth.user",
     "pk": 11,
     "fields": {
-        "password": "*",
-        "is_superuser": false,
-        "username": "navigator",
-        "first_name": "Navigator",
-        "last_name": "Navigator",
-        "is_staff": false,
-        "is_active": false
+      "password": "*",
+      "is_superuser": false,
+      "username": "navigator",
+      "first_name": "Navigator",
+      "last_name": "Navigator",
+      "is_staff": false,
+      "is_active": false
     }
-},
-{
+  },
+  {
     "model": "auth.user",
     "pk": 12,
     "fields": {
-        "password": "*",
-        "is_superuser": false,
-        "username": "datalogger",
-        "first_name": "Data",
-        "last_name": "Logger",
-        "is_staff": false,
-        "is_active": false
+      "password": "*",
+      "is_superuser": false,
+      "username": "datalogger",
+      "first_name": "Data",
+      "last_name": "Logger",
+      "is_staff": false,
+      "is_active": false
     }
-},
-{
+  },
+  {
     "model": "auth.user",
     "pk": 13,
     "fields": {
-        "password": "*",
-        "is_superuser": false,
-        "username": "scicommfellow",
-        "first_name": "Science",
-        "last_name": "Communication Fellow",
-        "is_staff": false,
-        "is_active": false
+      "password": "*",
+      "is_superuser": false,
+      "username": "scicommfellow",
+      "first_name": "Science",
+      "last_name": "Communication Fellow",
+      "is_staff": false,
+      "is_active": false
     }
-},
-    {
+  },
+  {
     "model": "auth.user",
     "pk": 14,
     "fields": {
-        "password": "*",
-        "is_superuser": false,
-        "username": "chief",
-        "first_name": "Chief",
-        "last_name": "Sci",
-        "is_staff": false,
-        "is_active": false
+      "password": "*",
+      "is_superuser": false,
+      "username": "chief",
+      "first_name": "Chief",
+      "last_name": "Sci",
+      "is_staff": false,
+      "is_active": false
     }
-},
-    {
+  },
+  {
     "model": "auth.user",
     "pk": 15,
     "fields": {
-        "password": "*",
-        "is_superuser": false,
-        "username": "science",
-        "first_name": "Science",
-        "last_name": "",
-        "is_staff": false,
-        "is_active": false
+      "password": "*",
+      "is_superuser": false,
+      "username": "science",
+      "first_name": "Science",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": false
     }
-},
-    {
+  },
+  {
     "model": "auth.user",
     "pk": 20,
     "fields": {
-        "password": "*",
-        "is_superuser": false,
-        "username": "herc",
-        "first_name": "ROV",
-        "last_name": "Hercules",
-        "is_staff": false,
-        "is_active": false
+      "password": "*",
+      "is_superuser": false,
+      "username": "herc",
+      "first_name": "ROV",
+      "last_name": "Hercules",
+      "is_staff": false,
+      "is_active": false
     }
-},
-    {
+  },
+  {
     "model": "auth.user",
     "pk": 21,
     "fields": {
-        "password": "*",
-        "is_superuser": false,
-        "username": "argus",
-        "first_name": "ROV",
-        "last_name": "Argus",
-        "is_staff": false,
-        "is_active": false
+      "password": "*",
+      "is_superuser": false,
+      "username": "argus",
+      "first_name": "ROV",
+      "last_name": "Argus",
+      "is_staff": false,
+      "is_active": false
     }
-},
-    {
+  },
+  {
     "model": "xgds_sample.sampletype",
     "pk": 1,
     "fields": {
-        "value": "IGT",
-        "display_name": "IGT"
+      "value": "IGT",
+      "display_name": "IGT"
     }
-},
-{
+  },
+  {
     "model": "xgds_sample.sampletype",
     "pk": 2,
     "fields": {
-        "value": "NISKIN",
-        "display_name": "Niskin"
+      "value": "Niskin",
+      "display_name": "Niskin"
     }
-},
-{
+  },
+  {
     "model": "xgds_sample.sampletype",
     "pk": 3,
     "fields": {
-        "value": "PushCore",
-        "display_name": "Push Core"
+      "value": "PushCore",
+      "display_name": "Push Core"
     }
-},
-{
+  },
+  {
     "model": "xgds_sample.sampletype",
     "pk": 4,
     "fields": {
-        "value": "ROVGrab",
-        "display_name": "ROV Grab"
+      "value": "ROVGrab",
+      "display_name": "ROV Grab"
     }
-},
-{
+  },
+  {
     "model": "xgds_sample.sampletype",
     "pk": 5,
     "fields": {
-        "value": "SUPR-1",
-        "display_name": "SUPR 1"
+      "value": "SUPR-1",
+      "display_name": "SUPR 1"
     }
-},
-{
+  },
+  {
     "model": "xgds_sample.sampletype",
     "pk": 6,
     "fields": {
-        "value": "SUPR-2",
-        "display_name": "SUPR 2"
+      "value": "SUPR-2",
+      "display_name": "SUPR 2"
     }
-},
-  {"pk":"mg2", "model":"xgds_map_server.MapGroup", "fields":
-	{"name":"Dives",
-	"description":"Root for all of the dives on the xGDS server",
-    "parent": "mg1"}
-},
+  },
   {
-        "pk": "maplink_completed_dives",
-        "model": "xgds_map_server.MapLink",
-        "fields": {
-                "creator": "xgds",
-                "name": "Completed",
-                "description": "Completed dive data.  Do not select this node; expand and select its children.",
-                "childNodesUrl": "/xgds_core/completedGroupFlightsTreeNodes",
-                "parent": "mg2"
-        }
-    },
-    {
-        "pk": "maplink_active_dives",
-        "model": "xgds_map_server.MapLink",
-        "fields": {
-                "creator": "xgds",
-                "name": "Active",
-                "description": "Active dive data.  Do not select this node; expand and select its children.",
-                "childNodesUrl": "/xgds_core/activeFlightsTreeNodes$",
-                "parent": "mg2"
-        }
-    },
-    {
-        "pk": "maplink_plans",
-        "model": "xgds_map_server.MapLink",
-        "fields": {
-                "creator": "xgds",
-                "name": " Plans",
-                "description": "All saved plans",
-                "childNodesUrl": "/xgds_planner2/plansTreeNodes",
-                "parent": "mg1"
-        }
-    },
-   {
-        "pk": 10,
-        "model": "geocamTrack.linestyle",
-        "fields": {
-            "color": "ffff00ff",
-            "width": 3,
-            "extras": "{}",
-            "name": "hercules_linestyle",
-            "uuid": "hercules"
-        }
-    },
-    {
-        "pk": 11,
-        "model": "geocamTrack.linestyle",
-        "fields": {
-            "color": "ffffff00",
-            "width": 2,
-            "extras": "{}",
-            "name": "argus_linestyle",
-            "uuid": "argus"
-        }
-    },
-    {
-        "pk": 12,
-        "model": "geocamTrack.linestyle",
-        "fields": {
-            "color": "ff00ffff",
-            "width": 1,
-            "extras": "{}",
-            "name": "nautilus_linestyle",
-            "uuid": "nautilus"
-        }
-    },
-    {
-        "pk": 10,
-        "model": "geocamTrack.iconstyle",
-        "fields": {
-            "scale": 0.3,
-            "name": "ev1_pointer",
-            "url": "/static/basaltApp/icons/hercules_pointer.png",
-            "height": 64,
-            "width": 42,
-            "extras": "{}",
-            "color": "",
-            "uuid": "hercules"
-        }
-    },
-    {
-        "pk": 11,
-        "model": "geocamTrack.iconstyle",
-        "fields": {
-            "scale": 0.3,
-            "name": "ev2_pointer",
-            "url": "/static/basaltApp/icons/argus_pointer.png",
-            "height": 64,
-            "width": 42,
-            "extras": "{}",
-            "color": "",
-            "uuid": "argus"
-        }
-    },
-    {
-        "pk": 12,
-        "model": "geocamTrack.iconstyle",
-        "fields": {
-            "scale": 1.0,
-            "name": "sa_dot",
-            "url": "/static/geocamTrack/icons/nautilus.png",
-            "height": 64,
-            "width": 64,
-            "extras": "{}",
-            "color": "",
-            "uuid": "nautilus"
-        }
-    },
+    "model": "xgds_sample.sampletype",
+    "pk": 7,
+    "fields": {
+      "value": "Scoop",
+      "display_name": "Scoop"
+    }
+  },
+  {"pk":"mg2", "model":"xgds_map_server.MapGroup", "fields":
+  {"name":"Dives",
+    "description":"Root for all of the dives on the xGDS server",
+    "parent": "mg1"}
+  },
+  {
+    "pk": "maplink_completed_dives",
+    "model": "xgds_map_server.MapLink",
+    "fields": {
+      "creator": "xgds",
+      "name": "Completed",
+      "description": "Completed dive data.  Do not select this node; expand and select its children.",
+      "childNodesUrl": "/xgds_core/completedGroupFlightsTreeNodes",
+      "parent": "mg2"
+    }
+  },
+  {
+    "pk": "maplink_active_dives",
+    "model": "xgds_map_server.MapLink",
+    "fields": {
+      "creator": "xgds",
+      "name": "Active",
+      "description": "Active dive data.  Do not select this node; expand and select its children.",
+      "childNodesUrl": "/xgds_core/activeFlightsTreeNodes$",
+      "parent": "mg2"
+    }
+  },
+  {
+    "pk": "maplink_plans",
+    "model": "xgds_map_server.MapLink",
+    "fields": {
+      "creator": "xgds",
+      "name": " Plans",
+      "description": "All saved plans",
+      "childNodesUrl": "/xgds_planner2/plansTreeNodes",
+      "parent": "mg1"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "geocamTrack.linestyle",
+    "fields": {
+      "color": "ffff00ff",
+      "width": 3,
+      "extras": "{}",
+      "name": "hercules_linestyle",
+      "uuid": "hercules"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "geocamTrack.linestyle",
+    "fields": {
+      "color": "ffffff00",
+      "width": 2,
+      "extras": "{}",
+      "name": "argus_linestyle",
+      "uuid": "argus"
+    }
+  },
+  {
+    "pk": 12,
+    "model": "geocamTrack.linestyle",
+    "fields": {
+      "color": "ff00ffff",
+      "width": 1,
+      "extras": "{}",
+      "name": "nautilus_linestyle",
+      "uuid": "nautilus"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "geocamTrack.iconstyle",
+    "fields": {
+      "scale": 0.3,
+      "name": "ev1_pointer",
+      "url": "/static/basaltApp/icons/hercules_pointer.png",
+      "height": 64,
+      "width": 42,
+      "extras": "{}",
+      "color": "",
+      "uuid": "hercules"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "geocamTrack.iconstyle",
+    "fields": {
+      "scale": 0.3,
+      "name": "ev2_pointer",
+      "url": "/static/basaltApp/icons/argus_pointer.png",
+      "height": 64,
+      "width": 42,
+      "extras": "{}",
+      "color": "",
+      "uuid": "argus"
+    }
+  },
+  {
+    "pk": 12,
+    "model": "geocamTrack.iconstyle",
+    "fields": {
+      "scale": 1.0,
+      "name": "sa_dot",
+      "url": "/static/geocamTrack/icons/nautilus.png",
+      "height": 64,
+      "width": 64,
+      "extras": "{}",
+      "color": "",
+      "uuid": "nautilus"
+    }
+  },
 ]

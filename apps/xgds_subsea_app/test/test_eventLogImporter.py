@@ -121,6 +121,8 @@ class eventLogImporterTest(TestCase):
         self.assertTrue('ROVGrab' in row['tag'])
         add_sample_type_tag(row, 'ROVPC')
         self.assertTrue('PushCore' in row['tag'])
+        add_sample_type_tag(row, 'scoop')
+        self.assertTrue('Scoop' in row['tag'])
         add_sample_type_tag(row, 'Niskin')
         self.assertTrue('Niskin' in row['tag'])
         row = {}
