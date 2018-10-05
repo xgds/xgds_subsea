@@ -453,6 +453,7 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MESSAGE_MODEL_NAME] = {'ol': 'xgds_notes2/js/o
                                                    'searchableColumns': ['content','flight_name', 'author_name', ],
                                                    'editableColumns':{'content':'text'},
                                                    'columnTitles': ['Time', 'Author', 'Content',],
+                                                   'columnWidths': ['5px', '50px', '50px', 'auto'],
                                                    'viewHandlebars': 'xgds_notes2/templates/handlebars/message-view.handlebars',
                                                    'event_time_field': 'event_time',
                                                    'event_timezone_field': 'event_timezone',

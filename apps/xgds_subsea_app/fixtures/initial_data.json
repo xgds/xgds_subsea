@@ -1069,7 +1069,7 @@
                 "creator": "xgds",
                 "name": "Completed",
                 "description": "Completed dive data.  Do not select this node; expand and select its children.",
-                "childNodesUrl": "/xgds_core/completedFlightsTreeNodes",
+                "childNodesUrl": "/xgds_core/completedGroupFlightsTreeNodes",
                 "parent": "mg2"
         }
     },
@@ -1094,5 +1094,80 @@
                 "childNodesUrl": "/xgds_planner2/plansTreeNodes",
                 "parent": "mg1"
         }
-    }
+    },
+   {
+        "pk": 10,
+        "model": "geocamTrack.linestyle",
+        "fields": {
+            "color": "ffff00ff",
+            "width": 3,
+            "extras": "{}",
+            "name": "hercules_linestyle",
+            "uuid": "hercules"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "geocamTrack.linestyle",
+        "fields": {
+            "color": "ffffff00",
+            "width": 2,
+            "extras": "{}",
+            "name": "argus_linestyle",
+            "uuid": "argus"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "geocamTrack.linestyle",
+        "fields": {
+            "color": "ff00ffff",
+            "width": 1,
+            "extras": "{}",
+            "name": "nautilus_linestyle",
+            "uuid": "nautilus"
+        }
+    },
+    {
+        "pk": 10,
+        "model": "geocamTrack.iconstyle",
+        "fields": {
+            "scale": 0.3,
+            "name": "ev1_pointer",
+            "url": "/static/basaltApp/icons/hercules_pointer.png",
+            "height": 64,
+            "width": 42,
+            "extras": "{}",
+            "color": "",
+            "uuid": "hercules"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "geocamTrack.iconstyle",
+        "fields": {
+            "scale": 0.3,
+            "name": "ev2_pointer",
+            "url": "/static/basaltApp/icons/argus_pointer.png",
+            "height": 64,
+            "width": 42,
+            "extras": "{}",
+            "color": "",
+            "uuid": "argus"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "geocamTrack.iconstyle",
+        "fields": {
+            "scale": 1.0,
+            "name": "sa_dot",
+            "url": "/static/geocamTrack/icons/nautilus.png",
+            "height": 64,
+            "width": 64,
+            "extras": "{}",
+            "color": "",
+            "uuid": "nautilus"
+        }
+    },
 ]

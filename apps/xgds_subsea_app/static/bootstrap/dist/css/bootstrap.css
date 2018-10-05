@@ -3119,6 +3119,7 @@ form table label {
   position: relative;
   clear: both;
   zoom: 1;
+  font-size: 0.7rem;
   /* Feeling sorry for IE */
 }
 
