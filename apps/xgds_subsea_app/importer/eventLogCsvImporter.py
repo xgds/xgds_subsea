@@ -527,6 +527,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         :return: the dictionary of sample data
         """
         found_sample = None
+        # we have found cases where samples had bad names with underscores or space
+        name = name.replace(' ', '-')
+        name = name.replace('_', '-')
         try:
             found_sample = Sample.objects.get(name=name)
             if not self.replace:
@@ -549,7 +552,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         sample_data = {'name': name,
                        'sample_type': sample_type,
                        'place': place,
-                       # 'track_position': None,
+                       'creator': self.xgds_user,
                        'collector': self.herc_user,
                        'collection_time': row['event_time'],
                        'collection_timezone': settings.TIME_ZONE,

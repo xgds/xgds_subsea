@@ -258,6 +258,12 @@ class eventLogImporterTest(TestCase):
         self.assertEqual(samples[0].name, 'NA100-001')
         self.assertEqual(samples[0].label.number, 100001)
 
+        # verify name cleanup
+        sample3 = Sample.objects.get(name='NA100-003')
+        self.assertIsInstance(sample3, Sample)
+        sample11 = Sample.objects.get(name='NA100-011')
+        self.assertIsInstance(sample11, Sample)
+
         igtsamples = Sample.objects.filter(sample_type__pk=1)
         self.assertEqual(igtsamples.count(), 2)
 
