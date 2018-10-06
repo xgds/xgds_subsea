@@ -900,6 +900,19 @@
     }
   },
   {
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 63,
+    "fields": {
+        "path": "000300050001",
+        "depth": 3,
+        "numchild": 0,
+        "name": "LaserMapping",
+        "slug": "lasermapping",
+        "abbreviation": "LASER",
+        "description": ""
+    }
+  },
+  {
     "model": "geocamUtil.siteframe",
     "pk": 2,
     "fields": {

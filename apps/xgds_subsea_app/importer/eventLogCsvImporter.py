@@ -113,6 +113,8 @@ def add_notes_tag(row, value):
         add_tag(row, 'TempIGT')
     elif 'T-SUPR' in value:
         add_tag(row, 'TempSUPR')
+    elif 'Laser Mapping' in value:
+        add_tag(row, 'LaserMapping')
     elif 'Other' in value:
         add_tag(row, 'Other')
     else:
@@ -204,36 +206,29 @@ def add_timing_or_data_tag(row, value):
     """
     if not value:
         return "NO VALUE"
-    tag_added = False
     lower_value = value.lower()
     if 'min' in lower_value:
         add_tag(row, 'Min')
-        tag_added = True
-    if 'max' in lower_value:
+    elif 'max' in lower_value:
         add_tag(row, 'Max')
-        tag_added = True
-    if 'avg' or 'average' in lower_value:
+    elif 'avg' or 'average' in lower_value:
         add_tag(row, 'Average')
-        tag_added = True
-    if 'end' in lower_value:
+    elif 'end' in lower_value:
         add_tag(row, 'End')
-        tag_added = True
-    if 'start' in lower_value:
+    elif 'start' in lower_value:
         if 'restart' in lower_value:
             add_tag(row, 'Resume')
         else:
             add_tag(row, 'Start')
-        tag_added = True
-    if 'pause' in lower_value:
+    elif 'pause' in lower_value:
         add_tag(row, 'Pause')
-        tag_added = True
-    if 'resume' in lower_value:
+    elif 'resume' in lower_value:
         add_tag(row, 'Resume')
-        tag_added = True
-    if 'stop' in lower_value:
+    elif 'stop' in lower_value:
         add_tag(row, 'Stop')
-        tag_added = True
-    return tag_added
+    else:
+        return False
+    return True
 
 
 def add_tag(row, tag_key, capitalize=False):
@@ -401,8 +396,12 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         if event_type == 'NOTES':
             row['content'] = value_2
             if value_3:
-                add_timing_or_data_tag(row, value_3)
-                prefix = '%s: %s\n' % (key_3, value_3)
+                td_tag_added = add_timing_or_data_tag(row, value_3)
+                if td_tag_added and 'Max' in row['tag']:
+                    # the max value is stored in the marker field but it is not really a marker
+                    prefix = '%s\n' % value_3
+                else:
+                    prefix = '%s: %s\n' % (key_3, value_3)
                 row['content'] = clean_append(prefix, row['content'])
             tag_added = add_notes_tag(row, value_1)
             if not tag_added:
