@@ -1,13 +1,8 @@
-// render json note information on the openlayers map
+// render json sample information on the openlayers map
 
-String.prototype.trunc = String.prototype.trunc ||
-      function(n){
-          return (this.length > n) ? this.substr(0, n-1) : this;
-      };
-
-var Event = {
-		selectedStylePath: '/static/xgds_notes2/icons/post_office_selected.png',
-		stylePath: '/static/xgds_notes2/icons/post_office.png',
+var Sample = {
+		selectedStylePath: '/static/xgds_sample/images/sample_icon_selected.png',
+		stylePath: '/static/xgds_sample/images/sample_icon.png',
         initStyles: function() {
             if (_.isUndefined(this.styles)){
                 this.styles = {};
@@ -15,14 +10,14 @@ var Event = {
                 	zIndex: 1,
                     image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                         src: this.stylePath,
-                        scale: 0.25
+                        scale: 0.8
                         }))
                       });
                 this.styles['selectedIconStyle'] = new ol.style.Style({
                 	zIndex: 10,
                     image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
                         src: this.selectedStylePath,
-                        scale: 0.25
+                        scale: 0.8
                         }))
                       });
                 this.styles['yellowStroke'] =  new ol.style.Stroke({
@@ -34,7 +29,6 @@ var Event = {
                     width: 2
                 });
                 this.styles['text'] = {
-                	zIndex: 1,
                     font: '12px Calibri,sans-serif',
                     fill: new ol.style.Fill({
                         color: 'black'
@@ -44,71 +38,48 @@ var Event = {
                 };
             }
         },
-        constructElements: function(notesJson){
-            if (_.isEmpty(notesJson)){
+        constructElements: function(samplesJson){
+            if (_.isEmpty(samplesJson)){
                 return null;
             }
             this.initStyles();
             var olFeatures = [];
-            for (var i = 0; i < notesJson.length; i++) {
-                if (_.isNumber(notesJson[i].lat)) {
-                    var noteFeature = this.constructMapElement(notesJson[i]);
-                    olFeatures = olFeatures.concat(noteFeature);
+            for (var i = 0; i < samplesJson.length; i++) {
+                if (samplesJson[i].lat !== "") {
+                    var sampleFeature = this.constructMapElement(samplesJson[i]);
+                    olFeatures = olFeatures.concat(sampleFeature);
                 }
             }
             var vectorLayer = new ol.layer.Vector({
-                name: notesJson[0].type,
+                name: samplesJson[0].type,
                 source: new ol.source.Vector({
                     features: olFeatures
                 }),
             });  
             return vectorLayer;
         },
-        constructMapElement:function(noteJson){
-        	noteJson.flattenedTags = '';
-            var coords = transform([noteJson.lon, noteJson.lat]);
-            var view_url = noteJson.content_url;
-            if (_.isUndefined(view_url) || _.isEmpty(view_url)) {
-            	view_url = '/xgds_map_server/view/' + noteJson.type + '/' + noteJson.pk;
-            }
+        constructMapElement:function(sampleJson){
+            var coords = transform([sampleJson.lon, sampleJson.lat]);
             var feature = new ol.Feature({
             	selected: false,
-            	view_url: view_url,
-                name: getLocalTimeString(noteJson.event_time, noteJson.event_timezone),
-                uuid: noteJson.pk,
-                pk: noteJson.pk,
-                type: noteJson.type,
+            	view_url: '/xgds_map_server/view/' + sampleJson.type + '/' + sampleJson.pk,
+                name: sampleJson.name,
+                pk: sampleJson.pk,
+                type: sampleJson.type,
                 geometry: new ol.geom.Point(coords)
             });
-            feature.setStyle(this.getStyles(noteJson));
-            this.setupPopup(feature, noteJson);
+            feature.setStyle(this.getStyles(sampleJson));
+            this.setupPopup(feature, sampleJson);
             return feature;
         },
-        getStyles: function(noteJson) {
+        getStyles: function(sampleJson) {
             var styles = [this.styles['iconStyle']];
-            if (noteJson.tags != '') {
-                var theText = new ol.style.Text(this.styles['text']);
-                var done = false;
-                if ('show_on_map' in noteJson) {
-                     if (noteJson.show_on_map) {
-                         theText.setText(noteJson.content.trunc(10));
-                         done = true;
-                     }
-                }
-                if (!done) {
-                    if (noteJson.tag_names.length > 0){
-                	    noteJson.flattenedTags = noteJson.tag_names.reduce(function(a, b) {
-                		    return a.concat(" " + b);
-                	    });
-            		    theText.setText(noteJson.tag_names[0]);
-                    }
-                }
-
-                var textStyle = new ol.style.Style({
-                    text: theText
-                });
-                styles.push(textStyle);
-            }
+            var theText = new ol.style.Text(this.styles['text']);
+            theText.setText(sampleJson.name);
+            var textStyle = new ol.style.Style({
+                text: theText
+            });
+            styles.push(textStyle);
             return styles;
         },
         selectMapElement:function(feature){
@@ -131,21 +102,22 @@ var Event = {
         	newstyles.push(newtextstyle);
         	feature.setStyle(newstyles);
         },
-        setupPopup: function(feature, noteJson) {
+        setupPopup: function(feature, sampleJson) {
             var trString = "<tr><td>%s</td><td>%s</td></tr>";
             var formattedString = "<table>";
-            for (j = 0; j< 4; j++){
+            for (j = 0; j< 5; j++){
                 formattedString = formattedString + trString;
             }
             formattedString = formattedString + "</table>";
-            depthString = sprintf("%.3f m", noteJson.depth)
-            var data = ["Author:", noteJson.author_name,
-                        "Tags:", noteJson.flattenedTags,
-                        "Content:", noteJson.content,
-                        "Depth:", depthString
-                        ];
+            depthString = sprintf("%.3f m", sampleJson.depth)
+
+            var data = ["Name:", sampleJson.name ? sampleJson.name : '',
+                        "Type:", sampleJson.sample_type_name,
+                        "Place:", sampleJson.place_name, //TODO: get label from settings
+                        //"Time:", sampleJson.collection_time ? getLocalTimeString(sampleJson.collection_time, sampleJson.collection_timezone):'',
+                        "Description:", sampleJson.description ? sampleJson.description : '',
+                        "Depth:", depthString];
             var popupContents = vsprintf(formattedString, data);
             feature['popup'] = popupContents;
-        		
         }
 }

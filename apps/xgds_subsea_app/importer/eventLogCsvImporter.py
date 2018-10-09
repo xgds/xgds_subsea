@@ -211,7 +211,9 @@ def add_timing_or_data_tag(row, value):
         add_tag(row, 'Min')
     elif 'max' in lower_value:
         add_tag(row, 'Max')
-    elif 'avg' or 'average' in lower_value:
+    elif 'avg' in lower_value:
+        add_tag(row, 'Average')
+    elif 'average' in lower_value:
         add_tag(row, 'Average')
     elif 'end' in lower_value:
         add_tag(row, 'End')

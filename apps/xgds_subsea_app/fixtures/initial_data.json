@@ -253,7 +253,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 12,
     "fields": {
-      "path": "000300050001",
+      "path": "000300050002",
       "depth": 3,
       "numchild": 0,
       "name": "MultibeamLine",
@@ -463,7 +463,7 @@
     "fields": {
       "path": "00030005",
       "depth": 2,
-      "numchild": 2,
+      "numchild": 3,
       "name": "Mapping",
       "slug": "mapping",
       "abbreviation": "MAP",
@@ -851,7 +851,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 59,
     "fields": {
-      "path": "000300050002",
+      "path": "000300050003",
       "depth": 3,
       "numchild": 0,
       "name": "Profiles",
@@ -903,13 +903,13 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 63,
     "fields": {
-        "path": "000300050001",
-        "depth": 3,
-        "numchild": 0,
-        "name": "LaserMapping",
-        "slug": "lasermapping",
-        "abbreviation": "LASER",
-        "description": ""
+      "path": "000300050001",
+      "depth": 3,
+      "numchild": 0,
+      "name": "LaserMapping",
+      "slug": "lasermapping",
+      "abbreviation": "LASER",
+      "description": ""
     }
   },
   {
@@ -1091,10 +1091,14 @@
       "display_name": "Scoop"
     }
   },
-  {"pk":"mg2", "model":"xgds_map_server.MapGroup", "fields":
-  {"name":"Dives",
-    "description":"Root for all of the dives on the xGDS server",
-    "parent": "mg1"}
+  {
+    "pk": "mg2",
+    "model": "xgds_map_server.MapGroup",
+    "fields": {
+      "name": "Dives",
+      "description": "Root for all of the dives on the xGDS server",
+      "parent": "mg1"
+    }
   },
   {
     "pk": "maplink_completed_dives",
