@@ -1,5 +1,13 @@
 [
   {
+    "pk": "mg1",
+    "model": "xgds_map_server.MapGroup",
+    "fields": {
+      "name": "xGDS Maps",
+      "description": "Root for all of the maps on the xGDS server"
+    }
+  },
+  {
     "pk": 2,
     "model": "xgds_core.vehicle",
     "fields": {

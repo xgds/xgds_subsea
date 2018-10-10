@@ -29,7 +29,7 @@ from django.contrib.auth.models import User
 
 class chatLogImporterTest(TransactionTestCase):
 
-    fixtures = ['initial_data.json', 'users.json',]
+    fixtures = ['xgds_subsea_app/initial_data.json', 'users.json',]
 
     """
     Tests for the chatLogCsvImporter
