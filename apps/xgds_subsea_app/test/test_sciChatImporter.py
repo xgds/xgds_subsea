@@ -17,7 +17,7 @@
 from dateutil.parser import parse as dateparser
 import pytz
 
-from django.test import TestCase
+from django.test import TransactionTestCase
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseForbidden, Http404, JsonResponse
 
@@ -27,7 +27,7 @@ from xgds_notes2.models import LocatedMessage
 from django.contrib.auth.models import User
 
 
-class chatLogImporterTest(TestCase):
+class chatLogImporterTest(TransactionTestCase):
 
     fixtures = ['initial_data.json', 'users.json',]
 

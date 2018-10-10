@@ -428,6 +428,11 @@ XGDS_NOTES_MESSAGES_MONIKER = 'Science Chat'
 XGDS_MAP_SERVER_SITE_MONIKER = 'Region'
 XGDS_MAP_SERVER_PLACE_MONIKER = 'Site'
 
+XGDS_PLANNER_PLAN_MONIKER = "Dive Plan"
+XGDS_PLANNER_STATION_MONIKER = "Target"
+XGDS_PLANNER_SEGMENT_MONIKER = "Segment"
+XGDS_PLANNER_COMMAND_MONIKER = "Activity"
+
 
 XGDS_MAP_SERVER_JS_MAP = getOrCreateDict('XGDS_MAP_SERVER_JS_MAP')
 XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MODEL_NAME] = {'ol': 'xgds_notes2/js/olNoteMap.js',
@@ -473,3 +478,6 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_SAMPLE_SAMPLE_KEY] = {'ol': 'xgds_sample/js/olSample
                                                   'event_timezone_field': 'collection_timezone',
                                                   'search_form_class': 'xgds_sample.forms.SearchSampleForm',
                                                   }
+
+XGDS_CORE_SHOW_CREATE_FLIGHTS = False
+XGDS_CORE_SHOW_FLIGHT_MANAGEMENT = False

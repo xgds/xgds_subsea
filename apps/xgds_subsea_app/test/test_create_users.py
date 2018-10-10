@@ -16,7 +16,7 @@
 
 #import json
 #from django.db import models
-from django.test import TestCase
+from django.test import TransactionTestCase
 #from django.core.urlresolvers import reverse
 #from django.http import HttpResponseForbidden, Http404, JsonResponse
 from django.contrib.auth.models import User
@@ -25,7 +25,7 @@ from xgds_subsea_app.importer.create_users import create_users
 from geocamUtil.UserUtil import get_new_username_from_name, username_exists, user_exists
 
 
-class TestCreateUsers(TestCase):
+class TestCreateUsers(TransactionTestCase):
 
     fixtures = ['test_create_users.json']
 

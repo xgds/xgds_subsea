@@ -14,14 +14,14 @@
 # specific language governing permissions and limitations under the License.
 # __END_LICENSE__
 
-from django.test import TestCase
+from django.test import TransactionTestCase
 
 from xgds_subsea_app.importer.eventLogCsvImporter import *
 from xgds_notes2.models import HierarchichalTag, LocatedNote
 from xgds_sample.models import Sample, Label
 
 
-class eventLogImporterTest(TestCase):
+class eventLogImporterTest(TransactionTestCase):
 
     fixtures = ['initial_data.json', 'users.json', 'note_locations.json', 'note_roles.json', 'note_tags.json', \
                 'test_eventlog_users.json', ]
