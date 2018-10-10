@@ -1036,6 +1036,19 @@
     }
   },
   {
+    "model": "auth.user",
+    "pk": 22,
+    "fields": {
+      "password": "*",
+      "is_superuser": false,
+      "username": "importer",
+      "first_name": "Auto",
+      "last_name": "Import",
+      "is_staff": false,
+      "is_active": false
+    }
+  },
+  {
     "model": "xgds_sample.sampletype",
     "pk": 1,
     "fields": {

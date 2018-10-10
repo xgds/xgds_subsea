@@ -263,7 +263,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
     navigator_user = getUserByUsername('navigator')
     scf_user = getUserByUsername('scicommfellow')
     herc_user = getUserByUsername('herc')
-    xgds_user = getUserByUsername('xgds')
+    importer_user = getUserByUsername('importer')
 
     roles = {'NAVIGATOR': Role.objects.get(value='NAVIGATOR'),
              'SCF': Role.objects.get(value='SCIENCE_COMMUNICATION_FELLOW'),
@@ -296,9 +296,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         result = super(EventLogCsvImporter, self).update_row(row)
 
         result = self.clean_site(result)
+        result = self.clean_author(result)
         result = self.clean_key_values(result)
         if result:
-            result = self.clean_author(result)
             result = remove_empty_keys(result)
             result['location'] = self.ship_location
 
@@ -318,7 +318,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                     place = Place.objects.get(name=site_string)
                 except:
                     # create a new place
-                    place = Place(name=site_string, creator=self.xgds_user,
+                    place = Place(name=site_string, creator=self.importer_user,
                                   creation_time=timezone.now(),
                                   region=SiteFrame.objects.get(pk=settings.XGDS_CURRENT_SITEFRAME_ID))
                     Place.add_root(instance=place)
@@ -333,29 +333,35 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         :param row:
         :return: the updated row
         """
-        author_name = row['author_name']
-        lower_name = author_name.lower()
-        if author_name.lower() == 'nav' or lower_name == 'navigator' or lower_name == 'navigation':
-            row['role'] = self.roles['NAVIGATOR']
-            row['author'] = self.navigator_user
-        elif author_name.lower() == 'default_scf_user':
-            row['role'] = self.roles['SCF']
-            row['author'] = self.scf_user
-        else:
-            row['role'] = self.roles['DATA_LOGGER']
-            splits = author_name.split('_')
-            if len(splits) == 2:
-                try:
-                    row['author'] = getUserByNames(splits[0], splits[1])
-                except:
-                    # TODO This happend for NA100 due to errors in cruise-record.xml
-                    print 'COULD NOT FIND USER FOR %s' % author_name
-                    pass
+        if 'author_name' in row:
+            author_name = row['author_name']
+            lower_name = author_name.lower()
+            if author_name.lower() == 'nav' or lower_name == 'navigator' or lower_name == 'navigation':
+                row['role'] = self.roles['NAVIGATOR']
+                row['author'] = self.navigator_user
+            elif author_name.lower() == 'default_scf_user':
+                row['role'] = self.roles['SCF']
+                row['author'] = self.scf_user
+            else:
+                row['role'] = self.roles['DATA_LOGGER']
+                splits = author_name.split('_')
+                if len(splits) == 2:
+                    try:
+                        row['author'] = getUserByNames(splits[0], splits[1])
+                    except:
+                        # TODO This happend for NA100 due to errors in cruise-record.xml
+                        print 'COULD NOT FIND USER FOR %s' % author_name
+                        pass
 
         if 'author' not in row:
             row['author'] = self.datalogger_user
 
-        del row['author_name']
+        if 'author_name' in row:
+            del row['author_name']
+        else:
+            print "*** THIS ROW HAS NO AUTHOR FIELD **"
+            print row
+
 
         return row
 
@@ -553,7 +559,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         sample_data = {'name': name,
                        'sample_type': sample_type,
                        'place': place,
-                       'creator': self.xgds_user,
+                       'creator': row['author'],
                        'collector': self.herc_user,
                        'collection_time': row['event_time'],
                        'collection_timezone': settings.TIME_ZONE,
