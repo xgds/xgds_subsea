@@ -26,7 +26,7 @@ from geocamUtil.UserUtil import getUserByUsername, getUserByNames
 from geocamUtil.models import SiteFrame
 from geocamTrack.utils import getClosestPosition
 from xgds_core.importer import csvImporter
-from xgds_core.FlightUtils import lookup_flight
+from xgds_core.flightUtils import lookup_flight
 from xgds_notes2.models import LocatedNote, HierarchichalTag, TaggedNote, Role, Location
 from xgds_map_server.models import Place
 from xgds_sample.models import Sample, SampleType, Label
