@@ -25,7 +25,7 @@ from xgds_sample.models import Sample, Label
 class eventLogImporterTest(TestCase):
 
 
-    fixtures = ['xgds_subsea_app/initial_data.json',
+    fixtures = ['xgds_subsea_app_initial_data.json',
                 'test_eventlog_users.json', ]
 
     # @classmethod
