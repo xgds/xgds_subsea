@@ -15,85 +15,142 @@
 # specific language governing permissions and limitations under the License.
 # __END_LICENSE__
 
+import os
 import optparse
+from collections import OrderedDict
 
 import django
 django.setup()
 from django.conf import settings
-from xgds_core.models import Flight, GroupFlight, Vehicle
-from xgds_core.flightUtils import getFlight
-from geocamTrack.utils import getClosestPosition
+from xgds_core.models import GroupFlight
 
-from csv import DictReader
-import sys
 import re
 import datetime
+from datetime import timedelta
 from dateutil.parser import parse as dateparser
 import pytz
 
 
-def create_dives(filename):
+def add_to_last_key(result, key, value):
     """
-    Import OET dive stats from a CSV file and write them to the database
-    :param filename: the name of the CSV file
-    :return: the number of dives imported
+    Append a string to the last string for the given key.
+    Supports dot notation for the summary section time area
     """
-    num_created = 0
+    if 'times.' in key:
+        splits = key.split('.')
+        times_dict = result[splits[0]]
+        specific_dict = times_dict[splits[1]]
+        specific_dict['description'] = '%s %s' % (specific_dict['description'], value)
+    else:
+        result[key] = '%s %s' % (result[key], value)
+    return result
 
-    vehicles = [Vehicle.objects.filter(name='Hercules')[0],
-                Vehicle.objects.filter(name='Argus')[0],
-                Vehicle.objects.filter(name='Nautilus')[0]]
 
-    reader = DictReader(open(filename, 'r'), delimiter='\t')
-    for row in reader:
-        start_time = dateparser(row['inwatertime']).replace(tzinfo=pytz.UTC)
-        end_time = dateparser(row['ondecktime']).replace(tzinfo=pytz.UTC)
+def build_time(input_time, last_time):
+    """
+    Construct datetime objects from 4 digit hourminute strings
+    :param input_time: HHMM string
+    :param last_time: the last datetime to use as starting point.
+    :return: a datetime using the given hours and minutes
+    """
+    hours = int(input_time[:2])
+    minutes = int(input_time[2:])
+    if hours > last_time.hour:
+        result = last_time.replace(hour=hours, minute=minutes)
+    else:
+        # add a day
+        last_time = last_time + timedelta(days=1)
+        result = last_time.replace(hour=hours, minute=minutes)
+    return result
 
-        # Check for existing database entries with this same instrument and acquisition time
-        existing_group_flights = GroupFlight.objects.filter(
-                name=row['dive'])
-        existing_flights = Flight.objects.filter(
-                start_time=start_time, end_time=end_time)
 
-        if len(existing_flights) > 0 or len(existing_group_flights) > 0:
-            print 'This flight exists:'
-            for g in existing_group_flights:
-                print '    %s' % g
-            for f in existing_flights:
-                print '    %s' % f
+def read_dive_summary(filename, dive_start_time):
+    """
+    Read the dive summary and store its values an ordered dict
+    :param filename: the name of the dive summary file
+    :return: the number of dive summary files successfully read (with data)
+    """
+    result = OrderedDict()
+    times = {}
+    result['times'] = times
+
+    f = open(filename, "r")
+    lines = f.readlines()
+    last_key = None
+    last_time = dive_start_time
+
+    for line in lines:
+        if line.startswith('#'):
             continue
 
-        group_flight = GroupFlight()
-        group_flight.name = row['dive']
-        # Pack everything from dive stats into the extras field
-        for k, v in row.iteritems():
-            group_flight.extras[k] = v
-        group_flight.save()
-        # print 'created %s' % groupFlight
-        num_created += 1
+        if not line:
+            last_key = None
+            continue
 
-        for vehicle in vehicles:
-            f = Flight()
-            f.name = '%s_%s' % (row['dive'], vehicle.name)
-            f.vehicle = vehicle
-            f.start_time = start_time
-            f.end_time = end_time
-            # Pack everything from dive stats into the extras field
-            for k, v in row.iteritems():
-                f.extras[k] = v
-            f.group = group_flight
-            f.save()
-            # print 'created %s' % f
-            num_created += 1
+        first_char = line[0]
+        if first_char.isdigit():
+            # 1021	1126	In water - on bottom
+            match = re.search('(\d{4})\s+(\d{4})\s+(.+)', line)
+            if match:
+                value = match.groups()[-1]
+                start_string = match.groups()[0]
+                end_string = match.groups()[1]
+                start_time = build_time(start_string, last_time)
+                end_time = build_time(end_string, start_time)
+                last_time = end_time
 
-    return num_created
+                description = match.groups()[2]
+                iso_start = start_time.isoformat()
+                block = {'start': iso_start,
+                         'end': end_time.isoformat(),
+                         'description': description}
+                times[iso_start] = block
+                last_key = 'times.%s' % iso_start
+            elif last_key:
+                add_to_last_key(result, last_key, line)
+
+        elif first_char.isalpha():
+            index = line.index(': ')
+            if index > 0:
+                key = line[0:index]
+                value = line[index:].strip()
+                if value:
+                    result[key] = value
+                last_key = key
+            elif last_key:
+                result[last_key] = '%s %s' % (result[last_key], line)
+
+    return result
+
+
+def load_dive_summary(filename):
+    """
+    Read the file and store it in the extras of the group flight
+    :param filename: the filename to read
+    :return: the number of keys loaded in the resulting dictionary
+    """
+
+    split_filename = os.path.basename(filename).split('-')
+    group_flight = GroupFlight.objects.get(name=split_filename[0])
+
+    herc_flight = group_flight.flights.get(vehicle__name='Hercules')
+    start_time = herc_flight.start_time
+    start_time = start_time.replace(microsecond=0, second=0)
+
+    loaded_dict = read_dive_summary(filename, start_time)
+    if not loaded_dict:
+        print "NO VALUES LOADED FROM %s" % filename
+        return 0
+
+    group_flight.extras.update(loaded_dict)
+    group_flight.save()
+
+    return len(loaded_dict)
 
 
 if __name__ == '__main__':
     parser = optparse.OptionParser('usage: %prog')
-    parser.add_option('-c', '--cruise', help='name of the cruise containing these dives')
 
     opts, args = parser.parse_args()
     stats_file = args[0]
-    created = create_dives(stats_file)
-    print 'Created %d dives and group dives' % created
+    loaded = load_dive_summary(stats_file)
