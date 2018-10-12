@@ -69,7 +69,11 @@ class SciChatCsvImporter(csvImporter.CsvImporter):
     This will create messages with references to the correct users, positions and flights.
     """
 
-    hercules = get_default_vehicle()
+    def __init__(self, yaml_file_path, csv_file_path, vehicle_name=None, flight_name=None, timezone_name='UTC',
+                 defaults=None, force=False, replace=False, skip_bad=False):
+        self.hercules = get_default_vehicle()
+        super(SciChatCsvImporter, self).__init__(yaml_file_path, csv_file_path, vehicle_name, flight_name,
+                                                  timezone_name, defaults, force, replace, skip_bad)
 
     def update_row(self, row):
         """
