@@ -1,0 +1,35 @@
+{{#if object_id}}
+<div> <strong>Loading data...</strong> </div>
+{{else}}
+<div> <strong>Message</strong> </div>
+	<table>
+		<tr>
+			<th><label for="id_collection_time">Event time:</label></th>
+			<td>{{prettyTime event_time event_timezone}}</td>
+		</tr>
+		<tr>
+			<th><label for="id_author_name">Author:</label></th>
+			<td>{{author_name}}</td>
+		</tr>
+		<tr>
+			<th><label for="id_content">Content</label></th>
+			<td>{{{content}}}</td>
+		</tr>
+		<tr>
+			<th><label for="id_latitude">Latitude:</label></th>
+			<td>{{lat}}</td>
+		</tr>
+		<tr>
+			<th><label for="id_longitude">Longitude:</label></th>
+			<td>{{lon}}</td>
+		</tr>
+		<tr>
+			<th><label for="id_altitude">Altitude:</label></th>
+			<td>{{alt}}</td>
+		</tr>
+		<tr>
+			<th><label for="id_depth">Depth:</label></th>
+			<td>{{depth}}</td>
+		</tr>
+	</table>
+{{/if}}

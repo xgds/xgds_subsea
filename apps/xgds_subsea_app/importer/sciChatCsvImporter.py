@@ -18,7 +18,7 @@ import re
 
 from geocamUtil.UserUtil import getUserByUsername, getUserByNames, create_user
 from xgds_core.importer import csvImporter
-from xgds_core.FlightUtils import getFlight, get_default_vehicle
+from xgds_core.flightUtils import getFlight, get_default_vehicle
 
 
 def clean_author(row):

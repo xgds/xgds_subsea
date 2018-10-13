@@ -26,7 +26,7 @@ from geocamUtil.UserUtil import getUserByUsername, getUserByNames
 from geocamUtil.models import SiteFrame
 from geocamTrack.utils import getClosestPosition
 from xgds_core.importer import csvImporter
-from xgds_core.FlightUtils import lookup_flight
+from xgds_core.flightUtils import lookup_flight
 from xgds_notes2.models import LocatedNote, HierarchichalTag, TaggedNote, Role, Location
 from xgds_map_server.models import Place
 from xgds_sample.models import Sample, SampleType, Label
@@ -113,6 +113,8 @@ def add_notes_tag(row, value):
         add_tag(row, 'TempIGT')
     elif 'T-SUPR' in value:
         add_tag(row, 'TempSUPR')
+    elif 'Laser Mapping' in value:
+        add_tag(row, 'LaserMapping')
     elif 'Other' in value:
         add_tag(row, 'Other')
     else:
@@ -204,36 +206,31 @@ def add_timing_or_data_tag(row, value):
     """
     if not value:
         return "NO VALUE"
-    tag_added = False
     lower_value = value.lower()
     if 'min' in lower_value:
         add_tag(row, 'Min')
-        tag_added = True
-    if 'max' in lower_value:
+    elif 'max' in lower_value:
         add_tag(row, 'Max')
-        tag_added = True
-    if 'avg' or 'average' in lower_value:
+    elif 'avg' in lower_value:
         add_tag(row, 'Average')
-        tag_added = True
-    if 'end' in lower_value:
+    elif 'average' in lower_value:
+        add_tag(row, 'Average')
+    elif 'end' in lower_value:
         add_tag(row, 'End')
-        tag_added = True
-    if 'start' in lower_value:
+    elif 'start' in lower_value:
         if 'restart' in lower_value:
             add_tag(row, 'Resume')
         else:
             add_tag(row, 'Start')
-        tag_added = True
-    if 'pause' in lower_value:
+    elif 'pause' in lower_value:
         add_tag(row, 'Pause')
-        tag_added = True
-    if 'resume' in lower_value:
+    elif 'resume' in lower_value:
         add_tag(row, 'Resume')
-        tag_added = True
-    if 'stop' in lower_value:
+    elif 'stop' in lower_value:
         add_tag(row, 'Stop')
-        tag_added = True
-    return tag_added
+    else:
+        return False
+    return True
 
 
 def add_tag(row, tag_key, capitalize=False):
@@ -266,7 +263,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
     navigator_user = getUserByUsername('navigator')
     scf_user = getUserByUsername('scicommfellow')
     herc_user = getUserByUsername('herc')
-    xgds_user = getUserByUsername('xgds')
+    importer_user = getUserByUsername('importer')
 
     roles = {'NAVIGATOR': Role.objects.get(value='NAVIGATOR'),
              'SCF': Role.objects.get(value='SCIENCE_COMMUNICATION_FELLOW'),
@@ -299,9 +296,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         result = super(EventLogCsvImporter, self).update_row(row)
 
         result = self.clean_site(result)
+        result = self.clean_author(result)
         result = self.clean_key_values(result)
         if result:
-            result = self.clean_author(result)
             result = remove_empty_keys(result)
             result['location'] = self.ship_location
 
@@ -321,7 +318,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                     place = Place.objects.get(name=site_string)
                 except:
                     # create a new place
-                    place = Place(name=site_string, creator=self.xgds_user,
+                    place = Place(name=site_string, creator=self.importer_user,
                                   creation_time=timezone.now(),
                                   region=SiteFrame.objects.get(pk=settings.XGDS_CURRENT_SITEFRAME_ID))
                     Place.add_root(instance=place)
@@ -336,29 +333,35 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         :param row:
         :return: the updated row
         """
-        author_name = row['author_name']
-        lower_name = author_name.lower()
-        if author_name.lower() == 'nav' or lower_name == 'navigator' or lower_name == 'navigation':
-            row['role'] = self.roles['NAVIGATOR']
-            row['author'] = self.navigator_user
-        elif author_name.lower() == 'default_scf_user':
-            row['role'] = self.roles['SCF']
-            row['author'] = self.scf_user
-        else:
-            row['role'] = self.roles['DATA_LOGGER']
-            splits = author_name.split('_')
-            if len(splits) == 2:
-                try:
-                    row['author'] = getUserByNames(splits[0], splits[1])
-                except:
-                    # TODO This happend for NA100 due to errors in cruise-record.xml
-                    print 'COULD NOT FIND USER FOR %s' % author_name
-                    pass
+        if 'author_name' in row:
+            author_name = row['author_name']
+            lower_name = author_name.lower()
+            if author_name.lower() == 'nav' or lower_name == 'navigator' or lower_name == 'navigation':
+                row['role'] = self.roles['NAVIGATOR']
+                row['author'] = self.navigator_user
+            elif author_name.lower() == 'default_scf_user':
+                row['role'] = self.roles['SCF']
+                row['author'] = self.scf_user
+            else:
+                row['role'] = self.roles['DATA_LOGGER']
+                splits = author_name.split('_')
+                if len(splits) == 2:
+                    try:
+                        row['author'] = getUserByNames(splits[0], splits[1])
+                    except:
+                        # TODO This happend for NA100 due to errors in cruise-record.xml
+                        print 'COULD NOT FIND USER FOR %s' % author_name
+                        pass
 
         if 'author' not in row:
             row['author'] = self.datalogger_user
 
-        del row['author_name']
+        if 'author_name' in row:
+            del row['author_name']
+        else:
+            print "*** THIS ROW HAS NO AUTHOR FIELD **"
+            print row
+
 
         return row
 
@@ -401,8 +404,12 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         if event_type == 'NOTES':
             row['content'] = value_2
             if value_3:
-                add_timing_or_data_tag(row, value_3)
-                prefix = '%s: %s\n' % (key_3, value_3)
+                td_tag_added = add_timing_or_data_tag(row, value_3)
+                if td_tag_added and 'Max' in row['tag']:
+                    # the max value is stored in the marker field but it is not really a marker
+                    prefix = '%s\n' % value_3
+                else:
+                    prefix = '%s: %s\n' % (key_3, value_3)
                 row['content'] = clean_append(prefix, row['content'])
             tag_added = add_notes_tag(row, value_1)
             if not tag_added:
@@ -552,7 +559,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         sample_data = {'name': name,
                        'sample_type': sample_type,
                        'place': place,
-                       'creator': self.xgds_user,
+                       'creator': row['author'],
                        'collector': self.herc_user,
                        'collection_time': row['event_time'],
                        'collection_timezone': settings.TIME_ZONE,

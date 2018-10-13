@@ -68,7 +68,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 12,
     "fields": {
-        "path": "000300050001",
+        "path": "000300050002",
         "depth": 3,
         "numchild": 0,
         "name": "MultibeamLine",
@@ -278,7 +278,7 @@
     "fields": {
         "path": "00030005",
         "depth": 2,
-        "numchild": 2,
+        "numchild": 3,
         "name": "Mapping",
         "slug": "mapping",
         "abbreviation": "MAP",
@@ -666,7 +666,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 59,
     "fields": {
-        "path": "000300050002",
+        "path": "000300050003",
         "depth": 3,
         "numchild": 0,
         "name": "Profiles",
@@ -711,6 +711,19 @@
         "name": "Scoop",
         "slug": "scoop",
         "abbreviation": "SCOOP",
+        "description": ""
+    }
+},
+{
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 63,
+    "fields": {
+        "path": "000300050001",
+        "depth": 3,
+        "numchild": 0,
+        "name": "LaserMapping",
+        "slug": "lasermapping",
+        "abbreviation": "LASER",
         "description": ""
     }
 }

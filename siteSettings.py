@@ -428,6 +428,11 @@ XGDS_NOTES_MESSAGES_MONIKER = 'Science Chat'
 XGDS_MAP_SERVER_SITE_MONIKER = 'Region'
 XGDS_MAP_SERVER_PLACE_MONIKER = 'Site'
 
+XGDS_PLANNER_PLAN_MONIKER = "Dive Plan"
+XGDS_PLANNER_STATION_MONIKER = "Target"
+XGDS_PLANNER_SEGMENT_MONIKER = "Segment"
+XGDS_PLANNER_COMMAND_MONIKER = "Activity"
+
 
 XGDS_MAP_SERVER_JS_MAP = getOrCreateDict('XGDS_MAP_SERVER_JS_MAP')
 XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MODEL_NAME] = {'ol': 'xgds_notes2/js/olNoteMap.js',
@@ -435,11 +440,11 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MODEL_NAME] = {'ol': 'xgds_notes2/js/olNoteMap
                                                    'columns': ['checkbox', 'event_time', 'author_name', 'content', 'tag_names', 'content_url', 'content_thumbnail_url', 'content_name', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'depth', 'flight_name', 'object_type', 'object_id', 'creation_time','show_on_map', 'role_name', 'location_name', 'event_timezone',  'pk'],
                                                    'hiddenColumns': ['app_label', 'model_type', 'type', 'event_timezone', 'lat', 'lon', 'alt', 'depth', 'role_name', 'location_name', 'flight_name', 'content_thumbnail_url', 'content_name', 'object_type', 'object_id', 'creation_time','show_on_map','pk'],
                                                    'searchableColumns': ['name', 'description', 'flight_name', 'author_name', 'role_name', 'location_name',],
-                                                   'editableColumns':{'content':'text','tag_names':'tagsinput'},
+                                                   'editableColumns': {'content': 'text', 'tag_names': 'tagsinput'},
                                                    'unsortableColumns': ['content_url'],
                                                    'columnTitles': ['Time', 'Author', 'Content', 'Tags', 'Link'],
                                                    'order_columns': ['pk', 'event_time', 'author__first_name', 'content', 'tags'],
-                                                   'viewHandlebars': 'xgds_notes2/templates/handlebars/note-view.handlebars',
+                                                   'viewHandlebars': 'xgds_subsea_app/templates/handlebars/note-view.handlebars',
                                                    'viewJS': [STATIC_URL + 'xgds_notes2/js/genericNotesView.js' ],
                                                    'viewInitMethods': ['xgds_notes.initDetailView'],
                                                    'searchInitMethods': ['xgds_notes.initializeInput'],
@@ -449,14 +454,14 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MODEL_NAME] = {'ol': 'xgds_notes2/js/olNoteMap
 
 XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MESSAGE_MODEL_NAME] = {'ol': 'xgds_notes2/js/olMessageMap.js',
                                                    'model': XGDS_NOTES_MESSAGE_MODEL,
-                                                   'columns': ['checkbox', 'event_time', 'author_name', 'content', 'lat', 'lon', 'alt', 'flight_name', 'app_label', 'model_type', 'type', 'event_timezone', 'pk'],
-                                                   'hiddenColumns': ['app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'flight_name', 'event_timezone', 'pk'],
+                                                   'columns': ['checkbox', 'event_time', 'author_name', 'content', 'lat', 'lon', 'alt', 'depth', 'flight_name', 'app_label', 'model_type', 'type', 'event_timezone', 'pk'],
+                                                   'hiddenColumns': ['app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'depth', 'flight_name', 'event_timezone', 'pk'],
                                                    'searchableColumns': ['content','flight_name', 'author_name', ],
                                                    'editableColumns':{'content':'text'},
                                                    'columnTitles': ['Time', 'Author', 'Content',],
                                                    'order_columns': ['pk', 'event_time', 'author__first_name', 'content'],
                                                    'columnWidths': ['5px', '50px', '50px', 'auto'],
-                                                   'viewHandlebars': 'xgds_notes2/templates/handlebars/message-view.handlebars',
+                                                   'viewHandlebars': 'xgds_subsea_app/templates/handlebars/message-view.handlebars',
                                                    'event_time_field': 'event_time',
                                                    'event_timezone_field': 'event_timezone',
                                                    'search_form_class': 'xgds_notes2.forms.SearchMessageForm'}
@@ -473,3 +478,6 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_SAMPLE_SAMPLE_KEY] = {'ol': 'xgds_sample/js/olSample
                                                   'event_timezone_field': 'collection_timezone',
                                                   'search_form_class': 'xgds_sample.forms.SearchSampleForm',
                                                   }
+
+XGDS_CORE_SHOW_CREATE_FLIGHTS = False
+XGDS_CORE_SHOW_FLIGHT_MANAGEMENT = False

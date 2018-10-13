@@ -253,7 +253,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 12,
     "fields": {
-      "path": "000300050001",
+      "path": "000300050002",
       "depth": 3,
       "numchild": 0,
       "name": "MultibeamLine",
@@ -463,7 +463,7 @@
     "fields": {
       "path": "00030005",
       "depth": 2,
-      "numchild": 2,
+      "numchild": 3,
       "name": "Mapping",
       "slug": "mapping",
       "abbreviation": "MAP",
@@ -851,7 +851,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 59,
     "fields": {
-      "path": "000300050002",
+      "path": "000300050003",
       "depth": 3,
       "numchild": 0,
       "name": "Profiles",
@@ -896,6 +896,19 @@
       "name": "Scoop",
       "slug": "scoop",
       "abbreviation": "SCOOP",
+      "description": ""
+    }
+  },
+  {
+    "model": "xgds_notes2.hierarchichaltag",
+    "pk": 63,
+    "fields": {
+      "path": "000300050001",
+      "depth": 3,
+      "numchild": 0,
+      "name": "LaserMapping",
+      "slug": "lasermapping",
+      "abbreviation": "LASER",
       "description": ""
     }
   },
@@ -1023,6 +1036,32 @@
     }
   },
   {
+    "model": "auth.user",
+    "pk": 22,
+    "fields": {
+      "password": "*",
+      "is_superuser": false,
+      "username": "importer",
+      "first_name": "Auto",
+      "last_name": "Import",
+      "is_staff": false,
+      "is_active": false
+    }
+  },
+   {
+    "model": "auth.user",
+    "pk": 23,
+    "fields": {
+      "password": "*",
+      "is_superuser": false,
+      "username": "initial",
+      "first_name": "Initial",
+      "last_name": "Data",
+      "is_staff": false,
+      "is_active": false
+    }
+  },
+  {
     "model": "xgds_sample.sampletype",
     "pk": 1,
     "fields": {
@@ -1078,16 +1117,20 @@
       "display_name": "Scoop"
     }
   },
-  {"pk":"mg2", "model":"xgds_map_server.MapGroup", "fields":
-  {"name":"Dives",
-    "description":"Root for all of the dives on the xGDS server",
-    "parent": "mg1"}
+  {
+    "pk": "mg2",
+    "model": "xgds_map_server.MapGroup",
+    "fields": {
+      "name": "Dives",
+      "description": "Root for all of the dives on the xGDS server",
+      "parent": "mg1"
+    }
   },
   {
     "pk": "maplink_completed_dives",
     "model": "xgds_map_server.MapLink",
     "fields": {
-      "creator": "xgds",
+      "creator": "initial",
       "name": "Completed",
       "description": "Completed dive data.  Do not select this node; expand and select its children.",
       "childNodesUrl": "/xgds_core/completedGroupFlightsTreeNodes",
@@ -1098,7 +1141,7 @@
     "pk": "maplink_active_dives",
     "model": "xgds_map_server.MapLink",
     "fields": {
-      "creator": "xgds",
+      "creator": "initial",
       "name": "Active",
       "description": "Active dive data.  Do not select this node; expand and select its children.",
       "childNodesUrl": "/xgds_core/activeFlightsTreeNodes$",
@@ -1109,7 +1152,7 @@
     "pk": "maplink_plans",
     "model": "xgds_map_server.MapLink",
     "fields": {
-      "creator": "xgds",
+      "creator": "initial",
       "name": " Plans",
       "description": "All saved plans",
       "childNodesUrl": "/xgds_planner2/plansTreeNodes",
