@@ -20,6 +20,7 @@ from django.core import management
 from xgds_subsea_app.importer.eventLogCsvImporter import *
 from xgds_notes2.models import HierarchichalTag, LocatedNote
 from xgds_sample.models import Sample, Label
+from django.conf import settings
 
 
 class eventLogImporterTest(TestCase):
@@ -225,9 +226,6 @@ class eventLogImporterTest(TestCase):
         Actually test loading a csv file into a database
         :return:
         """
-
-        from django.contrib.auth.models import User
-        print User.objects.all()
 
         importer = EventLogCsvImporter('/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/EventLog.yaml',
                                        '/home/xgds/xgds_subsea/apps/xgds_subsea_app/test/test_files/eventlog.txt',
