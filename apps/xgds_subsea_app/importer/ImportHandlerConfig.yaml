@@ -49,6 +49,11 @@ registry:
   - name: 'ECHO NAV'
     filepath_pattern: 'processed/dive_reports/H\d{4}/sampled/H\d{4}\.NAV\.M3\.sampled\.tsv'
     ignore: true
+  - name: 'dive summary'
+    filepath_pattern: 'processed/dive_reports/H\d{4}/H\d{4}-summary.txt'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/load_dive_summary.py'
+    timeout: 300
+    order: 8
   - name: 'event log'
     filepath_pattern: 'processed/eventlog/by-dive/all_eventlog_H\d{4}.*\.txt'
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/eventLogCsvImportRunner.py'

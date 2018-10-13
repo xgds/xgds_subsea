@@ -19,15 +19,9 @@ import optparse
 
 import django
 django.setup()
-from django.conf import settings
 from xgds_core.models import Flight, GroupFlight, Vehicle
-from xgds_core.flightUtils import getFlight
-from geocamTrack.utils import getClosestPosition
 
 from csv import DictReader
-import sys
-import re
-import datetime
 from dateutil.parser import parse as dateparser
 import pytz
 
@@ -79,8 +73,9 @@ def create_dives(filename):
             f.start_time = start_time
             f.end_time = end_time
             # Pack everything from dive stats into the extras field
-            for k, v in row.iteritems():
-                f.extras[k] = v
+            # for k, v in row.iteritems():
+            #     f.extras[k] = v
+            # TC: I don't think we need the above because it's in the group flight
             f.group = group_flight
             f.save()
             # print 'created %s' % f

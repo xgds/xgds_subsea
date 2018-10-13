@@ -259,19 +259,24 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
     It will also do sample creation, as samples are recorded through the event log.
     """
 
-    datalogger_user = getUserByUsername('datalogger')
-    navigator_user = getUserByUsername('navigator')
-    scf_user = getUserByUsername('scicommfellow')
-    herc_user = getUserByUsername('herc')
-    importer_user = getUserByUsername('importer')
+    def __init__(self, yaml_file_path, csv_file_path, vehicle_name=None, flight_name=None, timezone_name='UTC',
+                 defaults=None, force=False, replace=False, skip_bad=False):
 
-    roles = {'NAVIGATOR': Role.objects.get(value='NAVIGATOR'),
-             'SCF': Role.objects.get(value='SCIENCE_COMMUNICATION_FELLOW'),
-             'DATA_LOGGER': Role.objects.get(value='DATA_LOGGER')}
+        self.datalogger_user = getUserByUsername('datalogger')
+        self.navigator_user = getUserByUsername('navigator')
+        self.scf_user = getUserByUsername('scicommfellow')
+        self.herc_user = getUserByUsername('herc')
+        self.importer_user = getUserByUsername('importer')
 
-    ship_location = Location.objects.get(value='SHIP')
+        self.roles = {'NAVIGATOR': Role.objects.get(value='NAVIGATOR'),
+                      'SCF': Role.objects.get(value='SCIENCE_COMMUNICATION_FELLOW'),
+                      'DATA_LOGGER': Role.objects.get(value='DATA_LOGGER')}
 
-    sample_content_type = ContentType.objects.get_for_model(Sample)
+        self.ship_location = Location.objects.get(value='SHIP')
+
+        self.sample_content_type = ContentType.objects.get_for_model(Sample)
+        super(EventLogCsvImporter, self).__init__( yaml_file_path, csv_file_path, vehicle_name, flight_name,
+                                                   timezone_name, defaults, force, replace, skip_bad)
 
     def check_data_exists(self, row):
         """
