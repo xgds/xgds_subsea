@@ -20,4 +20,5 @@ from geocamTrack.models import PastResourcePoseDepth
 
 admin.site.register(TempProbe)
 admin.site.register(PastResourcePoseDepth)
+admin.site.register(ConductivityTempDepth)
 admin.site.register(O2Sat)

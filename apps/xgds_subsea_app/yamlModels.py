@@ -41,7 +41,36 @@ class TempProbe(xgds_timeseries.TimeSeriesModel):
     def __unicode__(self):
         return "%s: %s" % (self.timestamp.isoformat(), str(self.temperature))
 
+class ConductivityTempDepth(models.Model):
+    """
+    This is an auto-generated Django model created from a
+    YAML specifications using ./apps/xgds_core/importer/yamlModelBuilder.py
+    and YAML file ./apps/xgds_subsea_app/importer/CTD.yaml
+    """
 
+    timestamp = models.DateTimeField(db_index=True, null=False, blank=False)
+    temperature = models.FloatField(null=True, blank=True)
+    conductivity = models.FloatField(null=True, blank=True)
+    pressure = models.FloatField(null=True, blank=True)
+    salinity = models.FloatField(null=True, blank=True)
+    sound_velocity = models.FloatField(null=True, blank=True)
+    flight = models.ForeignKey('xgds_core.Flight', on_delete=models.SET_NULL, blank=True, null=True)
+
+    title = 'Conductivity Temp Depth'
+    channel_descriptions = {
+                            'temperature': xgds_timeseries.ChannelDescription('Temperature', units='Celsius'),
+                            'conductivity': xgds_timeseries.ChannelDescription('Conductivity', units='S/m'),
+                            'pressure': xgds_timeseries.ChannelDescription('Pressure', units='decibars'),
+                            'salinity': xgds_timeseries.ChannelDescription('Salinity', units='psu'),
+                            'sound_velocity': xgds_timeseries.ChannelDescription('Sound_velocity', units='m/s'),
+                            }
+
+    @classmethod
+    def get_channel_names(cls):
+        return ['temperature', 'conductivity', 'pressure', 'salinity', 'sound_velocity', ]
+
+    def __unicode__(self):
+        return "%s: %s %s %s %s %s" % (self.timestamp.isoformat(), str(self.temperature), str(self.conductivity), str(self.pressure), str(self.salinity), str(self.sound_velocity))
 
 class O2Sat(xgds_timeseries.TimeSeriesModel):
     """
@@ -54,11 +83,12 @@ class O2Sat(xgds_timeseries.TimeSeriesModel):
     oxygen_concentration = models.FloatField(null=True, blank=True)
     oxygen_saturation = models.FloatField(null=True, blank=True)
     temperature = models.FloatField(null=True, blank=True)
+    flight = models.ForeignKey('xgds_core.Flight', on_delete=models.SET_NULL, blank=True, null=True)
 
     title = 'O2Sat'
     channel_descriptions = {
-                            'oxygen_concentration': xgds_timeseries.ChannelDescription('Oxygen Concentration', units='microMolar'),
-                            'oxygen_saturation': xgds_timeseries.ChannelDescription('Oxygen Saturation', units='percent'),
+                            'oxygen_concentration': xgds_timeseries.ChannelDescription('Oxygen_concentration', units='microMolar'),
+                            'oxygen_saturation': xgds_timeseries.ChannelDescription('Oxygen_saturation', units='percent'),
                             'temperature': xgds_timeseries.ChannelDescription('Temperature', units='Celsius'),
                             }
 
