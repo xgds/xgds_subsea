@@ -1,0 +1,24 @@
+# This file describes the values from the NAV file
+name: CTD
+class: xgds_subsea_app.ConductivityTempDepth
+extension: tsv
+delimiter: '\t'
+flight_required: true
+fields:
+  timestamp:
+    type: iso8601
+  temperature:
+    type: float
+    units: Celsius
+  conductivity:
+    type: float
+    units: S/m
+  pressure:
+    type: float
+    units: decibars
+  salinity:
+    type: float
+    units: psu
+  sound_velocity:
+    type: float
+    units: m/s
