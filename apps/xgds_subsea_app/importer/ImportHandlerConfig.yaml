@@ -61,6 +61,12 @@ registry:
     timeout: 300
     order: 4
     auth: false
+  - name: 'sample spreadsheet'
+    filepath_pattern: 'processed/samples/\w*\d+_Samples\.xlsx'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/sampleSummaryImporter.py'
+    timeout: 300
+    order: 5
+    auth: false
   - name: 'science chat'
     filepath_pattern: 'processed/eventlog/by-day/all_chatlog_\d{8}\.txt'
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/sciChatCsvImportRunner.py'

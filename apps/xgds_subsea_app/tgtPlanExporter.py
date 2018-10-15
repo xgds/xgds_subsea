@@ -39,8 +39,6 @@ class TgtPlanExporter(TreeWalkPlanExporter):
         self.hms = self.utc_now.strftime('%H:%M:%S')
         self.mdy = self.utc_now.strftime('%m/%d/%Y')
 
-
-
     def initPlan(self, plan, context):
         if plan.site.alternateCrs:
             zone_number = plan.site.alternateCrs['properties']['zone']
