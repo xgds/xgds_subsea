@@ -8,6 +8,14 @@
     }
   },
   {
+    "pk": "targets",
+    "model": "xgds_map_server.MapGroup",
+    "fields": {
+      "name": "Targets",
+      "description": "Targets imported from Hypack"
+    }
+  },
+  {
     "pk": 2,
     "model": "xgds_core.vehicle",
     "fields": {

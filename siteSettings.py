@@ -471,7 +471,7 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_SAMPLE_SAMPLE_KEY] = {'ol': 'xgds_sample/js/olSample
                                                   'searchableColumns': ['name','description','flight_name', 'sample_type', 'extras'],
                                                   'columns': ['checkbox', 'collection_time', 'name', 'sample_type_name', 'place_name', 'label_number', 'collector_name', 'vehicle_name', 'thumbnail_image_url',  'pk', 'lat', 'lon', 'alt', 'depth', 'flight_name', 'app_label', 'model_type', 'type', 'description', 'collection_timezone', 'extras', 'DT_RowId'],
                                                   'hiddenColumns': ['thumbnail_image_url', 'collection_timezone', 'pk', 'lat', 'lon', 'alt', 'depth', 'label_number', 'collector_name', 'flight_name', 'vehicle_name', 'app_label', 'model_type', 'type', 'description', 'extras', 'DT_RowId'],
-                                                  'columnTitles': ['Time', 'Name', 'Type', 'Site'],
+                                                  'columnTitles': ['Time', 'ID', 'Type', 'Site'],
                                                   'order_columns': ['pk', 'collection_time', 'name', 'sample_type__display_name', 'place__name'],
                                                   'viewHandlebars': 'xgds_subsea_app/templates/handlebars/sample-view.handlebars',
                                                   'event_time_field': 'collection_time',

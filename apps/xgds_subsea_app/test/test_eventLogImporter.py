@@ -15,24 +15,16 @@
 # __END_LICENSE__
 
 from django.test import TestCase
-from django.core import management
 
 from xgds_subsea_app.importer.eventLogCsvImporter import *
 from xgds_notes2.models import HierarchichalTag, LocatedNote
 from xgds_sample.models import Sample, Label
-from django.conf import settings
 
 
 class eventLogImporterTest(TestCase):
 
-
     fixtures = ['xgds_subsea_app_initial_data.json',
                 'test_eventlog_users.json', ]
-
-    # @classmethod
-    # def setUpTestData(cls):
-    #     # Set up data for the whole TestCase
-    #     management.call_command('prepfixtures')
 
     """
     Tests for the eventLogCsvImporter
@@ -280,12 +272,3 @@ class eventLogImporterTest(TestCase):
 
         suprsamples = Sample.objects.filter(sample_type__pk=5)
         self.assertEqual(suprsamples.count(), 8)
-
-
-
-
-
-
-
-
-
