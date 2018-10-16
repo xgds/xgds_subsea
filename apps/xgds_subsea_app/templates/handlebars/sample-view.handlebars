@@ -4,10 +4,12 @@
 			<th><label for="id_name">ID:</label></th>
 			<td>{{name}}</td>
 		</tr>
+		{{#if extras.wetlab_sample_id}}
 		<tr>
 			<th><label for="id_wetlab_sample">Wetlab ID:</label></th>
 			<td>{{extras.wetlab_sample_id}}</td>
 		</tr>
+		{{/if}}
 		<tr>
 			<th><label for="id_name">Label #:</label></th>
 			<td>{{label_number}}</td>
@@ -32,30 +34,42 @@
 			<th><label for="id_description">Description:</label></th>
 			<td>{{description}}</td>
 		</tr>
+		{{#if extras.wetlab_description}}
 		<tr>
 			<th><label for="id_description">Wetlab Description:</label></th>
 			<td>{{extras.wetlab_description}}</td>
 		</tr>
+		{{/if}}
+		{{#if extras.wetlab_description_subsample}}
 		<tr>
 			<th><label for="id_description">Wetlab Subsample Description:</label></th>
 			<td>{{extras.wetlab_description_subsample}}</td>
 		</tr>
+		{{/if}}
+		{{#if extras.preservation}}
 		<tr>
 			<th><label for="id_description">Presevation:</label></th>
 			<td>{{extras.preservation}}</td>
 		</tr>
+		{{/if}}
+		{{#if extras.recipient}}
 		<tr>
 			<th><label for="id_description">Recipient:</label></th>
 			<td>{{extras.recipient}}</td>
 		</tr>
+		{{/if}}
+		{{#if extras.storage}}
 		<tr>
 			<th><label for="id_description">Storage:</label></th>
 			<td>{{extras.storage}}</td>
 		</tr>
+		{{/if}}
+		{{#if extras.other_notes}}
 		<tr>
 			<th><label for="id_description">Other Notes:</label></th>
 			<td>{{extras.other_notes}}</td>
 		</tr>
+		{{/if}}
 		<tr>
 			<th><label for="id_vehicle">Vehicle:</label></th>
 			<td>{{vehicle_name}}</td>
