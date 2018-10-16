@@ -15,7 +15,6 @@
 # specific language governing permissions and limitations under the License.
 # __END_LICENSE__
 
-import pydevd
 from openpyxl import load_workbook
 import optparse
 import django
@@ -91,7 +90,6 @@ def import_sample_summary(filename):
     workbook = load_workbook(filename, read_only=True)
     worksheet = workbook.worksheets[0]
     count = 0
-    pydevd.settrace('192.168.0.105', port=9999)
     column_keys = build_column_keys(worksheet)
 
     for row in worksheet.rows:
