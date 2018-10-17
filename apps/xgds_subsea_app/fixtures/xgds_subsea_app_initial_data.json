@@ -12,7 +12,8 @@
     "model": "xgds_map_server.MapGroup",
     "fields": {
       "name": "Targets",
-      "description": "Targets imported from Hypack"
+      "description": "Targets imported from Hypack",
+      "parentId": "mg1"
     }
   },
   {
