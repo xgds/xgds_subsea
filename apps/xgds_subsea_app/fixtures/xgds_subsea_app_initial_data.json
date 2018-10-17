@@ -13,7 +13,7 @@
     "fields": {
       "name": "Targets",
       "description": "Targets imported from Hypack",
-      "parentId": "mg1"
+      "parent": "mg1"
     }
   },
   {
