@@ -73,8 +73,6 @@ def process_row(map_layer, row, jsonString, minLat, minLon, maxLat, maxLon):
         new_station['depth'] = row[4]
         new_station['timestamp'] = dateparser(str(row[7] + " " + str(row[8])))
         new_station['uuid'] = uuid4()
-        # this line converts things into strings if they aren't serializable, is that okay?
-        # jsonString = jsonString + ',' + json.dumps(new_station, indent=4, sort_keys=True, default=str)
         jsonString = jsonString + json.dumps(new_station, indent=4, sort_keys=True, cls=DjangoJSONEncoder) + ","
         return jsonString, minLat, minLon, maxLat, maxLon
     raise Exception('Empty row in *.tgt file, panicking')
