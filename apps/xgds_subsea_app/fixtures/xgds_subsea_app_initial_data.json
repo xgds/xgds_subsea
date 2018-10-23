@@ -1065,7 +1065,7 @@
       "is_active": false
     }
   },
-   {
+  {
     "model": "auth.user",
     "pk": 23,
     "fields": {
@@ -1249,6 +1249,46 @@
       "extras": "{}",
       "color": "",
       "uuid": "nautilus"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "xgds_core.ConditionStatus",
+    "fields": {
+      "value": "started",
+      "display_name": "Started"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "xgds_core.ConditionStatus",
+    "fields": {
+      "value": "in_progress",
+      "display_name": "In Progress"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "xgds_core.ConditionStatus",
+    "fields": {
+      "value": "scheduled",
+      "display_name": "Scheduled"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "xgds_core.ConditionStatus",
+    "fields": {
+      "value": "completed",
+      "display_name": "Completed"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "xgds_core.ConditionStatus",
+    "fields": {
+      "value": "aborted",
+      "display_name": "Aborted"
     }
   }
 ]
