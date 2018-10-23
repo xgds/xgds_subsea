@@ -22,6 +22,8 @@ import json
 import django
 django.setup()
 
+from django.conf import settings
+
 from django.utils import timezone
 from xgds_map_server.models import MapLayer
 from dateutil.parser import parse as dateparser
@@ -40,7 +42,7 @@ def initialize_map_layer(filepath, cruiseID, region=0):
     map_layer.creation_time = timezone.now()
     map_layer.uuid = uuid4()
     map_layer.parentId = "targets"
-    map_layer.region = SiteFrame.objects.get(zoneNumber=region)
+    map_layer.region = SiteFrame.objects.get(id=region)
     return map_layer
 
 
@@ -115,19 +117,17 @@ def import_tgt_map_layer(filepath, cruiseID, region=0):
 
 
 if __name__=='__main__':
-    import optparse
-    parser = optparse.OptionParser('usage: %prog')
-    parser.add_option('-c', '--cruise',
-                      help='Cruise ID, i.e. NA100')
-    parser.add_option('-r', '--region',
-                      help='Number of the region the survey happened in, i.e. 2')
-
-    opts, args = parser.parse_args()
+    import argparse
+    parser = argparse.ArgumentParser('usage: %prog')
+    parser.add_argument('-f')
+    args, unknown = parser.parse_known_args()
+    print args
+    print unknown
     try:
-        filepath = args[0]
+        filepath = args.f
     except:
         print "Please enter a file to parse"
         sys.exit(-1)
 
-    retval = import_tgt_map_layer(filepath, cruiseID=opts.cruise, region=opts.region)
+    retval = import_tgt_map_layer(filepath, settings.CRUISE_ID, settings.XGDS_CURRENT_SITEFRAME_ID)
     sys.exit(retval)
