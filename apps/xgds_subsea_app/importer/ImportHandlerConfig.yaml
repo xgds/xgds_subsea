@@ -146,10 +146,16 @@ registry:
     auth: true
   - name: 'samples labphotos'
     filepath_pattern: '[\d\.]+/processed/samples/NA[\d]{3}-[\d]{3}/labphotos/DSCN[\d]{4}.JPG'
-    importer: '/home/xgds/xgds_subsea/apps/xgds_image/importer/import_image.py'
-    arguments: '-c LabCamera -t labphoto -r "DSCN[\d]{4}.JPG"'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/import_sample_photo.py'
+    arguments: '-i'
     timeout: 300
     order: 5
+    auth: true
+  - name: 'link vidcaps to samples'
+    filepath_pattern: '[\d\.]+/processed/samples/NA\d+-\d+/vidcaps/cam1_[\d]{14}.png'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/import_sample_photo.py'
+    timeout: 300
+    order: 6
     auth: true
   - name: 'tempprobe'
     filepath_pattern: '[\d\.]+/raw/datalog/.*\.TEM'
@@ -172,6 +178,13 @@ registry:
     timeout: 300
     order: 2
     auth: false
+  - name: 'tgt files'
+    filepath_pattern: '[\d\.]+/raw/nav/hypack/.*\.tgt'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/tgtToMapLayer.py'
+    arguments: '-f %(filename)s'
+    timeout: 300
+    order: 5
+    auth: true
   - name: 'chatlog_html' # ALWAYS SKIP
     filepath_pattern: '[\d\.]+/raw/chatlog/.*/.*/.*\.html'
     ignore: true

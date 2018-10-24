@@ -18,13 +18,12 @@ import traceback
 import re
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
-from django.db.utils import IntegrityError
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 
 from geocamUtil.UserUtil import getUserByUsername, getUserByNames
 from geocamUtil.models import SiteFrame
-from geocamTrack.utils import getClosestPosition
+from xgds_core.models import Condition, ConditionHistory
 from xgds_core.importer import csvImporter
 from xgds_core.flightUtils import lookup_flight
 from xgds_notes2.models import LocatedNote, HierarchichalTag, TaggedNote, Role, Location
@@ -404,7 +403,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         key_2, value_2 = clean_key_value(row['key_value_2'])
         key_3, value_3 = clean_key_value(row['key_value_3'])
 
-        flight_set = False
+        if 'flight' not in row or not row['flight']:
+            row = self.clean_flight(row)
+
         event_type = row['event_type']
         if event_type == 'NOTES':
             row['content'] = value_2
@@ -430,6 +431,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             if not tag_added:
                 print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_2, str(row))
                 row['content'] = '%s\n%s: %s' % (row['content'], key_2, value_2)
+            condition, condition_history = self.populate_condition_data(row, value_1)
+            row['condition_data'] = condition
+            row['condition_history_data'] = condition_history
         elif event_type == 'DIVESTATUS':
             row['content'] = value_1
             add_tag(row, 'DiveStatus')
@@ -437,6 +441,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             if not tag_added:
                 print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_1, str(row))
                 row['content'] = '%s\n%s: %s' % (row['content'], key_1, value_1)
+            condition, condition_history = self.populate_condition_data(row, value_1)
+            row['condition_data'] = condition
+            row['condition_history_data'] = condition_history
         elif event_type == 'OBJECTIVE':
             row['content'] = value_1
             add_tag(row, 'Objective')
@@ -456,7 +463,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 if 'Herc/Argus' not in value_3:
                     if 'argus' in value_3.lower():
                         row = self.clean_flight(row, 'Argus')
-                        flight_set = True
 
             key_4, value_4 = clean_key_value(row['key_value_4'])
             row['content'] = '%s: %s\n %s' % (key_2, value_2, value_1)
@@ -512,7 +518,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         else:
             print '*** UNKONWN EVENT TYPE ** %s' % event_type
 
-        if not flight_set or not row['flight']:
+        if 'flight' not in row or not row['flight']:
             row = self.clean_flight(row)
 
         if 'tag' in row and not row['tag']:
@@ -530,6 +536,30 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         del row['task_type']
 
         return row
+
+    def populate_condition_data(self, row, name):
+        """
+        Create metadata for storing condition with condition history for specific events, including:
+        DiveStatus
+        Sample
+        :param row:
+        :return: the condition and condition history dictionaries as a tuple
+        """
+        now = timezone.now()
+        condition_data = {'source': 'Event Log Import',
+                          'start_time': row['event_time'],
+                          'end_time': row['event_time'],
+                          'name': name,
+                          'flight': row['flight']
+                          }
+
+        condition_history_data = {'source_time': row['event_time'],
+                                  'creation_time': now,
+                                  'status_id': 4,  # complete
+                                  'jsonData': {'content': row['content']}
+                                  }
+
+        return condition_data, condition_history_data
 
     def populate_sample_data(self, row, name, description):
 
@@ -644,6 +674,14 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                             if sample:
                                 row['content_type'] = self.sample_content_type
                                 row['object_id'] = sample.pk
+                        if 'condition_data' in row:
+                            # this has a condition; create it
+                            condition = Condition.objects.create(**row['condition_data'])
+                            condition_history_data = row['condition_history_data']
+                            condition_history_data['condition'] = condition
+                            condition_history = ConditionHistory.objects.create(**condition_history_data)
+                            del row['condition_data']
+                            del row['condition_history_data']
 
                         if not found_position_id:
                             row = csvImporter.lookup_position(row, timestamp_key='event_time',
