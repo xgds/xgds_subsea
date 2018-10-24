@@ -286,6 +286,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         row = self.update_row(row)
         row_copy = row.copy()
         del row_copy['tag']
+        print 'in check_data_exists, row:', row
         if row:
             result = LocatedNote.objects.filter(**row_copy)
             return result.exists()
@@ -376,7 +377,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         :param row:
         :return: the updated row
         """
-        if not vehicle_name:
+        if not vehicle_name and 'vehicle_name' in row:
             key, rvn = clean_key_value(row['vehicle_name'])
             if rvn == 'Argus':
                 vehicle_name = rvn
@@ -386,10 +387,11 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 print 'INVALID VEHICLE, DEFAULTING TO HERCULES %s' % rvn
             if not vehicle_name:
                 vehicle_name = self.vehicle.name
-        flight_name = row['group_flight_name'] + '_' + vehicle_name
-        row['flight'] = lookup_flight(flight_name)
-        del row['group_flight_name']
-        del row['vehicle_name']
+            del row['vehicle_name']
+        if 'group_flight_name' in row:
+            flight_name = row['group_flight_name'] + '_' + vehicle_name
+            row['flight'] = lookup_flight(flight_name)
+            del row['group_flight_name']
         return row
 
     def clean_key_values(self, row):
