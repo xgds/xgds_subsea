@@ -23,7 +23,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from geocamUtil.UserUtil import getUserByUsername, getUserByNames
 from geocamUtil.models import SiteFrame
-from xgds_core.models import Condition, ConditionHistory
+from xgds_core.models import Condition, ConditionHistory, ConditionStatus
 from xgds_core.importer import csvImporter
 from xgds_core.flightUtils import lookup_flight
 from xgds_notes2.models import LocatedNote, HierarchichalTag, TaggedNote, Role, Location
@@ -274,6 +274,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         self.ship_location = Location.objects.get(value='SHIP')
 
         self.sample_content_type = ContentType.objects.get_for_model(Sample)
+
+        self.condition_started = ConditionStatus.objects.get(value='started')
+        self.condition_completed = ConditionStatus.objects.get(value='completed')
         super(EventLogCsvImporter, self).__init__( yaml_file_path, csv_file_path, vehicle_name, flight_name,
                                                    timezone_name, defaults, force, replace, skip_bad)
 
@@ -431,7 +434,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             if not tag_added:
                 print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_2, str(row))
                 row['content'] = '%s\n%s: %s' % (row['content'], key_2, value_2)
-            condition, condition_history = self.populate_condition_data(row, value_1)
+            condition, condition_history = self.populate_condition_data(row, value_1, self.condition_completed)
             row['condition_data'] = condition
             row['condition_history_data'] = condition_history
         elif event_type == 'DIVESTATUS':
@@ -441,7 +444,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             if not tag_added:
                 print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_1, str(row))
                 row['content'] = '%s\n%s: %s' % (row['content'], key_1, value_1)
-            condition, condition_history = self.populate_condition_data(row, value_1)
+
+            condition, condition_history = self.populate_condition_data(row, row['tag'][-1], self.condition_started)
             row['condition_data'] = condition
             row['condition_history_data'] = condition_history
         elif event_type == 'OBJECTIVE':
@@ -537,7 +541,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
         return row
 
-    def populate_condition_data(self, row, name):
+    def populate_condition_data(self, row, name, status):
         """
         Create metadata for storing condition with condition history for specific events, including:
         DiveStatus
@@ -555,7 +559,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
         condition_history_data = {'source_time': row['event_time'],
                                   'creation_time': now,
-                                  'status_id': 4,  # complete
+                                  'status': status,
                                   'jsonData': {'content': row['content']}
                                   }
 
@@ -680,6 +684,23 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                             condition_history_data = row['condition_history_data']
                             condition_history_data['condition'] = condition
                             condition_history = ConditionHistory.objects.create(**condition_history_data)
+
+                            # update prior condition to complete it if it is a dive status
+                            update = False
+                            if 'On' in condition.name or 'Off' in condition.name:
+                                condition_history_data['status'] = self.condition_completed
+
+                            if condition.name == 'OnDeck':
+                                inwater_condition = Condition.objects.get(flight=condition.flight, name='InWater')
+                                condition_history_data['condition'] = inwater_condition
+                                update = True
+                            elif condition.name == 'OffBottom':
+                                onbottom_condition = Condition.objects.get(flight=condition.flight, name='OnBottom')
+                                condition_history_data['condition'] = onbottom_condition
+                                update = True
+                            if update:
+                                condition_history2 = ConditionHistory.objects.create(**condition_history_data)
+
                             del row['condition_data']
                             del row['condition_history_data']
 
