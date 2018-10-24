@@ -289,7 +289,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         row = self.update_row(row)
         row_copy = row.copy()
         del row_copy['tag']
-        print 'in check_data_exists, row:', row
         if row:
             result = LocatedNote.objects.filter(**row_copy)
             return result.exists()
