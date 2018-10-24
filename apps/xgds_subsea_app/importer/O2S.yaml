@@ -7,7 +7,8 @@ delimiter: \t
 flight_required: true
 fields:
   timestamp:
-    type: iso8601
+    type: datetime
+    format: iso8601
   oxygen_concentration:
     type: float
     units: microMolar

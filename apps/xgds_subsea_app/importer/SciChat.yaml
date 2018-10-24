@@ -7,7 +7,8 @@ fields:
   col_1:
     skip: true
   event_time:
-    type: iso8601
+    type: datetime
+    format: iso8601
   col_3:
     skip: true
   col_4:

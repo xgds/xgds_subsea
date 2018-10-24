@@ -9,7 +9,8 @@ fields:
   col_1:
     skip: true
   timestamp:
-    type: iso8601
+    type: datetime
+    format: iso8601
   col_3:
     skip: true
   temperature:

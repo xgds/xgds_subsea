@@ -8,7 +8,8 @@ fields:
   col_1:
     skip: true
   event_time:
-    type: iso8601
+    type: datetime
+    format: iso8601
   col_3:
     skip: true
   col_4:
@@ -44,14 +45,18 @@ fields:
   key_value_5:
     # only found for DATA
     type: key_value
+    required: false
   key_value_6:
     # only found for DATA
     type: key_value
+    required: false
   key_value_7:
     # only found for DATA
     type: key_value
+    required: false
   key_value_8:
     # only found for DATA/PROFILES
     type: key_value
+    required: false
   tail:
     skip: true
