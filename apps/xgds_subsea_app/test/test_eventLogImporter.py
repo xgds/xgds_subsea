@@ -16,9 +16,13 @@
 
 from django.test import TestCase
 
+import pytz
+from dateutil.parser import parse as dateparser
+
 from xgds_subsea_app.importer.eventLogCsvImporter import *
 from xgds_notes2.models import HierarchichalTag, LocatedNote
 from xgds_sample.models import Sample, Label
+from xgds_core.models import Condition, ConditionHistory, ConditionStatus
 
 
 class eventLogImporterTest(TestCase):
@@ -272,3 +276,32 @@ class eventLogImporterTest(TestCase):
 
         suprsamples = Sample.objects.filter(sample_type__pk=5)
         self.assertEqual(suprsamples.count(), 8)
+
+        # verify condition creation
+        conditions = Condition.objects.all()
+        self.assertEqual(conditions.count(), 17)
+        first_condition = conditions.first()
+        self.assertEqual(first_condition.name, 'InWater')
+        first_condition_histories = first_condition.getHistory()
+        self.assertEqual(first_condition_histories.count(), 2)
+        self.assertEqual(first_condition_histories.first().status, ConditionStatus.objects.get(value='started'))
+        self.assertEqual(first_condition_histories.first().source_time,
+                         dateparser('2018-08-29T09:58:55.194Z').astimezone(pytz.utc))
+
+        self.assertEqual(first_condition_histories.last().status, ConditionStatus.objects.get(value='completed'))
+        self.assertEqual(first_condition_histories.last().source_time,
+                         dateparser('2018-08-29T23:14:43.509Z').astimezone(pytz.utc))
+
+        sample_conditions = Condition.objects.filter(name__contains='NA100')
+        self.assertEqual(sample_conditions.count(), 11)
+        first_sample_condition = sample_conditions.first()
+        first_sample_condition_histories = first_sample_condition.getHistory()
+        self.assertEqual(first_sample_condition_histories.count(), 1)
+        self.assertEqual(first_sample_condition_histories.last().status, ConditionStatus.objects.get(value='completed'))
+        self.assertEqual(first_sample_condition.name, 'NA100-001')
+        self.assertEqual(first_sample_condition_histories.last().source_time,
+                         dateparser('2018-08-29T12:50:18.733Z').astimezone(pytz.utc))
+
+
+
+

@@ -699,21 +699,22 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
                             # update prior condition to complete it if it is a dive status
                             update = False
-                            if 'On' in condition.name or 'Off' in condition.name:
-                                condition_history_data['status'] = self.condition_completed
-
+                            filter_name = None
                             if condition.name == 'OnDeck':
-                                inwater_conditions = Condition.objects.filter(flight=condition.flight, name='InWater')
-                                if inwater_conditions:
-                                    condition_history_data['condition'] = inwater_conditions.last()
-                                    update = True
+                                filter_name = 'InWater'
                             elif condition.name == 'OffBottom':
-                                onbottom_conditions = Condition.objects.filter(flight=condition.flight, name='OnBottom')
-                                if onbottom_conditions:
-                                    condition_history_data['condition'] = onbottom_conditions.last()
-                                    update = True
-                            if update:
-                                condition_history2 = ConditionHistory.objects.create(**condition_history_data)
+                                filter_name = 'OnBottom'
+                            if filter_name:
+                                found_conditions = Condition.objects.filter(flight=condition.flight, name=filter_name)
+                                if found_conditions:
+                                    last_condition = found_conditions.last()
+                                    last_condition_history = last_condition.getHistory().last()
+                                    if last_condition_history.status != self.condition_completed:
+                                        condition_history_data['condition'] = last_condition
+                                        update = True
+                                if update:
+                                    condition_history_data['status'] = self.condition_completed
+                                    condition_history2 = ConditionHistory.objects.create(**condition_history_data)
 
                             del row['condition_data']
                             del row['condition_history_data']
