@@ -14,6 +14,7 @@
 # specific language governing permissions and limitations under the License.
 # __END_LICENSE__
 
+import json
 import traceback
 import re
 from django.core.exceptions import ObjectDoesNotExist
@@ -289,6 +290,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         row = self.update_row(row)
         row_copy = row.copy()
         del row_copy['tag']
+        if 'condition_data' in row_copy:
+            del row_copy['condition_data']
+            del row_copy['condition_history_data']
         if row:
             result = LocatedNote.objects.filter(**row_copy)
             return result.exists()
@@ -407,9 +411,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         key_2, value_2 = clean_key_value(row['key_value_2'])
         key_3, value_3 = clean_key_value(row['key_value_3'])
 
-        if 'flight' not in row or not row['flight']:
-            row = self.clean_flight(row)
-
         event_type = row['event_type']
         if event_type == 'NOTES':
             row['content'] = value_2
@@ -446,7 +447,11 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_1, str(row))
                 row['content'] = '%s\n%s: %s' % (row['content'], key_1, value_1)
 
-            condition, condition_history = self.populate_condition_data(row, row['tag'][-1], self.condition_started)
+            last_tag = row['tag'][-1]
+            status = self.condition_completed
+            if last_tag == 'OnBottom' or last_tag == 'InWater':
+                status = self.condition_started
+            condition, condition_history = self.populate_condition_data(row, last_tag, status)
             row['condition_data'] = condition
             row['condition_history_data'] = condition_history
         elif event_type == 'OBJECTIVE':
@@ -525,6 +530,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
         if 'flight' not in row or not row['flight']:
             row = self.clean_flight(row)
+            if 'condition_data' in row:
+                if 'flight' in row:
+                    row['condition_data']['flight'] = row['flight']
 
         if 'tag' in row and not row['tag']:
             del row['tag']
@@ -554,14 +562,16 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         condition_data = {'source': 'Event Log Import',
                           'start_time': row['event_time'],
                           'end_time': row['event_time'],
-                          'name': name,
-                          'flight': row['flight']
+                          'name': name
                           }
+        if 'flight' in row:
+            condition_data['flight'] = row['flight']
 
+        content_dict = {"content": "%s" % row["content"]}
         condition_history_data = {'source_time': row['event_time'],
                                   'creation_time': now,
                                   'status': status,
-                                  'jsonData': {'content': row['content']}
+                                  'jsonData': json.dumps(content_dict)
                                   }
 
         return condition_data, condition_history_data
@@ -692,13 +702,15 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                                 condition_history_data['status'] = self.condition_completed
 
                             if condition.name == 'OnDeck':
-                                inwater_condition = Condition.objects.get(flight=condition.flight, name='InWater')
-                                condition_history_data['condition'] = inwater_condition
-                                update = True
+                                inwater_conditions = Condition.objects.filter(flight=condition.flight, name='InWater')
+                                if inwater_conditions:
+                                    condition_history_data['condition'] = inwater_conditions.last()
+                                    update = True
                             elif condition.name == 'OffBottom':
-                                onbottom_condition = Condition.objects.get(flight=condition.flight, name='OnBottom')
-                                condition_history_data['condition'] = onbottom_condition
-                                update = True
+                                onbottom_conditions = Condition.objects.filter(flight=condition.flight, name='OnBottom')
+                                if onbottom_conditions:
+                                    condition_history_data['condition'] = onbottom_conditions.last()
+                                    update = True
                             if update:
                                 condition_history2 = ConditionHistory.objects.create(**condition_history_data)
 
