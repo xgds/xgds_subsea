@@ -18,8 +18,6 @@ from dateutil.parser import parse as dateparser
 import pytz
 
 from django.test import TransactionTestCase
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseForbidden, Http404, JsonResponse
 
 from xgds_subsea_app.importer.sciChatCsvImporter import *
 from xgds_notes2.models import LocatedMessage

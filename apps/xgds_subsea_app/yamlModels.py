@@ -28,6 +28,7 @@ class TempProbe(xgds_timeseries.TimeSeriesModel):
 
     timestamp = models.DateTimeField(db_index=True, null=False, blank=False)
     temperature = models.FloatField(null=True, blank=True)
+    flight = models.ForeignKey('xgds_core.Flight', on_delete=models.SET_NULL, blank=True, null=True)
 
     title = 'Temp Probe'
     channel_descriptions = {

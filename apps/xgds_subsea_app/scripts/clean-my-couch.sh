@@ -8,5 +8,5 @@ then
     # create new empty one
     curl -X PUT http://$1:5984/subsea-file-store
     # install design (query) documents
-    curl -X PUT http://$1:5984/braille-file-store/"_design/deepzoom" -d @./couchViews.js
+    curl -X PUT http://$1:5984/subsea-file-store/"_design/deepzoom" -d @./couchViews.js
 fi
