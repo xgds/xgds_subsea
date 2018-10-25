@@ -380,7 +380,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         """
         Updates the row by looking up the correct flight id by the name.
         Hardcoding to Hercules vehicle
-        :param row:
+        :param row: the dict of the row we are working on
+        :param vehicle_name: the name of the vehicle
         :return: the updated row
         """
         if not vehicle_name and 'vehicle_name' in row:
@@ -393,7 +394,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 print 'INVALID VEHICLE, DEFAULTING TO HERCULES %s' % rvn
             if not vehicle_name:
                 vehicle_name = self.vehicle.name
-            del row['vehicle_name']
+        del row['vehicle_name']
         if 'group_flight_name' in row:
             flight_name = row['group_flight_name'] + '_' + vehicle_name
             row['flight'] = lookup_flight(flight_name)
