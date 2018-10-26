@@ -120,6 +120,8 @@ def read_dive_summary(filename, dive_start_time):
             elif last_key:
                 result[last_key] = '%s %s' % (result[last_key], line)
 
+    if "" in result:
+        del result[""]
     return result
 
 
