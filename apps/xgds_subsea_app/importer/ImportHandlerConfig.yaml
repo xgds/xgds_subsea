@@ -171,8 +171,15 @@ registry:
     timeout: 300
     order: 2
     auth: false
-  - name: 'CTD'
+  - name: 'CTD ascent/descent'
     filepath_pattern: '[\d\.]+/processed/dive_reports/.*/sampled/(?P<flight>H\d{4}).CTD.sampled.*.tsv'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/CTD.yaml -f %(flight)s_Hercules'
+    timeout: 300
+    order: 2
+    auth: false
+  - name: 'CTD'
+    filepath_pattern: '[\d\.]+/processed/dive_reports/.*/sampled/(?P<flight>H\d{4}).CTD.sampled.tsv'
     importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
     arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/CTD.yaml -f %(flight)s_Hercules'
     timeout: 300
@@ -191,10 +198,6 @@ registry:
   - name: 'DS_Store'
     filepath_pattern: '.*/\.DS_Store'
     ignore: true
-  - name: 'chatlog' # TODO IMPLEMENT
+  - name: 'chatlog'
     filepath_pattern: '[\d\.]+/processed/eventlog/by-dive/all_chatlog_.*\.txt'
-    importer: '/home/xgds/xgds_subsea/apps/xgds_notes/importer/import_notes.py'
-    timeout: 300
-    order: 4
-    auth: false
     ignore: true
