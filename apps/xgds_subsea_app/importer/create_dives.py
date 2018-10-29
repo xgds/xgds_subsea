@@ -69,7 +69,12 @@ def create_dives(filename):
                 pass
             if k.startswith("##"):  # we know the ## bla is the name of the cruise
                 k = 'cruise'
+
+            # further sanitize the keys, some of them have parens in them
+            if '(' in k:
+                k = k[0:k.index('(')]
             group_flight.extras[k] = v
+
         group_flight.save()
         # print 'created %s' % groupFlight
         num_created += 1

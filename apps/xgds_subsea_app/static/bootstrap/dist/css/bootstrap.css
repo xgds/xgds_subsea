@@ -3106,7 +3106,7 @@ form table thead th {
 }
 
 form table label {
-  display: inline;
+  display: inherit;
 }
 
 /* datatables */

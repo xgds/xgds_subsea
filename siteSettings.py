@@ -486,3 +486,9 @@ XGDS_CORE_SHOW_CREATE_FLIGHTS = False
 XGDS_CORE_SHOW_FLIGHT_MANAGEMENT = False
 
 CRUISE_ID = 'NA100'
+
+XGDS_MAP_SERVER_REPLAY_HANDLEBARS_DIRS = [os.path.join('xgds_map_server', 'templates', 'handlebars'),
+                                          os.path.join('xgds_map_server', 'templates', 'handlebars', 'search'),
+                                          os.path.join('xgds_map_server', 'templates', 'handlebars', 'replay'),
+                                          os.path.join('xgds_subsea_app', 'templates', 'handlebars', 'replay')]
+
