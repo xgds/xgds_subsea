@@ -57,7 +57,7 @@
 				</li>
 				-->
 				<li class='nav-item {% currentnav search_map* basalt_live_objects%}'>
-					<a class="nav-link {% currentnav search_map* basalt_live_objects%}" href="/xgds_map_server/search/Photo" title="Search">Search</a>
+					<a class="nav-link {% currentnav search_map* basalt_live_objects%}" href="/xgds_map_server/search/{{settings.XGDS_IMAGE_IMAGE_MODEL_NAME}}" title="Search">Search</a>
 				</li>
 				<li class='nav-item {% currentnav xgds_core_import %}'>
 					<a class="nav-link {% currentnav xgds_core_import %}" href="{% url 'xgds_core_import' %}" title="Import">Import</a>
