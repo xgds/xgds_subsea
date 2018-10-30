@@ -28,5 +28,5 @@ pysrc
 ssl
 db_dumps
 .coverage
-htmlcov
+coverage_html_report
 TempImportHandlerConfig.yaml

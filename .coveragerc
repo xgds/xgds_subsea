@@ -1,0 +1,10 @@
+# .coveragerc to control coverage.py
+[run]
+# Using '.' will include python files in the top level directory
+source = .
+
+# Using these two dirnames will include only files inside apps and submodules
+# source = apps,submodules
+
+[html]
+directory = coverage_html_report
