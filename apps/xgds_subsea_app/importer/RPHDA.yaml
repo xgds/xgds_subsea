@@ -1,5 +1,5 @@
 # This file describes the values from the NAV file
-name: NAV
+name: RPH
 class: geocamTrack.PastResourcePoseDepth
 extension: tsv
 delimiter: '\t'
@@ -8,10 +8,13 @@ fields:
   timestamp:
     type: datetime
     format: iso8601
-  latitude:
+  roll:
     type: float
-  longitude:
+  pitch:
+    type: float
+  heading:
     type: float
   depth:
     type: float
-    units: meters
+  altitude:
+    type: float
