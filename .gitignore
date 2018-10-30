@@ -30,3 +30,4 @@ db_dumps
 .coverage
 coverage_html_report
 TempImportHandlerConfig.yaml
+htmlcov/
