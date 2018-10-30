@@ -16,21 +16,17 @@
 # __END_LICENSE__
 
 import os
-import re
-import csv
-import sys
 from glob import glob
-from dateutil.parser import parse as dateparser
-import pytz
 from datetime import datetime, timedelta
 from xgds_core.importer.csvImporter import CsvImporter
+
 import django
 django.setup()
+
 from django.conf import settings
 
 IMPORT_ROOT = os.path.join(settings.DATA_ROOT, 'incoming', settings.CRUISE_ID)
 ADDENDUM_XGDS = os.path.join(IMPORT_ROOT, 'addendum', 'xgds')
-
 
 
 class FileSetTelemetry:
@@ -110,7 +106,7 @@ def get_dive_info():
 def filter_telemetry_files(vehicles):
     for vehicle in vehicles:
         # Pre-process telemetry files to get only the rows that contain Herc heading
-        raw_files = glob(os.path.join(IMPORT_ROOT, 'raw/datalog/*_*.HER'))
+        raw_files = sorted(glob(os.path.join(IMPORT_ROOT, 'raw/datalog/*_*.HER')))
         for infile in raw_files:
             outfile = os.path.basename(infile).replace('.HER', '.HER-%s' % vehicle['telem_id'])
             outfile = os.path.join(ADDENDUM_XGDS, outfile)
@@ -197,7 +193,7 @@ def resample_attitude_data(dives, vehicles):
 
     for vehicle in vehicles:
         # Parse filtered telemetry files to resample at 1Hz interval
-        raw_files = glob(os.path.join(ADDENDUM_XGDS, '*_*.HER-%s' % vehicle['telem_id']))
+        raw_files = sorted(glob(os.path.join(ADDENDUM_XGDS, '*_*.HER-%s' % vehicle['telem_id'])))
         yaml_file = os.path.join(settings.PROJ_ROOT, 'apps/xgds_subsea_app/importer/HER-%s.yaml' % vehicle['telem_id'])
         telem = FileSetTelemetry(yaml_file, raw_files)
 
