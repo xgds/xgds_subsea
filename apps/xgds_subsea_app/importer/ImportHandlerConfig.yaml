@@ -6,14 +6,6 @@ import_path: '/home/xgds/xgds_subsea/data/incoming'
 
 # Registry of regex patterns to look for and what to do when files match them
 registry:
-#  - name: 'nav_split'
-# # I am pretty sure that the file parsing is a one step process, so if this is going to generate
-# # new files it will have to also process them directly.
-#    filepath_pattern: '[\d\.]+raw/datalog/.*\.NAV'
-#    importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/navPreprocessor.py'
-#    timeout: 300
-#    order: 1
-#    auth: false
   - name: 'dive stats'
     filepath_pattern: 'processed/dive_reports/dives-stats.tsv'
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/create_dives.py'

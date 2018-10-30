@@ -1,3 +1,20 @@
+#!/usr/bin/env python
+#  __BEGIN_LICENSE__
+# Copyright (c) 2015, United States Government, as represented by the
+# Administrator of the National Aeronautics and Space Administration.
+# All rights reserved.
+#
+# The xGDS platform is licensed under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software distributed
+# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations under the License.
+# __END_LICENSE__
+
 import os
 import re
 import csv
@@ -9,15 +26,20 @@ from datetime import datetime, timedelta
 from xgds_core.importer.csvImporter import CsvImporter
 import django
 django.setup()
+from django.conf import settings
 
-XGDS_ROOT = '/home/xgds/xgds_subsea'
-IMPORT_ROOT = os.path.join(XGDS_ROOT, 'data/incoming/NA100')
+IMPORT_ROOT = os.path.join(settings.DATA_ROOT, 'incoming', settings.CRUISE_ID)
+ADDENDUM_XGDS = os.path.join(IMPORT_ROOT, 'addendum', 'xgds')
 
-# This class assumes that telemetry files are in lexicographic
-# and chronological order, so that opening them in lex order keeps
-# them in chron order, and that when one file runs out the first line
-# of the next file is the next line to read
+
+
 class FileSetTelemetry:
+    """
+    # This class assumes that telemetry files are in lexicographic
+    # and chronological order, so that opening them in lex order keeps
+    # them in chron order, and that when one file runs out the first line
+    # of the next file is the next line to read
+    """
     def __init__(self, yaml_config, file_list):
         # YAML config for telemetry files
         self.yaml_config = yaml_config
@@ -76,7 +98,7 @@ def total_seconds(t1, t2):
 
 def get_dive_info():
     # Get names, start/end times for all of the dives from dives-stats.tsv
-    dive_reader = CsvImporter(os.path.join(XGDS_ROOT, 'apps/xgds_subsea_app/importer/DiveStats.yaml'),
+    dive_reader = CsvImporter(os.path.join(settings.PROJ_ROOT, 'apps/xgds_subsea_app/importer/DiveStats.yaml'),
                               os.path.join(IMPORT_ROOT, 'processed/dive_reports/dives-stats.tsv'),
                               replace=True, skip_bad=True)
     dives = dive_reader.load_to_list()
@@ -91,7 +113,7 @@ def filter_telemetry_files(vehicles):
         raw_files = glob(os.path.join(IMPORT_ROOT, 'raw/datalog/*_*.HER'))
         for infile in raw_files:
             outfile = os.path.basename(infile).replace('.HER', '.HER-%s' % vehicle['telem_id'])
-            outfile = os.path.join(IMPORT_ROOT, 'addendum/xgds', outfile)
+            outfile = os.path.join(ADDENDUM_XGDS, outfile)
             assert(not outfile == infile)
             if os.path.exists(outfile):
                 print '%s already exists' % outfile
@@ -175,13 +197,13 @@ def resample_attitude_data(dives, vehicles):
 
     for vehicle in vehicles:
         # Parse filtered telemetry files to resample at 1Hz interval
-        raw_files = glob(os.path.join(IMPORT_ROOT, 'addendum/xgds/*_*.HER-%s' % vehicle['telem_id']))
-        yaml_file = os.path.join(XGDS_ROOT, 'apps/xgds_subsea_app/importer/HER-%s.yaml' % vehicle['telem_id'])
+        raw_files = glob(os.path.join(ADDENDUM_XGDS, '*_*.HER-%s' % vehicle['telem_id']))
+        yaml_file = os.path.join(settings.PROJ_ROOT, 'apps/xgds_subsea_app/importer/HER-%s.yaml' % vehicle['telem_id'])
         telem = FileSetTelemetry(yaml_file, raw_files)
 
         for dive in dives:
             print dive['dive_name'], dive['inwatertime'], dive['ondecktime'], dive['totaltime'], 'hours'
-            outfile = os.path.join(IMPORT_ROOT, 'addendum/xgds',
+            outfile = os.path.join(ADDENDUM_XGDS,
                                    '%s.RPHDA.%s.tsv' % (dive['dive_name'], vehicle['vehicle_id']))
             if os.path.exists(outfile):
                 print '%s already exists' % outfile
@@ -191,13 +213,13 @@ def resample_attitude_data(dives, vehicles):
 
 
 def merge_nav_data(dives, vehicles):
-    position_yaml = os.path.join(XGDS_ROOT, 'apps/xgds_subsea_app/importer/NAV.yaml')
-    orientation_yaml = os.path.join(XGDS_ROOT, 'apps/xgds_subsea_app/importer/RPHDA.yaml')
+    position_yaml = os.path.join(settings.PROJ_ROOT, 'apps/xgds_subsea_app/importer/NAV.yaml')
+    orientation_yaml = os.path.join(settings.PROJ_ROOT, 'apps/xgds_subsea_app/importer/RPHDA.yaml')
 
     for vehicle in vehicles:
         print 'Vehicle: %s' % vehicle['name']
         for dive in dives:
-            outfile = os.path.join(IMPORT_ROOT, 'addendum/xgds',
+            outfile = os.path.join(ADDENDUM_XGDS,
                                    '%s.NAV6D.%s.tsv' % (dive['dive_name'], vehicle['vehicle_id']))
             if os.path.exists(outfile):
                 print '%s already exists' % outfile
@@ -211,8 +233,8 @@ def merge_nav_data(dives, vehicles):
             positions = position_importer.load_to_list()
 
             # Orientation file that we just resampled
-            orientation_file = 'addendum/xgds/%s.RPHDA.%s.tsv' % (dive['dive_name'], vehicle['vehicle_id'])
-            orientation_file = os.path.join(IMPORT_ROOT, orientation_file)
+            orientation_file = '%s.RPHDA.%s.tsv' % (dive['dive_name'], vehicle['vehicle_id'])
+            orientation_file = os.path.join(ADDENDUM_XGDS, orientation_file)
             orientation_importer = CsvImporter(orientation_yaml, orientation_file, replace=True)
             orientations = orientation_importer.load_to_list()
 
@@ -288,6 +310,11 @@ def write_nav6d_file(samples, outfile):
 
 
 def main():
+
+    # ensure the directory exists
+    if not os.path.exists(ADDENDUM_XGDS):
+        os.makedirs(ADDENDUM_XGDS)
+
     # get dive names, start and end times, etc.
     dives = get_dive_info()
 
