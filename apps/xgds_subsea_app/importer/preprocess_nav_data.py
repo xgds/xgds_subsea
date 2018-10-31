@@ -23,58 +23,13 @@ from glob import glob
 from dateutil.parser import parse as dateparser
 import pytz
 from datetime import datetime, timedelta
-from xgds_core.importer.csvImporter import CsvImporter
+from xgds_core.importer.csvImporter import CsvImporter, CsvSetImporter
 import django
 django.setup()
 from django.conf import settings
 
 IMPORT_ROOT = os.path.join(settings.DATA_ROOT, 'incoming', settings.CRUISE_ID)
 ADDENDUM_XGDS = os.path.join(IMPORT_ROOT, 'addendum', 'xgds')
-
-
-
-class FileSetTelemetry:
-    """
-    # This class assumes that telemetry files are in lexicographic
-    # and chronological order, so that opening them in lex order keeps
-    # them in chron order, and that when one file runs out the first line
-    # of the next file is the next line to read
-    """
-    def __init__(self, yaml_config, file_list):
-        # YAML config for telemetry files
-        self.yaml_config = yaml_config
-        # ordered list of files
-        self.files = file_list
-        self.file_index = 0
-        # telemetry entries to be loaded from files
-        self.telemetry = None
-        self.telemetry_index = 0
-        # Initialize csv importer and load the first file
-        self.csv_importer = CsvImporter(self.yaml_config, self.files[0], replace=True, skip_bad=True)
-        self.read_next_csv_file()
-
-    def read_next_csv_file(self):
-        if self.file_index >= len(self.files):
-            raise StopIteration
-        self.csv_importer.open_csv(self.files[self.file_index])
-        self.telemetry = self.csv_importer.load_to_list()
-        self.file_index += 1
-
-    def __iter__(self):
-        self.file_index = 0
-        self.telemetry_index = 0
-        self.read_next_csv_file()
-        return self
-
-    def next(self):
-        if self.telemetry_index < len(self.telemetry):
-            val = self.telemetry[self.telemetry_index]
-            self.telemetry_index += 1
-            return val
-        else:
-            self.read_next_csv_file()
-            self.telemetry_index = 1
-            return self.telemetry[0]
 
 
 def interval_sampler(start_time, end_time, interval=timedelta(seconds=1)):
@@ -199,7 +154,7 @@ def resample_attitude_data(dives, vehicles):
         # Parse filtered telemetry files to resample at 1Hz interval
         raw_files = glob(os.path.join(ADDENDUM_XGDS, '*_*.HER-%s' % vehicle['telem_id']))
         yaml_file = os.path.join(settings.PROJ_ROOT, 'apps/xgds_subsea_app/importer/HER-%s.yaml' % vehicle['telem_id'])
-        telem = FileSetTelemetry(yaml_file, raw_files)
+        telem = CsvSetImporter(yaml_file, raw_files, replace=True)
 
         for dive in dives:
             print dive['dive_name'], dive['inwatertime'], dive['ondecktime'], dive['totaltime'], 'hours'
