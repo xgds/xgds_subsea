@@ -1214,8 +1214,8 @@
     "model": "geocamTrack.iconstyle",
     "fields": {
       "scale": 0.3,
-      "name": "ev1_pointer",
-      "url": "/static/basaltApp/icons/hercules_pointer.png",
+      "name": "hercules_pointer",
+      "url": "/static/xgds_subsea/images/hercules_pointer.png",
       "height": 64,
       "width": 42,
       "extras": "{}",
@@ -1228,8 +1228,8 @@
     "model": "geocamTrack.iconstyle",
     "fields": {
       "scale": 0.3,
-      "name": "ev2_pointer",
-      "url": "/static/basaltApp/icons/argus_pointer.png",
+      "name": "argus_pointer",
+      "url": "/static/xgds_subsea/images/argus_pointer.png",
       "height": 64,
       "width": 42,
       "extras": "{}",
@@ -1242,8 +1242,8 @@
     "model": "geocamTrack.iconstyle",
     "fields": {
       "scale": 1.0,
-      "name": "sa_dot",
-      "url": "/static/geocamTrack/icons/nautilus.png",
+      "name": "nautilus_dot",
+      "url": "/static/xgds_subsea/images/nautilus.png",
       "height": 64,
       "width": 64,
       "extras": "{}",
