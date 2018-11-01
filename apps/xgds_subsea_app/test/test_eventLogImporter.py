@@ -279,7 +279,7 @@ class eventLogImporterTest(TestCase):
 
         # verify condition creation
         conditions = Condition.objects.all()
-        self.assertEqual(conditions.count(), 17)
+        self.assertEqual(conditions.count(), 15)
         first_condition = conditions.first()
         self.assertEqual(first_condition.name, 'InWater')
         first_condition_histories = first_condition.getHistory()
