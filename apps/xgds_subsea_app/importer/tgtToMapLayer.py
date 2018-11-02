@@ -25,11 +25,14 @@ django.setup()
 from django.conf import settings
 
 from django.utils import timezone
-from xgds_map_server.models import MapLayer
 from dateutil.parser import parse as dateparser
+from datetime import datetime
 from uuid import uuid4, UUID
 from geocamUtil.models import SiteFrame
+from xgds_map_server.models import MapGroup
+from xgds_map_server.models import MapLayer
 from django.core.serializers.json import DjangoJSONEncoder
+
 
 def initialize_map_layer(filepath, cruiseID, region=0):
     map_layer = MapLayer()
@@ -41,8 +44,11 @@ def initialize_map_layer(filepath, cruiseID, region=0):
     map_layer.creator = 'Importer'
     map_layer.creation_time = timezone.now()
     map_layer.uuid = uuid4()
-    map_layer.parentId = "targets"
+    map_layer.parentId = 'targets'
+    map_layer.parent = MapGroup.objects.get(uuid='targets')
     map_layer.region = SiteFrame.objects.get(id=region)
+    map_layer.defaultColor = '#ffffff'
+    map_layer.save()
     return map_layer
 
 
@@ -62,7 +68,7 @@ def process_row(map_layer, row, jsonString, minLat, minLon, maxLat, maxLon):
         new_station['type'] = "Station"
         new_station['name'] = row[1]
         new_station['description'] = row[14]
-        new_station['point'] = [row[5], row[6]]
+        new_station['point'] = [row[6], row[5]]
         if float(row[5]) < minLat:
             minLat = float(row[5])
         if float(row[5]) > maxLat:
