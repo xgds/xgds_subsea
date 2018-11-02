@@ -34,9 +34,9 @@ def create_dives(filename):
     """
     num_created = 0
 
-    vehicles = [Vehicle.objects.filter(name='Hercules')[0],
-                Vehicle.objects.filter(name='Argus')[0],
-                Vehicle.objects.filter(name='Nautilus')[0]]
+    vehicles = [Vehicle.objects.get(name='Hercules'),
+                Vehicle.objects.get(name='Argus'),
+                Vehicle.objects.get(name='Nautilus')]
 
     reader = DictReader(open(filename, 'r'), delimiter='\t')
     for row in reader:
@@ -61,7 +61,20 @@ def create_dives(filename):
         group_flight.name = row['dive']
         # Pack everything from dive stats into the extras field
         for k, v in row.iteritems():
+            if not v or not k:
+                pass
+            if len(k) == 0:
+                pass
+            if k == "":
+                pass
+            if k.startswith("##"):  # we know the ## bla is the name of the cruise
+                k = 'cruise'
+
+            # further sanitize the keys, some of them have parens in them
+            if '(' in k:
+                k = k[0:k.index('(')]
             group_flight.extras[k] = v
+
         group_flight.save()
         # print 'created %s' % groupFlight
         num_created += 1

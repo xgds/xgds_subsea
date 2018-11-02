@@ -1,0 +1,53 @@
+# This file describes the values from dive_stats files
+name: dive_stats
+extension: tsv
+delimiter: '\t'
+flight_required: false
+fields:
+  cruise_name:
+    type: string
+  dive_name:
+    type: string
+  site_name:
+    type: string
+  inwatertime:
+    type: datetime
+    format: iso8601
+  inwaternav:
+    type: string
+  ondecktime:
+    type: datetime
+    format: iso8601
+  ondecknav:
+    type: datetime
+    format: iso8601
+  onbottomtime:
+    type: datetime
+    format: iso8601
+  onnav:
+    type: string
+  ondepth:
+    type: float
+  offbottomtime:
+    type: datetime
+    format: iso8601
+  offnav:
+    type: string
+  offdepth:
+    type: float
+  hercmaxdepth:
+    type: float
+  hercavgdepth:
+    type: float
+  argusmaxdepth:
+    type: float
+  argusavgdepth:
+    type: float
+  totaltime:
+    type: float
+    units: hours
+  bottomtime:
+    type: float
+    units: hours
+  sampleIDs:
+    type: string

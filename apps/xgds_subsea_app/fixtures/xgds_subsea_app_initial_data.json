@@ -1180,7 +1180,7 @@
     "pk": 10,
     "model": "geocamTrack.linestyle",
     "fields": {
-      "color": "ffff00ff",
+      "color": "ff00d7ff",
       "width": 3,
       "extras": "{}",
       "name": "hercules_linestyle",
@@ -1202,7 +1202,7 @@
     "pk": 12,
     "model": "geocamTrack.linestyle",
     "fields": {
-      "color": "ff00ffff",
+      "color": "ffff00ff",
       "width": 1,
       "extras": "{}",
       "name": "nautilus_linestyle",
@@ -1214,8 +1214,8 @@
     "model": "geocamTrack.iconstyle",
     "fields": {
       "scale": 0.3,
-      "name": "ev1_pointer",
-      "url": "/static/basaltApp/icons/hercules_pointer.png",
+      "name": "hercules_pointer",
+      "url": "/static/xgds_subsea/images/hercules_pointer.png",
       "height": 64,
       "width": 42,
       "extras": "{}",
@@ -1228,8 +1228,8 @@
     "model": "geocamTrack.iconstyle",
     "fields": {
       "scale": 0.3,
-      "name": "ev2_pointer",
-      "url": "/static/basaltApp/icons/argus_pointer.png",
+      "name": "argus_pointer",
+      "url": "/static/xgds_subsea/images/argus_pointer.png",
       "height": 64,
       "width": 42,
       "extras": "{}",
@@ -1242,8 +1242,8 @@
     "model": "geocamTrack.iconstyle",
     "fields": {
       "scale": 1.0,
-      "name": "sa_dot",
-      "url": "/static/geocamTrack/icons/nautilus.png",
+      "name": "nautilus_dot",
+      "url": "/static/xgds_subsea/images/nautilus.png",
       "height": 64,
       "width": 64,
       "extras": "{}",

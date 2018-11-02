@@ -1,0 +1,38 @@
+# This file describes the values from the NAV file
+name: HER
+class: geocamTrack.PastResourcePoseDepth
+extension: 'HER-APAS'
+delimiter: ' '
+flight_required: false
+fields:
+  timestamp:
+    type: datetime
+    format: iso8601
+    regex: HER\t([\dTZ\-\.:]+)\tHER\tAPAS
+    required: false
+  date:
+    type: string
+  time:
+    type: string
+  vehicle_name:
+    type: string
+  heading:
+    type: float
+    units: degrees
+    required: false
+  pitch:
+    type: float
+    units: degrees
+    required: false
+  roll:
+    type: float
+    units: degrees
+    required: false
+  altitude:
+    type: float
+    units: meters
+    required: false
+  depth:
+    type: float
+    units: meters
+    required: false

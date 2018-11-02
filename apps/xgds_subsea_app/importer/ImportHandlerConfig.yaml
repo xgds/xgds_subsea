@@ -6,14 +6,6 @@ import_path: '/home/xgds/xgds_subsea/data/incoming'
 
 # Registry of regex patterns to look for and what to do when files match them
 registry:
-#  - name: 'nav_split'
-# # I am pretty sure that the file parsing is a one step process, so if this is going to generate
-# # new files it will have to also process them directly.
-#    filepath_pattern: '[\d\.]+raw/datalog/.*\.NAV'
-#    importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/navPreprocessor.py'
-#    timeout: 300
-#    order: 1
-#    auth: false
   - name: 'dive stats'
     filepath_pattern: 'processed/dive_reports/dives-stats.tsv'
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/create_dives.py'
@@ -25,6 +17,12 @@ registry:
     arguments: '-v %(filename)s'
     timeout: 300
     order: 2
+  - name: 'Orientation temp nav file'
+    filepath_pattern: 'addendum/xgds/(?P<flight>H\d{4})\.RPHDA\.M\d\.tsv'
+    ignore: true
+  - name: 'Filtered temp nav file'
+    filepath_pattern: 'addendum/xgds/([\d_])+\.HER-[JDSAP]+'
+    ignore: true
   - name: 'Nautilus NAV'
     filepath_pattern: 'processed/dive_reports/(?P<flight>H\d{4})/sampled/H\d{4}\.NAV\.PV\.sampled\.tsv'
     importer: '/home/xgds/xgds_subsea/apps/geocamTrack/importer/trackImportRunner.py'
@@ -33,16 +31,16 @@ registry:
     order: 3
     auth: false
   - name: 'Hercules NAV'
-    filepath_pattern: 'processed/dive_reports/(?P<flight>H\d{4})/sampled/H\d{4}\.NAV\.M1\.sampled\.tsv'
+    filepath_pattern: 'addendum/xgds/(?P<flight>H\d{4})\.NAV6D\.M1\.tsv'
     importer: '/home/xgds/xgds_subsea/apps/geocamTrack/importer/trackImportRunner.py'
-    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/NAV.yaml -v Hercules -f %(flight)s_Hercules'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/NAV6D.yaml -v Hercules -f %(flight)s_Hercules'
     timeout: 300
     order: 3
     auth: false
   - name: 'Argus NAV'
-    filepath_pattern: 'processed/dive_reports/(?P<flight>H\d{4})/sampled/H\d{4}\.NAV\.M2\.sampled\.tsv'
+    filepath_pattern: 'addendum/xgds/(?P<flight>H\d{4})\.NAV6D\.M2\.tsv'
     importer: '/home/xgds/xgds_subsea/apps/geocamTrack/importer/trackImportRunner.py'
-    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/NAV.yaml -v Argus -f %(flight)s_Argus'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/NAV6D.yaml -v Argus -f %(flight)s_Argus'
     timeout: 300
     order: 3
     auth: false
@@ -162,21 +160,28 @@ registry:
     importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
     arguments: '-s -i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/TempProbe.yaml'
     timeout: 300
-    order: 3
+    order: 5
     auth: false
   - name: 'O2S'
     filepath_pattern: '[\d\.]+/processed/dive_reports/.*/sampled/(?P<flight>H\d{4}).O2S.sampled.tsv'
     importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
     arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/O2S.yaml -f %(flight)s_Hercules'
     timeout: 300
-    order: 2
+    order: 5
     auth: false
-  - name: 'CTD'
+  - name: 'CTD ascent/descent'
     filepath_pattern: '[\d\.]+/processed/dive_reports/.*/sampled/(?P<flight>H\d{4}).CTD.sampled.*.tsv'
     importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
     arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/CTD.yaml -f %(flight)s_Hercules'
     timeout: 300
     order: 2
+    auth: false
+  - name: 'CTD'
+    filepath_pattern: '[\d\.]+/processed/dive_reports/.*/sampled/(?P<flight>H\d{4}).CTD.sampled.tsv'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
+    arguments: '-i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/CTD.yaml -f %(flight)s_Hercules'
+    timeout: 300
+    order: 5
     auth: false
   - name: 'tgt files'
     filepath_pattern: '[\d\.]+/raw/nav/hypack/.*\.tgt'
@@ -191,10 +196,6 @@ registry:
   - name: 'DS_Store'
     filepath_pattern: '.*/\.DS_Store'
     ignore: true
-  - name: 'chatlog' # TODO IMPLEMENT
+  - name: 'chatlog'
     filepath_pattern: '[\d\.]+/processed/eventlog/by-dive/all_chatlog_.*\.txt'
-    importer: '/home/xgds/xgds_subsea/apps/xgds_notes/importer/import_notes.py'
-    timeout: 300
-    order: 4
-    auth: false
     ignore: true

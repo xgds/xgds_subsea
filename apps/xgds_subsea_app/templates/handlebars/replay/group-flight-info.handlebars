@@ -1,0 +1,46 @@
+<form class="bbf-form" id="group-flight-info-form">
+<div class="group-flight-info" id="group-flight-info">
+	<table>
+        <tr>
+            <th><label>Name</label></th>
+            <td><label id="group-flight-name">{{name}}</label></td>
+        </tr>
+        <tr>
+            <th><label>Cruise</label></th>
+            <td>{{extras.cruise}}</td>
+        </tr>
+
+        <tr>
+            <th><label>Site</label></th>
+            <td>{{extras.site}}</td>
+        </tr>
+        <tr>
+            <th><label>Objective</label></th>
+            <td>{{extras.Objective}}</td>
+        </tr>
+        <tr>
+            <th><label>Herc Max Depth</label></th>
+            <td>{{extras.hercmaxdepth}}</td>
+        </tr>
+        <tr>
+            <th><label>Herc Avg Depth</label></th>
+            <td>{{extras.hercavgdepth}}</td>
+        </tr>
+        <tr>
+            <th><label>Bottom Hours</label></th>
+            <td>{{extras.bottomtime}}</td>
+        </tr>
+        <tr>
+            <th><label>Total Hours</label></th>
+            <td>{{extras.totaltime}}</td>
+        </tr>
+        {{#each extras.times}}
+        <tr>
+            <th><label>{{prettyHHMM this.start group_flight.timezone}} - {{prettyHHMM this.end group_flight.timezone}}</label></th>
+            <td><label>{{this.description}}</label></td>
+        </tr>
+        {{/each}}
+
+	</table>
+</div>
+</form>

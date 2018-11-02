@@ -10,7 +10,7 @@ fields:
     format: iso8601
   temperature:
     type: float
-    units: Celsius
+    units: C
   conductivity:
     type: float
     units: S/m

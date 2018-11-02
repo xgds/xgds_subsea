@@ -73,6 +73,7 @@ INSTALLED_APPS = ['django_npm_apps',
                   'taggit',
                   'resumable',
                   'django_markwhat',
+                  'jsonify',
 
                   'dal',
                   'dal_select2',
@@ -425,6 +426,7 @@ XGDS_NOTES_NOTE_MONIKER = 'Event'
 XGDS_NOTES_MONIKER = 'Event Log'
 XGDS_NOTES_MESSAGES_MONIKER = 'Science Chat'
 XGDS_IMAGE_IMAGE_SET_MONIKER = 'Image'
+XGDS_IMAGE_IMAGE_MODEL_NAME = 'Image'
 
 
 XGDS_MAP_SERVER_SITE_MONIKER = 'Region'
@@ -481,7 +483,21 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_SAMPLE_SAMPLE_KEY] = {'ol': 'xgds_sample/js/olSample
                                                   'search_form_class': 'xgds_sample.forms.SearchSampleForm',
                                                   }
 
+
+if 'Note' in XGDS_MAP_SERVER_JS_MAP:
+    del XGDS_MAP_SERVER_JS_MAP['Note']
+
+if 'Photo' in XGDS_MAP_SERVER_JS_MAP:
+    XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME] = XGDS_MAP_SERVER_JS_MAP['Photo']
+    del XGDS_MAP_SERVER_JS_MAP['Photo']
+
 XGDS_CORE_SHOW_CREATE_FLIGHTS = False
 XGDS_CORE_SHOW_FLIGHT_MANAGEMENT = False
 
 CRUISE_ID = 'NA100'
+
+XGDS_MAP_SERVER_REPLAY_HANDLEBARS_DIRS = [os.path.join('xgds_map_server', 'templates', 'handlebars'),
+                                          os.path.join('xgds_map_server', 'templates', 'handlebars', 'search'),
+                                          os.path.join('xgds_map_server', 'templates', 'handlebars', 'replay'),
+                                          os.path.join('xgds_subsea_app', 'templates', 'handlebars', 'replay')]
+

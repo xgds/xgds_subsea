@@ -17,18 +17,13 @@
 
 import os
 import optparse
-from collections import OrderedDict
 
 import django
 django.setup()
-from django.conf import settings
 from xgds_core.models import GroupFlight
 
 import re
-import datetime
 from datetime import timedelta
-from dateutil.parser import parse as dateparser
-import pytz
 
 
 def add_to_last_key(result, key, value):
@@ -37,16 +32,15 @@ def add_to_last_key(result, key, value):
     Supports dot notation for the summary section time area
     """
     if 'times.' in key:
-        splits = key.split('.')
-        times_dict = result[splits[0]]
-        specific_dict = times_dict[splits[1]]
+        times_list = result['times']
+        specific_dict = times_list[-1]
         specific_dict['description'] = '%s %s' % (specific_dict['description'], value)
     else:
         result[key] = '%s %s' % (result[key], value)
     return result
 
 
-def build_time(input_time, last_time):
+def build_time(input_time, last_time, first=False):
     """
     Construct datetime objects from 4 digit hourminute strings
     :param input_time: HHMM string
@@ -55,7 +49,7 @@ def build_time(input_time, last_time):
     """
     hours = int(input_time[:2])
     minutes = int(input_time[2:])
-    if hours > last_time.hour:
+    if first or hours > last_time.hour:
         result = last_time.replace(hour=hours, minute=minutes)
     else:
         # add a day
@@ -70,8 +64,8 @@ def read_dive_summary(filename, dive_start_time):
     :param filename: the name of the dive summary file
     :return: the number of dive summary files successfully read (with data)
     """
-    result = OrderedDict()
-    times = {}
+    result = {}
+    times = []
     result['times'] = times
 
     f = open(filename, "r")
@@ -79,6 +73,7 @@ def read_dive_summary(filename, dive_start_time):
     last_key = None
     last_time = dive_start_time
 
+    first = True
     for line in lines:
         if line.startswith('#'):
             continue
@@ -95,8 +90,10 @@ def read_dive_summary(filename, dive_start_time):
                 value = match.groups()[-1]
                 start_string = match.groups()[0]
                 end_string = match.groups()[1]
-                start_time = build_time(start_string, last_time)
-                end_time = build_time(end_string, start_time)
+                start_time = build_time(start_string, last_time, first)
+                if first:
+                    first = False
+                end_time = build_time(end_string, start_time, first)
                 last_time = end_time
 
                 description = match.groups()[2]
@@ -104,7 +101,7 @@ def read_dive_summary(filename, dive_start_time):
                 block = {'start': iso_start,
                          'end': end_time.isoformat(),
                          'description': description}
-                times[iso_start] = block
+                times.append(block)
                 last_key = 'times.%s' % iso_start
             elif last_key:
                 add_to_last_key(result, last_key, line)
@@ -113,12 +110,15 @@ def read_dive_summary(filename, dive_start_time):
             index = line.index(': ')
             if index > 0:
                 key = line[0:index]
-                value = line[index:].strip()
+                value = line[index+2:].strip()
                 if value:
                     result[key] = value
                 last_key = key
             elif last_key:
                 result[last_key] = '%s %s' % (result[last_key], line)
+
+    if "" in result:
+        del result[""]
 
     return result
 

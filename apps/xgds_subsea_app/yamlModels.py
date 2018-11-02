@@ -28,6 +28,7 @@ class TempProbe(xgds_timeseries.TimeSeriesModel):
 
     timestamp = models.DateTimeField(db_index=True, null=False, blank=False)
     temperature = models.FloatField(null=True, blank=True)
+    flight = models.ForeignKey('xgds_core.Flight', on_delete=models.SET_NULL, blank=True, null=True)
 
     title = 'Temp Probe'
     channel_descriptions = {
@@ -40,6 +41,7 @@ class TempProbe(xgds_timeseries.TimeSeriesModel):
 
     def __unicode__(self):
         return "%s: %s" % (self.timestamp.isoformat(), str(self.temperature))
+
 
 class ConductivityTempDepth(models.Model):
     """
@@ -58,7 +60,7 @@ class ConductivityTempDepth(models.Model):
 
     title = 'Conductivity Temp Depth'
     channel_descriptions = {
-                            'temperature': xgds_timeseries.ChannelDescription('Temperature', units='Celsius'),
+                            'temperature': xgds_timeseries.ChannelDescription('Temperature', units='C'),
                             'conductivity': xgds_timeseries.ChannelDescription('Conductivity', units='S/m'),
                             'pressure': xgds_timeseries.ChannelDescription('Pressure', units='decibars'),
                             'salinity': xgds_timeseries.ChannelDescription('Salinity', units='psu'),
@@ -71,6 +73,7 @@ class ConductivityTempDepth(models.Model):
 
     def __unicode__(self):
         return "%s: %s %s %s %s %s" % (self.timestamp.isoformat(), str(self.temperature), str(self.conductivity), str(self.pressure), str(self.salinity), str(self.sound_velocity))
+
 
 class O2Sat(xgds_timeseries.TimeSeriesModel):
     """
@@ -88,8 +91,8 @@ class O2Sat(xgds_timeseries.TimeSeriesModel):
     title = 'O2Sat'
     channel_descriptions = {
                             'oxygen_concentration': xgds_timeseries.ChannelDescription('Oxygen_concentration', units='microMolar'),
-                            'oxygen_saturation': xgds_timeseries.ChannelDescription('Oxygen_saturation', units='percent'),
-                            'temperature': xgds_timeseries.ChannelDescription('Temperature', units='Celsius'),
+                            'oxygen_saturation': xgds_timeseries.ChannelDescription('Oxygen_saturation', units='%'),
+                            'temperature': xgds_timeseries.ChannelDescription('Temperature', units='C'),
                             }
 
     @classmethod
