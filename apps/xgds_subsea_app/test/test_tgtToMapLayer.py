@@ -105,8 +105,11 @@ class tgtToMapLayerTest(TestCase):
         point_string = '"point":[-150,20]'
         self.assertTrue(point_string in no_whitespace)
 
+        with self.assertRaises(Exception):
+            process_row(ml, None, "", 360, 360, -360, -360)
+
     def test_import_tgt_map_layer(self):
-        retval = import_tgt_map_layer(tgtToMapLayerTest.filepath, tgtToMapLayerTest.cruiseId, tgtToMapLayerTest.region)
+        import_tgt_map_layer(tgtToMapLayerTest.filepath, tgtToMapLayerTest.cruiseId, tgtToMapLayerTest.region)
 
         ml = MapLayer.objects.get(name="CROOZ_WUN_SURVEY")
         self.assertTrue(ml)
@@ -168,3 +171,24 @@ class tgtToMapLayerTest(TestCase):
 
         self.assertEqual(the_json['features'][3]['point'][0], "100.7")
         self.assertEqual(the_json['features'][3]['point'][1], "-89.1")
+
+        with self.assertRaises(Exception):
+            import_tgt_map_layer("nada", tgtToMapLayerTest.cruiseId, tgtToMapLayerTest.region)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
