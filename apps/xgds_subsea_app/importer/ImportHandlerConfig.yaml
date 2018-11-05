@@ -190,6 +190,13 @@ registry:
     timeout: 300
     order: 5
     auth: true
+  - name: 'geotiffs'
+    filepath_pattern: '[\d\.]+/processed/multibeam/*\.tif*'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_map_server/uploadGeotiff.py'
+    arguments: '--filename %(filename)'
+    timeout: 300
+    order: 6
+    auth: false
   - name: 'chatlog_html' # ALWAYS SKIP
     filepath_pattern: '[\d\.]+/raw/chatlog/.*/.*/.*\.html'
     ignore: true
