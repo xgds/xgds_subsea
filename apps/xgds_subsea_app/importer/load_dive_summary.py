@@ -15,15 +15,24 @@
 # specific language governing permissions and limitations under the License.
 # __END_LICENSE__
 
+"""
+Loads the dive summary
+Also connects the dive plan
+"""
 import os
 import optparse
+import glob
 
 import django
 django.setup()
-from xgds_core.models import GroupFlight
+from xgds_core.models import GroupFlight, NamedURL
+from xgds_core.util import build_relative_path
 
 import re
 from datetime import timedelta
+
+# Where we expect dive plans to be underneath 'processed'
+DIVE_PLAN_EXPECTED_PATH = "dive_plans"
 
 
 def add_to_last_key(result, key, value):
@@ -56,6 +65,29 @@ def build_time(input_time, last_time, first=False):
         last_time = last_time + timedelta(days=1)
         result = last_time.replace(hour=hours, minute=minutes)
     return result
+
+
+def connect_dive_plan(group_flight, dive_summary_file):
+    """
+    Search for the dive plan for this group flight based on expected path.
+    :param group_flight: the group flight
+    :param dive_summary_file: the full path to the dive summary
+    :return: the relative path to the dive plan if found, None otherwise
+    """
+    original_dirname = os.path.dirname(dive_summary_file)
+    splits = original_dirname.split('/')[0:-2]
+    splits.append(DIVE_PLAN_EXPECTED_PATH)
+    new_dirname = ''
+    for s in splits:
+        new_dirname = "%s%s/" % (new_dirname, s)
+    pattern = '%s*%s*' % (new_dirname, group_flight.name)
+    result = glob.glob(pattern)
+    if result:
+        relative_path = build_relative_path(result[-1])  # we really only expect one
+        named_url = NamedURL(name='Dive Plan', url=relative_path, content_object=group_flight)
+        named_url.save()
+        return relative_path
+    return None
 
 
 def read_dive_summary(filename, dive_start_time):
@@ -136,6 +168,10 @@ def load_dive_summary(filename):
     herc_flight = group_flight.flights.get(vehicle__name='Hercules')
     start_time = herc_flight.start_time
     start_time = start_time.replace(microsecond=0, second=0)
+
+    dive_plan = connect_dive_plan(group_flight, filename)
+    if not dive_plan:
+        print "DIVE PLAN NOT FOUND FOR %s" % group_flight.name
 
     loaded_dict = read_dive_summary(filename, start_time)
     if not loaded_dict:
