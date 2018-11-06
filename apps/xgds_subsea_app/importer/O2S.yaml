@@ -14,7 +14,7 @@ fields:
     units: microMolar
   oxygen_saturation:
     type: float
-    units: %
+    units: percent
   temperature:
     type: float
     units: C

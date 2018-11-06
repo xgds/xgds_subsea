@@ -43,7 +43,7 @@ class TempProbe(xgds_timeseries.TimeSeriesModel):
         return "%s: %s" % (self.timestamp.isoformat(), str(self.temperature))
 
 
-class ConductivityTempDepth(models.Model):
+class ConductivityTempDepth(xgds_timeseries.TimeSeriesModel):
     """
     This is an auto-generated Django model created from a
     YAML specifications using ./apps/xgds_core/importer/yamlModelBuilder.py
@@ -90,9 +90,9 @@ class O2Sat(xgds_timeseries.TimeSeriesModel):
 
     title = 'O2Sat'
     channel_descriptions = {
-                            'oxygen_concentration': xgds_timeseries.ChannelDescription('Oxygen_concentration', units='microMolar'),
-                            'oxygen_saturation': xgds_timeseries.ChannelDescription('Oxygen_saturation', units='%'),
-                            'temperature': xgds_timeseries.ChannelDescription('Temperature', units='C'),
+                            'oxygen_concentration': xgds_timeseries.ChannelDescription('O2 Conc', units='microMolar'),
+                            'oxygen_saturation': xgds_timeseries.ChannelDescription('O2 Sat', units='%'),
+                            'temperature': xgds_timeseries.ChannelDescription('O2 Temp', units='C'),
                             }
 
     @classmethod

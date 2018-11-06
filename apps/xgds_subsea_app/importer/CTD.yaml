@@ -1,6 +1,7 @@
 # This file describes the values from the NAV file
 name: CTD
 class: xgds_subsea_app.ConductivityTempDepth
+superclass: xgds_timeseries.TimeSeriesModel
 extension: tsv
 delimiter: '\t'
 flight_required: true
