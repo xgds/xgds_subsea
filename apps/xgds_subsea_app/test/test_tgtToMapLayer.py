@@ -26,7 +26,9 @@ class tgtToMapLayerTest(TestCase):
     fixtures = ['site_frames.json',
                 'xgds_subsea_app_initial_data.json']
 
-    filepath = '/home/xgds/xgds_subsea/apps/xgds_subsea_app/test/test_files/SURVEY.tgt'
+    filepath = '/home/xgds/xgds_subsea/apps/xgds_subsea_app/test/test_files/'
+    survey_file = filepath + 'SURVEY.tgt'
+    empty_file = filepath + 'empty.tgt'
     cruiseId = 'CROOZ_WUN'
     region = 2
 
@@ -40,7 +42,7 @@ class tgtToMapLayerTest(TestCase):
         self.assertEqual(len(uuid_tokens[4]), 12)
 
     def test_initialize_map_layer(self):
-        ml = initialize_map_layer(tgtToMapLayerTest.filepath, tgtToMapLayerTest.cruiseId, tgtToMapLayerTest.region)
+        ml = initialize_map_layer(tgtToMapLayerTest.survey_file, tgtToMapLayerTest.cruiseId, tgtToMapLayerTest.region)
         near_creation_time = timezone.now()
         self.assertEqual(ml.name, tgtToMapLayerTest.cruiseId + '_SURVEY')
         self.assertEqual(ml.description, 'Imported from Hypack file')
@@ -59,7 +61,7 @@ class tgtToMapLayerTest(TestCase):
         self.assertEqual(ml.defaultColor, '#ffffff')
 
     def test_process_row(self):
-        ml = initialize_map_layer(tgtToMapLayerTest.filepath, tgtToMapLayerTest.cruiseId, tgtToMapLayerTest.region)
+        ml = initialize_map_layer(tgtToMapLayerTest.survey_file , tgtToMapLayerTest.cruiseId, tgtToMapLayerTest.region)
 
         row = ['GPT',
                 "Label 1",
@@ -109,7 +111,7 @@ class tgtToMapLayerTest(TestCase):
             process_row(ml, None, "", 360, 360, -360, -360)
 
     def test_import_tgt_map_layer(self):
-        import_tgt_map_layer(tgtToMapLayerTest.filepath, tgtToMapLayerTest.cruiseId, tgtToMapLayerTest.region)
+        import_tgt_map_layer(tgtToMapLayerTest.survey_file, tgtToMapLayerTest.cruiseId, tgtToMapLayerTest.region)
 
         ml = MapLayer.objects.get(name="CROOZ_WUN_SURVEY")
         self.assertTrue(ml)
@@ -173,7 +175,7 @@ class tgtToMapLayerTest(TestCase):
         self.assertEqual(the_json['features'][3]['point'][1], "-89.1")
 
         with self.assertRaises(Exception):
-            import_tgt_map_layer("nada", tgtToMapLayerTest.cruiseId, tgtToMapLayerTest.region)
+            import_tgt_map_layer(tgtToMapLayerTest.empty_file, tgtToMapLayerTest.cruiseId, tgtToMapLayerTest.region)
 
 
 
