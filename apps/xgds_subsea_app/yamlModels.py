@@ -32,7 +32,7 @@ class TempProbe(xgds_timeseries.TimeSeriesModel):
 
     title = 'Temp Probe'
     channel_descriptions = {
-                            'temperature': xgds_timeseries.ChannelDescription('Temperature', units='Celsius'),
+                            'temperature': xgds_timeseries.ChannelDescription('Temp', units='C'),
                             }
 
     @classmethod
@@ -60,11 +60,11 @@ class ConductivityTempDepth(xgds_timeseries.TimeSeriesModel):
 
     title = 'Conductivity Temp Depth'
     channel_descriptions = {
-                            'temperature': xgds_timeseries.ChannelDescription('Temperature', units='C'),
+                            'temperature': xgds_timeseries.ChannelDescription('Temp', units='C'),
                             'conductivity': xgds_timeseries.ChannelDescription('Conductivity', units='S/m'),
                             'pressure': xgds_timeseries.ChannelDescription('Pressure', units='decibars'),
                             'salinity': xgds_timeseries.ChannelDescription('Salinity', units='psu'),
-                            'sound_velocity': xgds_timeseries.ChannelDescription('Sound_velocity', units='m/s'),
+                            'sound_velocity': xgds_timeseries.ChannelDescription('Sound Velocity', units='m/s'),
                             }
 
     @classmethod
