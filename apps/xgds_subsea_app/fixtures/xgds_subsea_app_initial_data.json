@@ -1213,7 +1213,7 @@
     "pk": 10,
     "model": "geocamTrack.iconstyle",
     "fields": {
-      "scale": 0.3,
+      "scale": 0.6,
       "name": "hercules_pointer",
       "url": "/static/xgds_subsea/images/hercules_pointer.png",
       "height": 64,
@@ -1227,7 +1227,7 @@
     "pk": 11,
     "model": "geocamTrack.iconstyle",
     "fields": {
-      "scale": 0.3,
+      "scale": 0.4,
       "name": "argus_pointer",
       "url": "/static/xgds_subsea/images/argus_pointer.png",
       "height": 64,

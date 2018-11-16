@@ -15,6 +15,8 @@
 	{% block cssMain %}
     <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'xgds_core/css/misc.css' %}">
+
     {% endblock cssMain %}
     
     {% block cssExtras %}
@@ -45,10 +47,10 @@
 				<li class='nav-item {% currentnav planner2* *video* *light* %}'>
 					<a class="nav-link {% currentnav planner2* *video* %}" href="{% url 'xgds_core_flownFlights' %}" title="{{ settings.XGDS_CORE_FLIGHT_MONIKER }}">{{ settings.XGDS_CORE_FLIGHT_MONIKER }}</a>
 				</li>
+            <!--
 				<li class='nav-item {% currentnav *note* %}'>
 					<a class="nav-link {% currentnav *note* %}" href="{% url 'search_xgds_notes_map' %}" title="{{ settings.XGDS_NOTES_MONIKER }}">{{ settings.XGDS_NOTES_MONIKER }}</a>
 				</li>
-            <!--
 				<li class='nav-item {% currentnav *chat* %}'>
 					<a class="nav-link {% currentnav *chat* %}" href="{#  url 'search_xgds_chat_map' #}" title="{{ settings.XGDS_CHAT_MONIKER }}">{{ settings.XGDS_CHAT_MONIKER }}</a>
 				</li>
@@ -56,10 +58,13 @@
 					<a class="nav-link {% currentnav *xgds_sample* %}" href="{#  #} url 'xgds_sample_record_edit' #}" title="Sample">Sample</a>
 				</li>
 				-->
-				<li class='nav-item {% currentnav search_map* basalt_live_objects%}'>
-					<a class="nav-link {% currentnav search_map* basalt_live_objects%}" href="/xgds_map_server/search/{{settings.XGDS_IMAGE_IMAGE_MODEL_NAME}}" title="Search">Search</a>
+				<li class='nav-item {% currentnav search_map* basalt_live_objects search_xgds_notes_map%}'>
+					<a class="nav-link {% currentnav search_map* basalt_live_objects search_xgds_notes_map %}" href="/xgds_map_server/search/{{settings.XGDS_IMAGE_IMAGE_MODEL_NAME}}" title="Search">Search</a>
 				</li>
-				<li class='nav-item {% currentnav xgds_core_import %}'>
+				<li class='nav-item {% currentnav xgds_core_settings xgds_notes_edit_tags xgds_notes_edit_user_session %}'>
+					<a class="nav-link {% currentnav xgds_core_settings xgds_notes_edit_tags xgds_notes_edit_user_session %}" href="{% url 'xgds_core_settings' %}" title="Settings">Settings</a>
+				</li>
+                <li class='nav-item {% currentnav xgds_core_import %}'>
 					<a class="nav-link {% currentnav xgds_core_import %}" href="{% url 'xgds_core_import' %}" title="Import">Import</a>
 				</li>
 				{% if settings.GEOCAM_UTIL_LIVE_MODE %}
