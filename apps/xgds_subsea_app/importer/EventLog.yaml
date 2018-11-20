@@ -1,4 +1,4 @@
-# This file describes the values from the temperature probe
+# This file describes the values from the event log
 name: EventLog
 class: xgds_notes2.LocatedNote
 extension: txt
