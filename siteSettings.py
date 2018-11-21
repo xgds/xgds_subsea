@@ -43,6 +43,9 @@ SECRET_KEY = '***REMOVED***'
 
 FAVICON_PATH = "xgds_subsea/images/favicon.ico"
 
+XGDS_CORE_REDIS_HOST = 'redis'
+
+COUCHDB_URL = 'couchdb'
 COUCHDB_FILESTORE_NAME = "subsea-file-store" # you may want to customize this to be something like yoursite-file-store
 
 # from apps.basaltApp.instrumentDataImporters import *
