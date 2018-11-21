@@ -147,13 +147,13 @@ registry:
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/import_sample_photo.py'
     arguments: '-i'
     timeout: 300
-    order: 7
+    order: 8
     auth: true
   - name: 'link vidcaps to samples'
     filepath_pattern: '[\d\.]+/processed/samples/NA\d+-\d+/vidcaps/cam1_[\d]{14}.png'
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/import_sample_photo.py'
     timeout: 300
-    order: 6
+    order: 8
     auth: true
   - name: 'tempprobe'
     filepath_pattern: '[\d\.]+/raw/datalog/.*\.TEM'

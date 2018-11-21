@@ -45,8 +45,6 @@ FAVICON_PATH = "xgds_subsea/images/favicon.ico"
 
 XGDS_CORE_REDIS_HOST = 'redis'
 
-COUCHDB_URL = 'couchdb'
-COUCHDB_FILESTORE_NAME = "subsea-file-store" # you may want to customize this to be something like yoursite-file-store
 
 # from apps.basaltApp.instrumentDataImporters import *
 # apps should be listed from "most specific" to "most general".  that
@@ -504,3 +502,5 @@ XGDS_MAP_SERVER_REPLAY_HANDLEBARS_DIRS = [os.path.join('xgds_map_server', 'templ
                                           os.path.join('xgds_map_server', 'templates', 'handlebars', 'replay'),
                                           os.path.join('xgds_subsea_app', 'templates', 'handlebars', 'replay')]
 
+COUCHDB_URL = "http://couchdb:5984"
+COUCHDB_FILESTORE_NAME = "subsea-file-store" # you may want to customize this to be something like yoursite-file-store
