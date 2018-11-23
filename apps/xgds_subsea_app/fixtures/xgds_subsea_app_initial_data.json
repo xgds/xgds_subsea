@@ -949,6 +949,25 @@
     }
   },
   {
+    "model": "geocamUtil.siteframe",
+    "pk": 3,
+    "fields": {
+      "name": "gorda",
+      "displayName": "Gorda Ridge",
+      "east0": 688597.0,
+      "north0": 4727781.5,
+      "zone": "9T",
+      "zoneNumber": 9,
+      "south": false,
+      "axes": "ENU",
+      "north": "1",
+      "timezone": "Etc/UTC",
+      "projCode": "EPSG:32409",
+      "projString": "+proj=utm +zone=9 +ellps=WGS84 +datum=WGS84 +units=m +no_defs",
+      "projUnits": "m"
+    }
+  },
+  {
     "model": "auth.user",
     "pk": 10,
     "fields": {
