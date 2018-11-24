@@ -45,19 +45,8 @@
 					<a class="nav-link {% currentnav map* xgds_map_server* %}" href="{% url 'map' %}" title="Map">Map</a>
 				</li>
 				<li class='nav-item {% currentnav planner2* *video* *light* %}'>
-					<a class="nav-link {% currentnav planner2* *video* %}" href="{% url 'xgds_core_flownFlights' %}" title="{{ settings.XGDS_CORE_FLIGHT_MONIKER }}">{{ settings.XGDS_CORE_FLIGHT_MONIKER }}</a>
+					<a class="nav-link {% currentnav planner2* *video* %}" href="{% url 'group_flight_list' %}" title="{{ settings.XGDS_CORE_FLIGHT_MONIKER }}">{{ settings.XGDS_CORE_FLIGHT_MONIKER }}</a>
 				</li>
-            <!--
-				<li class='nav-item {% currentnav *note* %}'>
-					<a class="nav-link {% currentnav *note* %}" href="{% url 'search_xgds_notes_map' %}" title="{{ settings.XGDS_NOTES_MONIKER }}">{{ settings.XGDS_NOTES_MONIKER }}</a>
-				</li>
-				<li class='nav-item {% currentnav *chat* %}'>
-					<a class="nav-link {% currentnav *chat* %}" href="{#  url 'search_xgds_chat_map' #}" title="{{ settings.XGDS_CHAT_MONIKER }}">{{ settings.XGDS_CHAT_MONIKER }}</a>
-				</li>
-				<li class='nav-item {% currentnav *xgds_sample* %}' >
-					<a class="nav-link {% currentnav *xgds_sample* %}" href="{#  #} url 'xgds_sample_record_edit' #}" title="Sample">Sample</a>
-				</li>
-				-->
 				<li class='nav-item {% currentnav search_map* basalt_live_objects search_xgds_notes_map%}'>
 					<a class="nav-link {% currentnav search_map* basalt_live_objects search_xgds_notes_map %}" href="/xgds_map_server/search/{{settings.XGDS_IMAGE_IMAGE_MODEL_NAME}}" title="Search">Search</a>
 				</li>
