@@ -31,3 +31,4 @@ db_dumps
 coverage_html_report
 TempImportHandlerConfig.yaml
 htmlcov/
+*.egg

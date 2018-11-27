@@ -1,5 +1,7 @@
 # This file defines how telemetry files are to be identified and
 # paired with a process that can import the file
+# In order to run, do something like this:
+# ./apps/xgds_core/importer/importHandler.py --user xgds --password the_password ./path/to/this/file.yaml
 
 # Top-level directory to look for incoming files, this is overridden if the import handler is called with a path
 import_path: '/home/xgds/xgds_subsea/data/incoming'
