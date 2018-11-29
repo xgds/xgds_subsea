@@ -188,7 +188,6 @@ registry:
   - name: 'tgt files'
     filepath_pattern: '[\d\.]+/raw/nav/hypack/.*\.tgt'
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/tgtToMapLayer.py'
-    arguments: '-f %(filename)s'
     timeout: 300
     order: 5
     auth: true

@@ -29,17 +29,19 @@ from dateutil.parser import parse as dateparser
 from datetime import datetime
 from uuid import uuid4, UUID
 from geocamUtil.models import SiteFrame
+
 from xgds_map_server.models import MapGroup
 from xgds_map_server.models import MapLayer
 from django.core.serializers.json import DjangoJSONEncoder
 
 
+WHITE = '#ffffff'
+
 def initialize_map_layer(filepath, cruiseID, region=0):
     map_layer = MapLayer()
 
-    fileparts = filepath.split('/')
-    nameparts = str(fileparts[-1]).split('.')
-    map_layer.name = str(cruiseID) + '_' + str(nameparts[0])
+    nameparts = os.path.basename(filepath).split('.')
+    map_layer.name = '%s_%s' % (cruiseID, nameparts[0])
     map_layer.description = 'Imported from Hypack file'
     map_layer.creator = 'Importer'
     map_layer.creation_time = timezone.now()
@@ -47,17 +49,16 @@ def initialize_map_layer(filepath, cruiseID, region=0):
     map_layer.parentId = 'targets'
     map_layer.parent = MapGroup.objects.get(uuid='targets')
     map_layer.region = SiteFrame.objects.get(id=region)
-    map_layer.defaultColor = '#ffffff'
-    map_layer.save()
+    map_layer.defaultColor = WHITE
     return map_layer
 
 
-class UUIDEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, UUID):
-            # if the obj is uuid, we simply return the value of uuid
-            return obj.hex
-        return json.JSONEncoder.default(self, obj)
+# class UUIDEncoder(json.JSONEncoder):
+#     def default(self, obj):
+#         if isinstance(obj, UUID):
+#             # if the obj is uuid, we simply return the value of uuid
+#             return obj.hex
+#         return json.JSONEncoder.default(self, obj)
 
 
 def process_row(map_layer, row, jsonString, minLat, minLon, maxLat, maxLon):
@@ -68,19 +69,23 @@ def process_row(map_layer, row, jsonString, minLat, minLon, maxLat, maxLon):
         new_station['type'] = "Station"
         new_station['name'] = row[1]
         new_station['description'] = row[14]
-        new_station['point'] = [row[6], row[5]]
-        if float(row[5]) < minLat:
-            minLat = float(row[5])
-        if float(row[5]) > maxLat:
-            maxLat = float(row[5])
-        if float(row[6]) < minLon:
-            minLon = float(row[6])
-        if float(row[6]) > maxLon:
-            maxLon = float(row[6])
+        float_lon = float(row[6])
+        float_lat = float(row[5])
+
+        new_station['point'] = [float_lon, float_lat]
+        if float_lat < minLat:
+            minLat = float_lat
+        if float_lat > maxLat:
+            maxLat = float_lat
+        if float_lon < minLon:
+            minLon = float_lon
+        if float_lon > maxLon:
+            maxLon = float_lon
 
         new_station['depth'] = row[4]
         new_station['timestamp'] = dateparser(str(row[7] + " " + str(row[8])))
         new_station['uuid'] = uuid4()
+        new_station['style'] = WHITE
         jsonString = jsonString + json.dumps(new_station, indent=4, sort_keys=True, cls=DjangoJSONEncoder) + ","
         return jsonString, minLat, minLon, maxLat, maxLon
     raise Exception('Empty row in *.tgt file, panicking')
@@ -116,24 +121,27 @@ def import_tgt_map_layer(filepath, cruiseID, region=0):
     map_layer.minLon = minLon
     map_layer.maxLat = maxLat
     map_layer.maxLon = maxLon
-    # we have to lop off the last comma and close the brackets
+
+    # lop off the last comma and close the brackets
     map_layer.jsonFeatures = jsonString[:-1] + ']}'
     map_layer.save()
-    return 0
+
+    return map_layer
 
 
 if __name__=='__main__':
-    import argparse
-    parser = argparse.ArgumentParser('usage: %prog')
-    parser.add_argument('-f')
-    args, unknown = parser.parse_known_args()
-    print args
-    print unknown
     try:
-        filepath = args.f
+        filepath = sys.argv[1]
     except:
         print "Please enter a file to parse"
         sys.exit(-1)
 
-    retval = import_tgt_map_layer(filepath, settings.CRUISE_ID, settings.XGDS_CURRENT_SITEFRAME_ID)
-    sys.exit(retval)
+    print 'importing %s' % filepath
+    map_layer = import_tgt_map_layer(filepath, settings.CRUISE_ID, settings.XGDS_CURRENT_SITEFRAME_ID)
+    if map_layer:
+        sys.exit(0)
+    else:
+        print 'map layer not created'
+        sys.exit(-1)
+
+
