@@ -1,0 +1,5 @@
+{% block sitemenu-content-secondary %}
+{% load nav %}
+		<li class="nav-item {% currentnav xgds_sample_record* xgds_sample_info_save %}"><a class="nav-link {% currentnav xgds_sample_record* xgds_sample_info_save %}" href="{% url 'xgds_sample_record_edit' %}">Record Samples</a></li>
+		<li class="nav-item {% currentnav xgds_sample_labels* %}"><a class="nav-link {% currentnav xgds_sample_labels* %}" href="{% url 'xgds_sample_labels' %}">Print Labels</a></li>
+{% endblock %}
