@@ -507,3 +507,6 @@ XGDS_MAP_SERVER_REPLAY_HANDLEBARS_DIRS = [os.path.join('xgds_map_server', 'templ
 
 COUCHDB_URL = "http://couchdb:5984"
 COUCHDB_FILESTORE_NAME = "subsea-file-store" # you may want to customize this to be something like yoursite-file-store
+
+# this is a hack for right now; really instead of 'today' it should be 'current dive'
+XGDS_MAP_SERVER_DEFAULT_HOURS_RANGE = 16
