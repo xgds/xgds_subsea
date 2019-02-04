@@ -173,13 +173,83 @@
             "type": "CommandSpec",
             "id": "Pause",
             "parent": "VehicleCommand",
+            "color": "#ffefef"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "mapping_setup",
+            "color": "#cc79a7"
+        },
+        {
+            "type": "CommandSpec",
+            "id": "sampling_setup",
+            "parent": "VehicleCommand",
+            "color": "#0072b2"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "IGT",
+            "color": "#f0e442"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "SUPR_micro",
+            "color": "#d55e00"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "SUPR_geochem",
+            "color": "#009e73"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "grab",
+            "color": "#cca15f"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "niskin",
+            "color": "#66d6df"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "temp_probe",
             "color": "#e8606a"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "misc",
+            "color": "#75e561"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "imaging",
+            "color": "#e5e561"
         }
      ],
 
     "stationSequenceCommands": [
     	"Pause",
-        "VehicleCommand"
+        "VehicleCommand",
+        "mapping_setup",
+        "sampling_setup",
+        "IGT",
+        "SUPR_micro",
+        "SUPR_geochem",
+        "grab",
+        "niskin",
+        "temp_probe",
+        "misc",
+        "imaging"
     ],
 
     "segmentSequenceCommands": [

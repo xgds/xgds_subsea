@@ -17,11 +17,11 @@
             "alternateCrs": {
                 "type": "roversw",
                 "properties": {
-                    "originNorthing": 4713469,
-                    "originEasting": 676024,
+                    "originNorthing": 4727781.5,
+                    "originEasting": 688597.0,
                     "projection": "utm",
-                    "zone": 10,
-                    "zoneLetter": "N",
+                    "zone": 9,
+                    "zoneLetter": "T",
                     "frame": "SubseaSiteFrameZDown",
                     "zDirection": "down",
                     "label": "Site Frame",
@@ -52,108 +52,74 @@
             "presetCode": "WAI"
         },
         {
-            "type": "VehicleCommand",
-            "name": "M_Set",
+            "type": "mapping_setup",
             "presetCode": "MSU",
-            "presetName": "Mapping Setup",
-            "id": "mapping_setup",
+            "presetName": "M_Set",
             "notes": "Set up to do mapping",
-            "duration": 5400,
-            "color": "#cc79a7",
-            "params": [
-                {  "valueType": "number","type": "ParamSpec", "id": "boundary", "parent": "boundary", "default": 0.5 },
-                {  "valueType": "number","type": "ParamSpec", "id": "duration", "parent": "duration", "default": 5400 }
-            ]
+            "duration": 5400
         },
         {
-            "type": "VehicleCommand",
-            "name": "S_Set",
+            "type": "sampling_setup",
+            "presetName": "S_Set",
             "presetCode": "SSU",
-            "presetName": "Sampling Setup",
-            "id": "sampling_setup",
             "notes": "Set up at a dive site",
-            "duration": 2700,
-            "color": "#0072b2"
+            "duration": 2700
         },
         {
-            "type": "VehicleCommand",
-            "name": "IGT",
+            "type": "IGT",
             "presetCode": "IGT",
-            "presetName": "IGT Sample",
-            "id": "IGT",
+            "presetName": "IGT",
             "notes": "IGT sampling (per sample)",
-            "duration": 900,
-            "color": "#f0e442"
+            "duration": 900
         },
         {
-            "type": "VehicleCommand",
-            "name": "SUPR Micro",
+            "type": "SUPR_micro",
             "presetCode": "SPM",
             "presetName": "SUPR Micro",
-            "id": "SUPR_micro",
             "notes": "conduct SUPR sampling",
-            "duration": 3600,
-            "color": "#d55e00"
+            "duration": 3600
         },
         {
-            "type": "VehicleCommand",
-            "name": "SUPR Geochem",
+            "type": "SUPR_geochem",
             "presetCode": "SPG",
             "presetName": "SUPR Geochem",
-            "id": "SUPR_geochem",
             "notes": "conduct SUPR sampling",
-            "duration": 900,
-            "color": "#009e73"
+            "duration": 900
         },
         {
-            "type": "VehicleCommand",
-            "name": "Grab",
+            "type": "grab",
             "presetCode": "GRB",
             "presetName": "Grab",
-            "id": "grab",
             "notes": "collect rock/mineral sample",
-            "duration": 1800,
-            "color": "#385a7c"
+            "duration": 1800
         },
         {
-            "type": "VehicleCommand",
-            "name": "Niskin",
+            "type": "niskin",
             "presetCode": "NSK",
             "presetName": "Niskin",
-            "id": "niskin",
             "notes": "collect niskin water sample",
-            "duration": 900,
-            "color": "#008db9"
+            "duration": 900
         },
         {
-            "type": "VehicleCommand",
-            "name": "Temp Probe",
+            "type": "temp_probe",
             "presetCode": "TMP",
             "presetName": "Temp Probe",
-            "id": "temp_probe",
             "notes": "measure temperature with temp probe",
-            "duration": 900,
-            "color": "#e8606a"
+            "duration": 900
         },
         {
-            "type": "VehicleCommand",
-            "name": "Misc",
+            "type": "misc",
             "presetCode": "MSC",
             "presetName": "Misc",
-            "id": "misc",
             "notes": "miscellaneous task to add custom time",
-            "duration": 1,
-            "color": "#75e561"
+            "duration": 1
         },
         {
-            "type": "VehicleCommand",
-            "name": "Eye Candy",
+            "type": "imaging",
             "presetCode": "EYE",
             "presetName": "Eye Candy",
-            "id": "imaging",
             "notes": "optimize video and lighting for 60 s clips",
-            "duration": 300,
-            "color": "#e5e561"
+            "duration": 300
         }
     ]
 }
