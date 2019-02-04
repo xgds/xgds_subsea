@@ -134,48 +134,13 @@
     ],
 
      "commandSpecs": [
-      {
-            "type": "CommandSpec",
-            "id": "VehicleCommand",
-            "notes": "Vehicle specific command",
-            "parent": "Command",
-            "abstract": true,
-            "color": "#BBBBBB",
-            "params": [
-                {
-                    "type": "ParamSpec",
-                    "id": "duration",
-                    "valueType": "number",
-                    "widget":"h:m:s",
-                    "minimum": 0,
-                    "default": 300
-                },
-                {
-                    "type": "ParamSpec",
-                    "id": "presetCode",
-                    "valueType": "string",
-                    "required": true
-                },
-                {
-                    "type": "ParamSpec",
-                    "id": "presetName",
-                    "valueType": "string",
-                    "required": true
-                },
-                {
-                    "type": "ParamSpec",
-                    "id": "instrument",
-                    "parent": "instrument"
-                }
-            ]
-        },
        {
             "type": "CommandSpec",
             "id": "VehicleCommand",
             "notes": "Vehicle specific command",
             "parent": "Command",
             "abstract": true,
-            "color": "#BBBBBB",
+            "color": "#0072b2",
             "params": [
                 {
                     "type": "ParamSpec",

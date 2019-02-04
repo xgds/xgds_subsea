@@ -54,18 +54,22 @@
         {
             "type": "VehicleCommand",
             "name": "M_Set",
-            "presetCode": "MS",
-            "presetName": "MSA",
+            "presetCode": "MSU",
+            "presetName": "Mapping Setup",
             "id": "mapping_setup",
             "notes": "Set up to do mapping",
             "duration": 5400,
-            "color": "#cc79a7"
+            "color": "#cc79a7",
+            "params": [
+                {  "valueType": "number","type": "ParamSpec", "id": "boundary", "parent": "boundary", "default": 0.5 },
+                {  "valueType": "number","type": "ParamSpec", "id": "duration", "parent": "duration", "default": 5400 }
+            ]
         },
         {
             "type": "VehicleCommand",
             "name": "S_Set",
-            "presetCode": "SS",
-            "presetName": "SSA",
+            "presetCode": "SSU",
+            "presetName": "Sampling Setup",
             "id": "sampling_setup",
             "notes": "Set up at a dive site",
             "duration": 2700,
@@ -74,8 +78,8 @@
         {
             "type": "VehicleCommand",
             "name": "IGT",
-            "presetCode": "IG",
-            "presetName": "IGT",
+            "presetCode": "IGT",
+            "presetName": "IGT Sample",
             "id": "IGT",
             "notes": "IGT sampling (per sample)",
             "duration": 900,
@@ -84,8 +88,8 @@
         {
             "type": "VehicleCommand",
             "name": "SUPR Micro",
-            "presetCode": "SM",
-            "presetName": "SMI",
+            "presetCode": "SPM",
+            "presetName": "SUPR Micro",
             "id": "SUPR_micro",
             "notes": "conduct SUPR sampling",
             "duration": 3600,
@@ -94,8 +98,8 @@
         {
             "type": "VehicleCommand",
             "name": "SUPR Geochem",
-            "presetCode": "SG",
-            "presetName": "SGC",
+            "presetCode": "SPG",
+            "presetName": "SUPR Geochem",
             "id": "SUPR_geochem",
             "notes": "conduct SUPR sampling",
             "duration": 900,
@@ -104,8 +108,8 @@
         {
             "type": "VehicleCommand",
             "name": "Grab",
-            "presetCode": "GR",
-            "presetName": "GRB",
+            "presetCode": "GRB",
+            "presetName": "Grab",
             "id": "grab",
             "notes": "collect rock/mineral sample",
             "duration": 1800,
@@ -114,8 +118,8 @@
         {
             "type": "VehicleCommand",
             "name": "Niskin",
-            "presetCode": "NS",
-            "presetName": "NSN",
+            "presetCode": "NSK",
+            "presetName": "Niskin",
             "id": "niskin",
             "notes": "collect niskin water sample",
             "duration": 900,
@@ -124,8 +128,8 @@
         {
             "type": "VehicleCommand",
             "name": "Temp Probe",
-            "presetCode": "TM",
-            "presetName": "TMP",
+            "presetCode": "TMP",
+            "presetName": "Temp Probe",
             "id": "temp_probe",
             "notes": "measure temperature with temp probe",
             "duration": 900,
@@ -134,8 +138,8 @@
         {
             "type": "VehicleCommand",
             "name": "Misc",
-            "presetCode": "MC",
-            "presetName": "MSC",
+            "presetCode": "MSC",
+            "presetName": "Misc",
             "id": "misc",
             "notes": "miscellaneous task to add custom time",
             "duration": 1,
@@ -144,8 +148,8 @@
         {
             "type": "VehicleCommand",
             "name": "Eye Candy",
-            "presetCode": "EC",
-            "presetName": "ECY",
+            "presetCode": "EYE",
+            "presetName": "Eye Candy",
             "id": "imaging",
             "notes": "optimize video and lighting for 60 s clips",
             "duration": 300,
