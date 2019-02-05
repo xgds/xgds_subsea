@@ -510,3 +510,7 @@ COUCHDB_FILESTORE_NAME = "subsea-file-store" # you may want to customize this to
 
 # this is a hack for right now; really instead of 'today' it should be 'current dive'
 XGDS_MAP_SERVER_DEFAULT_HOURS_RANGE = 16
+
+# If you are not running in docker-compose for some reason, remove the below
+XGDS_CORE_IMPORT_URL_PREFIX = 'nginx'
+
