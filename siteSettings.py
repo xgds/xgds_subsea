@@ -28,6 +28,7 @@
 import importlib
 import os
 import sys
+import copy
 
 from django.conf import global_settings
 from django.core.urlresolvers import reverse
@@ -493,6 +494,13 @@ if 'Note' in XGDS_MAP_SERVER_JS_MAP:
 if 'Photo' in XGDS_MAP_SERVER_JS_MAP:
     XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME] = XGDS_MAP_SERVER_JS_MAP['Photo']
     del XGDS_MAP_SERVER_JS_MAP['Photo']
+
+XGDS_MAP_SERVER_SEARCH_MODELS = copy.deepcopy(XGDS_MAP_SERVER_JS_MAP)
+if 'Track' in XGDS_MAP_SERVER_SEARCH_MODELS:
+    del XGDS_MAP_SERVER_SEARCH_MODELS['Track']
+
+if 'Position' in XGDS_MAP_SERVER_SEARCH_MODELS:
+    del XGDS_MAP_SERVER_SEARCH_MODELS['Position']
 
 XGDS_CORE_SHOW_CREATE_FLIGHTS = False
 XGDS_CORE_SHOW_FLIGHT_MANAGEMENT = False
