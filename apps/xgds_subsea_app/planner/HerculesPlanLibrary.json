@@ -46,22 +46,29 @@
 
     "commands": [
         {
-            "type": "Pause",
-            "presetName": "Pause",
+            "type": "pause",
+            "presetName": "Station Keep",
             "duration": 500,
             "presetCode": "WAI"
         },
         {
+            "type": "ascent",
+            "presetCode": "ASC",
+            "presetName": "Ascent",
+            "default": 55,
+            "duration": 1
+        },
+        {
             "type": "mapping_setup",
-            "presetCode": "MSU",
-            "presetName": "M_Set",
+            "presetCode": "SUM",
+            "presetName": "Setup: Map",
             "notes": "Set up to do mapping",
             "duration": 5400
         },
         {
             "type": "sampling_setup",
-            "presetName": "S_Set",
-            "presetCode": "SSU",
+            "presetName": "Setup: Sample",
+            "presetCode": "SUS",
             "notes": "Set up at a dive site",
             "duration": 2700
         },
@@ -116,8 +123,8 @@
         },
         {
             "type": "imaging",
-            "presetCode": "EYE",
-            "presetName": "Eye Candy",
+            "presetCode": "IMG",
+            "presetName": "Imaging",
             "notes": "optimize video and lighting for 60 s clips",
             "duration": 300
         }

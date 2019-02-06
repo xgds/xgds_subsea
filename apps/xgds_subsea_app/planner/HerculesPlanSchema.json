@@ -92,6 +92,14 @@
             "minimum": 0,
             "default": 0,
             "notes": "(Hours:)Minutes:Seconds"
+        },
+        {
+            "type": "ParamSpec",
+            "id": "depth",
+            "unit": "m",
+            "default": 50,
+            "valueType": "number",
+            "onChange": "alert('Hi'); if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = (model.get('depth')/25.0); model.set('duration', newDuration);}}"
         }
     ],
 
@@ -140,7 +148,6 @@
             "notes": "Vehicle specific command",
             "parent": "Command",
             "abstract": true,
-            "color": "#0072b2",
             "params": [
                 {
                     "type": "ParamSpec",
@@ -171,75 +178,88 @@
         },
         {
             "type": "CommandSpec",
-            "id": "Pause",
             "parent": "VehicleCommand",
-            "color": "#ffefef"
+            "id": "ascent",
+            "color": "#98CED9",
+             "params": [
+                {
+                    "type": "ParamSpec",
+                    "id": "depth",
+                    "valueType": "number"
+                }
+             ]
+        },
+        {
+            "type": "CommandSpec",
+            "id": "pause",
+            "parent": "VehicleCommand",
+            "color": "#dcdcdc"
         },
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "mapping_setup",
-            "color": "#cc79a7"
+            "color": "#fff5c1"
         },
         {
             "type": "CommandSpec",
             "id": "sampling_setup",
             "parent": "VehicleCommand",
-            "color": "#0072b2"
+            "color": "#c3f89c"
         },
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "IGT",
-            "color": "#f0e442"
+            "color": "#98CED9"
         },
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "SUPR_micro",
-            "color": "#d55e00"
+            "color": "#adfff4"
         },
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "SUPR_geochem",
-            "color": "#009e73"
+            "color": "#adfff4"
         },
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "grab",
-            "color": "#cca15f"
+            "color": "#FFD7B1"
         },
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "niskin",
-            "color": "#66d6df"
+            "color": "#DCF8AC"
         },
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "temp_probe",
-            "color": "#e8606a"
+            "color": "#ffc4c8"
         },
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "misc",
-            "color": "#75e561"
+            "color": "#ffc4c8"
         },
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "imaging",
-            "color": "#e5e561"
+            "color": "#b0eab0"
         }
      ],
 
     "stationSequenceCommands": [
-    	"Pause",
-        "VehicleCommand",
+    	"pause",
+        "ascent",
         "mapping_setup",
         "sampling_setup",
         "IGT",
