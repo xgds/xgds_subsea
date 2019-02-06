@@ -99,7 +99,7 @@
             "unit": "m",
             "default": 50,
             "valueType": "number",
-            "onChange": "alert('Hi'); if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = (model.get('depth')/25.0); model.set('duration', newDuration);}}"
+            "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = (model.get('depth')/25.0); model.set('duration', newDuration);}}"
         }
     ],
 
@@ -185,7 +185,7 @@
                 {
                     "type": "ParamSpec",
                     "id": "depth",
-                    "valueType": "number"
+                    "parent": "depth"
                 }
              ]
         },
