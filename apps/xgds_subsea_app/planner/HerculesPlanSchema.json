@@ -191,6 +191,20 @@
         },
         {
             "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "descent",
+            "color": "#98CED9",
+             "params": [
+                {
+                    "type": "ParamSpec",
+                    "id": "depth",
+                    "parent": "depth",
+                    "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = (model.get('depth')/15.0); model.set('duration', newDuration);}}"
+                }
+             ]
+        },
+        {
+            "type": "CommandSpec",
             "id": "pause",
             "parent": "VehicleCommand",
             "color": "#dcdcdc"
@@ -260,6 +274,7 @@
     "stationSequenceCommands": [
     	"pause",
         "ascent",
+        "descent",
         "mapping_setup",
         "sampling_setup",
         "IGT",
