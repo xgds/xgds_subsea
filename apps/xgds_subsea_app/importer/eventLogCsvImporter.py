@@ -437,7 +437,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             if not tag_added:
                 print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_2, str(row))
                 row['content'] = '%s\n%s: %s' % (row['content'], key_2, value_2)
-            condition, condition_history = self.populate_condition_data(row, value_1, self.condition_completed)
+            condition, condition_history = self.populate_condition_data(row, value_1.replace(' ','-'), self.condition_completed)
             row['condition_data'] = condition
             row['condition_history_data'] = condition_history
         elif event_type == 'DIVESTATUS':

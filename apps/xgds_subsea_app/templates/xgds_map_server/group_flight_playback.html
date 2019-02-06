@@ -3,3 +3,12 @@
 {% block buttonrowLeft %}
     <h4>{{ group_flight.extras.cruise }}: {{ group_flight.name }}</h4>
 {% endblock buttonrowLeft %}
+
+{% block start_end %}
+    group_flight_start = {% if group_flight.start_time %}new moment('{{ group_flight.start_time.isoformat }}'){% else %}null{% endif %};
+    {% if group_flight.end_time %}
+        group_flight_end = new moment('{{ group_flight.flights.0.end_time.isoformat }}')
+    {% else %}
+        group_flight_end = null
+    {% endif %};
+{%  endblock start_end %}
