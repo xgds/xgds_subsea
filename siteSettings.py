@@ -441,6 +441,12 @@ XGDS_PLANNER_STATION_MONIKER = "Target"
 XGDS_PLANNER_SEGMENT_MONIKER = "Segment"
 XGDS_PLANNER_COMMAND_MONIKER = "Activity"
 
+XGDS_PLANNER_SCHEMAS["Hercules"] = { "schemaSource": "apps/xgds_subsea_app/planner/HerculesPlanSchema.json",
+  "librarySource": "apps/xgds_subsea_app/planner/HerculesPlanLibrary.json",
+  "simulatorUrl": "xgds_planner2/js/planner/genericVehicleSimulator.js",
+  "simulator": "genericVehicle.Simulator", # the namespace within the simulator js
+}
+
 
 XGDS_MAP_SERVER_JS_MAP = getOrCreateDict('XGDS_MAP_SERVER_JS_MAP')
 XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MODEL_NAME] = {'ol': 'xgds_notes2/js/olNoteMap.js',

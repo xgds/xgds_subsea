@@ -1,0 +1,277 @@
+{
+    "xpjson": "0.2",
+    "type": "PlanSchema",
+    "name": "Robot Science Schema",
+    "notes": "Define available robot science commands",
+    "id": "http://xgds.org/planner/HerculesPlanSchema.json",
+
+    "planIdFormat": "{plan.site.id}{plan.platform.id}{plan.planNumber:03d}_{plan.planVersion}_PLAN",
+    "stationIdFormat": "STN{stationIndex:02d}",
+    "segmentIdFormat": "SEG{stationIndex:02d}",
+    "commandIdFormat": "{parent.id}_{commandIndex:01d}_{command.presetCode}",
+
+    "unitSpecs": [
+	    {
+	      "type": "UnitSpec",
+	      "name": "length",
+	      "units": {
+	        "meters": 1.0,
+	        "mm": 0.001,
+	        "inches": 0.0254
+	      }
+	    },
+	    {
+	      "type": "UnitSpec",
+	      "name": "duration",
+	      "units": {
+	        "seconds": 1.0,
+	        "minutes": 60
+	      }
+	    },
+	    {
+	      "type": "UnitSpec",
+	      "name": "speed",
+	      "units": {
+	        "m/s": 1.0,
+	        "mph": 2.2369363
+	      }
+	    }
+	  ],
+
+    "paramSpecs": [
+        {
+            "type": "ParamSpec",
+            "id": "instrument",
+            "valueType": "string",
+            "notes": "Instrument",
+            "editable": false,
+            "required": false
+        },
+        {
+            "type": "ParamSpec",
+            "id": "tolerance",
+            "valueType": "number",
+            "minimum": 0,
+            "default": 0.6,
+            "notes": "The vehicle must arrive within this distance of the goal position (meters)."
+        },
+        {
+            "type": "ParamSpec",
+            "id": "boundary",
+            "valueType": "number",
+            "minimum": 0,
+            "default": 0.6,
+            "required": false,
+            "notes": "Station boundary (meters)."
+        },
+        {
+            "type": "ParamSpec",
+            "id": "distanceMeters",
+            "valueType": "number",
+            "minimum": 0,
+            "notes": "The length the vehicle should travel (meters)."
+        },
+        {
+            "type": "ParamSpec",
+            "id": "traverseSpeed",
+            "valueType": "number",
+            "required": false,
+            "minimum": 0,
+            "notes": "The speed of traverse."
+        },
+        {
+            "type": "ParamSpec",
+            "id": "target",
+            "valueType": "Point"
+        },
+        {
+            "type": "ParamSpec",
+            "id": "duration",
+           	"widget":"h:m:s",
+            "valueType": "number",
+            "minimum": 0,
+            "default": 0,
+            "notes": "(Hours:)Minutes:Seconds"
+        },
+        {
+            "type": "ParamSpec",
+            "id": "depth",
+            "unit": "m",
+            "default": 50,
+            "valueType": "number",
+            "onChange": "alert('Hi'); if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = (model.get('depth')/25.0); model.set('duration', newDuration);}}"
+        }
+    ],
+
+     "planParams": [
+	{
+	    "type": "ParamSpec",
+	    "id": "defaultSpeed",
+	    "valueType": "number",
+        "unit": "m/s",
+	    "notes": "The default speed for traverses",
+	    "required": false,
+	    "name": "Default Speed",
+	    "default": 0.89408,
+	    "widget":"number"
+	}
+    ],
+
+    "stationParams": [
+        {
+            "type": "ParamSpec",
+            "id": "tolerance",
+            "parent": "tolerance"
+        },
+        {
+            "type": "ParamSpec",
+            "id": "boundary",
+            "parent": "boundary"
+        }
+    ],
+
+    "segmentParams": [
+        {
+            "type": "ParamSpec",
+            "id": "hintedSpeed",
+            "valueType": "number",
+            "required": false,
+            "minimum": 0,
+            "notes": "Recommended traverse speed. Actual traverse speed may differ."
+        }
+    ],
+
+     "commandSpecs": [
+       {
+            "type": "CommandSpec",
+            "id": "VehicleCommand",
+            "notes": "Vehicle specific command",
+            "parent": "Command",
+            "abstract": true,
+            "params": [
+                {
+                    "type": "ParamSpec",
+                    "id": "duration",
+                    "valueType": "number",
+                    "widget":"h:m:s",
+                    "minimum": 0,
+                    "default": 300
+                },
+                {
+                    "type": "ParamSpec",
+                    "id": "presetCode",
+                    "valueType": "string",
+                    "required": true
+                },
+                {
+                    "type": "ParamSpec",
+                    "id": "presetName",
+                    "valueType": "string",
+                    "required": true
+                },
+                {
+                    "type": "ParamSpec",
+                    "id": "instrument",
+                    "parent": "instrument"
+                }
+            ]
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "ascent",
+            "color": "#98CED9",
+             "params": [
+                {
+                    "type": "ParamSpec",
+                    "id": "depth",
+                    "valueType": "number"
+                }
+             ]
+        },
+        {
+            "type": "CommandSpec",
+            "id": "pause",
+            "parent": "VehicleCommand",
+            "color": "#dcdcdc"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "mapping_setup",
+            "color": "#fff5c1"
+        },
+        {
+            "type": "CommandSpec",
+            "id": "sampling_setup",
+            "parent": "VehicleCommand",
+            "color": "#c3f89c"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "IGT",
+            "color": "#98CED9"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "SUPR_micro",
+            "color": "#adfff4"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "SUPR_geochem",
+            "color": "#adfff4"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "grab",
+            "color": "#FFD7B1"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "niskin",
+            "color": "#DCF8AC"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "temp_probe",
+            "color": "#ffc4c8"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "misc",
+            "color": "#ffc4c8"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "imaging",
+            "color": "#b0eab0"
+        }
+     ],
+
+    "stationSequenceCommands": [
+    	"pause",
+        "ascent",
+        "mapping_setup",
+        "sampling_setup",
+        "IGT",
+        "SUPR_micro",
+        "SUPR_geochem",
+        "grab",
+        "niskin",
+        "temp_probe",
+        "misc",
+        "imaging"
+    ],
+
+    "segmentSequenceCommands": [
+    ]
+}
