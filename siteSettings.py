@@ -413,9 +413,9 @@ SESSION_COOKIE_AGE = 43200 # 12 hours
 
 XGDS_PLANNER_PLAN_EXPORTERS = (
     ('xpjson', '.json', 'xgds_planner2.planExporter.XpjsonPlanExporter'),
-    ('bearing_distance', '.bdj', 'xgds_planner2.planExporter.BearingDistanceJsonPlanExporter'),
+    # ('bearing_distance', '.bdj', 'xgds_planner2.planExporter.BearingDistanceJsonPlanExporter'),
     ('kml', '.kml', 'xgds_planner2.kmlPlanExporter.KmlPlanExporter'),
-    ('stats', '-stats.json', 'xgds_planner2.statsPlanExporter.StatsPlanExporter'),
+    # ('stats', '-stats.json', 'xgds_planner2.statsPlanExporter.StatsPlanExporter'),
     ('tgt', '.tgt', 'xgds_subsea_app.tgtPlanExporter.TgtPlanExporter'),
     ('lnw', '.lnw', 'xgds_subsea_app.linePlanExporter.LinePlanExporter'),
 )
@@ -438,8 +438,11 @@ XGDS_MAP_SERVER_PLACE_MONIKER = 'Site'
 
 XGDS_PLANNER_PLAN_MONIKER = "Dive Plan"
 XGDS_PLANNER_STATION_MONIKER = "Target"
+XGDS_PLANNER_STATION_MONIKER_PLURAL = XGDS_PLANNER_STATION_MONIKER + 's'
+
 XGDS_PLANNER_SEGMENT_MONIKER = "Segment"
 XGDS_PLANNER_COMMAND_MONIKER = "Activity"
+XGDS_PLANNER_COMMAND_MONIKER_PLURAL = "Activities"
 
 XGDS_PLANNER_SCHEMAS["Hercules"] = { "schemaSource": "apps/xgds_subsea_app/planner/HerculesPlanSchema.json",
   "librarySource": "apps/xgds_subsea_app/planner/HerculesPlanLibrary.json",
