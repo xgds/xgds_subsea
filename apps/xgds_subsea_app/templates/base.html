@@ -53,11 +53,9 @@
 				<li class='nav-item {% currentnav xgds_core_settings xgds_notes_edit_tags xgds_notes_edit_user_session %}'>
 					<a class="nav-link {% currentnav xgds_core_settings xgds_notes_edit_tags xgds_notes_edit_user_session %}" href="{% url 'xgds_core_settings' %}" title="Settings">Settings</a>
 				</li>
-                <!--
                 <li class='nav-item {% currentnav xgds_core_import %}'>
 					<a class="nav-link {% currentnav xgds_core_import %}" href="{% url 'xgds_core_import' %}" title="Import">Import</a>
 				</li>
-				-->
 				{% if settings.GEOCAM_UTIL_LIVE_MODE %}
 				<li class='nav-item {% currentnav *tatus* %}'>
 	            	<a class="nav-link {% currentnav *tatus* %}" href="{% url 'xgds_status_board_showSubsystemStatus' %}">Status</a>

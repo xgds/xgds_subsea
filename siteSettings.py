@@ -413,7 +413,7 @@ SESSION_COOKIE_AGE = 43200 # 12 hours
 
 XGDS_PLANNER_PLAN_EXPORTERS = (
     ('xpjson', '.json', 'xgds_planner2.planExporter.XpjsonPlanExporter'),
-    # ('bearing_distance', '.bdj', 'xgds_planner2.planExporter.BearingDistanceJsonPlanExporter'),
+    ('bearing_distance', '.bdj', 'xgds_planner2.planExporter.BearingDistanceJsonPlanExporter'),
     ('kml', '.kml', 'xgds_planner2.kmlPlanExporter.KmlPlanExporter'),
     # ('stats', '-stats.json', 'xgds_planner2.statsPlanExporter.StatsPlanExporter'),
     ('tgt', '.tgt', 'xgds_subsea_app.tgtPlanExporter.TgtPlanExporter'),
@@ -431,7 +431,7 @@ XGDS_NOTES_SHOW_ON_MAP_CHECKBOX = False
 
 XGDS_IMAGE_IMAGE_SET_MONIKER = 'Image'
 XGDS_IMAGE_IMAGE_MODEL_NAME = 'Image'
-
+XGDS_IMAGE_DEEPZOOM_THREAD = False
 
 XGDS_MAP_SERVER_SITE_MONIKER = 'Region'
 XGDS_MAP_SERVER_PLACE_MONIKER = 'Site'
@@ -530,4 +530,18 @@ XGDS_MAP_SERVER_DEFAULT_HOURS_RANGE = 16
 
 # If you are not running in docker-compose for some reason, remove the below
 XGDS_CORE_IMPORT_URL_PREFIX = 'nginx'
+
+XGDS_DATA_IMPORTS = getOrCreateDict('XGDS_DATA_IMPORTS')
+if 'Photos' in XGDS_DATA_IMPORTS:
+    del XGDS_DATA_IMPORTS['Photos']
+XGDS_DATA_IMPORTS[XGDS_IMAGE_IMAGE_SET_MONIKER + 's'] = '/xgds_image/import'
+if 'GPS Track' in XGDS_DATA_IMPORTS:
+    del XGDS_DATA_IMPORTS['GPS Track']
+
+if 'Notes' in XGDS_DATA_IMPORTS:
+    del XGDS_DATA_IMPORTS['Notes']
+
+if 'Science Instruments' in XGDS_DATA_IMPORTS:
+    del XGDS_DATA_IMPORTS['Science Instruments']
+
 
