@@ -22,7 +22,6 @@ media/css/*.r*.css
 /var/
 migrations/
 test.txt
-pyraptord
 .classpath
 pysrc
 ssl

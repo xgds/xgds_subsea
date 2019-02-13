@@ -372,7 +372,7 @@ CACHES = {
 }
 
 FILE_UPLOAD_TEMP_DIR = os.path.join(DATA_ROOT, XGDS_MAP_SERVER_GEOTIFF_SUBDIR, 'temp')
-#ZEROMQ_PORTS = PROJ_ROOT + 'apps/xgds_baseline_app/ports.json'
+ZEROMQ_PORTS = PROJ_ROOT + 'apps/xgds_subsea_app/ports.json'
 
 
 USE_TZ = True

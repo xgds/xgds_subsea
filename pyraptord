@@ -1,0 +1,33 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          pyraptord
+# Required-Start:    $local_fs $remote_fs $network $syslog $named
+# Required-Stop:     $local_fs $remote_fs $network $syslog $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Start/stop pycroraptor process manager
+# Description:       Starts and stops pycrraptor process manager.
+#  processname: pyraptord
+#  config example: /home/xgds/xgds_subsea/apps/xgds_subsea_app/pycroraptor.json
+#  config example: /home/xgds/xgds_subsea/apps/xgds_subsea_app/ports.json
+#  pidfile: /var/log/pyraptord/pyraptord.pid
+### END INIT INFO
+
+# This boot script is setup for Ubuntu's update-rc.d. To use:
+# * Edit paths to match your deployment configuration if needed.
+# * Install this file as /etc/init.d/pyraptord
+# * Run 'update-rc.d pyraptord defaults'
+
+projdir=/home/xgds/xgds_subsea
+pyraptord=$projdir/apps/geocamPycroraptor2/bin/pyraptord.py
+config_dir=$projdir/apps/xgds_subsea_app
+python_dir=/usr/bin
+user=root
+
+sudo -H -u $user bash -s <<EOF
+export PATH=${python_dir}:$PATH  # run the correct python, if not first in default PATH
+source $projdir/sourceme.sh  # further environment setup, if needed
+cd $config_dir
+$pyraptord -c $config_dir/pycroraptor_dev.json $1
+EOF
