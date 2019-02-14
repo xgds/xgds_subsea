@@ -382,6 +382,9 @@ GEOCAM_UTIL_LIVE_MODE = False
 GEOCAM_UTIL_DATATABLES_EDITOR = False
 GEOCAM_TRACK_URL_PORT = 8181
 
+# must be also set up in geoserver
+GEOSERVER_DEFAULT_WORKSPACE = 'xgds_subsea'
+
 # While you are modifying handlebars templates, this should be true.  Once they have been loaded
 # once they will be cached and you can set this to false.
 XGDS_CORE_TEMPLATE_DEBUG = True

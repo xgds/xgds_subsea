@@ -18,17 +18,23 @@ When you are told there are active EVAs, please click on the BASALT logo in the 
     <td style="text-align:right"><strong>{{settings.XGDS_CORE_FLIGHT_MONIKER}}</strong></td>
     <td>View and manage {{settings.XGDS_CORE_FLIGHT_MONIKER}}s and {{settings.XGDS_PLANNER_PLAN_MONIKER}}s.  A {{settings.XGDS_CORE_FLIGHT_MONIKER}} includes all of the data collected in a single excursion.</td>
   </tr>
+<!--
   <tr>
     <td style="text-align:right"><strong>{{settings.XGDS_NOTES_MONIKER}}</strong></td>
     <td>Review existing {{settings.XGDS_NOTES_MONIKER}}.  Manage tags.</td>
   </tr>
-    <tr>
+  -->
+  <tr>
     <td style="text-align:right"><strong>Search</strong></td>
     <td>Search for anything on the map, including Photos, Samples, and Instrument data.</td>
   </tr>
   <tr>
+    <td style="text-align:right"><strong>Settings</strong></td>
+    <td>Configure tags for {{ settings.XGDS_NOTES_MONIKER }}, and your role and location.</td>
+  </tr>
+  <tr>
     <td style="text-align:right"><strong>Import</strong></td>
-    <td>Import data including Photos, GPS, Science Instrument, Map Tiles.</td>
+    <td>Import data including {{ settings.XGDS_IMAGE_IMAGE_SET_MONIKER}}s and GeoTiff Map Tiles.</td>
   </tr>
   {% if settings.GEOCAM_UTIL_LIVE_MODE %}
   <tr>
