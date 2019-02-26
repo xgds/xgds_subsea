@@ -8,7 +8,6 @@
     "schemaUrl": "http://xgds.org/planner/HerculesPlanSchema.json",
 
     "sites": [
-
         {
             "type": "Site",
             "id": "gorda_ridge",
@@ -28,14 +27,38 @@
                     "coordinateLabel": "X, Y",
                     "coordinateNotes": "X=Northing Y=Easting",
                     "coordinateMapping": "lat, lon",
-                    "timezone": "America/Los_Angeles"
+                    "timezone": "Etc/UTC"
                 }
             },
             "bbox": [42.80498568056246, -126.5397273094823,
             		 42.55357154680716, -126.8559091144121]
+        },
+        {
+            "type": "Site",
+            "id": "loihi",
+            "name": "Lo'Ihi",
+            "notes": "SUBSEA dive site",
+            "alternateCrs": {
+                "type": "roversw",
+                "properties": {
+                    "originNorthing": 2092286.0,
+                    "originEasting": 262733.0,
+                    "projection": "utm",
+                    "zone": 5,
+                    "zoneLetter": "Q",
+                    "frame": "SubseaSiteFrameZDown",
+                    "zDirection": "down",
+                    "label": "Site Frame",
+                    "coordinateLabel": "X, Y",
+                    "coordinateNotes": "X=Northing Y=Easting",
+                    "coordinateMapping": "lat, lon",
+                    "timezone": "Etc/UTC"
+                }
+            },
+            "bbox": [18.763755, -155.427228,
+                     19.081175, -155.127195]
         }
     ],
-
     "platforms": [
         {
             "type": "Platform",
