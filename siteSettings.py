@@ -476,9 +476,9 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MESSAGE_MODEL_NAME] = {'ol': 'xgds_notes2/js/o
                                                    'model': XGDS_NOTES_MESSAGE_MODEL,
                                                    'columns': ['checkbox', 'event_time', 'author_name', 'content', 'lat', 'lon', 'alt', 'depth', 'flight_name', 'app_label', 'model_type', 'type', 'event_timezone', 'pk'],
                                                    'hiddenColumns': ['app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'depth', 'flight_name', 'event_timezone', 'pk'],
-                                                   'searchableColumns': ['content','flight_name', 'author_name', ],
-                                                   'editableColumns':{'content':'text'},
-                                                   'columnTitles': ['Time', 'Author', 'Content',],
+                                                   'searchableColumns': ['content', 'flight_name', 'author_name', ],
+                                                   'editableColumns': {'content': 'text'},
+                                                   'columnTitles': ['Time', 'Author', 'Content'],
                                                    'order_columns': ['pk', 'event_time', 'author__first_name', 'content'],
                                                    'columnWidths': ['5px', '50px', '50px', 'auto'],
                                                    'viewHandlebars': 'xgds_subsea_app/templates/handlebars/message-view.handlebars',
@@ -506,6 +506,18 @@ if 'Note' in XGDS_MAP_SERVER_JS_MAP:
 if 'Photo' in XGDS_MAP_SERVER_JS_MAP:
     XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME] = XGDS_MAP_SERVER_JS_MAP['Photo']
     del XGDS_MAP_SERVER_JS_MAP['Photo']
+
+XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['columns'] = ['checkbox', 'acquisition_time', 'author_name', 'name', 'description',
+                                                                  'thumbnail_image_url', 'pk', 'view_url',
+                                                                  'camera_name', 'raw_image_url', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'head',
+                                                                  'flight_name', 'deepzoom_file_url',
+                                                                  'rotation_degrees', 'originalImageResolutionString', 'originalImageFileSizeMB', 'create_deepzoom',
+                                                                  'vehicle_name', 'acquisition_timezone', 'DT_RowId']
+XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['hiddenColumns'] = ['pk', 'view_url', 'camera_name', 'raw_image_url', 'app_label', 'vehicle_name', 'model_type', 'type',
+                                                                        'lat', 'lon', 'alt', 'head', 'flight_name', 'deepzoom_file_url', 'rotation_degrees',
+                                                                        'originalImageResolutionString', 'originalImageFileSizeMB', 'create_deepzoom', 'acquisition_timezone','DT_RowId']
+XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['columnTitles'] = ['Time', 'Author', 'Name', 'Description', 'Image']
+XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['order_columns'] = ['pk', 'acquisition_time', 'author__first_name', 'name', 'description']
 
 XGDS_MAP_SERVER_SEARCH_MODELS = copy.deepcopy(XGDS_MAP_SERVER_JS_MAP)
 if 'Track' in XGDS_MAP_SERVER_SEARCH_MODELS:
