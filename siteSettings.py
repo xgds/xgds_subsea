@@ -560,3 +560,4 @@ if 'Science Instruments' in XGDS_DATA_IMPORTS:
     del XGDS_DATA_IMPORTS['Science Instruments']
 
 
+XGDS_VIDEO_DEFAULT_AUDIO_SOURCE = "Hercules"
