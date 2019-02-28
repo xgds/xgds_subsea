@@ -1309,5 +1309,37 @@
       "value": "aborted",
       "display_name": "Aborted"
     }
+  },
+  {
+    "model": "xgds_video.videosettings",
+    "pk": 1,
+    "fields": {
+        "name": "HIGH",
+        "width": 1920,
+        "height": 1080,
+        "compressionRate": 0.2,
+        "playbackDataRate": 5000000.0,
+        "aspectRatio": "16:9"
+    }
+  },
+  {
+    "model": "xgds_video.videosource",
+    "pk": 1,
+    "fields": {
+        "name": "Argus",
+        "shortName": "ARGUS",
+        "uuid": "ee9ec5ed-2a24-4260-abd1-c0c3af2e84c9",
+        "displayColor": "#7B3221"
+    }
+  },
+  {
+    "model": "xgds_video.videosource",
+    "pk": 2,
+    "fields": {
+        "name": "Hercules",
+        "shortName": "HERC",
+        "uuid": "d07ae920-dbbb-4a1f-b86b-694f9bbd3ef5",
+        "displayColor": "#3b7221"
+    }
   }
 ]
