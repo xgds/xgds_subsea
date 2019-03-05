@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>HLS JWPlayer Viewer</title>
+<script type="text/javascript" src="/static/jwplayer/jwplayer.js"></script>
+<script type="text/javascript" src="/static/jquery/dist/jquery.js"></script>
+
+<script type="text/javascript">
+    var groupFlightList = {"H1705":"H1705", "H1706":"H1706", "H1707":"H1707", "H1708":"H1708", "H1709":"H1709",
+                           "H1710":"H1710", "H1711":"H1711", "H1712":"H1712", "H1713":"H1713", "H1714":"H1714"};
+    var vehicleList = {"ARGUS":"Argus", "HERC":"Hercules"};
+    var hlsIndexFileName = "prog_index.m3u8";
+    var getFlightDir = () =>
+      `/data/subsea-data/${selectedGroupFlight}_${selectedVehicle}/Video/Recordings/Segment${selectedSeg}/${hlsIndexFileName}`;
+</script>
+
+<script type="text/javascript">jwplayer.key="***INSERT JWPLAYER KEY HERE***";</script>
+</head>
+
+<body style="font-family: Sans-Serif; font-size: 10pt;">
+<div id="infoHeader" style="margin-bottom:6px;">
+<strong>Flight:</strong> <select id="groupFlightMenu"></select> <strong>Vehicle:</strong> <select id="vehicleMenu"></select>
+<strong>Segment:</strong> <select id="segmentMenu"></select><button type="button" id="selectAndPlay">Select</button>
+<span id=selectedFlightAndSegment style="margin-left:20px; font-style:italic;"></span>
+</div>
+
+<div id="myPlayer1">Loading JW Player...</div>
+
+<script type="text/javascript">
+    $.each(groupFlightList, function(key, value) {
+        $('#groupFlightMenu').append($("<option/>", {
+            value: key,
+            text: value
+        }));
+    });
+
+    $.each(vehicleList, function(key, value) {
+        $('#vehicleMenu').append($("<option/>", {
+            value: key,
+            text: value
+        }));
+    });
+
+    for (i=0; i<=10; i++) {
+        segStr = i.toString().padStart(3,"0");
+        $('#segmentMenu').append($("<option/>", {
+            value: segStr,
+            text: segStr
+        }));
+    };
+
+    function getSelectionsAndSetupPlayer() {
+        selectedGroupFlight = $('#groupFlightMenu').val();
+        selectedVehicle = $('#vehicleMenu').val();
+        selectedSeg = $('#segmentMenu').val();
+        videoIndexPath = getFlightDir();
+        $('#selectedFlightAndSegment').text(videoIndexPath);
+
+        jwplayer("myPlayer1").setup({
+            autostart:false,
+            file: videoIndexPath,
+            width:1280,
+            height:720,
+        });
+    }
+
+    $("#selectAndPlay").click(function() {
+        getSelectionsAndSetupPlayer();
+    });
+
+    $( document ).ready(function() {
+        getSelectionsAndSetupPlayer();
+    });
+</script>
+</body>
+</html>
