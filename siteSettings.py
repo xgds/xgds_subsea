@@ -61,7 +61,7 @@ INSTALLED_APPS = ['django_npm_apps',
                   'xgds_image',
                   'xgds_video',
                   'xgds_plot',
-                  # 'xgds_status_board',
+                  'xgds_status_board',
                   'xgds_notes2',
                   'xgds_map_server',
 
