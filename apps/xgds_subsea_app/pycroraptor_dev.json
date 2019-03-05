@@ -4,10 +4,16 @@
     "LOG_FILE":"pyraptord_${unique}.txt",
 
     "SERVICES": {
-
+        "sse": {
+                "command": "gunicorn sse:app --worker-class gevent --bind localhost:9191",
+                "cwd": "/home/xgds/xgds_subsea/apps/xgds_core/sse/"
+        },
+        "sseHeartbeat": {
+            "command": "/home/xgds/xgds_basalt/apps/xgds_core/sse/sse-heartbeat.py"
+        }
     },
 
     "GROUPS": {
-        "startup": []
+        "startup": ["sse", "sseHeartbeat"]
     }
 }
