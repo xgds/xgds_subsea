@@ -15,7 +15,7 @@
         },
         "sseHeartbeat": {
             "command": "/home/xgds/xgds_basalt/apps/xgds_core/sse/sse-heartbeat.py"
-        }
+        },
 
         "pingSubsystems": {
           "command": "/home/xgds/xgds_subsea/apps/xgds_status_board/scripts/pingSubsystems.py -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/pingConfigShore.json"
