@@ -42,7 +42,7 @@ urlpatterns = [url(r'^admin/', include(admin.site.urls)),
                #url(r'^xgds_instrument/edit/(?P<instrument_name>\w*)/(?P<pk>[\d]+)$', editInstrumentData, {}, 'basalt_instrument_data_edit'),
                url(r'^xgds_instrument/', include('xgds_instrument.urls')),
                url(r'^xgds_core/', include('xgds_core.urls')),
-               #url(r'^xgds_status_board/', include('xgds_status_board.urls')),
+               url(r'^xgds_status_board/', include('xgds_status_board.urls')),
                url(r'^timeseries/', include('xgds_timeseries.urls')),
 
                ]
