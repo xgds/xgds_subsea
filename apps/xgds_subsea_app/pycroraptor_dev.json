@@ -10,11 +10,11 @@
         },
 
         "sse": {
-                "command": "gunicorn sse:app --worker-class gevent --bind localhost:9191",
+                "command": "gunicorn sse:app --workers=1 --worker-class gevent --bind 0.0.0.0:9191",
                 "cwd": "/home/xgds/xgds_subsea/apps/xgds_core/sse/"
         },
         "sseHeartbeat": {
-            "command": "/home/xgds/xgds_basalt/apps/xgds_core/sse/sse-heartbeat.py"
+            "command": "/home/xgds/xgds_subsea/apps/xgds_core/sse/sse-heartbeat.py"
         },
 
         "pingSubsystems": {
