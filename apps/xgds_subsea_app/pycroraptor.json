@@ -1,12 +1,30 @@
 {
-    "PORTS": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/ports.json",
-    "LOG_DIR": "/home/xgds/xgds_subsea/data/pyraptord",
+    "PORTS": "/home/irg/xgds_subsea/apps/xgds_subsea_app/ports.json",
+    "LOG_DIR": "/home/irg/xgds_subsea/data/pyraptord",
     "LOG_FILE":"pyraptord_${unique}.txt",
 
     "SERVICES": {
+		"zmqCentral": {
+		    "command": "/home/irg/xgds_subsea/apps/geocamUtil/zmqUtil/zmqCentral.py -m none -c none -f"
+        },
+	
 
+          "pingSubsystems": {
+        "command": "/home/irg/xgds_subsea/apps/xgds_status_board/scripts/pingSubsystems.py -c /home/irg/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/pingConfigShore.json"
+	    },
+        "updateLoadAverages": {
+        "command": "/home/irg/xgds_subsea/apps/xgds_status_board/scripts/updateLoadAverages.py -c /home/irg/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/loadAverageConfigShore.json"
+	    },
+        "sse": {
+                "command": "gunicorn sse:app --worker-class gevent --bind localhost:9191",
+                "cwd": "/home/xgds/xgds_subsea/apps/xgds_core/sse/"
+        },
+        "sseHeartbeat": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_core/sse/sse-heartbeat.py"
+        }
     },
     "GROUPS": {
-        "startup": []
+        "startup": ["pingSubsystems","updateLoadAverages","zmqCentral" , "sse", "sseHeartbeat"]
+
     }
 }

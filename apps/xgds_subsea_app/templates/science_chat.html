@@ -1,0 +1,22 @@
+  {% extends 'base.html' %}
+
+{% block cssExtras %}
+     <style>
+      .chat {
+          position:absolute;
+          width: 100%;
+          min-height: 600px;
+          height: 100%;
+          height: -moz-available;          /* WebKit-based browsers will ignore this. */
+          height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+          height: fill;
+      }
+    </style>
+{% endblock cssExtras %}
+
+  {% block content %}
+  <iframe class="chat" src="https://external.oet.org/nautiluschat/"></iframe>
+  {% endblock content %}
+
+{% block footer %}
+{% endblock footer %}

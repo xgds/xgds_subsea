@@ -50,6 +50,9 @@
 				<li class='nav-item {% currentnav search_map* basalt_live_objects search_xgds_notes_map%}'>
 					<a class="nav-link {% currentnav search_map* basalt_live_objects search_xgds_notes_map %}" href="/xgds_map_server/search/{{settings.XGDS_IMAGE_IMAGE_MODEL_NAME}}" title="Search">Search</a>
 				</li>
+				<li class='nav-item {% currentnav science_chat%}'>
+					<a class="nav-link {% currentnav science_chat %}" href="{%  url 'science_chat' %}" title="Chat">Chat</a>
+				</li>
 				<li class='nav-item {% currentnav xgds_core_settings xgds_notes_edit_tags xgds_notes_edit_user_session %}'>
 					<a class="nav-link {% currentnav xgds_core_settings xgds_notes_edit_tags xgds_notes_edit_user_session %}" href="{% url 'xgds_core_settings' %}" title="Settings">Settings</a>
 				</li>
