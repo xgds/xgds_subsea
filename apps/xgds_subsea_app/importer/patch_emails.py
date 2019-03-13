@@ -47,6 +47,7 @@ def patch_emails(csv_filename, verbose=False):
                     try:
                         found_user = User.objects.get(username=username)
                         found_user.email = email
+                        found_user.is_active = True
                         found_user.save()
                         if verbose:
                             print 'Patched %s: %s' % (username, email)
