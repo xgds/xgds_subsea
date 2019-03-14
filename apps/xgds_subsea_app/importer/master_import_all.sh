@@ -15,6 +15,12 @@ echo "*** PREPROCESSING NAV DATA FROM $DATA_DIR/$CRUISE_ID"
 $BASE_DIR/apps/xgds_subsea_app/importer/preprocess_nav_data.py $DATA_DIR/$CRUISE_ID
 echo "*** DONE PREPROCESSING NAV DATA FROM $DATA_DIR/$CRUISE_ID"
 
+# preprocess video episodes
+echo "*** PREPROCESSING VIDEO EPISODES FROM $DATA_DIR/$CRUISE_ID"
+$BASE_DIR/apps/xgds_subsea_app/scripts/computeEpisodeLengths.py --dataDir $DATA_DIR
+echo "*** DONE PREPROCESSING VIDEO EPISODES FROM $DATA_DIR/$CRUISE_ID"
+
+
 # do the actual import
 echo "*** CALLING IMPORTER FROM $IMPORT_CONFIG"
 $BASE_DIR/apps/xgds_core/importer/importHandler.py --user xgds --password TODO_CHANGEME $IMPORT_CONFIG
