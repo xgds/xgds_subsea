@@ -9,6 +9,7 @@ When you are told there are active EVAs, please click on the BASALT logo in the 
 {% endif %}
 
 <p>
+        <h2>Top Navigation</h2>
 <table >
   <tr>
     <td style="text-align:right"><strong>Map</strong></td>
@@ -26,7 +27,11 @@ When you are told there are active EVAs, please click on the BASALT logo in the 
   -->
   <tr>
     <td style="text-align:right"><strong>Search</strong></td>
-    <td>Search for anything on the map, including Photos, Samples, and Instrument data.</td>
+    <td>Search for anything on the map, including Photos, Samples, and Instrument data, across {{ settings.XGDS_CORE_FLIGHT_MONIKER }}s.</td>
+  </tr>
+    <tr>
+    <td style="text-align:right"><strong>Chat</strong></td>
+    <td>Science chat</td>
   </tr>
   <tr>
     <td style="text-align:right"><strong>Settings</strong></td>
@@ -44,6 +49,54 @@ When you are told there are active EVAs, please click on the BASALT logo in the 
   {% endif %}
 </table>
 </p>
+
+    <p>
+    <h2>Training Videos</h2>
+    Click on the blue link on the left in the list below to see the training video. Videos are best viewed full screen.<br/><br/>
+<table >
+  <tr>
+      <td style="text-align:right"><strong><a href="https://vimeo.com/317348413" target="_training">Overview</a></strong></td>
+    <td>Overview of how many common features work in xGDS, including registration and help</td>
+  </tr>
+  <tr>
+    <td style="text-align:right"><strong><a href="https://vimeo.com/324285547" target="_training">Map: Working with Maps</a></strong></td>
+    <td>Interact with maps and map layers</td>
+  </tr>
+  <tr>
+    <td style="text-align:right"><strong><a href="https://vimeo.com/317355116" target="_training">Map: Folders & Organization</a></strong></td>
+    <td>Control the folder structure in the map layers</td>
+  </tr>
+  <tr>
+    <td style="text-align:right"><strong><a href="https://vimeo.com/317380557" target="_training">Map: Layer Editing</a></strong></td>
+    <td>Create and edit map markup directly in xGDS</td>
+  </tr>
+  <tr>
+    <td style="text-align:right"><strong><a href="https://vimeo.com/322931585" target="_training">Map: Uploading GeoTiff</a></strong></td>
+    <td>Upload GeoTIFF files into xGDS</td>
+  </tr>
+    <tr>
+    <td style="text-align:right"><strong><a href="https://vimeo.com/317356839" target="_training">Map: Uploading KML</a></strong></td>
+    <td>Upload KML files into xGDS</td>
+  </tr>
+    <tr>
+    <td style="text-align:right"><strong><a href="https://vimeo.com/322940258" target="_training">Searching across {{ settings.XGDS_CORE_FLIGHT_MONIKER }}s</a></strong></td>
+    <td>Search for, filter, view and export data</td>
+  </tr>
+    <tr>
+    <td style="text-align:right"><strong><a href="https://vimeo.com/319361729" target="_training">Working with {{settings.XGDS_IMAGE_IMAGE_SET_MONIKER}}s</a></strong></td>
+    <td>View, annotate (mark up) and download {{ settings.XGDS_IMAGE_IMAGE_SET_MONIKER }}s</td>
+  </tr>
+  <tr>
+      <td style="text-align:right"><strong><a href="https://xgds.org/downloads/training/xgds_planner/" target="_training">{{ settings.XGDS_PLANNER_PLAN_MONIKER }}</a></strong></td>
+    <td>Create, edit and manage {{ settings.XGDS_PLANNER_PLAN_MONIKER }}s</td>
+  </tr>
+<tr>
+      <td style="text-align:right"><strong><a href="https://xgds.org/downloads/training/xgds_dive_replay/" target="_training">{{ settings.XGDS_CORE_FLIGHT_MONIKER }} replay</a></strong></td>
+    <td>Replay and interact with {{ settings.XGDS_CORE_FLIGHT_MONIKER }}s including data plots, video, map, timeline and searching</td>
+  </tr>
+
+</table>
+</p>
 {% endblock content %}
 
 {% block footer %}
@@ -58,7 +111,7 @@ When you are told there are active EVAs, please click on the BASALT logo in the 
     			</a>
     		</h5>
     		</div>
-    		
+
 			<a href="http://www.nasa.gov" title="NASA" target="_blank">
     			<img src="{% static 'bootstrap/img/meatball.png' %}"  alt="NASA logo" />
     		</a>
