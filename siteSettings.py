@@ -439,7 +439,7 @@ XGDS_IMAGE_DEEPZOOM_THREAD = False
 XGDS_MAP_SERVER_SITE_MONIKER = 'Region'
 XGDS_MAP_SERVER_PLACE_MONIKER = 'Site'
 
-XGDS_PLANNER_PLAN_MONIKER = "Dive Plan"
+XGDS_PLANNER_PLAN_MONIKER = "ROV Plan"
 XGDS_PLANNER_STATION_MONIKER = "Target"
 XGDS_PLANNER_STATION_MONIKER_PLURAL = XGDS_PLANNER_STATION_MONIKER + 's'
 
@@ -561,3 +561,30 @@ if 'Science Instruments' in XGDS_DATA_IMPORTS:
 
 
 XGDS_VIDEO_DEFAULT_AUDIO_SOURCE = "Hercules"
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+]
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'xgds_core.password_validation.SpecialCharsValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    }
+
+]

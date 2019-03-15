@@ -9,12 +9,15 @@ from uuid import uuid4
 from tzlocal import get_localzone
 from glob import glob
 from os.path import basename
+import dateutil.parser as dateparse
 from validateCinedekVideo import checkVideoIntegrity
 from validateCinedekVideo import VideoSegmentJsonEncoder
 
 SEGMENT_SUMMARY_FILE_NAME = "segmentSummary.json"
 FFMPEG_FILE_LIST_BASE = "ffmpegFiles_%03d.txt"
 FULL_VEHICLE_NAME = {"HERC": "Hercules", "ARGUS": "Argus"}
+PRIMARY_ROV = "HERC"
+SECONDARY_ROV = "ARGUS"
 
 def makedirsIfNeeded(path):
     """
@@ -53,40 +56,60 @@ def writeSegmentSummaryFile(segList, diveDir, vehicleName, dataDir):
             print "****** WARNING: FFMPEG segment list already exists: %s. Will not overwrite. ******" % ffmpegFilePath
 
 
-def analyzeNautilusVideo(baseDir, diveNamePattern, dataDir, writeSegmentFiles):
-    diveDirList = glob("%s/%s" % (baseDir, diveNamePattern))
+def computeEpisodeLengths(diveNamePattern, dataDir, updateSegmentFiles):
+    diveDirList = glob("%s/%s" % (dataDir, diveNamePattern))
     diveDirList.sort()
     for d in diveDirList:
-        vehicleList = glob("%s/*" % d)
-        vehicleList.sort()
+        otherRovDir = d.replace(PRIMARY_ROV, SECONDARY_ROV)
         diveName = basename(d)
         print "****************************** Processing %s ******************************\n" % diveName
-        for v in vehicleList:
-            vehicleName = basename(v)
-            print "=============== %s ===============" % vehicleName
-            segList = checkVideoIntegrity(v, writeSegmentFiles)
-            if segList:
-                print "\nWriting summary file with %d segments to %s_%s video directory" % (len(segList),
-                                                                                          diveName, vehicleName)
-                writeSegmentSummaryFile(segList, d, vehicleName, dataDir)
-            print "\n"
+        hercSegments = json.load(open("%s/Video/Recordings/%s" % (d, SEGMENT_SUMMARY_FILE_NAME), "r"))
+        argusSegments = json.load(open("%s/Video/Recordings/%s" % (otherRovDir, SEGMENT_SUMMARY_FILE_NAME), "r"))
+        minHerc = hercSegments["segments"][0]["startTime"]
+        maxHerc = hercSegments["segments"][0]["endTime"]
+        minHercDT = dateparse.parse(minHerc + "Z")
+        maxHercDT = dateparse.parse(maxHerc + "Z")
+
+        minArgus = argusSegments["segments"][0]["startTime"]
+        maxArgus = argusSegments["segments"][0]["endTime"]
+        minArgusDT = dateparse.parse(minArgus + "Z")
+        maxArgusDT = dateparse.parse(maxArgus + "Z")
+        
+        if minHercDT < minArgusDT:
+            episodeStart = minHerc
+        else:
+            episodeStart = minArgus
+
+        if maxHercDT > maxArgusDT:
+            episodeEnd = maxHerc
+        else:
+            episodeEnd = maxArgus
+
+        print "   Herc Start: %s --    Herc End: %s" % (minHercDT, maxHercDT)
+        print "  Argus Start: %s --   Argus End: %s" % (minArgusDT, maxArgusDT)
+        print "Episode Start: %s -- Episode End: %s" % (episodeStart, episodeEnd)
+        hercSegments["episodeStart"] = episodeStart
+        hercSegments["episodeEnd"] = episodeEnd
+        argusSegments["episodeStart"] = episodeStart
+        argusSegments["episodeEnd"] = episodeEnd
+        json.dump(hercSegments, open("%s/Video/Recordings/%s" % (d, SEGMENT_SUMMARY_FILE_NAME), "w"))
+        json.dump(argusSegments, open("%s/Video/Recordings/%s" % (otherRovDir, SEGMENT_SUMMARY_FILE_NAME), "w"))
+        print "\n"
 
 if __name__=='__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--baseDir', required=True,
-                        help="Path to a directory with one type of video (e.g. HIGH/LOW) from a cruise")
     parser.add_argument('--dataDir', required=False, default=None,
                         help="Path to xGDS data directory root. E.g. /home/xgds/xgds_subsea/data")
-    parser.add_argument('--diveNamePattern', required=False, default="H[0-9][0-9][0-9][0-9]",
-                        help="Glob regex for dive names. Default: H[0-9][0-9][0-9][0-9]")
-    parser.add_argument('--writeSegmentFiles', required=False, default=False, action="store_true",
-                        help="Write JSON summary of segments to flight directory")
+    parser.add_argument('--diveNamePattern', required=False, default="H[0-9][0-9][0-9][0-9]_HERC",
+                        help="Glob regex for dive names. Default: H[0-9][0-9][0-9][0-9]_HERC")
+    parser.add_argument('--updateSegmentFiles', required=False, default=False, action="store_true",
+                        help="Write JSON summary of episodes to segment summary file")
     args, unknown = parser.parse_known_args()
-    baseDir = args.baseDir
-    writeSegmentFiles = args.writeSegmentFiles
-    if writeSegmentFiles and not args.dataDir:
+    baseDir = "foo"
+    updateSegmentFiles = args.updateSegmentFiles
+    if updateSegmentFiles and not args.dataDir:
         print "You must specify a data directory root with --dataDir option to store segment summary JSON files."
-    print "Processing video in:", baseDir
+    print "Processing video in:", args.dataDir
 
-    analyzeNautilusVideo(baseDir, args.diveNamePattern, args.dataDir, writeSegmentFiles)
+    computeEpisodeLengths(args.diveNamePattern, args.dataDir, updateSegmentFiles)
