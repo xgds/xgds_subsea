@@ -1,0 +1,18 @@
+verbose: True
+
+bridges:
+
+  nav:
+    input_channel: 'xgds:nav'
+    outputs:
+      $PVGGA: 'xgds:nav:pvgga'
+      $PVHDG: 'xgds:nav:pvhdg'
+      $M1GGA: 'xgds:nav:m1gga'
+      $M2GGA: 'xgds:nav:m2gga'
+
+  her:
+    input_channel: 'xgds:her'
+    outputs:
+      JDS: 'xgds:her:jds'
+      APAS: 'xgds:her:apas'
+      O2S: 'xgds:her:o2s'

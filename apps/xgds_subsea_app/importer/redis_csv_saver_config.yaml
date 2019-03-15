@@ -1,0 +1,20 @@
+verbose: False
+timezone: UTC
+savers:
+  temp:
+    config_yaml: TempProbe.yaml
+    vehicle: Hercules
+    channel_name: 'xgds:tem'
+    buffer_time_sec: 5
+
+  o2sat:
+    config_yaml: O2S_UDP.yaml
+    vehicle: Hercules
+    channel_name: 'xgds:her:o2s'
+    buffer_time_sec: 5
+    
+  ctd:
+    config_yaml: CTD_UDP.yaml
+    vehicle: Hercules
+    channel_name: 'xgds:ctd'
+    buffer_length: 10

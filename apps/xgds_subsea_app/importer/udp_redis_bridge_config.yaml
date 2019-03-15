@@ -1,0 +1,19 @@
+verbose: false
+
+bridges:
+  her:
+    host: '127.0.0.1'
+    port: 41236
+    channel: 'xgds:her'
+  nav:
+    host: '127.0.0.1'
+    port: 41237
+    channel: 'xgds:nav'
+  tem:
+    host: '127.0.0.1'
+    port: 41240
+    channel: 'xgds:tem'
+  ctd:
+    host: '127.0.0.1'
+    port: 41241
+    channel: 'xgds:ctd'
