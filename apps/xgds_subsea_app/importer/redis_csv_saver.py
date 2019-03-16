@@ -19,6 +19,7 @@ import yaml
 import redis
 import datetime
 import threading
+import traceback
 from time import sleep
 from redis_utils import TelemetrySaver
 
@@ -47,19 +48,16 @@ class CsvSaver(TelemetrySaver):
         super(CsvSaver, self).__init__(options)
 
     def deserialize(self, msg):
-        # TODO: bad hack, need to support multiple delimiters
-        # TODO: especially '\t' delimiting headers and payload,
-        # TODO: then ' ' or ',' separating fields within the payload
         try:
-            msg = msg.replace(',','\t')
-            msg = msg.replace(' ','\t')
             values = msg.split(self.delimiter)
             row = {k: v for k, v in zip(self.keys, values)}
             row = self.importer.update_row(row)
             return self.model(**row)
-        except Error as e:
+        except Exception as e:
+            print 'deserializing:', msg
+            print 'deserialized:', row
+            traceback.print_exc()
             print e
-            print msg
             return None
 
 

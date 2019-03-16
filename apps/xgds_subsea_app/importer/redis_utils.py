@@ -51,22 +51,6 @@ class TelemetryQueue:
     def listener(self):
         return self.ps.listener()
 
-    # TODO: delete this method in favor of the built-in redis listener()
-    def unnecessary__iter__(self):
-        return self
-
-    # TODO: delete this method in favor of the built-in redis listener()
-    def unnecessary_next(self):
-        # next() is a blocking call, which includes a sleep loop
-        # wrapped around a call to redis pubsub get_message()
-        # which is not blocking.  If get_message() returns None,
-        # sleep and check again until it returns a message
-        while True:
-            sleep(self.sleep_time)
-            msg = self.ps.get_message() # non blocking call, returns message or None
-            if msg is not None:
-                return msg['data']
-
 
 class TelemetrySaver(object):
     def __init__(self,options):
@@ -98,6 +82,9 @@ class TelemetrySaver(object):
                 print e
                 for entry in self.buffer:
                     print entry
+                # If we couldn't write it before we won't be able to next time
+                # truncate the buffer or it will grow forever
+                self.buffer = []
 
     def deserialize(self,message):
         # Parse an incoming message and return a django object,

@@ -15,16 +15,19 @@ fields:
     format: iso8601
   source:
     skip: true
-  identifier:
-    skip: true
-  date:
-    skip: true
-  time:
-    skip: true
-  oxygen_concentration:
-    type: float
-  oxygen_saturation:
-    type: float
-  temperature:
-    type: float
-    units: C
+  payload:
+    type: delimited
+    fields:
+      identifier:
+        skip: true
+      date:
+        skip: true
+      time:
+        skip: true
+      oxygen_concentration:
+        type: float
+      oxygen_saturation:
+        type: float
+      temperature:
+        type: float
+        units: C

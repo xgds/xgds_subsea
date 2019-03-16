@@ -15,20 +15,22 @@ fields:
   source:
     type: string
     skip: true
-  identifier:
-    skip: true
-  temperature:
-    type: float
-    units: C
-  conductivity:
-    type: float
-    units: S/m
-  pressure:
-    type: float
-    units: decibars
-  salinity:
-    type: float
-    units: psu
-  sound_velocity:
-    type: float
-    units: m/s
+  payload:
+    type: delimited
+    delimiter: ','
+    fields:
+      temperature:
+        type: float
+        units: C
+      conductivity:
+        type: float
+        units: S/m
+      pressure:
+        type: float
+        units: decibars
+      salinity:
+        type: float
+        units: psu
+      sound_velocity:
+        type: float
+        units: m/s
