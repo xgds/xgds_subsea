@@ -17,4 +17,4 @@ savers:
     config_yaml: CTD_UDP.yaml
     vehicle: Hercules
     channel_name: 'xgds:ctd'
-    buffer_length: 10
+    buffer_time_sec: 5
