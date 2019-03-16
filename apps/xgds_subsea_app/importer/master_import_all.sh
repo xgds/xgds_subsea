@@ -20,6 +20,10 @@ echo "*** PREPROCESSING VIDEO EPISODES FROM $DATA_DIR/$CRUISE_ID"
 $BASE_DIR/apps/xgds_subsea_app/scripts/computeEpisodeLengths.py --dataDir $DATA_DIR
 echo "*** DONE PREPROCESSING VIDEO EPISODES FROM $DATA_DIR/$CRUISE_ID"
 
+# preprocess temperature probe data
+echo "*** PREPROCESSING VIDEO EPISODES FROM $DATA_DIR/$CRUISE_ID"
+$BASE_DIR/apps/xgds_subsea_app/importer/preprocess_temp_probe_data.py $DATA_DIR/$CRUISE_ID
+echo "*** DONE PREPROCESSING VIDEO EPISODES FROM $DATA_DIR/$CRUISE_ID"
 
 # do the actual import
 echo "*** CALLING IMPORTER FROM $IMPORT_CONFIG"
