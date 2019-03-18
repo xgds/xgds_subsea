@@ -6,12 +6,9 @@ import datetime
 import json
 
 from uuid import uuid4
-from tzlocal import get_localzone
 from glob import glob
 from os.path import basename
 import dateutil.parser as dateparse
-from validateCinedekVideo import checkVideoIntegrity
-from validateCinedekVideo import VideoSegmentJsonEncoder
 
 SEGMENT_SUMMARY_FILE_NAME = "segmentSummary.json"
 FFMPEG_FILE_LIST_BASE = "ffmpegFiles_%03d.txt"
