@@ -48,8 +48,8 @@ class TelemetryQueue:
         return None
 
     # returns a generator that blocks until each next message arrives
-    def listener(self):
-        return self.ps.listener()
+    def listen(self):
+        return self.ps.listen()
 
 
 class TelemetrySaver(object):
