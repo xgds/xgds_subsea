@@ -22,19 +22,20 @@ import threading
 from time import sleep
 
 import django
+
 django.setup()
 from django.conf import settings
 
 
 class UdpRedisBridge:
-    def __init__(self,udp_host,udp_port,redis_channel_name):
+    def __init__(self, udp_host, udp_port, redis_channel_name):
         self.udp_host = udp_host
         self.udp_port = udp_port
 
         # bind socket for udp stream coming in
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.socket.bind((udp_host,udp_port))
-        
+        self.socket.bind((udp_host, udp_port))
+
         # Redis connection for messages going out
         self.r = redis.Redis(host=settings.XGDS_CORE_REDIS_HOST, port=settings.XGDS_CORE_REDIS_PORT)
         self.channel_name = redis_channel_name
@@ -45,11 +46,11 @@ class UdpRedisBridge:
         thread.start()
 
     def run(self):
-        print 'bridging udp port %d -> redis "%s"' % (self.udp_port,self.channel_name)
+        print 'bridging udp port %d -> redis "%s"' % (self.udp_port, self.channel_name)
         connected = True
         while connected:
             rcv = self.socket.recv(2048).strip()
-            if len(rcv)<1:
+            if len(rcv) < 1:
                 connected = False
             else:
                 # status message showing the udp port data came in,
@@ -61,7 +62,7 @@ class UdpRedisBridge:
         self.socket.shutdown()
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     with open('udp_redis_bridge_config.yaml', 'r') as fp:
         config = yaml.load(fp)
 

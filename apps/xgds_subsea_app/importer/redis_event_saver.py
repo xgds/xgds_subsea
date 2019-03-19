@@ -16,28 +16,22 @@
 # __END_LICENSE__
 
 import yaml
-import redis
-import datetime
-import threading
 import traceback
 from time import sleep
 from redis_utils import TelemetrySaver
 
 import django
 django.setup()
-from django.conf import settings
-from xgds_core.importer.csvImporter import CsvImporter
+from eventLogcsvImporter import EventLogCsvImporter
 
 from geocamUtil.loader import getModelByName
 
 
-class CsvSaver(TelemetrySaver):
+class EventSaver(TelemetrySaver):
     def __init__(self, options):
-        # look up the flight we want to use
+        # Create an EventLogCsvImporter object with no corresponding CSV file:
         self.lookup_flight(options)
-
-        # Create a CsvImporter object with no corresponding CSV file:
-        self.importer = CsvImporter(options['config_yaml'], None,
+        self.importer = EventLogCsvImporter(options['config_yaml'], None,
                                     options['vehicle'],
                                     options['flight']) #,
                                     #options['timezone'],
@@ -48,7 +42,7 @@ class CsvSaver(TelemetrySaver):
         self.keys = self.importer.config['fields'].keys()
         self.delimiter = self.importer.config['delimiter']
         self.model = getModelByName(self.importer.config['class'])
-        super(CsvSaver, self).__init__(options)
+        super(EventLogCsvImporter, self).__init__(options)
 
     def deserialize(self, msg):
         try:
@@ -75,6 +69,6 @@ if __name__=='__main__':
     if 'savers' in config:
         savers = []
         for name, params in config['savers'].iteritems():
-            savers.append(CsvSaver(params))
+            savers.append(EventSaver(params))
         while True:
             sleep(1)

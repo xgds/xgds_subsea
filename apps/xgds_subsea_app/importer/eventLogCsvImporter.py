@@ -278,8 +278,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
         self.condition_started = ConditionStatus.objects.get(value='started')
         self.condition_completed = ConditionStatus.objects.get(value='completed')
-        super(EventLogCsvImporter, self).__init__( yaml_file_path, csv_file_path, vehicle_name, flight_name,
-                                                   timezone_name, defaults, force, replace, skip_bad)
+        super(EventLogCsvImporter, self).__init__(yaml_file_path, csv_file_path, vehicle_name, flight_name,
+                                                  timezone_name, defaults, force, replace, skip_bad)
 
     def check_data_exists(self, row):
         """
