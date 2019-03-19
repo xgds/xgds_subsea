@@ -19,9 +19,9 @@ import yaml
 import redis
 import threading
 from time import sleep
+from redis_utils import TelemetryQueue
 
 import django
-
 django.setup()
 from django.conf import settings
 
@@ -29,13 +29,8 @@ from django.conf import settings
 class RedisDemux:
     def __init__(self, channel_config, sleep_time=0.005):
         self.config = channel_config
-        self.sleep_time = sleep_time
-        # Redis connection
         self.r = redis.Redis(host=settings.XGDS_CORE_REDIS_HOST, port=settings.XGDS_CORE_REDIS_PORT)
-        # Redis subscription & confirmation
-        self.ps = self.r.pubsub(ignore_subscribe_messages=True)
-        # subscription request:
-        self.ps.subscribe(self.config['input_channel'])
+        self.tq = TelemetryQueue(self.config['input_channel'], sleep_time)
 
         # Spawn listener thread
         thread = threading.Thread(target=self.run)
@@ -45,16 +40,7 @@ class RedisDemux:
     def run(self):
         print '%s listener started' % self.config['input_channel']
         # polling loop:
-        while True:
-            msg = None
-            while msg is None:
-                sleep(self.sleep_time)
-                msg = self.ps.get_message()  # non blocking call, returns message or None
-            if float == type(msg):
-                fp = open('msg_float_error.txt')
-                fp.write(msg)
-                fp.write('\n')
-                fp.close()
+        for msg in self.tq.listen():
             payload = msg['data'].split('\t')[3]
             for payload_identifier, output_channel in self.config['outputs'].iteritems():
                 strlen = len(payload_identifier)
@@ -76,6 +62,6 @@ if __name__ == '__main__':
     if 'bridges' in config:
         bridges = []
         for name, params in config['bridges'].iteritems():
-            bridges.append(RedisDemux(params, sleep_time=0.005))
+            bridges.append(RedisDemux(params))
         while True:
             sleep(1)
