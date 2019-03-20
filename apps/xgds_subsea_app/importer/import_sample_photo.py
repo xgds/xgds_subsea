@@ -33,6 +33,7 @@ Import a sample photo, either connecting it to the sample or doing the import an
 Currently the connection to the sample is done via a note.
 """
 
+
 def lookup_sample(filename):
     # find the name of the sample
     tokens = filename.split('/')
@@ -44,7 +45,9 @@ def lookup_sample(filename):
         return sample
     except ObjectDoesNotExist as e:
         # TODO what do we do in this case?  I think fail
-        print "Could not find sample for %s" % sampleID
+        msg = "Could not find sample for %s. " % sampleID
+        print msg
+        e.message = msg + e.message
         raise e
 
 
