@@ -28,6 +28,25 @@ from django.conf import settings
 from xgds_core.flightUtils import get_default_vehicle, get_vehicle, getActiveFlight
 
 
+def lookup_active_flight(self, options):
+    """
+    Looks up a flight given the options
+    :param options: a dictionary, should contain the vehicle or it will use the default vehicle
+    :return: the found flight, and the flight name and vehicle name in options
+    """
+    if 'vehicle' not in options:
+        vehicle = get_default_vehicle()
+        options['vehicle'] = vehicle.name
+    else:
+        vehicle = get_vehicle(options['vehicle'])
+    flight = getActiveFlight(vehicle)
+    if not flight:
+        # do we want to error or create a flight in this case?
+        raise Exception('No active flight for vehicle %s' % vehicle.name)
+    options['flight'] = flight.name
+    return flight
+
+
 class TelemetryQueue:
     def __init__(self, channel_name, sleep_time=0.005):
         self.channel_name = channel_name
@@ -129,21 +148,5 @@ class TelemetrySaver(object):
                 if len(self.buffer) >= self.config['buffer_length']:
                     self.write_buffer()
 
-    def lookup_flight(self, options):
-        """
-        Looks up a flight given the options
-        :param options: a dictionary, should contain the vehicle or it will use the default vehicle
-        :return: the found flight, and the flight name and vehicle name in options
-        """
-        if 'vehicle' not in options:
-                vehicle = get_default_vehicle()
-                options['vehicle'] = vehicle.name
-            else:
-                vehicle = get_vehicle(options['vehicle'])
-        flight = getActiveFlight(vehicle)
-        if not flight:
-            # do we want to error or create a flight in this case?
-            raise Exception('No active flight for vehicle %s' % vehicle.name)
-        options['flight'] = flight.name
-        return flight
+
 

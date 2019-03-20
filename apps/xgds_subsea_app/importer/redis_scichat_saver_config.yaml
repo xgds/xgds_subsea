@@ -1,0 +1,9 @@
+verbose: False
+timezone: UTC
+savers:
+  scichat:
+    config_yaml: SciChat.yaml
+    vehicle: Hercules
+    channel_name: 'xgds:scichat'
+    buffer_time_sec: 0.2
+
