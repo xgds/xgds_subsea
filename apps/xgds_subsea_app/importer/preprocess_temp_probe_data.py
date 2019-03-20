@@ -35,6 +35,7 @@ def resample_file(file):
     in_file, out_file = file["in"], file["out"]
     df_names = ["ignore_a", "time", "ignore_b", "temperature"]
     df = pd.read_csv(in_file, sep="\t", header=None, names=df_names)
+    df.temperature = df.temperature.astype(str)
     ignore_a = list(np.unique(df.ignore_a))[0]
     ignore_b = list(np.unique(df.ignore_b))[0]
     df = df[["time", "temperature"]]
@@ -67,6 +68,7 @@ def get_list_of_files():
             print '%s already exists' % out_file
             continue
         else:
+            print 'added %s' % in_file
             list_of_files.append({"in": in_file, "out": out_file})
 
     return list_of_files
@@ -77,5 +79,11 @@ if __name__ == '__main__':
 
     list_of_files = get_list_of_files()
     for f in list_of_files:
-        resample_file(f)
+        print 'processing: %s' % f["in"]
+        try:
+            resample_file(f)
+            print 'processed: %s' % f["in"]
+        except Exception as e:
+            print 'unable to process %s due to %s' % (f["in"], str(e))
+
 
