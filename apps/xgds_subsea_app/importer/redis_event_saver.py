@@ -16,9 +16,6 @@
 # __END_LICENSE__
 
 import yaml
-import redis
-import datetime
-import threading
 import traceback
 from time import sleep
 
@@ -26,18 +23,14 @@ import django
 django.setup()
 
 from redis_utils import TelemetrySaver, lookup_active_flight
-from xgds_core.importer.csvImporter import CsvImporter
-
-from geocamUtil.loader import getModelByName
+from eventLogcsvImporter import EventLogCsvImporter
 
 
-class CsvSaver(TelemetrySaver):
+class EventSaver(TelemetrySaver):
     def __init__(self, options):
-        # look up the flight we want to use
+        # Create an EventLogCsvImporter object with no corresponding CSV file:
         lookup_active_flight(options)
-
-        # Create a CsvImporter object with no corresponding CSV file:
-        self.importer = CsvImporter(options['config_yaml'], None,
+        self.importer = EventLogCsvImporter(options['config_yaml'], None,
                                     options['vehicle'],
                                     options['flight']) #,
                                     #options['timezone'],
@@ -45,17 +38,21 @@ class CsvSaver(TelemetrySaver):
                                     #options['reload'],
                                     #options['replace'],
                                     #options['skip_bad'])
-        self.keys = self.importer.config['fields'].keys()
         self.delimiter = self.importer.config['delimiter']
-        self.model = getModelByName(self.importer.config['class'])
-        super(CsvSaver, self).__init__(options)
+        super(EventSaver, self).__init__(options)
 
     def deserialize(self, msg):
+        """
+        In this case the deserialize also stores the models
+        :param msg:
+        :return:
+        """
         try:
             values = msg.split(self.delimiter)
             row = {k: v for k, v in zip(self.keys, values)}
             row = self.importer.update_row(row)
-            return self.model(**row)
+            models = self.importer.build_models(row)
+            return None  # because the importer build models stores them
         except Exception as e:
             print 'deserializing:', msg
             print 'deserialized:', row
@@ -65,7 +62,7 @@ class CsvSaver(TelemetrySaver):
 
 
 if __name__=='__main__':
-    with open('redis_csv_saver_config.yaml', 'r') as fp:
+    with open('redis_event_saver_config.yaml', 'r') as fp:
         config = yaml.load(fp)
 
     verbose = False
@@ -75,6 +72,6 @@ if __name__=='__main__':
     if 'savers' in config:
         savers = []
         for name, params in config['savers'].iteritems():
-            savers.append(CsvSaver(params))
+            savers.append(EventSaver(params))
         while True:
             sleep(1)
