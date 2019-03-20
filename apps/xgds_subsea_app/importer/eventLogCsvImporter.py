@@ -732,7 +732,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                                                   position_found_key='position_found')
 
             # this should really never happen!!!
-            if 'author' not in row:
+            if 'author' not in row or not row['author']:
                 print('NO AUTHOR IN ROW')
                 print(row)
                 row.author = self.datalogger_user
@@ -753,6 +753,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             traceback.print_exc()
             print new_note_tags
             print row
+            e.message = str(row) + e.message
             raise e
 
         return new_models
