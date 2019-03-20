@@ -773,7 +773,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 if row:
                     models = self.build_models(row)
                     if models:
-                        new_models.update(models)
+                        new_models.extend(models)
             self.handle_last_row(row)
         finally:
             self.csv_file.close()

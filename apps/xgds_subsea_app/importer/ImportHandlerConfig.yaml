@@ -177,6 +177,13 @@ registry:
     timeout: 300
     order: 2
     auth: false
+  - name: 'tempprobe interpolated'
+    filepath_pattern: 'addendum/xgds/.*\.TEM'
+    importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
+    arguments: '-s -i %(filename)s -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/TempProbe.yaml'
+    timeout: 300
+    order: 2
+    auth: false
   - name: 'O2S'
     filepath_pattern: '[\d\.]+/processed/dive_reports/.*/sampled/(?P<flight>H\d{4}).O2S.sampled.tsv'
     importer: '/home/xgds/xgds_subsea/apps/xgds_core/importer/csvImportRunner.py'
