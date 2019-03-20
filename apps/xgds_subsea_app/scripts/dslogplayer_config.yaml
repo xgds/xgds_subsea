@@ -1,0 +1,67 @@
+#fileExt: INNAV
+#outputs:
+#        - source: 
+#          address: 127.0.0.1
+#          port: 41235
+#          term: \r\n
+#          headers: True
+#
+#---
+
+fileExt: HER
+outputs:
+        - source: ~
+          address: 127.0.0.1
+          port: 41236
+          term: \r\n
+          headers: True
+
+---
+
+fileExt: NAV
+outputs:
+        - source: ~
+          address: 127.0.0.1
+          port: 41237
+          term: \r\n
+          headers: True
+
+#---
+#
+#fileExt: USBL
+#outputs:
+#        - source: ~
+#          address: 127.0.0.1
+#          port: 41238
+#          term: \r\n
+#          headers: True
+#
+#---
+#
+#fileExt: DNV
+#outputs:
+#        - source: ~
+#          address: 127.0.0.1
+#          port: 41239
+#          term: \r\n
+#          headers: True
+
+---
+
+fileExt: TEM
+outputs:
+        - source: ~
+          address: 127.0.0.1
+          port: 41240
+          term: \r\n
+          headers: True
+
+---
+
+fileExt: CTD
+outputs:
+        - source: ~
+          address: 127.0.0.1
+          port: 41241
+          term: \r\n
+          headers: True
