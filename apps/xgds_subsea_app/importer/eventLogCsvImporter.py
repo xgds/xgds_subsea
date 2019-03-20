@@ -373,7 +373,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             print "*** THIS ROW HAS NO AUTHOR FIELD **"
             print row
 
-
         return row
 
     def clean_flight(self, row, vehicle_name=None):
@@ -631,6 +630,126 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
         return sample_data
 
+    def build_models(self, row):
+        """
+        Build the models based on the cleaned up row
+        :return: list of models of varying types
+        """
+        if not row:
+            return None
+
+        the_model = LocatedNote
+        new_models = []
+
+        # Create the note and the tags.  Because the tags cannot be created until the note exists,
+        # we have to do this one at a time.
+        try:
+            has_tag = False
+            found_position_id = None
+            sample = None
+            if 'tag' in row:
+                has_tag = True
+                new_note_tags = row['tag']
+                del row['tag']
+            if 'sample_data' in row:
+                # This is a sample; create it and set the foreign key
+                sample_data = row['sample_data']
+                del row['sample_data']
+                label, created = Label.objects.get_or_create(number=sample_data['sample_label_number'])
+                del sample_data['sample_label_number']
+                sample_data['label'] = label
+                sample_data['flight'] = row['flight']
+                if created:
+                    sample_data['creation_time'] = sample_data['modification_time']
+                    # assume the time of the sample will not change; look up position here
+                    sample_data = csvImporter.lookup_position(sample_data, timestamp_key='collection_time',
+                                                              position_id_key='track_position_id')
+                    if 'track_position_id' in sample_data:
+                        found_position_id = sample_data['track_position_id']
+                        row['position_id'] = found_position_id
+                        row['position_found'] = True
+                    else:
+                        row['position_found'] = False
+
+                try:
+                    sample = Sample.objects.create(**sample_data)
+                except Exception as e:
+                    # This sample already existed, update it instead.
+                    sample_filter = Sample.objects.filter(name=sample_data['name'], label=label)
+                    sample_filter.update(**sample_data)
+                    sample = sample_filter[0]
+                    print 'UPDATED SAMPLE %s' % sample_data['name']
+
+                # set the generic foreign key on the note
+                if sample:
+                    row['content_type'] = self.sample_content_type
+                    row['object_id'] = sample.pk
+            if 'condition_data' in row:
+                # this has a condition.
+                # If it was not a sample, see if it already exists.
+                skip = False
+                if not sample:
+                    found_conditions = Condition.objects.filter(flight=row['flight'],
+                                                                name=row['condition_data']['name'])
+                    if found_conditions:
+                        skip = True
+
+                if not skip:
+                    condition = Condition.objects.create(**row['condition_data'])
+                    condition_history_data = row['condition_history_data']
+                    condition_history_data['condition'] = condition
+                    condition_history = ConditionHistory.objects.create(**condition_history_data)
+
+                    # update prior condition to complete it if it is a dive status
+                    update = False
+                    filter_name = None
+                    if condition.name == 'OnDeck':
+                        filter_name = 'InWater'
+                    elif condition.name == 'OffBottom':
+                        filter_name = 'OnBottom'
+                    if filter_name:
+                        found_conditions = Condition.objects.filter(flight=condition.flight, name=filter_name)
+                        if found_conditions:
+                            last_condition = found_conditions.last()
+                            last_condition_history = last_condition.getHistory().last()
+                            if last_condition_history.status != self.condition_completed:
+                                condition_history_data['condition'] = last_condition
+                                update = True
+                        if update:
+                            condition_history_data['status'] = self.condition_completed
+                            condition_history2 = ConditionHistory.objects.create(**condition_history_data)
+
+                del row['condition_data']
+                del row['condition_history_data']
+
+            if not found_position_id:
+                row = csvImporter.lookup_position(row, timestamp_key='event_time',
+                                                  position_id_key='position_id',
+                                                  position_found_key='position_found')
+
+            # this should really never happen!!!
+            if 'author' not in row:
+                print('NO AUTHOR IN ROW')
+                print(row)
+                row.author = self.datalogger_user
+
+            if self.replace:
+                new_note, note_created = the_model.objects.update_or_create(**row)
+            else:
+                new_note = the_model.objects.create(**row)
+
+            if has_tag:
+                new_note.tags.clear()
+                new_note.tags.add(*new_note_tags)
+            new_models.append(new_note)
+        except Exception as e:
+            traceback.print_exc()
+            print new_note_tags
+            print row
+            raise e
+
+        return new_models
+
     def load_csv(self):
         """
         Load the CSV file according to the self.configuration, and store the values in the database using the
@@ -638,115 +757,16 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         Warning: the model's save method will not be called as we are using bulk_create.
         :return: the newly created models, which may be an empty list
         """
-        the_model = LocatedNote
-        new_models = []
-        # rows = []
 
+        new_models = []
         try:
             self.reset_csv()
             for row in self.csv_reader:
                 row = self.update_row(row)
                 if row:
-                    # rows.append(row)
-                    # Create the note and the tags.  Because the tags cannot be created until the note exists,
-                    # we have to do this one at a time.
-                    try:
-                        has_tag = False
-                        found_position_id = None
-                        sample = None
-                        if 'tag' in row:
-                            has_tag = True
-                            new_note_tags = row['tag']
-                            del row['tag']
-                        if 'sample_data' in row:
-                            # This is a sample; create it and set the foreign key
-                            sample_data = row['sample_data']
-                            del row['sample_data']
-                            label, created = Label.objects.get_or_create(number=sample_data['sample_label_number'])
-                            del sample_data['sample_label_number']
-                            sample_data['label'] = label
-                            sample_data['flight'] = row['flight']
-                            if created:
-                                sample_data['creation_time'] = sample_data['modification_time']
-                                # assume the time of the sample will not change; look up position here
-                                sample_data = csvImporter.lookup_position(sample_data, timestamp_key='collection_time',
-                                                                          position_id_key='track_position_id')
-                                if 'track_position_id' in sample_data:
-                                    found_position_id = sample_data['track_position_id']
-                                    row['position_id'] = found_position_id
-                                    row['position_found'] = True
-                                else:
-                                    row['position_found'] = False
-
-                            try:
-                                sample = Sample.objects.create(**sample_data)
-                            except Exception as e:
-                                # This sample already existed, update it instead.
-                                sample_filter = Sample.objects.filter(name=sample_data['name'], label=label)
-                                sample_filter.update(**sample_data)
-                                sample = sample_filter[0]
-                                print 'UPDATED SAMPLE %s' % sample_data['name']
-
-                            # set the generic foreign key on the note
-                            if sample:
-                                row['content_type'] = self.sample_content_type
-                                row['object_id'] = sample.pk
-                        if 'condition_data' in row:
-                            # this has a condition.
-                            # If it was not a sample, see if it already exists.
-                            skip = False
-                            if not sample:
-                                found_conditions = Condition.objects.filter(flight=row['flight'], name=row['condition_data']['name'])
-                                if found_conditions:
-                                    skip = True
-
-                            if not skip:
-                                condition = Condition.objects.create(**row['condition_data'])
-                                condition_history_data = row['condition_history_data']
-                                condition_history_data['condition'] = condition
-                                condition_history = ConditionHistory.objects.create(**condition_history_data)
-
-                                # update prior condition to complete it if it is a dive status
-                                update = False
-                                filter_name = None
-                                if condition.name == 'OnDeck':
-                                    filter_name = 'InWater'
-                                elif condition.name == 'OffBottom':
-                                    filter_name = 'OnBottom'
-                                if filter_name:
-                                    found_conditions = Condition.objects.filter(flight=condition.flight, name=filter_name)
-                                    if found_conditions:
-                                        last_condition = found_conditions.last()
-                                        last_condition_history = last_condition.getHistory().last()
-                                        if last_condition_history.status != self.condition_completed:
-                                            condition_history_data['condition'] = last_condition
-                                            update = True
-                                    if update:
-                                        condition_history_data['status'] = self.condition_completed
-                                        condition_history2 = ConditionHistory.objects.create(**condition_history_data)
-
-                            del row['condition_data']
-                            del row['condition_history_data']
-
-                        if not found_position_id:
-                            row = csvImporter.lookup_position(row, timestamp_key='event_time',
-                                                              position_id_key='position_id',
-                                                              position_found_key='position_found')
-
-                        if self.replace:
-                            new_note, note_created = the_model.objects.update_or_create(**row)
-                        else:
-                            new_note = the_model.objects.create(**row)
-
-                        if has_tag:
-                            new_note.tags.clear()
-                            new_note.tags.add(*new_note_tags)
-                        new_models.append(new_note)
-                    except Exception as e:
-                        traceback.print_exc()
-                        print new_note_tags
-                        print row
-                        raise e
+                    models = self.build_models(row)
+                    if models:
+                        new_models.update(models)
             self.handle_last_row(row)
         finally:
             self.csv_file.close()
