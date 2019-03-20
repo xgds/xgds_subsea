@@ -28,6 +28,7 @@ from time import sleep
 from dateutil.parser import parse as dateparse
 
 import django
+
 django.setup()
 from django.conf import settings
 
@@ -75,7 +76,7 @@ class TimestampedItemQueue(object):
         return item
 
     def delete_before(self, timestamp):
-        while len(self.queue)>1 and self.queue[0][0] < timestamp:
+        while len(self.queue) > 1 and self.queue[0][0] < timestamp:
             heapq.heappop(self.queue)
 
 
@@ -84,15 +85,11 @@ class NavSaver(TelemetrySaver):
         # Get vehicle
         if 'vehicle' not in options:
             raise ValueError('Vehicle not specified')
-        vehicle = Vehicle.objects.filter(name=options['vehicle'])
-        if vehicle.count()==1:
-            self.vehicle = vehicle[0]
-        else:
-            raise ValueError('Unknown or ambiguous vehicle %s' % options['vehicle'])
+        vehicle = Vehicle.objects.get(name=options['vehicle'])
 
         # Get flight using current time
         t = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
-        self.flight = getFlight(t,vehicle)
+        self.flight = getFlight(t, vehicle)
 
         # Set the desired time once telemetry starts coming in
         self.desired_pose_time = None
@@ -128,8 +125,8 @@ class NavSaver(TelemetrySaver):
                 params[k] = interpolate(t, t1, prev_nav[k], t2, next_nav[k], unwrap=True)
 
         # TODO: a pose has a track_id, not a vehicle and flight
-        #params['vehicle'] = self.vehicle
-        #params['flight'] = getFlight(t,self.vehicle)
+        # params['vehicle'] = self.vehicle
+        # params['flight'] = getFlight(t,self.vehicle)
         desired_pose = PastResourcePoseDepth(**params)
         return desired_pose
 
@@ -176,7 +173,7 @@ class NavSaver(TelemetrySaver):
             # Per Justin:
             # Argus APAS string: "APAS" <date> <time> <vehicle> <heading> <pitch> <roll> <altitude> <depth>
             subparts = parts[3].split()
-            timestamp = dateparse('%sT%sZ'%(subparts[1],subparts[2]))
+            timestamp = dateparse('%sT%sZ' % (subparts[1], subparts[2]))
             nav = {'timestamp': timestamp,
                    'roll': float(subparts[6]),
                    'pitch': float(subparts[5]),
@@ -191,7 +188,7 @@ class NavSaver(TelemetrySaver):
             # JDS lines contain: "JDS" <date> <time> <vehicle> <bad-lat> <bad-lon> <bad-easting> <bad-northing>
             # <roll> <pitch> <heading> <depth> <altitude> <elapsed_time> <tether_wraps>
             subparts = parts[3].split()
-            timestamp = dateparse('%sT%sZ'%(subparts[1],subparts[2]))
+            timestamp = dateparse('%sT%sZ' % (subparts[1], subparts[2]))
             nav = {'timestamp': timestamp,
                    'roll': float(subparts[8]),
                    'pitch': float(subparts[9]),
@@ -205,10 +202,10 @@ class NavSaver(TelemetrySaver):
             return None
 
         # Get interpolated values if we can
-        if len(self.nav_queue.queue)>1 and len(self.gps_queue.queue)>1:
+        if len(self.nav_queue.queue) > 1 and len(self.gps_queue.queue) > 1:
             results = []
             while self.nav_queue.queue[-1][0] > self.desired_pose_time \
-                and self.gps_queue.queue[-1][0] > self.desired_pose_time:
+                    and self.gps_queue.queue[-1][0] > self.desired_pose_time:
                 # We should have the information we need to interpolate
                 pos = self.interpolate()
                 if pos is not None:
@@ -220,7 +217,7 @@ class NavSaver(TelemetrySaver):
             done_with = self.desired_pose_time - datetime.timedelta(seconds=1)
             self.gps_queue.delete_before(done_with)
             self.nav_queue.delete_before(done_with)
-            if len(results)>0:
+            if len(results) > 0:
                 for pose in results:
                     print '%s pose at %s computed' % (self.vehicle, pose.timestamp)
                 return results

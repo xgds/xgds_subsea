@@ -104,7 +104,7 @@ class tgtToMapLayerTest(TestCase):
         self.assertTrue(type_string in jsonString)
 
         no_whitespace = ''.join(jsonString.split())
-        point_string = '"point":[-150,20]'
+        point_string = '"point":[-150.0,20.0]'
         self.assertTrue(point_string in no_whitespace)
 
         with self.assertRaises(Exception):
@@ -162,17 +162,17 @@ class tgtToMapLayerTest(TestCase):
         self.assertEqual(the_json['features'][2]['description'], 'Shhhhhh!')
         self.assertEqual(the_json['features'][3]['description'], 'That crab never stops composing')
 
-        self.assertEqual(the_json['features'][0]['point'][0], "-150.2")
-        self.assertEqual(the_json['features'][0]['point'][1], "20.01")
+        self.assertEqual(the_json['features'][0]['point'][0], -150.2)
+        self.assertEqual(the_json['features'][0]['point'][1], 20.01)
 
-        self.assertEqual(the_json['features'][1]['point'][0], "-40.2")
-        self.assertEqual(the_json['features'][1]['point'][1], "50.5")
+        self.assertEqual(the_json['features'][1]['point'][0], -40.2)
+        self.assertEqual(the_json['features'][1]['point'][1], 50.5)
 
-        self.assertEqual(the_json['features'][2]['point'][0], "28.009")
-        self.assertEqual(the_json['features'][2]['point'][1], "-23.2")
+        self.assertEqual(the_json['features'][2]['point'][0], 28.009)
+        self.assertEqual(the_json['features'][2]['point'][1], -23.2)
 
-        self.assertEqual(the_json['features'][3]['point'][0], "100.7")
-        self.assertEqual(the_json['features'][3]['point'][1], "-89.1")
+        self.assertEqual(the_json['features'][3]['point'][0], 100.7)
+        self.assertEqual(the_json['features'][3]['point'][1], -89.1)
 
         with self.assertRaises(Exception):
             import_tgt_map_layer(tgtToMapLayerTest.empty_file, tgtToMapLayerTest.cruiseId, tgtToMapLayerTest.region)

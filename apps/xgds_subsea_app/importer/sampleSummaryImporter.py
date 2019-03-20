@@ -60,11 +60,12 @@ def build_column_keys(worksheet):
                    'other_notes': 21,
                    }
 
-    if not worksheet.shared_strings:
+    # TODO version 2.6 of openpyxl made shared strings private but did not provide access to it
+    if not worksheet._shared_strings:
         return column_keys
 
     # update the column keys based on the headers
-    for key, index in enumerate(worksheet.shared_strings):
+    for key, index in enumerate(worksheet._shared_strings):
         if isinstance(key, basestring):
             lower_key = key.lower()
             if 'wetlab sample id' in lower_key:

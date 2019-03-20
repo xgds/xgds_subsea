@@ -21,12 +21,34 @@ import threading
 from time import sleep
 
 import django
+
 django.setup()
 from django.conf import settings
 
+from xgds_core.flightUtils import get_default_vehicle, get_vehicle, getActiveFlight
+
+
+def lookup_active_flight(self, options):
+    """
+    Looks up a flight given the options
+    :param options: a dictionary, should contain the vehicle or it will use the default vehicle
+    :return: the found flight, and the flight name and vehicle name in options
+    """
+    if 'vehicle' not in options:
+        vehicle = get_default_vehicle()
+        options['vehicle'] = vehicle.name
+    else:
+        vehicle = get_vehicle(options['vehicle'])
+    flight = getActiveFlight(vehicle)
+    if not flight:
+        # do we want to error or create a flight in this case?
+        raise Exception('No active flight for vehicle %s' % vehicle.name)
+    options['flight'] = flight.name
+    return flight
+
 
 class TelemetryQueue:
-    def __init__(self,channel_name, sleep_time=0.005):
+    def __init__(self, channel_name, sleep_time=0.005):
         self.channel_name = channel_name
         self.sleep_time = sleep_time
         # Redis connection
@@ -48,12 +70,12 @@ class TelemetryQueue:
         return None
 
     # returns a generator that blocks until each next message arrives
-    def listener(self):
-        return self.ps.listener()
+    def listen(self):
+        return self.ps.listen()
 
 
 class TelemetrySaver(object):
-    def __init__(self,options):
+    def __init__(self, options):
         self.config = options
 
         # redis subscription, sleep loop, buffering, saving records are general
@@ -71,9 +93,9 @@ class TelemetrySaver(object):
         thread.start()
 
     def write_buffer(self):
-        if len(self.buffer)>0:
+        if len(self.buffer) > 0:
             try:
-                print 'saving %d models from %s' % (len(self.buffer),self.channel_name)
+                print 'saving %d models from %s' % (len(self.buffer), self.channel_name)
                 if type(self.buffer[0]) is not None:
                     type(self.buffer[0]).objects.bulk_create(self.buffer)
                     self.buffer = []
@@ -86,7 +108,7 @@ class TelemetrySaver(object):
                 # truncate the buffer or it will grow forever
                 self.buffer = []
 
-    def deserialize(self,message):
+    def deserialize(self, message):
         # Parse an incoming message and return a django object,
         # a list of django objects, or None.  Subclasses need to
         # define this method, there is no generic version
@@ -125,3 +147,6 @@ class TelemetrySaver(object):
             if 'buffer_length' in self.config:
                 if len(self.buffer) >= self.config['buffer_length']:
                     self.write_buffer()
+
+
+

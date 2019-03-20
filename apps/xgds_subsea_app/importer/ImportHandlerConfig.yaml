@@ -62,17 +62,17 @@ registry:
     order: 4
     auth: false
   - name: 'video metadata'
-    filepath_pattern: 'H[0-9]{4}_[AH][er][rg].*/Video/Recordings/segmentSummary.json'
+    filepath_pattern: 'H\d{4}_\w+/Video/Recordings/segmentSummary.json'
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/videoMetadataImportRunner.py'
     arguments: '%(filename)s'
     timeout: 300
     order: 4
     auth: false
   - name: 'video segment list'
-    filepath_pattern: 'H[0-9]{4}_[AH][er][rg].*/Video/Recordings/ffmpegFiles_[0-9]{3}.txt'
+    filepath_pattern: 'H\d{4}_\w+/Video/Recordings/ffmpegFiles_[0-9]{3}.txt'
     ignore: true
   - name: 'video chunks'
-    filepath_pattern: 'H[0-9]{4}_[AH][er][rg].*/Video/Recordings/Segment[0-9]{3}/.*.ts'
+    filepath_pattern: 'H\d{4}_\w+/Video/Recordings/Segment[0-9]{3}/.*.ts'
     ignore: true
   - name: 'sample spreadsheet'
     filepath_pattern: 'processed/samples/\w*\d+_Samples\.xlsx'
