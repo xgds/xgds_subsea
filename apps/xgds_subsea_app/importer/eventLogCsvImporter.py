@@ -630,7 +630,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
         return sample_data
 
-    def build_models(self, row):
+    def build_models(self, row, broadcast=False):
         """
         Build the models based on the cleaned up row
         :return: list of models of varying types
@@ -673,6 +673,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
                 try:
                     sample = Sample.objects.create(**sample_data)
+                    if broadcast:
+                        sample.broadcast()
                 except Exception as e:
                     # This sample already existed, update it instead.
                     sample_filter = Sample.objects.filter(name=sample_data['name'], label=label)
@@ -718,6 +720,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                         if update:
                             condition_history_data['status'] = self.condition_completed
                             condition_history2 = ConditionHistory.objects.create(**condition_history_data)
+                    if broadcast:
+                        condition_history.broadcast()
 
                 del row['condition_data']
                 del row['condition_history_data']
@@ -737,6 +741,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 new_note, note_created = the_model.objects.update_or_create(**row)
             else:
                 new_note = the_model.objects.create(**row)
+
+            if broadcast:
+                new_note.broadcast()
 
             if has_tag:
                 new_note.tags.clear()

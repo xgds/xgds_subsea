@@ -21,9 +21,12 @@ from time import sleep
 
 import django
 django.setup()
+from django.conf import settings
 
 from redis_utils import TelemetrySaver, lookup_active_flight
 from eventLogcsvImporter import EventLogCsvImporter
+
+BROADCAST = settings.XGDS_CORE_REDIS and settings.XGDS_SSE  # type: bool
 
 
 class EventSaver(TelemetrySaver):
@@ -51,7 +54,7 @@ class EventSaver(TelemetrySaver):
             values = msg.split(self.delimiter)
             row = {k: v for k, v in zip(self.keys, values)}
             row = self.importer.update_row(row)
-            models = self.importer.build_models(row)
+            models = self.importer.build_models(row, BROADCAST)
             return None  # because the importer build models stores them
         except Exception as e:
             print 'deserializing:', msg
