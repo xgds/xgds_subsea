@@ -38,7 +38,7 @@ def patch_emails(csv_filename, verbose=False):
     skipped = 0
 
     with open(csv_filename, 'r') as f:
-        reader = csv.reader(f, delimiter='\t')
+        reader = csv.reader(f, delimiter=',')
         for row in reader:
             if len(row) > 1:
                 username = row[0]
@@ -76,6 +76,5 @@ if __name__ == '__main__':
         exit(1)
     csv_filename = args[0]
     patched, skipped = patch_emails(csv_filename, verbose=opts.verbose)
-    if opts.verbose:
-        print 'Patched %d users email addresses' % patched
-        print 'Skipped %d users email addresses' % skipped
+    print 'Patched %d users email addresses' % patched
+    print 'Skipped %d users email addresses' % skipped
