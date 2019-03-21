@@ -210,7 +210,7 @@ registry:
     importer: '/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/tgtToMapLayer.py'
     timeout: 300
     order: 5
-    auth: true
+    auth: false
   - name: 'geotiffs'
     filepath_pattern: '[\d\.]+/processed/multibeam/*\.tif*'
     importer: '/home/xgds/xgds_subsea/apps/xgds_map_server/uploadGeotiff.py'
