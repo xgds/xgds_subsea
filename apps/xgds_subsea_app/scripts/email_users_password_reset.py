@@ -38,7 +38,7 @@ def send_password_reset_email(user):
         'Important: Register for xGDS for SUBSEA',
         body,
         settings.SERVER_EMAIL,
-        [user.email],
+        ['%s %s <%s>' % (user.first_name, user.last_name, user.email)],
         fail_silently=False,
     )
     print 'emailed %s' % user.username
