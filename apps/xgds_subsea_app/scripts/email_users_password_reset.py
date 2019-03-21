@@ -20,6 +20,7 @@ import base64
 import django
 django.setup()
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.template.loader import get_template
@@ -36,7 +37,7 @@ def send_password_reset_email(user):
     send_mail(
         'Important: Register for xGDS for SUBSEA',
         body,
-        'info@xgds.org',
+        settings.SERVER_EMAIL,
         [user.email],
         fail_silently=False,
     )
