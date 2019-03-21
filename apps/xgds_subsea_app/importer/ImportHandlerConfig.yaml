@@ -227,3 +227,9 @@ registry:
   - name: 'chatlog'
     filepath_pattern: '[\d\.]+/processed/eventlog/by-dive/all_chatlog_.*\.txt'
     ignore: true
+  - name: 'ts'
+    filepath_pattern: 'H\d{4}_\w+/Video/Recordings/Segment\d{3}/.*\.ts'
+    ignore: true
+  - name: 'm3u8'
+    filepath_pattern: 'H\d{4}_\w+/Video/Recordings/Segment\d{3}/.*\.m3u8'
+    ignore: true
