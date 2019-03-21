@@ -735,7 +735,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             if 'author' not in row or not row['author']:
                 print('NO AUTHOR IN ROW')
                 print(row)
-                row.author = self.datalogger_user
+                row['author'] = self.datalogger_user
 
             if self.replace:
                 new_note, note_created = the_model.objects.update_or_create(**row)
