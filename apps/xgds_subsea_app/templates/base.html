@@ -11,20 +11,20 @@
     <title>
     {% block title %}{% block siteSection %}{% endblock siteSection%} {% block siteTitle %}{{ settings.SITE_TITLE }}{% endblock siteTitle%}{% endblock title%}
     </title>
-    
+
 	{% block cssMain %}
     <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'xgds_core/css/misc.css' %}">
 
     {% endblock cssMain %}
-    
+
     {% block cssExtras %}
     {% endblock cssExtras %}
   	{% block headExtras %}
   	{% endblock headExtras%}
   </head>
- 
+
   <body>
   {% load nav %}
   {% block nav %}
@@ -76,39 +76,39 @@
 	            <div class="mt-1">
 	            {% if user.is_authenticated %}
 	                 <a class="btn btn-primary btn btn-primary" href="/apache_logout/"  title="Logout">Logout&nbsp;&nbsp;{{ user.first_name }}</a>
-	            {% else %} 
+	            {% else %}
 	                <a class="btn btn-primary btn btn-primary" href="{{ login_url_with_next }}"title="Login">Login</a>
-	            {% endif %} 
+	            {% endif %}
 	            <a href="{% url 'email_feedback' %}" class='btn btn-primary fa fa-envelope' role='button'></a>
 	            {% help_button help_content_path title %}
-	            <span class='btn alert-danger' id="connected_div" style="visibility:hidden;">
+	            <span class='btn alert-danger' id="connected_div">
 	            	<span class="fa fa-bolt" id="connected" style="min-width:1rem;"></span>
 	            </span>
 	            </div>
             </div>
-            
+
             <div class="subnav">
 				<ul class="nav nav-tabs">
 				{% block sitemenu-content-secondary %}
-				
+
                 <li class="nav-item">
                     &nbsp;
                 </li>
                 {% endblock sitemenu-content-secondary %}
             	</ul>
             </div>
-            
+
         </div>
     </div>
 </nav>
 	{% endblock nav %}
-  
+
   <div class="container-fluid">
   {% block contents %}
   {% block content %}
   {% endblock content %}
   {% endblock contents %}
-  
+
   {% block footer %}
   <div class="fixed-bottom container-fluid bg-primary d-flex justify-content-between py-2 ">
   			<a href="https://ti.arc.nasa.gov/tech/asr/intelligent-robotics/" target="_blank" title="IRG" >
@@ -127,7 +127,7 @@
 	</div>
   {% endblock footer %}
   </div>
-  
+
   {% block prescripts %}
 	<script type="text/javascript">
          var useOWATracking = {{settings.INCLUDE_OWA_TRACKING|yesno:"true,false"}};
