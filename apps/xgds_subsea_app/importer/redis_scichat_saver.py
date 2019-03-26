@@ -15,6 +15,7 @@
 # specific language governing permissions and limitations under the License.
 # __END_LICENSE__
 
+import sys
 import yaml
 from time import sleep
 
@@ -42,7 +43,12 @@ class SciChatSaver(CsvSaver):
 
 
 if __name__=='__main__':
-    with open('redis_scichat_saver_config.yaml', 'r') as fp:
+    if len(sys.argv) < 2:
+        print "You must pass yaml file path as the first argument"
+        exit(1)
+
+    yaml_file = sys.argv[1]
+    with open(yaml_file, 'r') as fp:
         config = yaml.load(fp)
 
     verbose = False

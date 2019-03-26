@@ -1,0 +1,8 @@
+{
+  "xgds1LoadAverage": {
+    "HOST": "irg@xgds1"
+  },
+  "xgds2LoadAverage": {
+    "HOST": "irg@xgds2"
+  }
+}

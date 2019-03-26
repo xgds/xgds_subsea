@@ -601,4 +601,5 @@ XGDS_SSE_SAMPLE_CHANNELS = ['sse', 'herc']
 
 XGDS_SSE_CHANNELS = ['sse', 'herc', 'argus', 'nautilus', 'sat3']
 
-XGDS_CORE_REDIS=True
+XGDS_CORE_REDIS = True
+XGDS_CORE_REDIS_HOST = "redis"  # if you are NOT running in docker-compose, set this to localhost in your settings.py

@@ -17,3 +17,11 @@ bridges:
     host: '127.0.0.1'
     port: 41241
     channel: 'xgds:ctd'
+  event:
+    host: '127.0.0.1'
+    port: 41250
+    channel: 'xgds:event'
+  chat:
+    host: '127.0.0.1'
+    port: 41260
+    channel: 'xgds:chat'

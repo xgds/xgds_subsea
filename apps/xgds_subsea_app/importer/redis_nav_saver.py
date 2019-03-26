@@ -225,7 +225,12 @@ class NavSaver(TelemetrySaver):
 
 
 if __name__ == '__main__':
-    with open('redis_nav_saver_config.yaml', 'r') as fp:
+    if len(sys.argv) < 2:
+        print "You must pass yaml file path as the first argument"
+        exit(1)
+
+    yaml_file = sys.argv[1]
+    with open(yaml_file, 'r') as fp:
         config = yaml.load(fp)
 
     verbose = False

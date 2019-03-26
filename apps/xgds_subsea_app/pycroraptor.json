@@ -8,11 +8,11 @@
 		    "command": "/home/xgds/xgds_subsea/apps/geocamUtil/zmqUtil/zmqCentral.py -m none -c none -f"
         },
         "pingSubsystems": {
-            "command": "/home/xgds/xgds_subsea/apps/xgds_status_board/scripts/pingSubsystems.py -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/pingConfigShore.json"
-	    },
+            "command": "/home/xgds/xgds_subsea/apps/xgds_status_board/scripts/pingSubsystems.py -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/pingConfig.json"
+        },
         "updateLoadAverages": {
-            "command": "/home/xgds/xgds_subsea/apps/xgds_status_board/scripts/updateLoadAverages.py -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/loadAverageConfigShore.json"
-	    },
+            "command": "/home/xgds/xgds_subsea/apps/xgds_status_board/scripts/updateLoadAverages.py -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/loadAverageConfig.json"
+        },
         "sse": {
                 "command": "gunicorn sse:app -w 8 --worker-class gevent --bind 0.0.0.0:9191",
                 "cwd": "/home/xgds/xgds_subsea/apps/xgds_core/sse/"
@@ -21,22 +21,22 @@
             "command": "/home/xgds/xgds_subsea/apps/xgds_core/sse/sse-heartbeat.py"
         },
         "udp_redis_bridge": {
-            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/udp_redis_bridge.py"
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/udp_redis_bridge.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/udp_redis_bridge_config.yaml"
         },
         "redis_demux": {
-            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_demux.py"
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_demux.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_demux_config.yaml"
         },
         "redis_csv_saver": {
-            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_csv_saver.py"
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_csv_saver.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_csv_saver_config.yaml"
         },
         "redis_nav_saver": {
-            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_nav_saver.py"
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_nav_saver.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_nav_saver_config.yaml"
         },
         "redis_event_saver": {
-            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_event_saver.py"
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_event_saver.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_event_saver_config.yaml"
         },
-        "redis_chat_saver": {
-            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_chat_saver.py"
+        "redis_scichat_saver": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_scichat_saver.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_chat_saver_config.yaml"
         }
     },
     "GROUPS": {

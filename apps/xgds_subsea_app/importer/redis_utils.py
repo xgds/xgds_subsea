@@ -28,7 +28,7 @@ from django.conf import settings
 from xgds_core.flightUtils import get_default_vehicle, get_vehicle, getActiveFlight
 
 
-def lookup_active_flight(self, options):
+def lookup_active_flight(options):
     """
     Looks up a flight given the options
     :param options: a dictionary, should contain the vehicle or it will use the default vehicle
