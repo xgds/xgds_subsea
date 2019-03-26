@@ -365,12 +365,21 @@ def make_key(key, key_prefix, version):
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': 'redis:6379',
         'TIMEOUT': 604800,
         'KEY_FUNCTION' : make_key
-    }
+    },
 }
+
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': '127.0.0.1:11211',
+#         'TIMEOUT': 604800,
+#         'KEY_FUNCTION' : make_key
+#     }
+# }
 
 FILE_UPLOAD_TEMP_DIR = os.path.join(DATA_ROOT, XGDS_MAP_SERVER_GEOTIFF_SUBDIR, 'temp')
 ZEROMQ_PORTS = PROJ_ROOT + 'apps/xgds_subsea_app/ports.json'
