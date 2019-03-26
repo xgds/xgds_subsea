@@ -4,28 +4,42 @@
     "LOG_FILE":"pyraptord_${unique}.txt",
 
     "SERVICES": {
-
 		"zmqCentral": {
 		    "command": "/home/xgds/xgds_subsea/apps/geocamUtil/zmqUtil/zmqCentral.py -m none -c none -f"
         },
-
+        "pingSubsystems": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_status_board/scripts/pingSubsystems.py -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/pingConfigShore.json"
+	    },
+        "updateLoadAverages": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_status_board/scripts/updateLoadAverages.py -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/loadAverageConfigShore.json"
+	    },
         "sse": {
-                "command": "gunicorn sse:app --workers=1 --worker-class gevent --bind 0.0.0.0:9191",
+                "command": "gunicorn sse:app -w 8 --worker-class gevent --bind 0.0.0.0:9191",
                 "cwd": "/home/xgds/xgds_subsea/apps/xgds_core/sse/"
         },
         "sseHeartbeat": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_core/sse/sse-heartbeat.py"
         },
-
-        "pingSubsystems": {
-          "command": "/home/xgds/xgds_subsea/apps/xgds_status_board/scripts/pingSubsystems.py -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/pingConfigShore.json"
-	    },
-        "updateLoadAverages": {
-          "command": "/home/xgds/xgds_subsea/apps/xgds_status_board/scripts/updateLoadAverages.py -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/loadAverageConfigShore.json"
-	    }
-	},
+        "udp_redis_bridge": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/udp_redis_bridge.py"
+        },
+        "redis_demux": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_demux.py"
+        },
+        "redis_csv_saver": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_csv_saver.py"
+        },
+        "redis_nav_saver": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_nav_saver.py"
+        },
+        "redis_event_saver": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_event_saver.py"
+        },
+        "redis_chat_saver": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_chat_saver.py"
+        }
+    },
     "GROUPS": {
-
-        "startup": ["pingSubsystems","updateLoadAverages","zmqCentral", "sse", "sseHeartbeat"]
+        "startup": ["pingSubsystems","updateLoadAverages","zmqCentral" , "sse", "sseHeartbeat"]
     }
 }

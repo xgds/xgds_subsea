@@ -21,6 +21,7 @@
     "model": "xgds_core.vehicle",
     "fields": {
       "name": "Hercules",
+      "shortName": "herc",
       "type": "ROV",
       "primary": true
     }
@@ -30,6 +31,7 @@
     "model": "xgds_core.vehicle",
     "fields": {
       "name": "Argus",
+      "shortName": "argus",
       "type": "ROV",
       "primary": true
     }
@@ -39,6 +41,7 @@
     "model": "xgds_core.vehicle",
     "fields": {
       "name": "Nautilus",
+      "shortName": "nautilus",
       "type": "Ship",
       "primary": true
     }
@@ -53,6 +56,7 @@
       "primary": false,
       "serial": "HERC",
       "name": "Hercules",
+      "shortName": "herc",
       "heading_offset_degrees": 0.0
     }
   },
@@ -66,6 +70,7 @@
       "primary": false,
       "serial": "ARGUS",
       "name": "Argus",
+      "shortName": "argus",
       "heading_offset_degrees": 0.0
     }
   },
@@ -79,6 +84,7 @@
       "primary": false,
       "serial": "HERC_EDITED",
       "name": "Hercules Edited",
+      "shortName": "herc_edited",
       "heading_offset_degrees": 0.0
     }
   },
@@ -92,6 +98,7 @@
       "primary": false,
       "serial": "ARGUS_EDITED",
       "name": "Argus Edited",
+      "shortName": "argus_edited",
       "heading_offset_degrees": 0.0
     }
   },
@@ -105,6 +112,7 @@
       "primary": false,
       "serial": "MISO",
       "name": "Miso",
+      "shortName": "miso",
       "heading_offset_degrees": 0.0
     }
   },
@@ -118,6 +126,7 @@
       "primary": false,
       "serial": "ACOUSTIC",
       "name": "Acoustic",
+      "shortName": "acoustic",
       "heading_offset_degrees": 0.0
     }
   },
@@ -257,7 +266,7 @@
     "model": "xgds_notes2.hierarchichaltag",
     "pk": 9,
     "fields": {
-      "path": "000A",
+      "path": "000C",
       "depth": 1,
       "numchild": 0,
       "name": "Trash",
@@ -1314,32 +1323,178 @@
     "model": "xgds_video.videosettings",
     "pk": 1,
     "fields": {
-        "name": "HIGH",
-        "width": 1920,
-        "height": 1080,
-        "compressionRate": 0.2,
-        "playbackDataRate": 5000000.0,
-        "aspectRatio": "16:9"
+      "name": "HIGH",
+      "width": 1920,
+      "height": 1080,
+      "compressionRate": 0.2,
+      "playbackDataRate": 5000000.0,
+      "aspectRatio": "16:9"
     }
   },
   {
     "model": "xgds_video.videosource",
     "pk": 1,
     "fields": {
-        "name": "Argus",
-        "shortName": "ARGUS",
-        "uuid": "ee9ec5ed-2a24-4260-abd1-c0c3af2e84c9",
-        "displayColor": "#edd02d"
+      "name": "Argus",
+      "shortName": "ARGUS",
+      "uuid": "ee9ec5ed-2a24-4260-abd1-c0c3af2e84c9",
+      "displayColor": "#edd02d"
     }
   },
   {
     "model": "xgds_video.videosource",
     "pk": 2,
     "fields": {
-        "name": "Hercules",
-        "shortName": "HERC",
-        "uuid": "d07ae920-dbbb-4a1f-b86b-694f9bbd3ef5",
-        "displayColor": "#00a2bf"
+      "name": "Hercules",
+      "shortName": "HERC",
+      "uuid": "d07ae920-dbbb-4a1f-b86b-694f9bbd3ef5",
+      "displayColor": "#00a2bf"
+    }
+  },
+  {
+    "model": "xgds_core.constant",
+    "pk": 45,
+    "fields": {
+      "name": "XGDS1_IP",
+      "units": "N/A",
+      "notes": "IP of main xGDS computer",
+      "dataType": "string",
+      "value": "0.0.0.0"
+    }
+  },
+  {
+    "model": "xgds_core.constant",
+    "pk": 46,
+    "fields": {
+      "name": "XGDS2_IP",
+      "units": "N/A",
+      "notes": "IP of backup xGDS computer",
+      "dataType": "string",
+      "value": "0.0.0.0"
+    }
+  },
+  {
+    "model": "xgds_core.constant",
+    "pk": 47,
+    "fields": {
+      "name": "VIDEO_IP",
+      "units": "N/A",
+      "notes": "IP of wowza server",
+      "dataType": "string",
+      "value": "0.0.0.0"
+    }
+  },
+  {
+    "model": "xgds_core.constant",
+    "pk": 48,
+    "fields": {
+      "name": "NAUTILUS_IP",
+      "units": "N/A",
+      "notes": "IP of OET computer providing UDP messages from Nautilus",
+      "dataType": "string",
+      "value": "0.0.0.0"
+    }
+  },
+
+  {
+    "model": "xgds_status_board.subsystemgroup",
+    "pk": 1,
+    "fields": {
+      "name": "nautilus",
+      "displayName": "Nautilus",
+      "warningThreshold": 5,
+      "failureThreshold": 10
+    }
+  },
+  {
+    "model": "xgds_status_board.subsystemgroup",
+    "pk": 2,
+    "fields": {
+      "name": "xgds1",
+      "displayName": "xGDS",
+      "warningThreshold": 5,
+      "failureThreshold": 10
+    }
+  },
+  {
+    "model": "xgds_status_board.subsystemgroup",
+    "pk": 3,
+    "fields": {
+      "name": "xgds2",
+      "displayName": "xGDS Backup",
+      "warningThreshold": 5,
+      "failureThreshold": 10
+    }
+  },
+  {
+    "model": "xgds_status_board.subsystemgroup",
+    "pk": 4,
+    "fields": {
+      "name": "video",
+      "displayName": "Video",
+      "warningThreshold": 5,
+      "failureThreshold": 10
+    }
+  },
+  {
+    "model": "xgds_status_board.subsystem",
+    "pk": 1,
+    "fields": {
+      "name": "wowza_server",
+      "displayName": "Wowza Server",
+      "group": 4,
+      "logFileUrl": "",
+      "warningThreshold": 5,
+      "failureThreshold": 10,
+      "refreshRate": 1,
+      "constantName": "VIDEO_IP",
+      "active": true
+    }
+  },
+  {
+    "model": "xgds_status_board.subsystem",
+    "pk": 2,
+    "fields": {
+      "name": "xgds1",
+      "displayName": "xGDS Computer",
+      "group": 2,
+      "logFileUrl": "",
+      "warningThreshold": 5,
+      "failureThreshold": 10,
+      "refreshRate": 1,
+      "constantName": "XGDS1_IP",
+      "active": true
+    }
+  },
+  {
+    "model": "xgds_status_board.subsystem",
+    "pk": 3,
+    "fields": {
+      "name": "xgds2",
+      "displayName": "xGDS Backup Computer",
+      "group": 3,
+      "logFileUrl": "",
+      "warningThreshold": 5,
+      "failureThreshold": 10,
+      "refreshRate": 1,
+      "constantName": "XGDS2_IP",
+      "active": true
+    }
+  },
+  {
+    "model": "xgds_status_board.subsystem",
+    "pk": 4,
+    "fields": {
+      "name": "nautilus",
+      "displayName": "Computer",
+      "group": 1,
+      "logFileUrl": "",
+      "warningThreshold": 5,
+      "failureThreshold": 10,
+      "refreshRate": 1,
+      "constantName": "NAUTILUS_IP",
+      "active": true
     }
   }
+
 ]
