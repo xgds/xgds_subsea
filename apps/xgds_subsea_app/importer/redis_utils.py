@@ -28,6 +28,17 @@ from django.conf import settings
 from xgds_core.flightUtils import get_default_vehicle, get_vehicle, getActiveFlight
 
 
+def ensure_vehicle(options):
+    """
+    Ensure there is a vehicle in the options, uses the default if there is none
+    :param options:
+    :return: options
+    """
+    if 'vehicle' not in options or not options['vehicle']:
+        options['vehicle'] = get_default_vehicle().name
+    return options
+
+
 def lookup_active_flight(options):
     """
     Looks up a flight given the options
@@ -41,9 +52,9 @@ def lookup_active_flight(options):
         vehicle = get_vehicle(options['vehicle'])
     flight = getActiveFlight(vehicle)
     if not flight:
-        # do we want to error or create a flight in this case?
-        raise Exception('No active flight for vehicle %s' % vehicle.name)
-    options['flight'] = flight.name
+        options['flight'] = None
+    else:
+        options['flight'] = flight.name
     return flight
 
 

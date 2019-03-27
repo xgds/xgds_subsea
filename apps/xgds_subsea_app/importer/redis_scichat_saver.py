@@ -21,7 +21,7 @@ from time import sleep
 
 import django
 django.setup()
-from redis_utils import TelemetrySaver, lookup_active_flight
+from redis_utils import TelemetrySaver, ensure_vehicle
 from redis_csv_saver import CsvSaver
 from sciChatCsvImporter import SciChatCsvImporter
 
@@ -29,10 +29,9 @@ from sciChatCsvImporter import SciChatCsvImporter
 class SciChatSaver(CsvSaver):
     def __init__(self, options):
         # Create an EventLogCsvImporter object with no corresponding CSV file:
-        lookup_active_flight(options)
+        ensure_vehicle(options)
         self.importer = SciChatCsvImporter(options['config_yaml'], None,
                                     options['vehicle'],
-                                    options['flight']) #,
                                     #options['timezone'],
                                     #options['input'],
                                     #options['reload'],
