@@ -17,6 +17,16 @@
     }
   },
   {
+    "pk": 1,
+    "model": "xgds_core.vehicle",
+    "fields": {
+      "name": "Generic Vehicle",
+      "shortName": "generic",
+      "type": "GenericVehicle",
+      "primary": false
+    }
+  },
+  {
     "pk": 2,
     "model": "xgds_core.vehicle",
     "fields": {
@@ -1495,6 +1505,35 @@
       "constantName": "NAUTILUS_IP",
       "active": true
     }
+  },
+  {
+    "model": "xgds_status_board.subsystem",
+    "pk": 5,
+    "fields": {
+      "name": "xgds1LoadAverage",
+      "displayName": "Load Average",
+      "group": 2,
+      "logFileUrl": "/data/pyraptord/updateLoadAverages_latest.txt",
+      "warningThreshold": 120,
+      "failureThreshold": 180,
+      "refreshRate": 60,
+      "constantName": null,
+      "active": true
+    }
+  },
+  {
+    "model": "xgds_status_board.subsystem",
+    "pk": 6,
+    "fields": {
+      "name": "xgds2LoadAverage",
+      "displayName": "Load Average",
+      "group": 3,
+      "logFileUrl": "/data/pyraptord/updateLoadAverages_latest.txt",
+      "warningThreshold": 120,
+      "failureThreshold": 180,
+      "refreshRate": 60,
+      "constantName": null,
+      "active": true
+    }
   }
-
 ]
