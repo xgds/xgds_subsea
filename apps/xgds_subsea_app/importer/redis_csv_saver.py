@@ -23,7 +23,7 @@ from time import sleep
 import django
 django.setup()
 
-from redis_utils import TelemetrySaver, ensure_vehicle
+from redis_utils import TelemetrySaver, ensure_vehicle, patch_yaml_path
 from xgds_core.importer.csvImporter import CsvImporter
 
 from geocamUtil.loader import getModelByName
@@ -33,10 +33,11 @@ class CsvSaver(TelemetrySaver):
     def __init__(self, options):
 
         ensure_vehicle(options)
+        patch_yaml_path(options)
 
         # Create a CsvImporter object with no corresponding CSV file:
         self.importer = CsvImporter(options['config_yaml'], None,
-                                    options['vehicle']),
+                                    options['vehicle'])
                                     #options['timezone'],
                                     #options['input'],
                                     #options['reload'],

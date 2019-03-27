@@ -2,7 +2,7 @@ verbose: False
 timezone: UTC
 savers:
   temp:
-    config_yaml: TempProbe.yaml
+    config_yaml: TempProbe_UDP.yaml
     vehicle: Hercules
     channel_name: 'xgds:tem'
     buffer_time_sec: 5

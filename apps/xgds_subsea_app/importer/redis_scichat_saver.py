@@ -21,7 +21,7 @@ from time import sleep
 
 import django
 django.setup()
-from redis_utils import TelemetrySaver, ensure_vehicle
+from redis_utils import TelemetrySaver, ensure_vehicle, patch_yaml_path
 from redis_csv_saver import CsvSaver
 from sciChatCsvImporter import SciChatCsvImporter
 
@@ -30,13 +30,15 @@ class SciChatSaver(CsvSaver):
     def __init__(self, options):
         # Create an EventLogCsvImporter object with no corresponding CSV file:
         ensure_vehicle(options)
+        patch_yaml_path(options)
+
         self.importer = SciChatCsvImporter(options['config_yaml'], None,
-                                    options['vehicle'],
-                                    #options['timezone'],
-                                    #options['input'],
-                                    #options['reload'],
-                                    #options['replace'],
-                                    #options['skip_bad'])
+                                           options['vehicle'])
+                                           #options['timezone'],
+                                           #options['input'],
+                                           #options['reload'],
+                                           #options['replace'],
+                                           #options['skip_bad'])
         self.delimiter = self.importer.config['delimiter']
         TelemetrySaver.__init__(self, options)
 
@@ -56,7 +58,7 @@ if __name__=='__main__':
 
     if 'savers' in config:
         savers = []
-        for name, params in config['savers'].iteritems():
-            savers.append(SciChatSaver(params))
-        while True:
-            sleep(1)
+    for name, params in config['savers'].iteritems():
+        savers.append(SciChatSaver(params))
+    while True:
+        sleep(1)

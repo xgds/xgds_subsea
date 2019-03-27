@@ -1,0 +1,19 @@
+# This file describes the values from the temperature probe
+name: TempProbe
+class: xgds_subsea_app.TempProbe
+superclass: xgds_timeseries.TimeSeriesModel
+extension: TEM
+delimiter: \t
+flight_required: false
+fields:
+  col_1:
+    skip: true
+  timestamp:
+    type: datetime
+    format: iso8601
+  col_3:
+    skip: true
+  temperature:
+    type: float
+    regex: (\d+\.\d+)C
+    units: Celsius

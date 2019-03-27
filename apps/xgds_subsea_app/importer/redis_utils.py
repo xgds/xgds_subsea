@@ -18,6 +18,8 @@
 import redis
 import datetime
 import threading
+import inspect
+import os
 from time import sleep
 
 import django
@@ -26,6 +28,18 @@ django.setup()
 from django.conf import settings
 
 from xgds_core.flightUtils import get_default_vehicle, get_vehicle, getActiveFlight
+
+
+def patch_yaml_path(options):
+    """
+    Prepend the path to this script to the yaml paths
+    :param options: the options that have a yaml path
+    :return: the options with the yaml patched
+    """
+    if '/' not in options['config_yaml']:
+        dir_name = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+        options['config_yaml'] = os.path.join(dir_name, options['config_yaml'])
+    return options
 
 
 def ensure_vehicle(options):

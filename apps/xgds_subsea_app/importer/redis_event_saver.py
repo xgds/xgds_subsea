@@ -24,7 +24,8 @@ import django
 django.setup()
 from django.conf import settings
 
-from redis_utils import TelemetrySaver, ensure_vehicle
+from redis_utils import TelemetrySaver, ensure_vehicle, patch_yaml_path
+
 from eventLogcsvImporter import EventLogCsvImporter
 
 BROADCAST = settings.XGDS_CORE_REDIS and settings.XGDS_SSE  # type: bool
@@ -34,8 +35,10 @@ class EventSaver(TelemetrySaver):
     def __init__(self, options):
         # Create an EventLogCsvImporter object with no corresponding CSV file:
         ensure_vehicle(options)
+        patch_yaml_path(options)
+
         self.importer = EventLogCsvImporter(options['config_yaml'], None,
-                                    options['vehicle'],
+                                    options['vehicle'])
                                     #options['timezone'],
                                     #options['input'],
                                     #options['reload'],

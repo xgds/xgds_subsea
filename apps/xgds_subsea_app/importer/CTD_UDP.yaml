@@ -4,7 +4,7 @@ class: xgds_subsea_app.ConductivityTempDepth
 superclass: xgds_timeseries.TimeSeriesModel
 extension: tsv
 delimiter: '\t'
-flight_required: true
+flight_required: false
 fields:
   type:
     type: string
