@@ -29,17 +29,18 @@ from django.conf import settings
 
 
 class UdpRedisBridge:
-    def __init__(self, udp_host, udp_port, redis_channel_name):
-        self.udp_host = udp_host
-        self.udp_port = udp_port
+    def __init__(self, config):
+        self.verbose = config['verbose']
+        self.udp_host = config['host']
+        self.udp_port = config['port']
 
         # bind socket for udp stream coming in
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.socket.bind((udp_host, udp_port))
+        self.socket.bind((self.udp_host, self.udp_port))
 
         # Redis connection for messages going out
         self.r = redis.Redis(host=settings.XGDS_CORE_REDIS_HOST, port=settings.XGDS_CORE_REDIS_PORT)
-        self.channel_name = redis_channel_name
+        self.channel_name = config['channel']
 
         # Start a thread for this UDP to that Redis channel
         thread = threading.Thread(target=self.run)
@@ -57,7 +58,7 @@ class UdpRedisBridge:
                 # status message showing the udp port data came in,
                 # the redis channel it is goingn to, and the contents
                 # of the message
-                if verbose:
+                if self.verbose:
                     print '%d->%s: %s' % (self.udp_port, self.channel_name, rcv)
                 self.r.publish(self.channel_name, rcv)
         self.socket.shutdown()
@@ -73,13 +74,9 @@ if __name__ == '__main__':
     with open(yaml_file, 'r') as fp:
         config = yaml.load(fp)
 
-    verbose = False
-    if 'verbose' in config:
-        verbose = config['verbose']
-
     if 'bridges' in config:
         bridges = []
         for name, params in config['bridges'].iteritems():
-            bridges.append(UdpRedisBridge(params['host'], params['port'], params['channel']))
+            bridges.append(UdpRedisBridge(params))
         while True:
             sleep(1)
