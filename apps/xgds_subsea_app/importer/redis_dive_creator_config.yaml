@@ -1,0 +1,3 @@
+verbose: True
+config_yaml: EventLog.yaml
+channel_name: 'xgds:event'
