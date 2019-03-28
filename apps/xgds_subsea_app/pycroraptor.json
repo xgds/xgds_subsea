@@ -23,6 +23,9 @@
         "udp_redis_bridge": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/udp_redis_bridge.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/udp_redis_bridge_config.yaml"
         },
+        "redis_dive_creator": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_dive_creator.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_dive_creator_config.yaml"
+        },
         "redis_demux": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_demux.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_demux_config.yaml"
         },

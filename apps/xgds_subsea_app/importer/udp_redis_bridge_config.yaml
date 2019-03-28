@@ -28,4 +28,4 @@ bridges:
     host: '127.0.0.1'
     port: 41242
     channel: 'xgds:scichat'
-    verbose: true
+    verbose: false

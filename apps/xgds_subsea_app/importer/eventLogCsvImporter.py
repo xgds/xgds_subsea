@@ -32,6 +32,20 @@ from xgds_map_server.models import Place
 from xgds_sample.models import Sample, SampleType, Label
 
 
+def safe_delete_key(dictionary, key):
+    """
+    Safely delete a key from a dictionary only if it exists
+    :param dictionary: the dictionary
+    :param key: the key to delete
+    :return: the dictionary
+    """
+    try:
+        del dictionary[key]
+    except:
+        pass
+    return dictionary
+
+
 def clean_key_value(dictionary):
     """
     Return a tuple including the key and value string replacing underscores with spaces
@@ -289,10 +303,10 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         """
         row = self.update_row(row)
         row_copy = row.copy()
-        del row_copy['tag']
+        safe_delete_key(row, 'tag')
         if 'condition_data' in row_copy:
-            del row_copy['condition_data']
-            del row_copy['condition_history_data']
+            safe_delete_key(row_copy, 'condition_data')
+            safe_delete_key(row_copy, 'condition_history_data')
         if row:
             result = LocatedNote.objects.filter(**row_copy)
             return result.exists()
@@ -334,7 +348,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                                   region=SiteFrame.objects.get(pk=settings.XGDS_CURRENT_SITEFRAME_ID))
                     Place.add_root(instance=place)
                 row['place'] = place
-            del row['site']
+            safe_delete_key(row, 'site')
         return row
 
     def clean_author(self, row):
@@ -368,7 +382,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             row['author'] = self.datalogger_user
 
         if 'author_name' in row:
-            del row['author_name']
+            safe_delete_key(row, 'author_name')
         else:
             print "*** THIS ROW HAS NO AUTHOR FIELD **"
             print row
@@ -393,11 +407,11 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 print 'INVALID VEHICLE, DEFAULTING TO HERCULES %s' % rvn
             if not vehicle_name:
                 vehicle_name = self.vehicle.name
-        del row['vehicle_name']
+        safe_delete_key(row, 'vehicle_name')
         if 'group_flight_name' in row:
             flight_name = row['group_flight_name'] + '_' + vehicle_name
             row['flight'] = lookup_flight(flight_name)
-            del row['group_flight_name']
+            safe_delete_key(row, 'group_flight_name')
         return row
 
     def clean_key_values(self, row):
@@ -409,7 +423,10 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         """
         key_1, value_1 = clean_key_value(row['key_value_1'])
         key_2, value_2 = clean_key_value(row['key_value_2'])
-        key_3, value_3 = clean_key_value(row['key_value_3'])
+        key_3 = None
+        value_3 = None
+        if 'key_value_3' in row:
+            key_3, value_3 = clean_key_value(row['key_value_3'])
 
         event_type = row['event_type']
         if event_type == 'NOTES':
@@ -535,20 +552,20 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                     row['condition_data']['flight'] = row['flight']
 
         if 'tag' in row and not row['tag']:
-            del row['tag']
+            safe_delete_key(row, 'tag')
 
-        del row['key_value_1']
-        del row['key_value_2']
-        del row['key_value_3']
-        del row['key_value_4']
-        del row['key_value_5']
-        del row['key_value_6']
-        del row['key_value_7']
-        del row['key_value_8']
-        del row['event_type']
-        del row['task_type']
-
+        safe_delete_key(row, 'key_value_1')
+        safe_delete_key(row, 'key_value_2')
+        safe_delete_key(row, 'key_value_3')
+        safe_delete_key(row, 'key_value_4')
+        safe_delete_key(row, 'key_value_5')
+        safe_delete_key(row, 'key_value_6')
+        safe_delete_key(row, 'key_value_7')
+        safe_delete_key(row, 'key_value_8')
+        safe_delete_key(row, 'event_type')
+        safe_delete_key(row, 'task_type')
         return row
+
 
     def populate_condition_data(self, row, name, status):
         """
@@ -650,13 +667,13 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             if 'tag' in row:
                 has_tag = True
                 new_note_tags = row['tag']
-                del row['tag']
+                safe_delete_key(row, 'tag')
             if 'sample_data' in row:
                 # This is a sample; create it and set the foreign key
                 sample_data = row['sample_data']
-                del row['sample_data']
+                safe_delete_key(row, 'sample_data')
                 label, created = Label.objects.get_or_create(number=sample_data['sample_label_number'])
-                del sample_data['sample_label_number']
+                safe_delete_key(row, 'sample_label_number')
                 sample_data['label'] = label
                 sample_data['flight'] = row['flight']
                 if created:
@@ -723,8 +740,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                     if broadcast:
                         condition_history.broadcast()
 
-                del row['condition_data']
-                del row['condition_history_data']
+                safe_delete_key(row, 'condition_data')
+                safe_delete_key(row, 'condition_history_data')
 
             if not found_position_id:
                 row = csvImporter.lookup_position(row, timestamp_key='event_time',
@@ -801,7 +818,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 if 'tag' in row:
                     has_tag = True
                     new_note_tags = row['tag']
-                    del row['tag']
+                    safe_delete_key(row, 'tag')
                 for key, value in row.iteritems():
                     setattr(item, key, value)
                 item.tags.clear()
