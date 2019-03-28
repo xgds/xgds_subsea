@@ -85,11 +85,11 @@ class NavSaver(TelemetrySaver):
         # Get vehicle
         if 'vehicle' not in options:
             raise ValueError('Vehicle not specified')
-        vehicle = Vehicle.objects.get(name=options['vehicle'])
+        self.vehicle = Vehicle.objects.get(name=options['vehicle'])
 
         # Get flight using current time
         t = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
-        self.flight = getFlight(t, vehicle)
+        self.flight = getFlight(t, self.vehicle)
 
         # Set the desired time once telemetry starts coming in
         self.desired_pose_time = None
