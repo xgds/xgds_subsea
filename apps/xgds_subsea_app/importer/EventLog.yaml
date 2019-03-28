@@ -3,7 +3,6 @@ name: EventLog
 class: xgds_notes2.LocatedNote
 extension: txt
 delimiter: \t
-# flight_required: true
 fields:
   col_1:
     skip: true

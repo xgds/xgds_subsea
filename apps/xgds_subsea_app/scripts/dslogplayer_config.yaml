@@ -65,3 +65,22 @@ outputs:
           port: 41241
           term: \r\n
           headers: True
+---
+
+fileExt: EVENT
+outputs:
+  - source: ~
+    address: 127.0.0.1
+    port: 41250
+    term: \r\n
+    headers: True
+
+---
+
+fileExt: CHAT
+outputs:
+        - source: ~
+          address: 127.0.0.1
+          port: 41242
+          term: \r\n
+          headers: True

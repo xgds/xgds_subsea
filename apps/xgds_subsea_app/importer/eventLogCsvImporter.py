@@ -607,7 +607,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         try:
             found_sample = Sample.objects.get(name=name)
             if not self.replace:
-                raise 'Sample already exists and replace not specified %s' % name
+                # we want to continue
+                print 'Sample already exists and replace not specified %s' % name
+                return None
         except ObjectDoesNotExist:
             pass
         sample_type = None
@@ -673,7 +675,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 sample_data = row['sample_data']
                 safe_delete_key(row, 'sample_data')
                 label, created = Label.objects.get_or_create(number=sample_data['sample_label_number'])
-                safe_delete_key(row, 'sample_label_number')
+                safe_delete_key(sample_data, 'sample_label_number')
                 sample_data['label'] = label
                 sample_data['flight'] = row['flight']
                 if created:
@@ -690,6 +692,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
                 try:
                     sample = Sample.objects.create(**sample_data)
+                    new_models.append(sample)
                     if broadcast:
                         sample.broadcast()
                 except Exception as e:
@@ -718,6 +721,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                     condition_history_data = row['condition_history_data']
                     condition_history_data['condition'] = condition
                     condition_history = ConditionHistory.objects.create(**condition_history_data)
+                    new_models.append(condition_history)
 
                     # update prior condition to complete it if it is a dive status
                     update = False
@@ -737,6 +741,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                         if update:
                             condition_history_data['status'] = self.condition_completed
                             condition_history2 = ConditionHistory.objects.create(**condition_history_data)
+                            new_models.append(condition_history2)
                     if broadcast:
                         condition_history.broadcast()
 

@@ -1,9 +1,8 @@
-verbose: False
+verbose: True
 timezone: UTC
 savers:
   event:
     config_yaml: EventLog.yaml
     vehicle: Hercules
     channel_name: 'xgds:event'
-    buffer_time_sec: 5
 
