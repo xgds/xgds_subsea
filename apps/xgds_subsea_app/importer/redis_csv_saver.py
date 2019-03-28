@@ -36,19 +36,24 @@ class CsvSaver(TelemetrySaver):
         patch_yaml_path(options)
 
         # Create a CsvImporter object with no corresponding CSV file:
-        self.importer = CsvImporter(options['config_yaml'], None,
-                                    options['vehicle'])
-                                    #options['timezone'],
-                                    #options['input'],
-                                    #options['reload'],
-                                    #options['replace'],
-                                    #options['skip_bad'])
+        self.importer = self.construct_importer(options)
         self.keys = self.importer.config['fields'].keys()
         self.delimiter = self.importer.config['delimiter']
         self.model = getModelByName(self.importer.config['class'])
         super(CsvSaver, self).__init__(options)
 
+    def construct_importer(self, options):
+        return CsvImporter(options['config_yaml'], None,
+                           options['vehicle'])
+        # options['timezone'],
+        # options['input'],
+        # options['reload'],
+        # options['replace'],
+        # options['skip_bad'])
+
     def deserialize(self, msg):
+        print(msg)
+        row = None
         try:
             values = msg.split(self.delimiter)
             row = {k: v for k, v in zip(self.keys, values)}
@@ -56,7 +61,8 @@ class CsvSaver(TelemetrySaver):
             return self.model(**row)
         except Exception as e:
             print 'deserializing:', msg
-            print 'deserialized:', row
+            if row:
+                print 'deserialized:', row
             traceback.print_exc()
             print e
             return None

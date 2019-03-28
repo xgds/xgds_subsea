@@ -27,20 +27,10 @@ from sciChatCsvImporter import SciChatCsvImporter
 
 
 class SciChatSaver(CsvSaver):
-    def __init__(self, options):
-        # Create an EventLogCsvImporter object with no corresponding CSV file:
-        ensure_vehicle(options)
-        patch_yaml_path(options)
 
-        self.importer = SciChatCsvImporter(options['config_yaml'], None,
-                                           options['vehicle'])
-                                           #options['timezone'],
-                                           #options['input'],
-                                           #options['reload'],
-                                           #options['replace'],
-                                           #options['skip_bad'])
-        self.delimiter = self.importer.config['delimiter']
-        TelemetrySaver.__init__(self, options)
+    def construct_importer(self, options):
+        return SciChatCsvImporter(options['config_yaml'], None,
+                           options['vehicle'])
 
 
 if __name__=='__main__':

@@ -1,4 +1,4 @@
-verbose: false
+verbose: true
 
 bridges:
   her:
@@ -23,5 +23,5 @@ bridges:
     channel: 'xgds:event'
   chat:
     host: '127.0.0.1'
-    port: 41260
-    channel: 'xgds:chat'
+    port: 41242
+    channel: 'xgds:scichat'

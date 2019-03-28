@@ -5,5 +5,5 @@ savers:
     config_yaml: SciChat.yaml
     vehicle: Hercules
     channel_name: 'xgds:scichat'
-    buffer_time_sec: 0.2
+    buffer_time_sec: 1
 
