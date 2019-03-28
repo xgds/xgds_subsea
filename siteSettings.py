@@ -44,8 +44,6 @@ SECRET_KEY = '***REMOVED***'
 
 FAVICON_PATH = "xgds_subsea/images/favicon.ico"
 
-XGDS_CORE_REDIS_HOST = 'redis'
-
 
 # from apps.basaltApp.instrumentDataImporters import *
 # apps should be listed from "most specific" to "most general".  that
@@ -363,23 +361,6 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 def make_key(key, key_prefix, version):
     return key
 
-CACHES = {
-    'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': 'redis:6379',
-        'TIMEOUT': 604800,
-        'KEY_FUNCTION' : make_key
-    },
-}
-
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#         'LOCATION': '127.0.0.1:11211',
-#         'TIMEOUT': 604800,
-#         'KEY_FUNCTION' : make_key
-#     }
-# }
 
 FILE_UPLOAD_TEMP_DIR = os.path.join(DATA_ROOT, XGDS_MAP_SERVER_GEOTIFF_SUBDIR, 'temp')
 ZEROMQ_PORTS = PROJ_ROOT + 'apps/xgds_subsea_app/ports.json'
@@ -612,4 +593,24 @@ XGDS_SSE_SAMPLE_CHANNELS = ['sse', 'herc']
 XGDS_SSE_CHANNELS = ['sse', 'herc', 'argus', 'nautilus', 'sat3']
 
 XGDS_CORE_REDIS = True
-XGDS_CORE_REDIS_HOST = "redis"  # if you are NOT running in docker-compose, set this to localhost in your settings.py
+
+# if you are NOT running in docker-compose, put the following in your settings.py:
+# XGDS_CORE_REDIS_HOST = "localhost"
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'redis_cache.RedisCache',
+#         'LOCATION': 'localhost:6379',
+#         'TIMEOUT': 604800,
+#         'KEY_FUNCTION': make_key
+#     },
+# }
+
+XGDS_CORE_REDIS_HOST = "redis"
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': '%s:6379' % XGDS_CORE_REDIS_HOST,
+        'TIMEOUT': 604800,
+        'KEY_FUNCTION': make_key
+    },
+}
