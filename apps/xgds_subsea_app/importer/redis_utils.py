@@ -163,7 +163,7 @@ class TelemetrySaver(object):
                         self.buffer.append(obj)
 
             # Check how long it's been and write if it's been too long
-            if 'buffer_time_sec' in self.config:
+            if 'buffer_time_sec' in self.config and self.last_write_time:
                 dt = (datetime.datetime.utcnow() - self.last_write_time).total_seconds()
                 if dt >= self.config['buffer_time_sec']:
                     self.write_buffer()

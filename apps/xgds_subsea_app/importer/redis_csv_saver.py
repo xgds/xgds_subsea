@@ -55,7 +55,6 @@ class CsvSaver(TelemetrySaver):
         # options['skip_bad'])
 
     def deserialize(self, msg):
-        print(msg)
         row = None
         try:
             values = msg.split(self.delimiter)
@@ -70,7 +69,6 @@ class CsvSaver(TelemetrySaver):
             if row:
                 print 'deserialized:', row
             traceback.print_exc()
-            print e
             return None
 
 

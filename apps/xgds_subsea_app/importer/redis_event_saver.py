@@ -24,28 +24,18 @@ import django
 django.setup()
 from django.conf import settings
 
-from redis_utils import TelemetrySaver, ensure_vehicle, patch_yaml_path
+from redis_csv_saver import CsvSaver
 
 from eventLogcsvImporter import EventLogCsvImporter
 
 BROADCAST = settings.XGDS_CORE_REDIS and settings.XGDS_SSE  # type: bool
 
 
-class EventSaver(TelemetrySaver):
-    def __init__(self, options):
-        # Create an EventLogCsvImporter object with no corresponding CSV file:
-        ensure_vehicle(options)
-        patch_yaml_path(options)
+class EventSaver(CsvSaver):
 
-        self.importer = EventLogCsvImporter(options['config_yaml'], None,
-                                    options['vehicle'])
-                                    #options['timezone'],
-                                    #options['input'],
-                                    #options['reload'],
-                                    #options['replace'],
-                                    #options['skip_bad'])
-        self.delimiter = self.importer.config['delimiter']
-        super(EventSaver, self).__init__(options)
+    def construct_importer(self, options):
+        return EventLogCsvImporter(options['config_yaml'], None,
+                           options['vehicle'])
 
     def deserialize(self, msg):
         """
@@ -53,17 +43,20 @@ class EventSaver(TelemetrySaver):
         :param msg:
         :return:
         """
+        row = None
         try:
             values = msg.split(self.delimiter)
             row = {k: v for k, v in zip(self.keys, values)}
             row = self.importer.update_row(row)
             models = self.importer.build_models(row, BROADCAST)
+            print('CREATED')
+            print(models)
             return None  # because the importer build models stores them
         except Exception as e:
             print 'deserializing:', msg
-            print 'deserialized:', row
+            if row:
+                print 'deserialized:', row
             traceback.print_exc()
-            print e
             return None
 
 

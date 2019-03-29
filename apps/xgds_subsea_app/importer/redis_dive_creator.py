@@ -22,9 +22,9 @@ import pytz
 import datetime
 import threading
 from time import sleep
+from dateutil.parser import parse as dateparser
 
 import django
-
 django.setup()
 from django.conf import settings
 
@@ -65,7 +65,7 @@ class DiveCreator(object):
         if not self.active_dive:
             print 'NO ACTIVE DIVE'
 
-        self.delimiter = self.importer.config['delimiter']
+        self.delimiter = '\t'
         self.tq = TelemetryQueue(config['channel_name'])
 
         # Start listener thread
@@ -73,45 +73,95 @@ class DiveCreator(object):
         thread.daemon = True
         thread.start()
 
-    def start_dive(self, group_flight_name):
+    def start_dive(self, group_flight_name, start_time):
         # call create_group_flight
         print('starting dive %s' % group_flight_name)
-        self.active_dive = create_group_flight(group_flight_name, notes=None, vehicles=self.vehicles, active=True)
+        self.active_dive = create_group_flight(group_flight_name, notes=None, active=True, start_time=start_time)
 
-    def end_dive(self):
+    def end_dive(self, end_time=None):
+        """
+        End a dive, stopping active flights and clearing self.active_dive
+        :param end_time: the end time to set on all the flights
+        """
         group_flight_name = self.active_dive.name
-        end_time = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
         print('ending dive %s %s' % (group_flight_name, end_time))
-
         end_group_flight(group_flight_name, end_time)
         self.active_dive = None
+
+    def end_other_dive(self, group_flight_name, end_time):
+        """
+        End a dive that is not our active dive
+        :param group_flight_name: the group flight name to look for
+        :param end_time: the end time
+        """
+        print('ending dive %s %s' % (group_flight_name, end_time))
+        end_group_flight(group_flight_name, end_time)
+
+    def parse_data(self, data):
+        """
+        Gets the group flight name and the dive number and the time from the data
+        :param data:
+        :return: dictionary with group flight name, dive number and time
+        """
+        dive_number = None
+        group_flight_name = None
+        values = data.split(self.delimiter)
+
+        if 'DIVENUMBER' in data:
+            # Try to get the group flight name from the event message
+            for v in values:
+                if v.startswith('DIVENUMBER'):
+                    dive_number = v.split(':')[1]
+                    group_flight_name = self.prefix + dive_number
+                    break
+            if not group_flight_name:
+                # should never happen but just in case
+                last_flight_number = self.get_last_flight_number()
+                flight_number = last_flight_number + 1
+                group_flight_name = '%sH%d' % (self.prefix, flight_number)
+
+        # get the time
+        value = values[1]
+        the_time = dateparser(value)
+        the_time.replace(tzinfo=pytz.UTC)
+        print(the_time.isoformat())
+
+        result = {'group_flight_name': group_flight_name,
+                  'dive_number': dive_number,
+                  'time': the_time}
+        return result
 
     def run(self):
         for msg in self.tq.listen():
             data = msg['data']
             print data
-            if self.active_dive:
-                print 'ADIVE'
-            if self.active_dive is None:
-                if 'DIVESTATUSEVENT:inwater' in data:
-                    # Try to get the group flight name from the event message
-                    group_flight_name = None
-                    if 'DIVENUMBER' in data:
-                        values = data.split(self.delimiter)
-                        for v in values:
-                            if v.startswith('DIVENUMBER'):
-                                group_flight_name = self.prefix + v.split(':')[1]
-                                break
-                    else:
-                        last_flight_number = self.get_last_flight_number()
-                        flight_number = last_flight_number + 1
-                        group_flight_name = '%sH%d' % (self.prefix, flight_number)
-                    self.start_dive(group_flight_name)
 
-            else:
-                if 'DIVESTATUSEVENT:ondeck' in data:
-                    print 'END MATCH'
-                    self.end_dive()
+            if 'DIVESTATUSEVENT:inwater' in data:
+                parsed_data = self.parse_data(data)
+
+                if self.active_dive:
+                    if parsed_data['dive_number']:
+                        if parsed_data['dive_number'] not in self.active_dive.name:
+                            # end that dive with no end time, the names do not match
+                            self.end_dive()
+                        else:
+                            return
+
+                # make the dive and start it
+                self.start_dive(parsed_data['group_flight_name'], parsed_data['time'])
+
+            elif 'DIVESTATUSEVENT:ondeck' in data:
+                parsed_data = self.parse_data(data)
+                end_time = None
+
+                if self.active_dive:
+                    if parsed_data['dive_number']:
+                        if parsed_data['dive_number'] in self.active_dive.name:
+                            end_time = parsed_data['time']
+                    self.end_dive(end_time)
+                else:
+                    # no active dive, but we got an end so let's end that dive
+                    self.end_other_dive(parsed_data['dive_number'], parsed_data['time'])
 
 
 if __name__ == '__main__':
