@@ -40,10 +40,14 @@
         },
         "redis_scichat_saver": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_scichat_saver.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_scichat_saver_config.yaml"
+        },
+        "redis_frame_grabber": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_frame_grabber.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_frame_grabber_config.yaml"
         }
       },
     "GROUPS": {
-        "startup": ["pingSubsystems","updateLoadAverages", "sse", "sseHeartbeat",
-            "udp_redis_bridge", "redis_demux", "redis_nav_saver"]
+                "startup": ["pingSubsystems","updateLoadAverages", "sse", "sseHeartbeat",
+                    "udp_redis_bridge", "redis_dive_creator", "redis_demux", "redis_nav_saver",
+                    "redis_csv_saver", "redis_event_saver", "redis_scichat_saver", "redis_frame_grabber"]
     }
 }

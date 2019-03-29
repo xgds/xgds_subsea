@@ -84,3 +84,13 @@ outputs:
           port: 41242
           term: \r\n
           headers: True
+
+---
+
+fileExt: GRABHD
+outputs:
+        - source: ~
+          address: 127.0.0.1
+          port: 41243
+          term: \r\n
+          headers: True

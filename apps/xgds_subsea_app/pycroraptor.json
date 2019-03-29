@@ -29,20 +29,25 @@
         "redis_demux": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_demux.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_demux_config.yaml"
         },
-        "redis_csv_saver": {
-            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_csv_saver.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_csv_saver_config.yaml"
-        },
         "redis_nav_saver": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_nav_saver.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_nav_saver_config.yaml"
+        },
+        "redis_csv_saver": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_csv_saver.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_csv_saver_config.yaml"
         },
         "redis_event_saver": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_event_saver.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_event_saver_config.yaml"
         },
         "redis_scichat_saver": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_scichat_saver.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_scichat_saver_config.yaml"
+        },
+        "redis_frame_grabber": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_frame_grabber.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_frame_grabber_config.yaml"
         }
     },
     "GROUPS": {
-        "startup": ["pingSubsystems","updateLoadAverages","zmqCentral" , "sse", "sseHeartbeat"]
+        "startup": ["pingSubsystems","updateLoadAverages", "sse", "sseHeartbeat",
+                    "udp_redis_bridge", "redis_dive_creator", "redis_demux", "redis_nav_saver",
+                    "redis_csv_saver", "redis_event_saver", "redis_scichat_saver", "redis_frame_grabber"]
     }
 }

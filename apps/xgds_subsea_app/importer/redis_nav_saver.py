@@ -88,8 +88,8 @@ class NavSaver(TelemetrySaver):
         self.vehicle = Vehicle.objects.get(name=options['vehicle'])
 
         # Get flight using current time
-        t = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
-        self.flight = getFlight(t, self.vehicle)
+        # t = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
+        # self.flight = getFlight(t, self.vehicle)
 
         # Set the desired time once telemetry starts coming in
         self.desired_pose_time = None

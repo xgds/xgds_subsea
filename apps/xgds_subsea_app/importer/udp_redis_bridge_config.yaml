@@ -23,9 +23,14 @@ bridges:
     host: '127.0.0.1'
     port: 41250
     channel: 'xgds:event'
-    verbose: true
+    verbose: false
   chat:
     host: '127.0.0.1'
     port: 41242
     channel: 'xgds:scichat'
     verbose: false
+  grab:
+    host: '127.0.0.1'
+    port: 41243
+    channel: 'xgds:grab'
+    verbose: true
