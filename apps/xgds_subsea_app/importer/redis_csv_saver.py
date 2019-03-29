@@ -25,7 +25,7 @@ django.setup()
 
 from redis_utils import TelemetrySaver, ensure_vehicle, patch_yaml_path
 from xgds_core.importer.csvImporter import CsvImporter
-
+from xgds_core.flightUtils import getActiveFlight
 from geocamUtil.loader import getModelByName
 
 
@@ -40,6 +40,9 @@ class CsvSaver(TelemetrySaver):
         self.keys = self.importer.config['fields'].keys()
         self.delimiter = self.importer.config['delimiter']
         self.model = getModelByName(self.importer.config['class'])
+        self.needs_flight = False
+        if hasattr(self.model(), 'flight'):
+            self.needs_flight = True
         super(CsvSaver, self).__init__(options)
 
     def construct_importer(self, options):
@@ -57,6 +60,9 @@ class CsvSaver(TelemetrySaver):
             values = msg.split(self.delimiter)
             row = {k: v for k, v in zip(self.keys, values)}
             row = self.importer.update_row(row)
+            if self.needs_flight:
+                flight = getActiveFlight()
+                row['flight'] = flight
             return self.model(**row)
         except Exception as e:
             print 'deserializing:', msg

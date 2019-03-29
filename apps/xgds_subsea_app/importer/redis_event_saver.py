@@ -27,6 +27,7 @@ from django.conf import settings
 from redis_csv_saver import CsvSaver
 
 from eventLogcsvImporter import EventLogCsvImporter
+from xgds_core.flightUtils import getActiveFlight
 
 BROADCAST = settings.XGDS_CORE_REDIS and settings.XGDS_SSE  # type: bool
 
@@ -48,6 +49,8 @@ class EventSaver(CsvSaver):
             values = msg.split(self.delimiter)
             row = {k: v for k, v in zip(self.keys, values)}
             row = self.importer.update_row(row)
+            if self.needs_flight:
+                row['flight'] = getActiveFlight()
             models = self.importer.build_models(row, BROADCAST)
             print('CREATED')
             print(models)
