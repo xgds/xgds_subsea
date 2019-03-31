@@ -510,12 +510,7 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['hiddenColumns'] = ['pk', 'v
 XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['columnTitles'] = ['Time', 'Author', 'Name', 'Description', 'Image']
 XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['order_columns'] = ['pk', 'acquisition_time', 'author__first_name', 'name', 'description']
 
-XGDS_MAP_SERVER_SEARCH_MODELS = copy.deepcopy(XGDS_MAP_SERVER_JS_MAP)
-if 'Track' in XGDS_MAP_SERVER_SEARCH_MODELS:
-    del XGDS_MAP_SERVER_SEARCH_MODELS['Track']
-
-if 'Position' in XGDS_MAP_SERVER_SEARCH_MODELS:
-    del XGDS_MAP_SERVER_SEARCH_MODELS['Position']
+XGDS_MAP_SERVER_SEARCH_MODELS = ['Event', 'Sample', 'Image', 'Message']
 
 XGDS_CORE_SHOW_CREATE_FLIGHTS = False
 XGDS_CORE_SHOW_FLIGHT_MANAGEMENT = False
