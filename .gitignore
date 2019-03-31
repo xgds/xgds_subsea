@@ -31,3 +31,5 @@ coverage_html_report
 TempImportHandlerConfig.yaml
 htmlcov/
 *.egg
+dslogReplay/
+pynmea2/
