@@ -52,8 +52,8 @@ class EventSaver(CsvSaver):
             if self.needs_flight:
                 row['flight'] = getActiveFlight()
             models = self.importer.build_models(row, BROADCAST)
-            print('CREATED')
-            print(models)
+            if self.verbose:
+                print(models)
             return None  # because the importer build models stores them
         except Exception as e:
             print 'deserializing:', msg
@@ -71,10 +71,6 @@ if __name__=='__main__':
     yaml_file = sys.argv[1]
     with open(yaml_file, 'r') as fp:
         config = yaml.load(fp)
-
-    verbose = False
-    if 'verbose' in config:
-        verbose = config['verbose']
 
     if 'savers' in config:
         savers = []

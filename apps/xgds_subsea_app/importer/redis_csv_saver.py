@@ -40,6 +40,10 @@ class CsvSaver(TelemetrySaver):
         self.keys = self.importer.config['fields'].keys()
         self.delimiter = self.importer.config['delimiter']
         self.model = getModelByName(self.importer.config['class'])
+        if 'verbose' in options:
+            self.verbose = options['verbose']
+        else:
+            self.verbose = False
         self.needs_flight = False
         if hasattr(self.model(), 'flight'):
             self.needs_flight = True
@@ -48,11 +52,6 @@ class CsvSaver(TelemetrySaver):
     def construct_importer(self, options):
         return CsvImporter(options['config_yaml'], None,
                            options['vehicle'])
-        # options['timezone'],
-        # options['input'],
-        # options['reload'],
-        # options['replace'],
-        # options['skip_bad'])
 
     def deserialize(self, msg):
         row = None
@@ -63,7 +62,10 @@ class CsvSaver(TelemetrySaver):
             if self.needs_flight:
                 flight = getActiveFlight()
                 row['flight'] = flight
-            return self.model(**row)
+            result = self.model(**row)
+            if self.verbose:
+                print result
+            return result
         except Exception as e:
             print 'deserializing:', msg
             if row:
@@ -80,10 +82,6 @@ if __name__=='__main__':
     yaml_file = sys.argv[1]
     with open(yaml_file, 'r') as fp:
         config = yaml.load(fp)
-
-    verbose = False
-    if 'verbose' in config:
-        verbose = config['verbose']
 
     if 'savers' in config:
         savers = []

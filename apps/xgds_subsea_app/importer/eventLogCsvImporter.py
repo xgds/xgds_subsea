@@ -326,7 +326,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         if result:
             result = remove_empty_keys(result)
             result['location'] = self.ship_location
-
         return result
 
     def clean_site(self, row):
@@ -408,9 +407,11 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             if not vehicle_name:
                 vehicle_name = self.vehicle.name
         safe_delete_key(row, 'vehicle_name')
+
         if 'group_flight_name' in row:
-            flight_name = row['group_flight_name'] + '_' + vehicle_name
-            row['flight'] = lookup_flight(flight_name)
+            if 'flight' not in row or row['flight'] is None:
+                flight_name = row['group_flight_name'] + '_' + vehicle_name
+                row['flight'] = lookup_flight(flight_name)
             safe_delete_key(row, 'group_flight_name')
         return row
 
@@ -545,11 +546,10 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         else:
             print '*** UNKONWN EVENT TYPE ** %s' % event_type
 
-        if 'flight' not in row or not row['flight']:
-            row = self.clean_flight(row)
-            if 'condition_data' in row:
-                if 'flight' in row:
-                    row['condition_data']['flight'] = row['flight']
+        row = self.clean_flight(row)
+        if 'condition_data' in row:
+            if 'flight' in row:
+                row['condition_data']['flight'] = row['flight']
 
         if 'tag' in row and not row['tag']:
             safe_delete_key(row, 'tag')
@@ -565,7 +565,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         safe_delete_key(row, 'event_type')
         safe_delete_key(row, 'task_type')
         return row
-
 
     def populate_condition_data(self, row, name, status):
         """

@@ -1,4 +1,3 @@
-verbose: False
 timezone: UTC
 savers:
   temp:
