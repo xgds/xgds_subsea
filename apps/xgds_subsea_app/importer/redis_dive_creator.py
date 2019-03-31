@@ -15,11 +15,10 @@
 # specific language governing permissions and limitations under the License.
 # __END_LICENSE__
 
-import sys
+from threading import Timer
 import argparse
 import yaml
 import pytz
-import datetime
 import threading
 from time import sleep
 from dateutil.parser import parse as dateparser
@@ -77,7 +76,11 @@ class DiveCreator(object):
     def start_dive(self, group_flight_name, start_time):
         # call create_group_flight
         print('starting dive %s' % group_flight_name)
-        self.active_dive = create_group_flight(group_flight_name, notes=None, active=True, start_time=start_time)
+        extras = {"cruise": settings.CRUISE_ID,
+                  "dive": group_flight_name,
+                  "inwatertime": start_time.isoformat()}
+        self.active_dive = create_group_flight(group_flight_name, notes=None, active=True, start_time=start_time,
+                                               extras=extras)
 
         for flight in self.active_dive.flights:
             # create a track for each flight
@@ -91,7 +94,11 @@ class DiveCreator(object):
         """
         group_flight_name = self.active_dive.name
         print('ending dive %s %s' % (group_flight_name, end_time))
-        end_group_flight(group_flight_name, end_time)
+
+        # delay so other things have time to finish
+        t = Timer(30, end_group_flight, [group_flight_name, end_time])
+        t.start()
+
         self.active_dive = None
 
     def end_other_dive(self, group_flight_name, end_time):
@@ -130,11 +137,11 @@ class DiveCreator(object):
         value = values[1]
         the_time = dateparser(value)
         the_time.replace(tzinfo=pytz.UTC)
-        print(the_time.isoformat())
 
         result = {'group_flight_name': group_flight_name,
                   'dive_number': dive_number,
                   'time': the_time}
+        print result
         return result
 
     def run(self):

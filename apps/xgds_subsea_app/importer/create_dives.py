@@ -68,7 +68,7 @@ def create_dives(filename):
             if k == "":
                 pass
             if k.startswith("##"):  # we know the ## bla is the name of the cruise
-                k = 'cruise'
+                k = "cruise"
 
             # further sanitize the keys, some of them have parens in them
             if '(' in k:
