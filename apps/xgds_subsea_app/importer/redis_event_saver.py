@@ -48,9 +48,8 @@ class EventSaver(CsvSaver):
         try:
             values = msg.split(self.delimiter)
             row = {k: v for k, v in zip(self.keys, values)}
+            row['flight'] = getActiveFlight()
             row = self.importer.update_row(row)
-            if self.needs_flight:
-                row['flight'] = getActiveFlight()
             models = self.importer.build_models(row, BROADCAST)
             if self.verbose:
                 print(models)

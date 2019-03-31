@@ -412,6 +412,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             if 'flight' not in row or row['flight'] is None:
                 flight_name = row['group_flight_name'] + '_' + vehicle_name
                 row['flight'] = lookup_flight(flight_name)
+                print ('looked up flight %d %s' % (row['flight'].id, row['flight'].name))
             safe_delete_key(row, 'group_flight_name')
         return row
 
@@ -454,7 +455,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             if not tag_added:
                 print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_2, str(row))
                 row['content'] = '%s\n%s: %s' % (row['content'], key_2, value_2)
-            condition, condition_history = self.populate_condition_data(row, value_1.replace(' ','-'), self.condition_completed)
+            condition, condition_history = self.populate_condition_data(row, value_1.replace(' ', '-'),
+                                                                        self.condition_completed)
             row['condition_data'] = condition
             row['condition_history_data'] = condition_history
         elif event_type == 'DIVESTATUS':
@@ -505,27 +507,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             key_6, value_6 = clean_key_value(row['key_value_6'])
             key_7, value_7 = clean_key_value(row['key_value_7'])
             key_8, value_8 = clean_key_value(row['key_value_8'])
-
-            # 1 EVENT
-            # TIME
-            # 3 EVENTLOG
-            # 4 DATA
-            # task_type PROFILES
-            # event_type DATA
-            # cruise CRUISEID:NA100
-            # author AUTHOR:Navigator
-            # group_flight_name DIVENUMBER:H1705
-            # site SITE:Loihi_Summit
-            # vehicle VEHICLE:Hercules / Argus
-            # key_value_1 SURVEYNAME:NaN
-            # key_value_2 FILENAME:NA100_20180828_2213_00023_XBT.edf
-            # key_value_3 STARTLAT:19.20593302N
-            # key_value_4 STARTLON:154.97059658W
-            # kv5 ENDLAT:19.20593302N
-            # kv6 ENDLON:154.97059658W
-            # kv7 TOTALDEPTH:760
-            # kv8 NOTES:NaN
-            # tail NaN
 
             if row['task_type'] == 'MULTIBEAMLINE':
                 add_tag(row, 'MultibeamLine')
@@ -580,7 +561,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                           'end_time': row['event_time'],
                           'name': name
                           }
-        if 'flight' in row:
+        if 'flight' in row and row['flight'] is not None:
             condition_data['flight'] = row['flight']
 
         content_dict = {"content": "%s" % row["content"]}
@@ -716,7 +697,11 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                         skip = True
 
                 if not skip:
+                    print('creating condition for row with name %s flight %s %d' % (row['condition_data']['name'],
+                                                                                    row['condition_data']['flight'],
+                                                                                    row['condition_data']['flight'].id, ))
                     condition = Condition.objects.create(**row['condition_data'])
+                    new_models.append(condition)
                     condition_history_data = row['condition_history_data']
                     condition_history_data['condition'] = condition
                     condition_history = ConditionHistory.objects.create(**condition_history_data)
@@ -754,7 +739,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
             # this should really never happen!!!
             if 'author' not in row or not row['author']:
-                print('NO AUTHOR IN ROW')
+                print('NO AUTHOR IN ROW, defaulting to datalogger')
                 print(row)
                 row['author'] = self.datalogger_user
 
