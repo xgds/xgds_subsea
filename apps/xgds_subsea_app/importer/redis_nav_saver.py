@@ -33,9 +33,22 @@ django.setup()
 from django.conf import settings
 
 from xgds_core.models import Vehicle
-from xgds_core.flightUtils import getFlight
+from xgds_core.flightUtils import getActiveFlight
 from geocamTrack.models import PastResourcePoseDepth
+from geocamTrack.utils import get_or_create_track
 from redis_utils import TelemetrySaver
+
+
+def get_active_track(vehicle):
+    """
+    Get the active track for a vehicle
+    :param vehicle: the vehicle
+    :return: the track or None
+    """
+    flight = getActiveFlight(vehicle=vehicle)
+    if flight:
+        return flight.track
+    return None
 
 
 def interpolate(t, t1, value1, t2, value2, unwrap=False):
@@ -124,9 +137,7 @@ class NavSaver(TelemetrySaver):
             if k in prev_nav and k in next_nav:
                 params[k] = interpolate(t, t1, prev_nav[k], t2, next_nav[k], unwrap=True)
 
-        # TODO: a pose has a track_id, not a vehicle and flight
-        # params['vehicle'] = self.vehicle
-        # params['flight'] = getFlight(t,self.vehicle)
+        params['track'] = get_active_track(self.vehicle)
         desired_pose = PastResourcePoseDepth(**params)
         return desired_pose
 

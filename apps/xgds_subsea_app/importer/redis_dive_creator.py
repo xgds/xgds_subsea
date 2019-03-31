@@ -30,7 +30,8 @@ from django.conf import settings
 
 from xgds_core.flightUtils import getFlight, getActiveFlight, create_group_flight, end_group_flight
 from redis_utils import TelemetryQueue
-from geocamTrack.utils import LazyGetModelByName
+from geocamUtil.loader import LazyGetModelByName
+from geocamTrack.utils import get_or_create_track
 
 VEHICLE_MODEL = LazyGetModelByName(settings.XGDS_CORE_VEHICLE_MODEL)
 GROUP_FLIGHT_MODEL = LazyGetModelByName(settings.XGDS_CORE_GROUP_FLIGHT_MODEL)
@@ -77,6 +78,11 @@ class DiveCreator(object):
         # call create_group_flight
         print('starting dive %s' % group_flight_name)
         self.active_dive = create_group_flight(group_flight_name, notes=None, active=True, start_time=start_time)
+
+        for flight in self.active_dive.flights:
+            # create a track for each flight
+            track = get_or_create_track(flight.name, flight.vehicle, flight)
+        print('started dive %s' % group_flight_name)
 
     def end_dive(self, end_time=None):
         """
