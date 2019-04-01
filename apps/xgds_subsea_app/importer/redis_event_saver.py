@@ -26,7 +26,7 @@ from django.conf import settings
 
 from redis_csv_saver import CsvSaver
 
-from eventLogcsvImporter import EventLogCsvImporter
+from eventLogCsvImporter import EventLogCsvImporter
 from xgds_core.flightUtils import getActiveFlight
 
 BROADCAST = settings.XGDS_CORE_REDIS and settings.XGDS_SSE  # type: bool
