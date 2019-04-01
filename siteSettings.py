@@ -609,3 +609,5 @@ CACHES = {
         'KEY_FUNCTION': make_key
     },
 }
+
+XGDS_CORE_LIVE_INDEX_URL = '/xgds_subsea_app/live'

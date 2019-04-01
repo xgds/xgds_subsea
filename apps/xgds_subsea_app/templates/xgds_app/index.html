@@ -2,8 +2,8 @@
 {% load static %}
 {% block content %}
 {% if settings.GEOCAM_UTIL_LIVE_MODE %}
-<strong style="color:red">There are not currently any active EVAs.</strong><br/>
-When you are told there are active EVAs, please click on the BASALT logo in the upper left.
+<strong style="color:red">There are not currently any active {{settings.XGDS_CORE_FLIGHT_MONIKER}}s.</strong><br/>
+When you are told there is an active {{settings.XGDS_CORE_FLIGHT_MONIKER}}, please click on the SUBSEA logo in the upper left.
 </br>
 </br>
 {% endif %}

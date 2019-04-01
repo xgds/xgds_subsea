@@ -1,0 +1,40 @@
+{% extends "xgds_map_server/group_flight_playback_base.html" %}
+
+{% block cssExtras %}
+    {{ block.super }}
+     <style>
+      .chat {
+          //position:absolute;
+          width: 100%;
+          min-height: 200px;
+          height: 100%;
+          height: -moz-available;          /* WebKit-based browsers will ignore this. */
+          height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+          height: fill;
+      }
+    </style>
+{% endblock cssExtras %}
+
+{% block preMap %}
+    <div id="scichat-gridstack-item" class="grid-stack-item"
+		data-gs-x="1" data-gs-y="0"
+        data-gs-width="2" data-gs-height="3" >
+			<div class="grid-stack-item-content" id="scichat-gridstack-item-content" >
+				<div id="scichat"><iframe class="chat" src="https://external.oet.org/nautiluschat/"></iframe></div>
+			</div>
+		</div>
+{% endblock preMap %}
+
+{% block postMap %}
+    <div id="tabs-gridstack-item" class="grid-stack-item"  data-gs-x="4" data-gs-y="0" data-gs-width="3" data-gs-height="3" >
+    		<div id="tabs-gridstack-item-content" class="grid-stack-item-content" >
+			<ul class="nav justify-content-end">
+				<i class="fa fa-lock pinDiv gray-light"></i>
+			</ul>
+	        <div id="tabs" class="mt-negative-1rem"></div>
+	    </div>
+{% endblock postMap %}
+
+{% block postOtherJSInit %}
+    app.vent.trigger('tab:set','search');
+{% endblock postOtherJSInit %}
