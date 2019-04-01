@@ -23,6 +23,7 @@ from time import sleep
 import django
 django.setup()
 from django.conf import settings
+from django.db import connection, OperationalError
 
 from redis_csv_saver import CsvSaver
 
@@ -45,12 +46,24 @@ class EventSaver(CsvSaver):
         :return:
         """
         row = None
+        print(msg)
         try:
             values = msg.split(self.delimiter)
             row = {k: v for k, v in zip(self.keys, values)}
-            row['flight'] = getActiveFlight()
-            row = self.importer.update_row(row)
-            models = self.importer.build_models(row, BROADCAST)
+            updated_row = False
+            try:
+                row['flight'] = getActiveFlight()
+                row = self.importer.update_row(row)
+                updated_row = True
+                models = self.importer.build_models(row, BROADCAST)
+            except OperationalError as oe:
+                traceback.print_exc()
+                connection.close()
+                connection.connect()
+                if not updated_row:
+                    row['flight'] = getActiveFlight()
+                    row = self.importer.update_row(row)
+                models = self.importer.build_models(row, BROADCAST)
             if self.verbose:
                 print(models)
             return None  # because the importer build models stores them

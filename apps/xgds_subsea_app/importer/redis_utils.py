@@ -26,6 +26,7 @@ import django
 
 django.setup()
 from django.conf import settings
+from django.db import connection, OperationalError
 
 from xgds_core.flightUtils import get_default_vehicle, get_vehicle, getActiveFlight
 
@@ -125,6 +126,17 @@ class TelemetrySaver(object):
                     type(self.buffer[0]).objects.bulk_create(self.buffer)
                     self.buffer = []
                     self.last_write_time = datetime.datetime.utcnow()
+            except OperationalError:
+                # try again
+                print 'Lost db connection, retrying'
+                connection.close()
+                connection.connect()
+                if type(self.buffer[0]) is not None:
+                    type(self.buffer[0]).objects.bulk_create(self.buffer)
+                    self.buffer = []
+                    self.last_write_time = datetime.datetime.utcnow()
+                else:
+                    print 'Buffer is empty!!'
             except Exception as e:
                 print e
                 for entry in self.buffer:

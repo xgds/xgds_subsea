@@ -27,6 +27,7 @@ import django
 django.setup()
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.db import connection, OperationalError
 
 from redis_utils import TelemetryQueue
 from geocamTrack.utils import LazyGetModelByName
@@ -48,12 +49,17 @@ def grab_frame(the_time, channel, vehicle,  author):
     try:
         print ('Grabbing frame for %s at %s' % (str(vehicle), the_time.isoformat()))
         imageset = grab_frame_from_time(the_time, vehicle, author, vehicle.name)
-        if imageset:
-            print 'created image'
-            print imageset
-            return imageset
-    except:
+    except OperationalError:
+        connection.close()
+        connection.connect()
+        # reset db connection
+        imageset = grab_frame_from_time(the_time, vehicle, author, vehicle.name)
+    except Exception:
         traceback.print_exc()
+    if imageset:
+        print 'created image'
+        print imageset
+        return imageset
     return 'No image created!!!'
 
 

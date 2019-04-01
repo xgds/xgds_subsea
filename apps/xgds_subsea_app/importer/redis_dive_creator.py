@@ -26,6 +26,7 @@ from dateutil.parser import parse as dateparser
 import django
 django.setup()
 from django.conf import settings
+from django.db import connection, OperationalError
 
 from xgds_core.flightUtils import getFlight, getActiveFlight, create_group_flight, end_group_flight
 from redis_utils import TelemetryQueue
@@ -79,6 +80,7 @@ class DiveCreator(object):
         extras = {"cruise": settings.CRUISE_ID,
                   "dive": group_flight_name,
                   "inwatertime": start_time.isoformat()}
+        print extras
         self.active_dive = create_group_flight(group_flight_name, notes=None, active=True, start_time=start_time,
                                                extras=extras)
 
@@ -150,8 +152,9 @@ class DiveCreator(object):
             print data
 
             if 'DIVESTATUSEVENT:inwater' in data:
+                connection.close()
+                connection.connect()
                 parsed_data = self.parse_data(data)
-
                 if self.active_dive:
                     if parsed_data['dive_number']:
                         if parsed_data['dive_number'] not in self.active_dive.name:
@@ -164,6 +167,8 @@ class DiveCreator(object):
                 self.start_dive(parsed_data['group_flight_name'], parsed_data['time'])
 
             elif 'DIVESTATUSEVENT:ondeck' in data:
+                connection.close()
+                connection.connect()
                 parsed_data = self.parse_data(data)
                 end_time = None
 

@@ -53,6 +53,7 @@ class UdpRedisBridge:
         while connected:
             rcv = self.socket.recv(2048).strip()
             if len(rcv) < 1:
+                print 'DISCONNECTED %s' % self.channel_name
                 connected = False
             else:
                 # status message showing the udp port data came in,
