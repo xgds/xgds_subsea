@@ -46,6 +46,7 @@ def grab_frame(the_time, channel, vehicle,  author):
     :param channel:
     :return:
     """
+    imageset = None
     try:
         print ('Grabbing frame for %s at %s' % (str(vehicle), the_time.isoformat()))
         imageset = grab_frame_from_time(the_time, vehicle, author, vehicle.name)
