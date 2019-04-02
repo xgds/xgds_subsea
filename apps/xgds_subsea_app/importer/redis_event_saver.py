@@ -57,7 +57,7 @@ class EventSaver(CsvSaver):
                 updated_row = True
                 models = self.importer.build_models(row, BROADCAST)
             except OperationalError as oe:
-                traceback.print_exc()
+                print 'Lost db connection, retrying'
                 connection.close()
                 connection.connect()
                 if not updated_row:

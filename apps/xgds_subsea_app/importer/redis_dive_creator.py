@@ -26,7 +26,7 @@ from dateutil.parser import parse as dateparser
 import django
 django.setup()
 from django.conf import settings
-from django.db import connection, OperationalError
+from django.db import connection
 
 from xgds_core.flightUtils import getFlight, getActiveFlight, create_group_flight, end_group_flight
 from redis_utils import TelemetryQueue

@@ -50,6 +50,7 @@ def grab_frame(the_time, channel, vehicle,  author):
         print ('Grabbing frame for %s at %s' % (str(vehicle), the_time.isoformat()))
         imageset = grab_frame_from_time(the_time, vehicle, author, vehicle.name)
     except OperationalError:
+        print 'Lost db connection, retrying'
         connection.close()
         connection.connect()
         # reset db connection

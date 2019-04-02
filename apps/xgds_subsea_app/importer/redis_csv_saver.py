@@ -71,7 +71,7 @@ class CsvSaver(TelemetrySaver):
                     print result
                 return result
             except OperationalError as oe:
-                traceback.print_exc()
+                print 'Lost db connection, retrying'
                 connection.close()
                 connection.connect()
                 if not updated_row:
