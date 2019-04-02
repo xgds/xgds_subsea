@@ -1,0 +1,16 @@
+{
+  "name": "xgds_subsea_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "candy": "github:candy-chat/candy#v2.2.0"
+  },
+  "django": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0"
+}

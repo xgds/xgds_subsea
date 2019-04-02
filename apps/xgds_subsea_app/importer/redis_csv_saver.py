@@ -22,6 +22,8 @@ from time import sleep
 
 import django
 django.setup()
+from django.db import connection, OperationalError
+
 
 from redis_utils import TelemetrySaver, ensure_vehicle, patch_yaml_path
 from xgds_core.importer.csvImporter import CsvImporter
@@ -55,17 +57,32 @@ class CsvSaver(TelemetrySaver):
 
     def deserialize(self, msg):
         row = None
+        updated_row = False
         try:
-            values = msg.split(self.delimiter)
-            row = {k: v for k, v in zip(self.keys, values)}
-            row = self.importer.update_row(row)
-            if self.needs_flight:
-                flight = getActiveFlight()
-                row['flight'] = flight
-            result = self.model(**row)
-            if self.verbose:
-                print result
-            return result
+            try:
+                values = msg.split(self.delimiter)
+                row = {k: v for k, v in zip(self.keys, values)}
+                row = self.importer.update_row(row)
+                if self.needs_flight:
+                    flight = getActiveFlight()
+                    row['flight'] = flight
+                result = self.model(**row)
+                if self.verbose:
+                    print result
+                return result
+            except OperationalError as oe:
+                traceback.print_exc()
+                connection.close()
+                connection.connect()
+                if not updated_row:
+                    row = self.importer.update_row(row)
+                    if self.needs_flight:
+                        flight = getActiveFlight()
+                        row['flight'] = flight
+                    result = self.model(**row)
+                    if self.verbose:
+                        print result
+                    return result
         except Exception as e:
             print 'deserializing:', msg
             if row:

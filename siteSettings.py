@@ -615,3 +615,7 @@ XGDS_CORE_DEFAULT_GROUP_FLIGHT_DURATION_HOURS = 18
 XGDS_CORE_LIVE_INDEX_URL = '/xgds_subsea_app/live'
 
 CONN_MAX_AGE = 30
+
+# override these in settings.py
+NAUTILUS_CHAT_URL = ''
+NAUTILUS_CHAT_AUTOJOIN = ''

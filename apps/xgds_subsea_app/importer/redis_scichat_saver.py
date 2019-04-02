@@ -21,7 +21,7 @@ from time import sleep
 
 import django
 django.setup()
-from redis_utils import TelemetrySaver, ensure_vehicle, patch_yaml_path
+
 from redis_csv_saver import CsvSaver
 from sciChatCsvImporter import SciChatCsvImporter
 
@@ -41,10 +41,6 @@ if __name__=='__main__':
     yaml_file = sys.argv[1]
     with open(yaml_file, 'r') as fp:
         config = yaml.load(fp)
-
-    verbose = False
-    if 'verbose' in config:
-        verbose = config['verbose']
 
     if 'savers' in config:
         savers = []

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://external.oet.org/nautiluschat/ -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Nautilus Science Chat</title>
+    <link rel="shortcut icon" href="https://external.oet.org/res/img/favicon.png" type="image/gif">
+    <link rel="stylesheet" type="text/css" href="./Nautilus Science Chat_files/default.css">
+    <script type="text/javascript" src="./Nautilus Science Chat_files/jquery.min.js"></script>
+    <script type="text/javascript" src="./Nautilus Science Chat_files/libs.min.js"></script>
+    <script type="text/javascript" src="./Nautilus Science Chat_files/candy.min.js"></script>
+
+    <!--Stylesheet and JavaScript for Chat theming and date format customization -->
+    <link rel="stylesheet" type="text/css" href="./Nautilus Science Chat_files/candy.css">
+    <script type="text/javascript" src="./Nautilus Science Chat_files/candy.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Candy.init('https://external.oceanexplorationtrust.org/nautiluschat/http-bind', {
+                core: {
+                    debug: true,
+                    autojoin: ['nautilusscience@conference.external.oet.org']
+                },
+                view: {resources: '/static/candy/res/'}
+            });
+            Candy.Core.connect();
+        });
+    </script>
+</head>
+<body>
+<div id="candy">
+    <div id="chat-pane">
+        <ul id="chat-tabs">
+            <li class="roomtype-groupchat active"
+                data-roomjid="nautilusscience@conference.external.oet.org"
+                data-roomtype="groupchat" style="width: auto; overflow: visible;">
+                <a href="https://external.oet.org/nautiluschat/#" class="label">Nautilus Science</a>
+                <a href="https://external.oet.org/nautiluschat/#" class="transition"></a>
+                <a href="https://external.oet.org/nautiluschat/#" class="close">×</a>
+                <small class="unread" style="display: none;"></small>
+            </li>
+        </ul>
+        <ul id="chat-toolbar" style="display: block;">
+            <li id="emoticons-icon" data-tooltip="Emoticons"></li>
+            <li id="chat-sound-control" class="checked" data-tooltip="Play sound for new private messages">
+                <object id="chat-sound-player" type="application/x-shockwave-flash"
+                        data="./Nautilus Science Chat_files/audioplayer.swf.download" width="0" height="0">
+                    <param name="movie" value="./res/audioplayer.swf">
+                    <param name="AllowScriptAccess" value="always">
+                    <param name="FlashVars" value="listener=audioplayerListener&amp;mp3=./res/notify.mp3">
+                </object>
+            </li>
+            <li id="chat-autoscroll-control" class="checked" data-tooltip="Autoscroll"></li>
+            <li class="checked" id="chat-statusmessage-control" data-tooltip="Display status messages"></li>
+            <li class="context" data-tooltip="Room Administration"></li>
+            <li class="usercount" data-tooltip="Room Occupants"><span id="chat-usercount">1</span></li>
+        </ul>
+        <div id="chat-rooms" class="rooms">
+            <div class="room-pane roomtype-groupchat" id="chat-room-27d2877171e39acc454ae22815f5c5f0"
+                 data-roomjid="nautilusscience@conference.external.oet.org" data-roomtype="groupchat"
+                 data-userjid="nautilusscience@conference.external.oet.org/TamarCohen" style="display: block;">
+                <div class="roster-pane">
+                    <div class="user role-participant affiliation-none me"
+                         id="user-27d2877171e39acc454ae22815f5c5f0-97449e530417a9d853aa28e7be283e1f"
+                         data-jid="nautilusscience@conference.external.oet.org/TamarCohen" data-nick="TamarCohen"
+                         data-role="participant" data-affiliation="none" style="display: block; opacity: 1;">
+                        <div class="label">TamarCohen</div>
+                        <ul>
+                            <li class="context"
+                                id="context-27d2877171e39acc454ae22815f5c5f0-97449e530417a9d853aa28e7be283e1f"></li>
+                            <li class="role role-participant affiliation-none" data-tooltip="Moderator"></li>
+                            <li class="ignore" data-tooltip="You ignore this user"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="message-pane-wrapper">
+                    <dl class="message-pane">
+                        <dt>2019-04-01 13:28:12 PDT</dt>
+                        <dd><span class="label"><a href="https://external.oet.org/nautiluschat/#" class="name">TamarCohen</a></span>test
+                        </dd>
+                        <dt>2019-04-01 13:37:30 PDT</dt>
+                        <dd class="subject"><span class="label">Nautilus Science</span>Subject: NA104</dd>
+                    </dl>
+                </div>
+                <div class="message-form-wrapper"></div>
+                <form method="post" class="message-form"><input name="message" class="field" type="text"
+                                                                autocomplete="off" maxlength="1000"><input type="submit"
+                                                                                                           class="submit"
+                                                                                                           name="submit"
+                                                                                                           value="Send">
+                </form>
+            </div>
+        </div>
+        <div id="context-menu">
+            <ul></ul>
+        </div>
+    </div>
+    <div id="chat-modal" style="display: none;"><a id="admin-message-cancel" class="close"
+                                                   href="https://external.oet.org/nautiluschat/#"
+                                                   style="display: none;">×</a><span id="chat-modal-body"></span><img
+            src="./Nautilus Science Chat_files/modal-spinner.gif" id="chat-modal-spinner" style="display: none;"></div>
+    <div id="chat-modal-overlay" style="display: none;"></div>
+</div>
+
+
+</body>
+</html>

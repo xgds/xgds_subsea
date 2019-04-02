@@ -1,0 +1,64 @@
+/**
+ * Nautilus Chat Theme CSS
+ *
+ * @author Zach Lash <zach.lash@gmail.com>
+ * Imagery sources from nautiluslive.org
+ */
+/*body {*/
+	/*background-color: #02121C;*/
+	/*background-position: right 0px top -60px;*/
+	/*color: #0275E2;*/
+/*}*/
+
+#candy {
+	background: none;
+}
+
+a {
+	color: lightgray;
+}
+
+#chat-pane {
+	margin-top: 100px;
+}
+
+.roster-pane .user {
+	color:white;
+	background-color: #15537a;
+}
+
+.chat-pane .label {
+        color:white;
+        background-color: #15537a;
+}
+
+.message-pane-wrapper {
+	color: white;
+	background-color: #02121C;
+	font-size: 0.9em;
+	clear: both;
+	overflow: auto;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: auto;
+	width: auto;
+	font-size: 0.8em;
+}
+
+.message-pane dt {
+	width: 12em;
+	text-align: left;
+	font-size: .8em;
+	color: lightgray;
+}
+
+.chat-pane {
+	//top: 100px;
+}
+
+.roster-pane {
+	top: 100px;
+}
