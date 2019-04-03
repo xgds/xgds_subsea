@@ -38,3 +38,11 @@ import os
 import datetime
 
 XGDS_SAMPLE_START_YEAR = datetime.datetime.now().year
+
+XGDS_SSE_TEMP_PROBE_CHANNELS = []
+XGDS_SSE_COND_TEMP_DEPTH_CHANNELS = []
+XGDS_SSE_O2_SAT_CHANNELS = []
+
+XGDS_TEMP_PROBE_SSE_TYPE = 'temp_probe'
+XGDS_COND_TEMP_DEPTH_SSE_TYPE = 'cond_temp_depth'
+XGDS_O2_SAT_SSE_TYPE = 'o2_sat'
