@@ -26,4 +26,4 @@ def get_live_page(request):
         return getGroupFlightPlaybackPage(request, group_flight_name,
                                           templatePath='xgds_subsea_app/live_dive.html',
                                           video=False)
-    return redirect('group_flight_list')
+    return redirect('index')
