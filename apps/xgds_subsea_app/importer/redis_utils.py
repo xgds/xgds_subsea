@@ -131,6 +131,7 @@ class TelemetrySaver(object):
                 print 'Lost db connection, retrying'
                 connection.close()
                 connection.connect()
+                self.pre_buffer_save()
                 if type(self.buffer[0]) is not None:
                     type(self.buffer[0]).objects.bulk_create(self.buffer)
                     self.buffer = []
@@ -151,6 +152,15 @@ class TelemetrySaver(object):
         # define this method, there is no generic version
         return None
 
+    def handle_msg(self, msg):
+        obj = self.deserialize(msg)
+        # The result should be None, a model object, or a list of model objects
+        if obj is not None:
+            if type(obj) is list:
+                self.buffer.extend(obj)
+            else:
+                self.buffer.append(obj)
+
     def run(self):
         print '%s listener started' % self.channel_name
         tq = TelemetryQueue(self.channel_name)
@@ -166,13 +176,7 @@ class TelemetrySaver(object):
             # Check for a message; if there is one deserialize and buffer it
             msg = tq.check_for_msg()
             if msg is not None:
-                obj = self.deserialize(msg)
-                # The result should be None, a model object, or a list of model objects
-                if obj is not None:
-                    if type(obj) is list:
-                        self.buffer.extend(obj)
-                    else:
-                        self.buffer.append(obj)
+                self.handle_msg(msg)
 
             # Check how long it's been and write if it's been too long
             if 'buffer_time_sec' in self.config and self.last_write_time:

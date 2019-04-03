@@ -34,9 +34,8 @@ from django.conf import settings
 
 from xgds_core.models import Vehicle
 from xgds_core.flightUtils import getActiveFlight
-from geocamTrack.models import PastResourcePoseDepth
-from geocamTrack.utils import get_or_create_track
-from redis_utils import TelemetrySaver
+from geocamTrack.models import ResourcePoseDepth, PastResourcePoseDepth
+from redis_utils import TelemetrySaver, TelemetryQueue
 
 
 def get_active_track(vehicle):
@@ -105,6 +104,7 @@ class NavSaver(TelemetrySaver):
         # self.flight = getFlight(t, self.vehicle)
 
         # Set the desired time once telemetry starts coming in
+        self.current_position = None
         self.desired_pose_time = None
         self.gps_queue = TimestampedItemQueue()
         self.nav_queue = TimestampedItemQueue()
@@ -139,9 +139,16 @@ class NavSaver(TelemetrySaver):
 
         params['track'] = get_active_track(self.vehicle)
         desired_pose = PastResourcePoseDepth(**params)
-        return desired_pose
+        current_pose = ResourcePoseDepth(**params)
+        return desired_pose, current_pose
 
     def deserialize(self, msg):
+        """
+
+        :param msg:
+        :return: In this case we are returning a tuple, positions, current_position
+        """
+        #
         # TODO: This would be more efficient if it only deserialized the OET messages
         # that it needs instead of deserializing every message in case it is needed.
 
@@ -214,13 +221,18 @@ class NavSaver(TelemetrySaver):
 
         # Get interpolated values if we can
         if len(self.nav_queue.queue) > 1 and len(self.gps_queue.queue) > 1:
-            results = []
+            past_results = []
+            current_results = []
             while self.nav_queue.queue[-1][0] > self.desired_pose_time \
                     and self.gps_queue.queue[-1][0] > self.desired_pose_time:
                 # We should have the information we need to interpolate
-                pos = self.interpolate()
-                if pos is not None:
-                    results.append(pos)
+                interpolated = self.interpolate()
+                if interpolated:
+                    past_pos, current_pos = interpolated
+                    if past_pos is not None:
+                        past_results.append(past_pos)
+                    if current_pos is not None:
+                        current_results.append(current_pos)
                 # Increment the next desired pose time
                 self.desired_pose_time += datetime.timedelta(seconds=1)
 
@@ -228,11 +240,29 @@ class NavSaver(TelemetrySaver):
             done_with = self.desired_pose_time - datetime.timedelta(seconds=1)
             self.gps_queue.delete_before(done_with)
             self.nav_queue.delete_before(done_with)
-            if len(results) > 0:
-                for pose in results:
+            if len(past_results) > 0:
+                for pose in past_results:
                     print '%s pose at %s computed' % (self.vehicle, pose.timestamp)
-                return results
+                return past_results, current_results[-1]
         return None
+
+    def handle_msg(self, msg):
+        deserialized = self.deserialize(msg)
+        if deserialized:
+            past_positions, self.current_position = deserialized
+        else:
+            return
+
+        if self.current_position:
+            print 'saving current position from %s' % self.channel_name
+            self.current_position.saveCurrent()
+
+        # The result should be None, a model object, or a list of model objects
+        if past_positions is not None:
+            if type(past_positions) is list:
+                self.buffer.extend(past_positions)
+            else:
+                self.buffer.append(past_positions)
 
 
 if __name__ == '__main__':
