@@ -78,13 +78,13 @@
             "type": "ascent",
             "presetCode": "ASC",
             "presetName": "Ascent",
-            "duration": 1
+            "duration": 19000
         },
         {
             "type": "descent",
             "presetCode": "DES",
             "presetName": "Descent",
-            "duration": 1
+            "duration": 11400
         },
         {
             "type": "mapping_setup",
