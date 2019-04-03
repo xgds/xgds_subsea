@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {
-    "candy": "github:candy-chat/candy#v2.2.0"
-  },
+  "dependencies": {},
   "django": {},
   "devDependencies": {},
   "scripts": {

@@ -13,21 +13,11 @@
           height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
           height: fill;
       }
-      .message-pane-wrapper {
-          top: 0px !important;
-          margin: 0px !important;
-      }
-    </style>
 
-    <!--<link rel="stylesheet" type="text/css" href="{% static 'xgds_subsea/css/default.css' %}"></link> -->
-    <link rel="stylesheet" type="text/css" href="{% static 'xgds_subsea/css/candy.css' %}"></link>
+    </style>
 
 {% endblock cssExtras %}
 
-{% block scripts %}
-{{block.super}}
-    <script type="text/javascript" src="{{ EXTERNAL_URL }}candy/src/candy.js" ></script>
-{% endblock scripts %}
 
 {% block preMap %}
     <div id="scichat-gridstack-item" class="grid-stack-item"
@@ -36,6 +26,8 @@
 			<div class="grid-stack-item-content" id="scichat-gridstack-item-content" >
 				<div id="scichat">
                     <div id="candy">
+                          <iframe class="chat" src="/data/chat/"></iframe>
+
                     </div>
                 </div>
 			</div>
@@ -54,16 +46,6 @@
 
 {% block postOtherJSInit %}
     app.vent.trigger('tab:set','search');
-    /*$(document).ready(function () {
-            Candy.init('{{settings.NAUTILUS_CHAT_URL}}/http-bind', {
-                core: {
-                    debug: true,
-                    autojoin: ['{{settings.NAUTILUS_CHAT_AUTOJOIN}}']
-                },
-                view: {resources: '/static/candy/res/'}
-            });
-            Candy.Core.connect();
-    }); */
 {% endblock postOtherJSInit %}
 
 {% block postAppOptions %}

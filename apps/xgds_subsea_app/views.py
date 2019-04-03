@@ -16,7 +16,7 @@
 
 from xgds_core.flightUtils import getActiveFlight
 from xgds_map_server.views import getGroupFlightPlaybackPage
-from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 
 
 def get_live_page(request):
@@ -26,4 +26,4 @@ def get_live_page(request):
         return getGroupFlightPlaybackPage(request, group_flight_name,
                                           templatePath='xgds_subsea_app/live_dive.html',
                                           video=False)
-    return reverse('group_flight_list')
+    return redirect('index')
