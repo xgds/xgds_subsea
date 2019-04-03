@@ -16,6 +16,9 @@
 # __END_LICENSE__
 
 import sys
+import yaml
+import pytz
+import json
 import redis
 import curses
 import datetime
@@ -26,14 +29,12 @@ import django
 django.setup()
 from django.conf import settings
 
-from xgds_subsea_app.models import TempProbe, ConductivityTempDepth, O2Sat
-
+from geocamUtil.datetimeJsonEncoder import DatetimeJsonEncoder
 
 class TelemetryCounter:
-    def __init__(self,sleep_time=0.005):
-        self.sleep_time = sleep_time
-        self.counters = {}
-        self.timers = {}
+    def __init__(self, listen_interval=0.005, publish_channel=None, publish_interval=None):
+        self.listen_interval = listen_interval
+        self.stats = {}
         # Redis connection
         self.r = redis.Redis(host=settings.XGDS_CORE_REDIS_HOST, port=settings.XGDS_CORE_REDIS_PORT)
         # Redis subscription & confirmation
@@ -41,87 +42,82 @@ class TelemetryCounter:
         # subscription request:
         self.ps.psubscribe('*')
 
+        # for publishing stats
+        self.publish = False
+        if publish_channel is not None and publish_interval is not None:
+            self.publish = True
+            self.publish_channel = publish_channel
+            self.publish_interval = datetime.timedelta(seconds=publish_interval)
+            self.publish_time = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
+
         thread = threading.Thread(target=self.run)
         thread.daemon = True
         thread.start()
 
+    def update_stats(self):
+        msg = self.ps.get_message()
+        while msg is not None:
+            channel = msg['channel']
+            if channel not in self.stats:
+                self.stats[channel] = {}
+                self.stats[channel]['count'] = 0
+                self.stats[channel]['last'] = None
+            self.stats[channel]['count'] += 1
+            self.stats[channel]['last'] = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
+            msg = self.ps.get_message()
+
+    def publish_stats(self):
+        msg = json.dumps(self.stats, cls=DatetimeJsonEncoder)
+        self.r.publish(self.publish_channel,msg)
+        self.publish_time = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
+
     def run(self):
         while True:
-            sleep(self.sleep_time)
-            msg = self.ps.get_message() # non blocking call, returns message or None
-            if msg is not None:
-                channel = msg['channel']
-                if channel not in self.counters:
-                    self.counters[channel] = 0
-                    self.timers[channel] = None
-                self.counters[channel] += 1
-                self.timers[channel] = datetime.datetime.utcnow()
+            sleep(self.listen_interval)
+            self.update_stats()
+            if self.publish:
+                age = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC) - self.publish_time
+                if age >= self.publish_interval:
+                    self.publish_stats()
 
-    def channels(self):
-        return self.counters.keys()
 
-    def count(self,channel):
-        return self.counters[channel]
-
-    def time(self,channel):
-        return self.timers[channel]
-
-def drawer(stdscr):
-
-    tc = TelemetryCounter()
-
-    # Make stdscr.getch non-blocking
-    stdscr.nodelay(True)
-    stdscr.clear()
-
-    done = False
+def drawer(stdscr, telem_counter):
     while True:
-        c = stdscr.getch()
-        # Clear out anything else the user has typed in
-        curses.flushinp()
-        # If the user presses p, increase the width of the springy bar
-        if c == ord('q'):
-            done = True
+        channel_names = sorted(telem_counter.stats.keys())
+        if len(channel_names) > 0:
+            name_width = len(max(channel_names, key=len))
+            count_width = 8
+            time_width = len('2000-01-01 12:00:00.000000+00:00')
+            format = '%%%ds %%%dd %%%ds' % (name_width, count_width, time_width)
 
-        tc.counters['temp records'] = TempProbe.objects.count()
-        if tc.counters['temp records'] > 0:
-            tc.timers['temp records'] = TempProbe.objects.all().order_by('-timestamp')[0].timestamp
-        else:
-            tc.timers['temp records'] = None
-
-        tc.counters['ctd records'] = ConductivityTempDepth.objects.count()
-        if tc.counters['ctd records'] > 0:
-            tc.timers['ctd records'] = ConductivityTempDepth.objects.all().order_by('-timestamp')[0].timestamp
-        else:
-            tc.timers['ctd records'] = None
-
-        tc.counters['o2s records'] = O2Sat.objects.count()
-        if tc.counters['o2s records'] > 0:
-            tc.timers['o2s records'] = O2Sat.objects.all().order_by('-timestamp')[0].timestamp
-        else:
-            tc.timers['o2s records'] = None
-
-        # redraw the table
-        stdscr.erase()
-        channel_names = sorted(tc.channels())
-
-        i = 0
-        for i,channel in enumerate(channel_names):
-            stdscr.addstr(i, 0, '%s: %d %s' % (channel, tc.count(channel), tc.time(channel)))
-        stdscr.move(i+1,0)
-
+            # redraw the table
+            stdscr.erase()
+            for i, channel in enumerate(channel_names):
+                stdscr.addstr(i, 0, format % (channel,
+                                              telem_counter.stats[channel]['count'],
+                                              telem_counter.stats[channel]['last'].isoformat()))
+            stdscr.move(len(channel_names),0)
+            stdscr.refresh()
         sleep(0.1)
 
-def printer():
-    tc = TelemetryCounter()
 
-    while True:
-        channel_names = sorted(tc.channels())
+def main():
+    yaml_file = sys.argv[1]
+    with open(yaml_file, 'r') as fp:
+        config = yaml.load(fp)
 
-        i = 0
-        for i,channel in enumerate(channel_names):
-            print '%s: %d' % (channel,tc.count(channel))
+    if 'pubsub' in config:
+        tc = TelemetryCounter(**config['pubsub'])
+    else:
+        tc = TelemetryCounter()
 
-        sleep(1)
+    if 'display' in config and config['display']:
+        # curses event loop will take over
+        curses.wrapper(drawer, tc)
+    else:
+        # need our own sleep loop to keep the telemetry counter thread alive
+        while True:
+            sleep(1)
 
-curses.wrapper(drawer)
+if __name__=='__main__':
+    main()
