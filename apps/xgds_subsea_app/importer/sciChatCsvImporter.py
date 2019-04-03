@@ -86,7 +86,8 @@ class SciChatCsvImporter(csvImporter.CsvImporter):
         result = super(SciChatCsvImporter, self).update_row(row)
         result = clean_author(result)
         result = self.clean_flight(result)
-        result = csvImporter.lookup_position(result, timestamp_key='event_time', position_found_key='position_found')
+        result = csvImporter.lookup_position(result, timestamp_key='event_time', position_found_key='position_found',
+                                             retries=3)
         return result
 
     def clean_flight(self, row):
