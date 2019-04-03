@@ -1,0 +1,24 @@
+{% extends "xgds_planner2/planner_app_base.html" %}
+
+    {% block postAppOptions %}
+
+
+    {% endblock postAppOptions %}
+
+{% block plannerInitializers %}
+    update_start_time = function() {
+        if (!_.isUndefined(app.planJson.startTime) && !_.isEmpty(app.planJson.startTime)) {
+            var startMoment = moment(app.planJson.startTime);
+            var updated = playback.updateStartTime(startMoment);
+            if (updated) {
+                playback.updateEndTime(moment(startMoment).add(app.currentPlan._simInfo.deltaTimeSeconds, 's'));
+                playback.setCurrentTime(startMoment);
+                appOptions.planExecution = {planned_start_time: new moment(startMoment)};
+                app.vent.trigger('change:scheduledStartTime', startMoment);
+            }
+        }
+    }
+    update_start_time();
+    app.currentPlan.on('change', update_start_time);
+
+{% endblock plannerInitializers %}

@@ -114,8 +114,17 @@
 	    "name": "Default Speed",
 	    "default": 0.89408,
 	    "widget":"number"
-	}
-    ],
+	},
+         {
+			"type": "ParamSpec",
+			"id": "startTime",
+			"valueType": "date-time",
+			"notes": "UTC time plan should start",
+			"required": false,
+			"name": "Start",
+			"widget": "datetime"
+		}
+     ],
 
     "stationParams": [
         {
