@@ -22,7 +22,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
 
-from geocamUtil.UserUtil import getUserByUsername, getUserByNames
+from geocamUtil.UserUtil import getUserByUsername, getUserByNames, create_user
 from geocamUtil.models import SiteFrame
 from xgds_core.models import Condition, ConditionHistory, ConditionStatus
 from xgds_core.importer import csvImporter
@@ -375,7 +375,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                     except:
                         # TODO This happend for NA100 due to errors in cruise-record.xml
                         print 'COULD NOT FIND USER FOR %s' % author_name
-                        pass
+                        print 'creating new user'
+                        row['author'] = create_user(splits[0], splits[1])
 
         if 'author' not in row:
             row['author'] = self.datalogger_user
@@ -662,7 +663,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                     sample_data['creation_time'] = sample_data['modification_time']
                     # assume the time of the sample will not change; look up position here
                     sample_data = csvImporter.lookup_position(sample_data, timestamp_key='collection_time',
-                                                              position_id_key='track_position_id')
+                                                              position_id_key='track_position_id',
+                                                              retries=3)
                     if 'track_position_id' in sample_data:
                         found_position_id = sample_data['track_position_id']
                         row['position_id'] = found_position_id
@@ -735,7 +737,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             if not found_position_id:
                 row = csvImporter.lookup_position(row, timestamp_key='event_time',
                                                   position_id_key='position_id',
-                                                  position_found_key='position_found')
+                                                  position_found_key='position_found',
+                                                  retries=3)
 
             # this should really never happen!!!
             if 'author' not in row or not row['author']:

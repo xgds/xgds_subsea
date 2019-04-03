@@ -16,12 +16,14 @@
 # __END_LICENSE__
 
 from threading import Timer
+import json
 import argparse
 import yaml
 import pytz
 import threading
 from time import sleep
 from dateutil.parser import parse as dateparser
+from geocamUtil.datetimeJsonEncoder import DatetimeJsonEncoder
 
 import django
 django.setup()
@@ -32,6 +34,9 @@ from xgds_core.flightUtils import getFlight, getActiveFlight, create_group_fligh
 from redis_utils import TelemetryQueue
 from geocamUtil.loader import LazyGetModelByName
 from geocamTrack.utils import get_or_create_track
+
+if settings.XGDS_SSE:
+    from xgds_core.redisUtil import publishRedisSSE
 
 VEHICLE_MODEL = LazyGetModelByName(settings.XGDS_CORE_VEHICLE_MODEL)
 GROUP_FLIGHT_MODEL = LazyGetModelByName(settings.XGDS_CORE_GROUP_FLIGHT_MODEL)
@@ -87,6 +92,14 @@ class DiveCreator(object):
         for flight in self.active_dive.flights:
             # create a track for each flight
             track = get_or_create_track(flight.name, flight.vehicle, flight)
+
+        if settings.XGDS_SSE:
+            # publishing on sse with type group_flight
+            result = {'status': 'started',
+                      'name': self.active_dive.name,
+                      'time': start_time}
+            publishRedisSSE('sse', settings.XGDS_GROUP_FLIGHT_SSE_TYPE.lower(),
+                            json.dumps(result, cls=DatetimeJsonEncoder))
         print('started dive %s' % group_flight_name)
 
     def end_dive(self, end_time=None):
