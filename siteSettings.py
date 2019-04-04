@@ -578,14 +578,14 @@ AUTH_PASSWORD_VALIDATORS = [
 XGDS_NOTES_NOTE_SSE_TYPE = XGDS_NOTES_NOTE_MONIKER
 XGDS_NOTES_MESSAGE_SSE_TYPE = 'Message'
 XGDS_SSE_NOTE_CHANNELS = ['sse', 'herc']
-XGDS_SSE_NOTE_MESSAGE_CHANNELS = ['sse', 'herc']
+XGDS_SSE_NOTE_MESSAGE_CHANNELS = ['sse', 'hercules']
 
-XGDS_SSE_IMAGE_CHANNELS = ['sse', 'herc', 'argus', 'sat3']
+XGDS_SSE_IMAGE_CHANNELS = ['sse', 'hercules', 'argus', 'sat3']
 XGDS_IMAGE_SSE_TYPE = XGDS_IMAGE_IMAGE_MODEL_NAME
 
-XGDS_SSE_SAMPLE_CHANNELS = ['sse', 'herc']
+XGDS_SSE_SAMPLE_CHANNELS = ['sse', 'hercules']
 
-XGDS_SSE_CHANNELS = ['sse', 'herc', 'argus', 'nautilus', 'sat3']
+XGDS_SSE_CHANNELS = ['sse', 'hercules', 'argus', 'nautilus', 'sat3']
 
 XGDS_CORE_REDIS = True
 

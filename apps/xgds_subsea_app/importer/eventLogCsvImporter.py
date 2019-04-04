@@ -630,7 +630,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
         return sample_data
 
-    def build_models(self, row, broadcast=False):
+    def build_models(self, row):
         """
         Build the models based on the cleaned up row
         :return: list of models of varying types
@@ -640,6 +640,7 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
         the_model = LocatedNote
         new_models = []
+        new_note_tags = None
 
         # Create the note and the tags.  Because the tags cannot be created until the note exists,
         # we have to do this one at a time.
@@ -675,14 +676,11 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 try:
                     sample = Sample.objects.create(**sample_data)
                     new_models.append(sample)
-                    if broadcast:
-                        sample.broadcast()
                 except Exception as e:
                     # This sample already existed, update it instead.
                     sample_filter = Sample.objects.filter(name=sample_data['name'], label=label)
                     sample_filter.update(**sample_data)
                     sample = sample_filter[0]
-                    print 'UPDATED SAMPLE %s' % sample_data['name']
 
                 # set the generic foreign key on the note
                 if sample:
@@ -728,8 +726,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                             condition_history_data['status'] = self.condition_completed
                             condition_history2 = ConditionHistory.objects.create(**condition_history_data)
                             new_models.append(condition_history2)
-                    if broadcast:
-                        condition_history.broadcast()
 
                 safe_delete_key(row, 'condition_data')
                 safe_delete_key(row, 'condition_history_data')
@@ -750,9 +746,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 new_note, note_created = the_model.objects.update_or_create(**row)
             else:
                 new_note = the_model.objects.create(**row)
-
-            if broadcast:
-                new_note.broadcast()
 
             if has_tag:
                 new_note.tags.clear()

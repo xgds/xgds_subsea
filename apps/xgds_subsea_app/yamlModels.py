@@ -23,6 +23,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
 
+
 class TempProbe(xgds_timeseries.TimeSeriesModel):
     """
     This is an auto-generated Django model created from a
@@ -47,12 +48,12 @@ class TempProbe(xgds_timeseries.TimeSeriesModel):
         return "%s: %s" % (self.timestamp.isoformat(), str(self.temperature))
 
 
-@receiver(post_save, sender=TempProbe)
-def publishAfterSave(sender, instance, **kwargs):
-    if settings.XGDS_CORE_REDIS:
-        for channel in settings.XGDS_SSE_TEMP_PROBE_CHANNELS:
-            publishRedisSSE(channel, settings.XGDS_TEMP_PROBE_SSE_TYPE.lower(),
-                            json.dumps(instance.toDict(), cls=DatetimeJsonEncoder))
+# if settings.XGDS_CORE_REDIS and settings.XGDS_SSE:
+#     @receiver(post_save, sender=TempProbe)
+#     def publishAfterSave(sender, instance, **kwargs):
+#         for channel in settings.XGDS_SSE_TEMP_PROBE_CHANNELS:
+#             publishRedisSSE(channel, settings.XGDS_TEMP_PROBE_SSE_TYPE.lower(),
+#                             json.dumps(instance.toDict(), cls=DatetimeJsonEncoder))
 
 
 class ConductivityTempDepth(xgds_timeseries.TimeSeriesModel):
@@ -86,12 +87,12 @@ class ConductivityTempDepth(xgds_timeseries.TimeSeriesModel):
     def __unicode__(self):
         return "%s: %s %s %s %s %s" % (self.timestamp.isoformat(), str(self.temperature), str(self.conductivity), str(self.pressure), str(self.salinity), str(self.sound_velocity))
 
-@receiver(post_save, sender=ConductivityTempDepth)
-def publishAfterSave(sender, instance, **kwargs):
-    if settings.XGDS_CORE_REDIS:
-        for channel in settings.XGDS_SSE_COND_TEMP_DEPTH_CHANNELS:
-            publishRedisSSE(channel, settings.XGDS_COND_TEMP_DEPTH_SSE_TYPE.lower(),
-                            json.dumps(instance.toDict(), cls=DatetimeJsonEncoder))
+# @receiver(post_save, sender=ConductivityTempDepth)
+# def publishAfterSave(sender, instance, **kwargs):
+#     if settings.XGDS_CORE_REDIS:
+#         for channel in settings.XGDS_SSE_COND_TEMP_DEPTH_CHANNELS:
+#             publishRedisSSE(channel, settings.XGDS_COND_TEMP_DEPTH_SSE_TYPE.lower(),
+#                             json.dumps(instance.toDict(), cls=DatetimeJsonEncoder))
 
 class O2Sat(xgds_timeseries.TimeSeriesModel):
     """
@@ -120,9 +121,9 @@ class O2Sat(xgds_timeseries.TimeSeriesModel):
     def __unicode__(self):
         return "%s: %s %s %s" % (self.timestamp.isoformat(), str(self.oxygen_concentration), str(self.oxygen_saturation), str(self.temperature))
 
-@receiver(post_save, sender=O2Sat)
-def publishAfterSave(sender, instance, **kwargs):
-    if settings.XGDS_CORE_REDIS:
-        for channel in settings.XGDS_SSE_O2_SAT_CHANNELS:
-            publishRedisSSE(channel, settings.XGDS_O2_SAT_SSE_TYPE.lower(),
-                            json.dumps(instance.toDict(), cls=DatetimeJsonEncoder))
+# @receiver(post_save, sender=O2Sat)
+# def publishAfterSave(sender, instance, **kwargs):
+#     if settings.XGDS_CORE_REDIS:
+#         for channel in settings.XGDS_SSE_O2_SAT_CHANNELS:
+#             publishRedisSSE(channel, settings.XGDS_O2_SAT_SSE_TYPE.lower(),
+#                             json.dumps(instance.toDict(), cls=DatetimeJsonEncoder))

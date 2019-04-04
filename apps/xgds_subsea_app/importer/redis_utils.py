@@ -118,26 +118,24 @@ class TelemetrySaver(object):
         thread.daemon = True
         thread.start()
 
+    def do_write_buffer(self):
+        print 'saving %d models from %s' % (len(self.buffer), self.channel_name)
+        model = type(self.buffer[0])
+        if model is not None:
+            model.objects.bulk_create(self.buffer)
+            self.buffer = []
+            self.last_write_time = datetime.datetime.utcnow()
+
     def write_buffer(self):
         if len(self.buffer) > 0:
             try:
-                print 'saving %d models from %s' % (len(self.buffer), self.channel_name)
-                if type(self.buffer[0]) is not None:
-                    type(self.buffer[0]).objects.bulk_create(self.buffer)
-                    self.buffer = []
-                    self.last_write_time = datetime.datetime.utcnow()
+                self.do_write_buffer()
             except OperationalError:
                 # try again
                 print 'Lost db connection, retrying'
                 connection.close()
                 connection.connect()
-                self.pre_buffer_save()
-                if type(self.buffer[0]) is not None:
-                    type(self.buffer[0]).objects.bulk_create(self.buffer)
-                    self.buffer = []
-                    self.last_write_time = datetime.datetime.utcnow()
-                else:
-                    print 'Buffer is empty!!'
+                self.do_write_buffer()
             except Exception as e:
                 print e
                 for entry in self.buffer:
@@ -157,9 +155,18 @@ class TelemetrySaver(object):
         # The result should be None, a model object, or a list of model objects
         if obj is not None:
             if type(obj) is list:
-                self.buffer.extend(obj)
+                if obj:
+                    self.buffer.extend(obj)
+                    # see if we should broadcast
+                    model = type(obj[0])
+                    if hasattr(model, 'broadcast'):
+                        for m in obj:
+                            m.broadcast()
             else:
                 self.buffer.append(obj)
+                # see if we should broadcast
+                if hasattr(obj, 'broadcast'):
+                    obj.broadcast()
 
     def run(self):
         print '%s listener started' % self.channel_name

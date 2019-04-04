@@ -30,8 +30,6 @@ from redis_csv_saver import CsvSaver
 from eventLogCsvImporter import EventLogCsvImporter
 from xgds_core.flightUtils import getActiveFlight
 
-BROADCAST = settings.XGDS_CORE_REDIS and settings.XGDS_SSE  # type: bool
-
 
 class EventSaver(CsvSaver):
 
@@ -55,7 +53,7 @@ class EventSaver(CsvSaver):
                 row['flight'] = getActiveFlight()
                 row = self.importer.update_row(row)
                 updated_row = True
-                models = self.importer.build_models(row, BROADCAST)
+                models = self.importer.build_models(row)
             except OperationalError as oe:
                 print 'Lost db connection, retrying'
                 connection.close()
@@ -63,7 +61,7 @@ class EventSaver(CsvSaver):
                 if not updated_row:
                     row['flight'] = getActiveFlight()
                     row = self.importer.update_row(row)
-                models = self.importer.build_models(row, BROADCAST)
+                models = self.importer.build_models(row)
             if self.verbose:
                 print(models)
             return None  # because the importer build models stores them

@@ -260,9 +260,13 @@ class NavSaver(TelemetrySaver):
         # The result should be None, a model object, or a list of model objects
         if past_positions is not None:
             if type(past_positions) is list:
-                self.buffer.extend(past_positions)
+                if past_positions:
+                    self.buffer.extend(past_positions)
+                    for m in past_positions:
+                        m.broadcast()
             else:
                 self.buffer.append(past_positions)
+                past_positions.broadcast()
 
 
 if __name__ == '__main__':
