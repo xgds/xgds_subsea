@@ -321,6 +321,16 @@ GEOCAM_TRACK_POSITION_MODEL = 'geocamTrack.ResourcePoseDepth'
 GEOCAM_TRACK_PAST_POSITION_MODEL = 'geocamTrack.PastResourcePoseDepth'
 GEOCAM_TRACK_CLOSEST_POSITION_MAX_DIFFERENCE_SECONDS = 2
 
+GEOCAM_TRACK_PRELOAD_TRACK_IMAGES = ["/static/geocamTrack/icons/hercules_pointer.png",
+                                     "/static/geocamTrack/icons/argus_pointer.png",
+                                     "/static/geocamTrack/icons/nautilus_pointer.png",
+                                     "/static/geocamTrack/icons/hercules_circle.png",
+                                     "/static/geocamTrack/icons/argus_circle.png",
+                                     "/static/geocamTrack/icons/nautilus_circle.png",
+                                     "/static/geocamTrack/icons/hercules_stop.png",
+                                     "/static/geocamTrack/icons/argus_stop.png",
+                                     "/static/geocamTrack/icons/nautilus_stop.png"]
+
 
 
 COMPASS_EQUIPPED_VEHICLES = []
