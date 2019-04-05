@@ -320,6 +320,7 @@ GEOCAM_TRACK_OPS_TIME_ZONE = TIME_ZONE
 GEOCAM_TRACK_POSITION_MODEL = 'geocamTrack.ResourcePoseDepth'
 GEOCAM_TRACK_PAST_POSITION_MODEL = 'geocamTrack.PastResourcePoseDepth'
 GEOCAM_TRACK_CLOSEST_POSITION_MAX_DIFFERENCE_SECONDS = 2
+GEOCAM_TRACK_HEADING_UNITS = 'degrees'
 
 GEOCAM_TRACK_PRELOAD_TRACK_IMAGES = ["/static/geocamTrack/icons/hercules_pointer.png",
                                      "/static/geocamTrack/icons/argus_pointer.png",
