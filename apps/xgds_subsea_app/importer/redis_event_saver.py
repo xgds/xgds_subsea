@@ -29,6 +29,7 @@ from redis_csv_saver import CsvSaver
 
 from eventLogCsvImporter import EventLogCsvImporter
 from xgds_core.flightUtils import getActiveFlight
+from xgds_core.util import persist_error
 
 
 class EventSaver(CsvSaver):
@@ -70,6 +71,7 @@ class EventSaver(CsvSaver):
             if row:
                 print 'deserialized:', row
             traceback.print_exc()
+            persist_error(e)
             return None
 
 

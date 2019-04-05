@@ -30,6 +30,8 @@ from django.contrib.auth.models import User
 from django.db import connection, OperationalError
 
 from redis_utils import TelemetryQueue
+
+from xgds_core.util import persist_error
 from geocamTrack.utils import LazyGetModelByName
 
 from xgds_video.views import grab_frame_from_time
@@ -56,7 +58,8 @@ def grab_frame(the_time, channel, vehicle,  author):
         connection.close()
         connection.connect()
         imageset = grab_frame_from_time(the_time, vehicle, author, vehicle.name)
-    except Exception:
+    except Exception as e:
+        persist_error(e)
         traceback.print_exc()
     if imageset:
         print 'created image'
@@ -101,14 +104,17 @@ class FrameGrabber(object):
 
     def run(self):
         for msg in self.tq.listen():
-            data = msg['data']
-            the_time, channel = self.parse_data(data)
-            vehicle = self.hercules
-            if channel == 2:
-                vehicle = self.argus
+            try:
+                data = msg['data']
+                the_time, channel = self.parse_data(data)
+                vehicle = self.hercules
+                if channel == 2:
+                    vehicle = self.argus
 
-            t = Timer(settings.XGDS_VIDEO_RECORDING_LAG_SECONDS, grab_frame, [the_time, channel, vehicle, self.author])
-            t.start()
+                t = Timer(settings.XGDS_VIDEO_RECORDING_LAG_SECONDS, grab_frame, [the_time, channel, vehicle, self.author])
+                t.start()
+            except Exception as e:
+                persist_error(e)
 
 
 if __name__ == '__main__':

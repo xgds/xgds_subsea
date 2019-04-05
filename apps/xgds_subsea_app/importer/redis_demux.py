@@ -25,6 +25,7 @@ from redis_utils import TelemetryQueue
 import django
 django.setup()
 from django.conf import settings
+from xgds_core.util import persist_error
 
 
 class RedisDemux:
@@ -42,14 +43,17 @@ class RedisDemux:
         print '%s listener started' % self.config['input_channel']
         # polling loop:
         for msg in self.tq.listen():
-            payload = msg['data'].split('\t')[3]
-            for payload_identifier, output_channel in self.config['outputs'].iteritems():
-                strlen = len(payload_identifier)
-                if payload[0:strlen] == payload_identifier:
-                    if verbose:
-                        print '%s %s -> %s' % (self.config['input_channel'],
-                                               payload_identifier, output_channel)
-                    self.r.publish(output_channel, msg['data'])
+            try:
+                payload = msg['data'].split('\t')[3]
+                for payload_identifier, output_channel in self.config['outputs'].iteritems():
+                    strlen = len(payload_identifier)
+                    if payload[0:strlen] == payload_identifier:
+                        if verbose:
+                            print '%s %s -> %s' % (self.config['input_channel'],
+                                                   payload_identifier, output_channel)
+                        self.r.publish(output_channel, msg['data'])
+            except Exception as e:
+                persist_error(e)
 
 
 if __name__ == '__main__':

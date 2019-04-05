@@ -30,7 +30,7 @@ class SciChatSaver(CsvSaver):
 
     def construct_importer(self, options):
         return SciChatCsvImporter(options['config_yaml'], None,
-                           options['vehicle'])
+                                  options['vehicle'])
 
 
 if __name__=='__main__':

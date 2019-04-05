@@ -31,6 +31,7 @@ from django.conf import settings
 from django.db import connection
 
 from xgds_core.flightUtils import getFlight, getActiveFlight, create_group_flight, end_group_flight
+from xgds_core.util import persist_error
 from redis_utils import TelemetryQueue
 from geocamUtil.loader import LazyGetModelByName
 from geocamTrack.utils import get_or_create_track
@@ -161,38 +162,41 @@ class DiveCreator(object):
 
     def run(self):
         for msg in self.tq.listen():
-            data = msg['data']
-            print data
+            try:
+                data = msg['data']
+                print data
 
-            if 'DIVESTATUSEVENT:inwater' in data:
-                connection.close()
-                connection.connect()
-                parsed_data = self.parse_data(data)
-                if self.active_dive:
-                    if parsed_data['dive_number']:
-                        if parsed_data['dive_number'] not in self.active_dive.name:
-                            # end that dive with no end time, the names do not match
-                            self.end_dive()
-                        else:
-                            return
+                if 'DIVESTATUSEVENT:inwater' in data:
+                    connection.close()
+                    connection.connect()
+                    parsed_data = self.parse_data(data)
+                    if self.active_dive:
+                        if parsed_data['dive_number']:
+                            if parsed_data['dive_number'] not in self.active_dive.name:
+                                # end that dive with no end time, the names do not match
+                                self.end_dive()
+                            else:
+                                return
 
-                # make the dive and start it
-                self.start_dive(parsed_data['group_flight_name'], parsed_data['time'])
+                    # make the dive and start it
+                    self.start_dive(parsed_data['group_flight_name'], parsed_data['time'])
 
-            elif 'DIVESTATUSEVENT:ondeck' in data:
-                connection.close()
-                connection.connect()
-                parsed_data = self.parse_data(data)
-                end_time = None
+                elif 'DIVESTATUSEVENT:ondeck' in data:
+                    connection.close()
+                    connection.connect()
+                    parsed_data = self.parse_data(data)
+                    end_time = None
 
-                if self.active_dive:
-                    if parsed_data['dive_number']:
-                        if parsed_data['dive_number'] in self.active_dive.name:
-                            end_time = parsed_data['time']
-                    self.end_dive(end_time)
-                else:
-                    # no active dive, but we got an end so let's end that dive
-                    self.end_other_dive(parsed_data['dive_number'], parsed_data['time'])
+                    if self.active_dive:
+                        if parsed_data['dive_number']:
+                            if parsed_data['dive_number'] in self.active_dive.name:
+                                end_time = parsed_data['time']
+                        self.end_dive(end_time)
+                    else:
+                        # no active dive, but we got an end so let's end that dive
+                        self.end_other_dive(parsed_data['dive_number'], parsed_data['time'])
+            except Exception as e:
+                persist_error(e)
 
 
 if __name__ == '__main__':

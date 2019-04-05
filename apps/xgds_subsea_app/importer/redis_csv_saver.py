@@ -24,8 +24,8 @@ import django
 django.setup()
 from django.db import connection, OperationalError
 
-
 from redis_utils import TelemetrySaver, ensure_vehicle, patch_yaml_path
+from xgds_core.util import persist_error
 from xgds_core.importer.csvImporter import CsvImporter
 from xgds_core.flightUtils import getActiveFlight
 from geocamUtil.loader import getModelByName
@@ -88,6 +88,7 @@ class CsvSaver(TelemetrySaver):
             if row:
                 print 'deserialized:', row
             traceback.print_exc()
+            persist_error(e)
             return None
 
 

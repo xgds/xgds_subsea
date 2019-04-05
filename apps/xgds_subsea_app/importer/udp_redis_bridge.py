@@ -23,9 +23,9 @@ import threading
 from time import sleep
 
 import django
-
 django.setup()
 from django.conf import settings
+from xgds_core.util import persist_error
 
 
 class UdpRedisBridge:
@@ -51,17 +51,21 @@ class UdpRedisBridge:
         print 'bridging udp port %d -> redis "%s"' % (self.udp_port, self.channel_name)
         connected = True
         while connected:
-            rcv = self.socket.recv(2048).strip()
-            if len(rcv) < 1:
-                print 'DISCONNECTED %s' % self.channel_name
-                connected = False
-            else:
-                # status message showing the udp port data came in,
-                # the redis channel it is goingn to, and the contents
-                # of the message
-                if self.verbose:
-                    print '%d->%s: %s' % (self.udp_port, self.channel_name, rcv)
-                self.r.publish(self.channel_name, rcv)
+            try:
+                rcv = self.socket.recv(2048).strip()
+                if len(rcv) < 1:
+                    print 'DISCONNECTED %s' % self.channel_name
+                    connected = False
+                else:
+                    # status message showing the udp port data came in,
+                    # the redis channel it is goingn to, and the contents
+                    # of the message
+                    if self.verbose:
+                        print '%d->%s: %s' % (self.udp_port, self.channel_name, rcv)
+                    self.r.publish(self.channel_name, rcv)
+            except Exception as e:
+                persist_error(e)
+
         self.socket.shutdown()
 
 
