@@ -52,9 +52,9 @@ def grab_frame(the_time, channel, vehicle,  author):
         imageset = grab_frame_from_time(the_time, vehicle, author, vehicle.name)
     except OperationalError:
         print 'Lost db connection, retrying'
+        # reset db connection
         connection.close()
         connection.connect()
-        # reset db connection
         imageset = grab_frame_from_time(the_time, vehicle, author, vehicle.name)
     except Exception:
         traceback.print_exc()

@@ -510,6 +510,15 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['hiddenColumns'] = ['pk', 'v
 XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['columnTitles'] = ['Time', 'Author', 'Name', 'Description', 'Image']
 XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['order_columns'] = ['pk', 'acquisition_time', 'author__first_name', 'name', 'description']
 
+
+XGDS_MAP_SERVER_JS_MAP['Position'] = {'ol': 'geocamTrack/js/olPositionMap.js',
+                                      'model': GEOCAM_TRACK_PAST_POSITION_MODEL,
+                                      'columns': ['timestamp', 'lat', 'lon', 'altitude', 'heading', 'depth', 'pk', 'app_label', 'model_type', 'track_name','track_pk', 'displayName', 'DT_RowId'],
+                                      'hiddenColumns': ['pk', 'app_label', 'model_type', 'track_pk', 'displayName', 'DT_RowId'],
+                                      'columnTitles': ['Time', 'TZ', 'Latitude', 'Longitude', 'Altitude', 'Heading', 'Depth', 'Track', ''],
+                                      'searchableColumns': ['timestamp', 'lat', 'lon', 'altitude', 'heading', 'depth', 'track_name'],
+                                      'search_form_class': 'geocamTrack.forms.SearchPositionForm'}
+
 XGDS_MAP_SERVER_SEARCH_MODELS = ['Event', 'Sample', 'Image', 'Message']
 
 XGDS_CORE_SHOW_CREATE_FLIGHTS = False
@@ -575,9 +584,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 ]
 
+
+XGDS_SSE_TRACK_CHANNELS = ['hercules', 'argus', 'nautilus']
+
+
 XGDS_NOTES_NOTE_SSE_TYPE = XGDS_NOTES_NOTE_MONIKER
 XGDS_NOTES_MESSAGE_SSE_TYPE = 'Message'
-XGDS_SSE_NOTE_CHANNELS = ['sse', 'herc']
+XGDS_SSE_NOTE_CHANNELS = ['sse', 'hercules']
 XGDS_SSE_NOTE_MESSAGE_CHANNELS = ['sse', 'hercules']
 
 XGDS_SSE_IMAGE_CHANNELS = ['sse', 'hercules', 'argus', 'sat3']

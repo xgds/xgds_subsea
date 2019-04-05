@@ -15,6 +15,7 @@
 # specific language governing permissions and limitations under the License.
 # __END_LICENSE__
 
+import traceback
 import sys
 import yaml
 import pytz
@@ -31,6 +32,9 @@ import django
 
 django.setup()
 from django.conf import settings
+
+from django.db import connection, OperationalError
+
 
 from xgds_core.models import Vehicle
 from xgds_core.flightUtils import getActiveFlight
@@ -137,9 +141,23 @@ class NavSaver(TelemetrySaver):
             if k in prev_nav and k in next_nav:
                 params[k] = interpolate(t, t1, prev_nav[k], t2, next_nav[k], unwrap=True)
 
-        params['track'] = get_active_track(self.vehicle)
-        desired_pose = PastResourcePoseDepth(**params)
-        current_pose = ResourcePoseDepth(**params)
+        desired_pose = None
+        current_pose = None
+        try:
+            params['track'] = get_active_track(self.vehicle)
+            desired_pose = PastResourcePoseDepth(**params)
+            current_pose = ResourcePoseDepth(**params)
+        except OperationalError:
+            print 'Lost db connection, retrying'
+            # reset db connection
+            connection.close()
+            connection.connect()
+            params['track'] = get_active_track(self.vehicle)
+            desired_pose = PastResourcePoseDepth(**params)
+            current_pose = ResourcePoseDepth(**params)
+        except Exception:
+            traceback.print_exc()
+
         return desired_pose, current_pose
 
     def deserialize(self, msg):
