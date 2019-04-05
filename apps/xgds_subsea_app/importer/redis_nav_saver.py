@@ -110,36 +110,36 @@ class NavSaver(TelemetrySaver):
         # Set the desired time once telemetry starts coming in
         self.current_position = None
         self.desired_pose_time = None
-        self.gps_queue = TimestampedItemQueue()
-        self.nav_queue = TimestampedItemQueue()
+        self.latlon_queue = TimestampedItemQueue()
+        self.rypad_queue = TimestampedItemQueue()
         super(NavSaver, self).__init__(options)
 
     def interpolate(self):
         # Interpolate a pose for the current desired_pose_time and return it
-        prev_gps = self.gps_queue.get_closest_before(self.desired_pose_time)
-        next_gps = self.gps_queue.get_closest_after(self.desired_pose_time)
-        if prev_gps is None or next_gps is None:
+        prev_latlon = self.latlon_queue.get_closest_before(self.desired_pose_time)
+        next_latlon = self.latlon_queue.get_closest_after(self.desired_pose_time)
+        if prev_latlon is None or next_latlon is None:
             return None
         t = self.desired_pose_time
-        t1 = prev_gps['timestamp']
-        t2 = next_gps['timestamp']
+        t1 = prev_latlon['timestamp']
+        t2 = next_latlon['timestamp']
         params = {'timestamp': t}
         for k in ['longitude', 'latitude']:
-            params[k] = interpolate(t, t1, prev_gps[k], t2, next_gps[k])
+            params[k] = interpolate(t, t1, prev_latlon[k], t2, next_latlon[k])
 
-        prev_nav = self.gps_queue.get_closest_before(self.desired_pose_time)
-        next_nav = self.gps_queue.get_closest_after(self.desired_pose_time)
-        if prev_nav is None or next_nav is None:
+        prev_rypad = self.rypad_queue.get_closest_before(self.desired_pose_time)
+        next_rypad = self.rypad_queue.get_closest_after(self.desired_pose_time)
+        if prev_rypad is None or next_rypad is None:
             return None
-        t1 = prev_nav['timestamp']
-        t2 = next_nav['timestamp']
+        t1 = prev_rypad['timestamp']
+        t2 = next_rypad['timestamp']
         for k in ['altitude', 'depth']:
-            if k in prev_nav and k in next_nav:
-                params[k] = interpolate(t, t1, prev_nav[k], t2, next_nav[k])
+            if k in prev_rypad and k in next_rypad:
+                params[k] = interpolate(t, t1, prev_rypad[k], t2, next_rypad[k])
 
         for k in ['roll', 'pitch', 'yaw']:
-            if k in prev_nav and k in next_nav:
-                params[k] = interpolate(t, t1, prev_nav[k], t2, next_nav[k], unwrap=True)
+            if k in prev_rypad and k in next_rypad:
+                params[k] = interpolate(t, t1, prev_rypad[k], t2, next_rypad[k], unwrap=True)
 
         desired_pose = None
         current_pose = None
@@ -189,17 +189,17 @@ class NavSaver(TelemetrySaver):
             nmea = pynmea2.parse(parts[3])
             if nmea.sentence_type == 'GGA':
                 # GPS position fix
-                gps = {'timestamp': timestamp,
+                latlon = {'timestamp': timestamp,
                        'longitude': nmea.longitude,
                        'latitude': nmea.latitude}
-                self.gps_queue.append(timestamp, gps)
+                self.latlon_queue.append(timestamp, latlon)
             elif nmea.sentence_type == 'HDG':
                 # heading fix
-                nav = {'timestamp': timestamp,
+                rypad = {'timestamp': timestamp,
                        'yaw': float(nmea.heading),
                        'pitch': None,
                        'roll': None}
-                self.nav_queue.append(timestamp, nav)
+                self.rypad_queue.append(timestamp, rypad)
             else:
                 # not an NMEA string we need
                 return None
@@ -210,13 +210,13 @@ class NavSaver(TelemetrySaver):
             # Argus APAS string: "APAS" <date> <time> <vehicle> <heading> <pitch> <roll> <altitude> <depth>
             subparts = parts[3].split()
             timestamp = dateparse('%sT%sZ' % (subparts[1], subparts[2]))
-            nav = {'timestamp': timestamp,
+            rypad = {'timestamp': timestamp,
                    'roll': float(subparts[6]),
                    'pitch': float(subparts[5]),
                    'yaw': float(subparts[4]),
                    'altitude': float(subparts[7]),
                    'depth': float(subparts[8])}
-            self.nav_queue.append(timestamp, nav)
+            self.rypad_queue.append(timestamp, rypad)
 
         elif 'JDS' in parts[3]:
             # Parse timestamp, orientation, depth, and altitude from the JDS string
@@ -225,24 +225,24 @@ class NavSaver(TelemetrySaver):
             # <roll> <pitch> <heading> <depth> <altitude> <elapsed_time> <tether_wraps>
             subparts = parts[3].split()
             timestamp = dateparse('%sT%sZ' % (subparts[1], subparts[2]))
-            nav = {'timestamp': timestamp,
+            rypad = {'timestamp': timestamp,
                    'roll': float(subparts[8]),
                    'pitch': float(subparts[9]),
                    'yaw': float(subparts[10]),
                    'altitude': float(subparts[12]),
                    'depth': float(subparts[11])}
-            self.nav_queue.append(timestamp, nav)
+            self.rypad_queue.append(timestamp, rypad)
 
         else:
             print 'Unknown message:', msg
             return None
 
         # Get interpolated values if we can
-        if len(self.nav_queue.queue) > 1 and len(self.gps_queue.queue) > 1:
+        if len(self.rypad_queue.queue) > 1 and len(self.latlon_queue.queue) > 1:
             past_results = []
             current_results = []
-            while self.nav_queue.queue[-1][0] > self.desired_pose_time \
-                    and self.gps_queue.queue[-1][0] > self.desired_pose_time:
+            while self.rypad_queue.queue[-1][0] > self.desired_pose_time \
+                    and self.latlon_queue.queue[-1][0] > self.desired_pose_time:
                 # We should have the information we need to interpolate
                 interpolated = self.interpolate()
                 if interpolated:
@@ -256,8 +256,8 @@ class NavSaver(TelemetrySaver):
 
             # Get rid of older values we won't need again
             done_with = self.desired_pose_time - datetime.timedelta(seconds=1)
-            self.gps_queue.delete_before(done_with)
-            self.nav_queue.delete_before(done_with)
+            self.latlon_queue.delete_before(done_with)
+            self.rypad_queue.delete_before(done_with)
             if len(past_results) > 0:
                 for pose in past_results:
                     print '%s pose at %s computed' % (self.vehicle, pose.timestamp)
