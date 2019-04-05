@@ -255,6 +255,7 @@ class NavSaver(TelemetrySaver):
 
         if self.current_position:
             print 'saving current position from %s' % self.channel_name
+            print 'current position type %s' % self.current_position.__class__.__name__
             self.current_position.saveCurrent()
 
         # The result should be None, a model object, or a list of model objects
@@ -262,11 +263,11 @@ class NavSaver(TelemetrySaver):
             if type(past_positions) is list:
                 if past_positions:
                     self.buffer.extend(past_positions)
-                    for m in past_positions:
-                        m.broadcast()
+                    # for m in past_positions:
+                    #     m.broadcast()
             else:
                 self.buffer.append(past_positions)
-                past_positions.broadcast()
+                # past_positions.broadcast()
 
 
 if __name__ == '__main__':
