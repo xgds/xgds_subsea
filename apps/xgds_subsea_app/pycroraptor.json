@@ -4,9 +4,6 @@
     "LOG_FILE":"pyraptord_${unique}.txt",
 
     "SERVICES": {
-        "zmqCentral": {
-            "command": "/home/xgds/xgds_subsea/apps/geocamUtil/zmqUtil/zmqCentral.py -m none -c none -f"
-        },
         "pingSubsystems": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_status_board/scripts/pingSubsystems.py -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/pingConfig.json"
         },
