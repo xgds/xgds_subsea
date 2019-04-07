@@ -2,4 +2,4 @@ pubsub:
   listen_interval: 0.005
   publish_channel: 'redis_stats'
   publish_interval: 0.5
-display: false
+display: true
