@@ -15,6 +15,7 @@
 # specific language governing permissions and limitations under the License.
 # __END_LICENSE__
 
+import traceback
 from threading import Timer
 import json
 import argparse
@@ -196,7 +197,7 @@ class DiveCreator(object):
                         # no active dive, but we got an end so let's end that dive
                         self.end_other_dive(parsed_data['dive_number'], parsed_data['time'])
             except Exception as e:
-                persist_error(e)
+                persist_error(e, traceback.format_exc())
 
 
 if __name__ == '__main__':

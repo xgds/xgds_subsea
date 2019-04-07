@@ -71,7 +71,7 @@ class EventSaver(CsvSaver):
             if row:
                 print 'deserialized:', row
             traceback.print_exc()
-            persist_error(e)
+            persist_error(e, traceback.format_exc())
             return None
 
 
