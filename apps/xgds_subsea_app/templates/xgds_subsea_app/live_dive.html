@@ -18,8 +18,20 @@
 
 {% endblock cssExtras %}
 
+{% block mapdiv %}
+    {% if settings.DIVE_MODE == 2 %}
+    <div id="map-gridstack-item" class="grid-stack-item"
+    data-gs-x="0" data-gs-y="0"
+    data-gs-width="1" data-gs-height="3" >
+    {% else %}
+        <div id="map-gridstack-item" class="grid-stack-item"
+    data-gs-x="0" data-gs-y="0"
+    data-gs-width="2" data-gs-height="3" >
+    {% endif %}
+{% endblock mapdiv %}
 
 {% block preMap %}
+    {% if settings.DIVE_MODE == 2 %}
     <div id="scichat-gridstack-item" class="grid-stack-item"
 		data-gs-x="1" data-gs-y="0"
         data-gs-width="2" data-gs-height="3" >
@@ -32,10 +44,15 @@
                 </div>
 			</div>
 		</div>
+    {% endif %}
 {% endblock preMap %}
 
 {% block postMap %}
+    {% if settings.DIVE_MODE == 2 %} <!-- chat -->
     <div id="tabs-gridstack-item" class="grid-stack-item"  data-gs-x="4" data-gs-y="0" data-gs-width="3" data-gs-height="3" >
+    {%  else %}
+    <div id="tabs-gridstack-item" class="grid-stack-item"  data-gs-x="3" data-gs-y="0" data-gs-width="4" data-gs-height="3" >
+    {% endif %}
     		<div id="tabs-gridstack-item-content" class="grid-stack-item-content" >
 			<ul class="nav justify-content-end">
 				<i class="fa fa-lock pinDiv gray-light"></i>
