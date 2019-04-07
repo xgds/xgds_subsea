@@ -399,12 +399,15 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         """
         if not vehicle_name and 'vehicle_name' in row:
             key, rvn = clean_key_value(row['vehicle_name'])
-            if rvn == 'Argus':
-                vehicle_name = rvn
-            elif 'Herc' in rvn:
-                vehicle_name = 'Hercules'
+            if not rvn:
+                print 'NULL VEHICLE, DEFAULTING TO HERCULES %s' % rvn
             else:
-                print 'INVALID VEHICLE, DEFAULTING TO HERCULES %s' % rvn
+                if rvn == 'Argus':
+                    vehicle_name = rvn
+                elif 'Herc' in rvn:
+                    vehicle_name = 'Hercules'
+                else:
+                    print 'INVALID VEHICLE, DEFAULTING TO HERCULES %s' % rvn
             if not vehicle_name:
                 vehicle_name = self.vehicle.name
         safe_delete_key(row, 'vehicle_name')
