@@ -53,7 +53,7 @@ class TgtPlanExporter(TreeWalkPlanExporter):
         self.projection = get_projection(self.utm_zone, self.south)
 
     def transformStation(self, station, tsequence, context):
-        # GPT "name" easting northing 0.00 latitude longitude hh:mm:ss MM/DD/YYYY 0.00 0.00 0 0 0.00 "notes" "SY(POSGEN03,0)" 0.0
+        # GPT "name" easting northing DEPTH latitude longitude hh:mm:ss MM/DD/YYYY 0.00 0.00 0 0 0.00 "notes" "SY(POSGEN03,0)" heading
         # GPT "Test1" 273387.37 2100940.52 0.00 18.98849991667 -155.15254155556 15:38:26 08/31/2018 0.00 0.00 0 0 0.00 "" "SY(FLTHAZ02,0)" 0.0
 
         lon, lat = station.geometry['coordinates']
@@ -65,11 +65,20 @@ class TgtPlanExporter(TreeWalkPlanExporter):
         if not notes:
             notes = ""
 
-        result = 'GPT%s"%s"%s%.2f%s%.2f%s0.00%s%.11f%s%.11f%s%s%s%s%s0.00%s0.00%s0%s0%s0.00%s"%s"%s"SY(POSGEN03,0)"%s0.0\n' % \
-                 (SEPARATOR, name, SEPARATOR, easting, SEPARATOR, northing, SEPARATOR, SEPARATOR,
+        depth = 0
+        if hasattr(station, 'depth'):
+            depth = station.depth
+
+        heading = -999
+        if hasattr(station, 'heading'):
+            heading = station.heading
+
+        # blabla 'GPT  "nm" east%s%.2f%s0.00%s%.11f%s%.11f%s%s%s%s%s0.00%s0.00%s0%s0%s0.00%s"%s"%s"SY(POSGEN03,0)"%s0.0\n' % \
+        result = 'GPT%s"%s"%s%.2f%s%.2f%s%.2f%s%.11f%s%.11f%s%s%s%s%s0.00%s0.00%s0%s0%s0.00%s"%s"%s"SY(POSGEN03,0)"%s%.2f\n' % \
+                 (SEPARATOR, name, SEPARATOR, easting, SEPARATOR, northing, SEPARATOR, depth, SEPARATOR,
                   lat, SEPARATOR, lon, SEPARATOR, self.hms, SEPARATOR, self.mdy, SEPARATOR,
                   SEPARATOR, SEPARATOR, SEPARATOR, SEPARATOR, SEPARATOR,
-                  notes, SEPARATOR, SEPARATOR)
+                  notes, SEPARATOR, SEPARATOR, heading)
         return result
 
     def transformSegment(self, segment, tsequence, context):
