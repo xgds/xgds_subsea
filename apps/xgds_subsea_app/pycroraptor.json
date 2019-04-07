@@ -42,7 +42,7 @@
             "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_frame_grabber.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_frame_grabber_config.yaml"
         },
          "redis_stats": {
-            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_stats.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_stats_nodisplay.yaml"
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_stats.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_stats_config_nodisplay.yaml"
         },
         "redis_stats_sse": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_stats_sse.py"
