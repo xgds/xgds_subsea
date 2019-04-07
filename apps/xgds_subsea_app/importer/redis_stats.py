@@ -26,10 +26,12 @@ import threading
 from time import sleep
 
 import django
+
 django.setup()
 from django.conf import settings
 
 from geocamUtil.datetimeJsonEncoder import DatetimeJsonEncoder
+
 
 class TelemetryCounter:
     def __init__(self, listen_interval=0.005, publish_channel=None, publish_interval=None):
@@ -68,7 +70,7 @@ class TelemetryCounter:
 
     def publish_stats(self):
         msg = json.dumps(self.stats, cls=DatetimeJsonEncoder)
-        self.r.publish(self.publish_channel,msg)
+        self.r.publish(self.publish_channel, msg)
         self.publish_time = datetime.datetime.utcnow().replace(tzinfo=pytz.UTC)
 
     def run(self):
@@ -88,15 +90,15 @@ def drawer(stdscr, telem_counter):
             name_width = len(max(channel_names, key=len))
             count_width = 8
             time_width = len('2000-01-01 12:00:00.000000+00:00')
-            format = '%%%ds %%%dd %%%ds' % (name_width, count_width, time_width)
+            fmt = '%%%ds %%%dd %%%ds' % (name_width, count_width, time_width)
 
             # redraw the table
             stdscr.erase()
             for i, channel in enumerate(channel_names):
-                stdscr.addstr(i, 0, format % (channel,
-                                              telem_counter.stats[channel]['count'],
-                                              telem_counter.stats[channel]['last'].isoformat()))
-            stdscr.move(len(channel_names),0)
+                stdscr.addstr(i, 0, fmt % (channel,
+                                           telem_counter.stats[channel]['count'],
+                                           telem_counter.stats[channel]['last'].isoformat()))
+            stdscr.move(len(channel_names), 0)
             stdscr.refresh()
         sleep(0.1)
 
@@ -119,5 +121,6 @@ def main():
         while True:
             sleep(1)
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     main()

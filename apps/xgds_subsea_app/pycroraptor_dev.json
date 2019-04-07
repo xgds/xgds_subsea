@@ -41,6 +41,9 @@
         "redis_frame_grabber": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_frame_grabber.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_frame_grabber_config.yaml"
         },
+        "redis_stats": {
+            "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_stats.py /home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_stats_nodisplay.yaml"
+        },
         "redis_stats_sse": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_subsea_app/importer/redis_stats_sse.py"
         }
@@ -48,6 +51,7 @@
     "GROUPS": {
                 "startup": ["pingSubsystems","updateLoadAverages", "sse", "sseHeartbeat",
                     "udp_redis_bridge", "redis_dive_creator", "redis_demux", "redis_nav_saver",
-                    "redis_csv_saver", "redis_event_saver", "redis_scichat_saver", "redis_frame_grabber", "redis_stats_sse"]
+                    "redis_csv_saver", "redis_event_saver", "redis_scichat_saver", "redis_frame_grabber",
+                    "redis_stats", "redis_stats_sse"]
     }
 }
