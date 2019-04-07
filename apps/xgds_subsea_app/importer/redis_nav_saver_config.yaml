@@ -5,12 +5,12 @@ savers:
   Hercules:
     vehicle: Hercules
     channel_name: ['xgds:nav:m1gga','xgds:her:jds']
-    buffer_time_sec: 1
+    buffer_time_sec: 0.4
 
   Argus:
     vehicle: Argus
     channel_name: ['xgds:nav:m2gga','xgds:her:apas']
-    buffer_time_sec: 1
+    buffer_time_sec: 0.4
 
   Nautilus:
     vehicle: Nautilus
