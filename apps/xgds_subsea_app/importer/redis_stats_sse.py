@@ -47,11 +47,11 @@ class TelemetryPrinter:
         for msg in tq.listen():
             print '%s: %s' % (self.channel_name, msg)
             publishRedisSSE(
-                self.channel_name, 
+                self.channel_name + "_sse", 
                 self.channel_name, 
                 json.dumps({
                     "timestamp": int(time.time()),
-                    "message": str(msg),
+                    "message": msg,
                 },
             ))
 
