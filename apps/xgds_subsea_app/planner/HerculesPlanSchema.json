@@ -149,7 +149,7 @@
             "type": "ParamSpec",
             "id": "heading",
             "unit": "degrees",
-            "default": 0,
+            "default": -999,
             "valueType": "number"
         }
     ],
