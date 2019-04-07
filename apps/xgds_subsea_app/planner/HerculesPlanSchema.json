@@ -77,7 +77,8 @@
             "valueType": "number",
             "required": false,
             "minimum": 0,
-            "notes": "The speed of traverse."
+            "notes": "The speed of traverse.",
+            "default": 0.125
         },
         {
             "type": "ParamSpec",
@@ -112,7 +113,7 @@
 	    "notes": "The default speed for traverses",
 	    "required": false,
 	    "name": "Default Speed",
-	    "default": 0.89408,
+	    "default": 0.125,
 	    "widget":"number"
 	},
          {
@@ -136,6 +137,20 @@
             "type": "ParamSpec",
             "id": "boundary",
             "parent": "boundary"
+        },
+        {
+            "type": "ParamSpec",
+            "id": "depth",
+            "unit": "m",
+            "default": 2850,
+            "valueType": "number"
+        },
+        {
+            "type": "ParamSpec",
+            "id": "heading",
+            "unit": "degrees",
+            "default": 0,
+            "valueType": "number"
         }
     ],
 
