@@ -28,6 +28,7 @@ from redis import StrictRedis
 import json
 
 import django
+
 django.setup()
 
 from django.conf import settings
@@ -35,7 +36,7 @@ from xgds_core.redisUtil import publishRedisSSE
 
 
 class TelemetryPrinter:
-    def __init__(self,channel_name):
+    def __init__(self, channel_name):
         self.channel_name = channel_name
         thread = threading.Thread(target=self.run)
         thread.daemon = True
@@ -53,8 +54,9 @@ class TelemetryPrinter:
                     "timestamp": int(time.time()),
                     "message": msg,
                 },
-            ))
+                ))
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     TelemetryPrinter("redis_stats")
     while True: sleep(1)
