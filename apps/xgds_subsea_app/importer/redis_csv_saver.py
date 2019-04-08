@@ -22,9 +22,9 @@ from time import sleep
 
 import django
 django.setup()
-from django.db import connection, OperationalError
+from django.db import OperationalError
 
-from redis_utils import TelemetrySaver, ensure_vehicle, patch_yaml_path
+from redis_utils import TelemetrySaver, ensure_vehicle, patch_yaml_path, reconnect_db
 from xgds_core.util import persist_error
 from xgds_core.importer.csvImporter import CsvImporter
 from xgds_core.flightUtils import getActiveFlight
@@ -71,9 +71,7 @@ class CsvSaver(TelemetrySaver):
                     print result
                 return result
             except OperationalError as oe:
-                print 'Lost db connection, retrying'
-                connection.close()
-                connection.connect()
+                reconnect_db()
                 if not updated_row:
                     row = self.importer.update_row(row)
                     if self.needs_flight:

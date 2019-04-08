@@ -31,15 +31,14 @@ from dateutil.parser import parse as dateparse
 import django
 
 django.setup()
-from django.conf import settings
 
-from django.db import connection, OperationalError
+from django.db import OperationalError
 
 from xgds_core.models import Vehicle
 from xgds_core.util import persist_error
 from xgds_core.flightUtils import getActiveFlight
 from geocamTrack.models import ResourcePoseDepth, PastResourcePoseDepth
-from redis_utils import TelemetrySaver, TelemetryQueue
+from redis_utils import TelemetrySaver, TelemetryQueue, reconnect_db
 
 
 def get_active_track(vehicle):
@@ -147,11 +146,9 @@ class NavSaver(TelemetrySaver):
             params['track'] = get_active_track(self.vehicle)
             desired_pose = PastResourcePoseDepth(**params)
             current_pose = ResourcePoseDepth(**params)
-        except OperationalError:
-            print 'Lost db connection, retrying'
-            # reset db connection
-            connection.close()
-            connection.connect()
+        except OperationalError as oe:
+            traceback.print_exc()
+            reconnect_db()
             params['track'] = get_active_track(self.vehicle)
             desired_pose = PastResourcePoseDepth(**params)
             current_pose = ResourcePoseDepth(**params)
@@ -275,7 +272,13 @@ class NavSaver(TelemetrySaver):
         if self.current_position:
             print 'saving current position from %s' % self.channel_name
             print 'current position type %s' % self.current_position.__class__.__name__
-            self.current_position.saveCurrent()
+            try:
+                self.current_position.saveCurrent()
+            except OperationalError as oe:
+                reconnect_db()
+                self.current_position.saveCurrent()
+            except Exception as e:
+                persist_error(e)
 
         # The result should be None, a model object, or a list of model objects
         if past_positions is not None:

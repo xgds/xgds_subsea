@@ -27,9 +27,9 @@ import django
 django.setup()
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.db import connection, OperationalError
+from django.db import OperationalError
 
-from redis_utils import TelemetryQueue
+from redis_utils import TelemetryQueue, reconnect_db
 
 from xgds_core.util import persist_error
 from geocamTrack.utils import LazyGetModelByName
@@ -53,10 +53,7 @@ def grab_frame(the_time, channel, vehicle,  author):
         print ('Grabbing frame for %s at %s' % (str(vehicle), the_time.isoformat()))
         imageset = grab_frame_from_time(the_time, vehicle, author, vehicle.name)
     except OperationalError:
-        print 'Lost db connection, retrying'
-        # reset db connection
-        connection.close()
-        connection.connect()
+        reconnect_db()
         imageset = grab_frame_from_time(the_time, vehicle, author, vehicle.name)
     except Exception as e:
         persist_error(e)

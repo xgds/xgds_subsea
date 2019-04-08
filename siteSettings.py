@@ -601,7 +601,7 @@ XGDS_SSE_TRACK_CHANNELS = ['hercules', 'argus', 'nautilus']
 
 
 XGDS_NOTES_NOTE_SSE_TYPE = XGDS_NOTES_NOTE_MONIKER
-XGDS_NOTES_MESSAGE_SSE_TYPE = 'Message'
+XGDS_NOTES_MESSAGE_SSE_TYPE = 'message'
 XGDS_SSE_NOTE_CHANNELS = ['sse', 'hercules']
 XGDS_SSE_NOTE_MESSAGE_CHANNELS = ['sse', 'hercules']
 

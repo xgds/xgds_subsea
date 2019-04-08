@@ -701,9 +701,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                         skip = True
 
                 if not skip:
-                    print('creating condition for row with name %s flight %s %d' % (row['condition_data']['name'],
-                                                                                    row['condition_data']['flight'],
-                                                                                    row['condition_data']['flight'].id, ))
                     condition = Condition.objects.create(**row['condition_data'])
                     new_models.append(condition)
                     condition_history_data = row['condition_history_data']
