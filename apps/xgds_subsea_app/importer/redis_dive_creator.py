@@ -29,11 +29,10 @@ from geocamUtil.datetimeJsonEncoder import DatetimeJsonEncoder
 import django
 django.setup()
 from django.conf import settings
-from django.db import connection
 
 from xgds_core.flightUtils import getFlight, getActiveFlight, create_group_flight, end_group_flight
 from xgds_core.util import persist_error
-from redis_utils import TelemetryQueue
+from redis_utils import TelemetryQueue, reconnect_db
 from geocamUtil.loader import LazyGetModelByName
 from geocamTrack.utils import get_or_create_track
 
@@ -168,8 +167,7 @@ class DiveCreator(object):
                 print data
 
                 if 'DIVESTATUSEVENT:inwater' in data:
-                    connection.close()
-                    connection.connect()
+                    reconnect_db()
                     parsed_data = self.parse_data(data)
                     if self.active_dive:
                         if parsed_data['dive_number']:
@@ -183,8 +181,7 @@ class DiveCreator(object):
                     self.start_dive(parsed_data['group_flight_name'], parsed_data['time'])
 
                 elif 'DIVESTATUSEVENT:ondeck' in data:
-                    connection.close()
-                    connection.connect()
+                    reconnect_db()
                     parsed_data = self.parse_data(data)
                     end_time = None
 

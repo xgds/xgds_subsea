@@ -31,6 +31,13 @@ from django.db import connection, OperationalError
 from xgds_core.flightUtils import get_default_vehicle, get_vehicle, getActiveFlight
 
 
+def reconnect_db():
+    print 'Lost db connection, retrying'
+    # reset db connection
+    connection.close()
+    connection.connect()
+
+
 def patch_yaml_path(options):
     """
     Prepend the path to this script to the yaml paths
@@ -132,9 +139,7 @@ class TelemetrySaver(object):
                 self.do_write_buffer()
             except OperationalError:
                 # try again
-                print 'Lost db connection, retrying'
-                connection.close()
-                connection.connect()
+                reconnect_db()
                 self.do_write_buffer()
             except Exception as e:
                 print e

@@ -22,14 +22,14 @@ from time import sleep
 
 import django
 django.setup()
-from django.conf import settings
-from django.db import connection, OperationalError
 
+from django.db import OperationalError
 from redis_csv_saver import CsvSaver
 
 from eventLogCsvImporter import EventLogCsvImporter
 from xgds_core.flightUtils import getActiveFlight
 from xgds_core.util import persist_error
+from redis_utils import reconnect_db
 
 
 class EventSaver(CsvSaver):
@@ -56,9 +56,7 @@ class EventSaver(CsvSaver):
                 updated_row = True
                 models = self.importer.build_models(row)
             except OperationalError as oe:
-                print 'Lost db connection, retrying'
-                connection.close()
-                connection.connect()
+                reconnect_db()
                 if not updated_row:
                     row['flight'] = getActiveFlight()
                     row = self.importer.update_row(row)
