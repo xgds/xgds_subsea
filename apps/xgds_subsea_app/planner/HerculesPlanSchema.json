@@ -98,9 +98,8 @@
             "type": "ParamSpec",
             "id": "depth",
             "unit": "m",
-            "default": 2850,
-            "valueType": "number",
-            "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = (model.get('depth')/.25); model.set('duration', newDuration);}}"
+            "default": 3000,
+            "valueType": "number"
         }
     ],
 
@@ -142,7 +141,7 @@
             "type": "ParamSpec",
             "id": "depth",
             "unit": "m",
-            "default": 2850,
+            "default": 3000,
             "valueType": "number"
         },
         {
@@ -204,12 +203,13 @@
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "ascent",
-            "color": "#98CED9",
+            "color": "#fff9e6",
              "params": [
                 {
                     "type": "ParamSpec",
                     "id": "depth",
-                    "parent": "depth"
+                    "parent": "depth",
+                    "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = (model.get('depth')/.15); model.set('duration', newDuration);}}"
                 }
              ]
         },
@@ -217,13 +217,13 @@
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "descent",
-            "color": "#98CED9",
+            "color": "#fff9e6",
              "params": [
                 {
                     "type": "ParamSpec",
                     "id": "depth",
                     "parent": "depth",
-                    "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = (model.get('depth')/.15); model.set('duration', newDuration);}}"
+                    "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = (model.get('depth')/.25); model.set('duration', newDuration);}}"
                 }
              ]
         },
@@ -254,13 +254,19 @@
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
-            "id": "SUPR_micro",
+            "id": "SUPR_filter",
             "color": "#adfff4"
         },
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
-            "id": "SUPR_geochem",
+            "id": "SUPR_bag",
+            "color": "#adfff4"
+        },
+         {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "SUPR_tube",
             "color": "#adfff4"
         },
         {
@@ -302,8 +308,9 @@
         "mapping_setup",
         "sampling_setup",
         "IGT",
-        "SUPR_micro",
-        "SUPR_geochem",
+        "SUPR_filter",
+        "SUPR_tube",
+        "SUPR_bag",
         "grab",
         "niskin",
         "temp_probe",

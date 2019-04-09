@@ -78,13 +78,13 @@
             "type": "ascent",
             "presetCode": "ASC",
             "presetName": "Ascent",
-            "duration": 19000
+            "duration": 20000
         },
         {
             "type": "descent",
             "presetCode": "DES",
             "presetName": "Descent",
-            "duration": 11400
+            "duration": 12000
         },
         {
             "type": "mapping_setup",
@@ -108,23 +108,30 @@
             "duration": 900
         },
         {
-            "type": "SUPR_micro",
-            "presetCode": "SPM",
-            "presetName": "SUPR Micro",
+            "type": "SUPR_filter",
+            "presetCode": "SUF",
+            "presetName": "SUPR Filter",
             "notes": "conduct SUPR sampling",
-            "duration": 3600
+            "duration": 2400
         },
         {
-            "type": "SUPR_geochem",
-            "presetCode": "SPG",
-            "presetName": "SUPR Geochem",
+            "type": "SUPR_tube",
+            "presetCode": "SUT",
+            "presetName": "SUPR Tube",
             "notes": "conduct SUPR sampling",
             "duration": 900
         },
         {
+            "type": "SUPR_bag",
+            "presetCode": "SUB",
+            "presetName": "SUPR Bag",
+            "notes": "conduct SUPR bag",
+            "duration": 1200
+        },
+        {
             "type": "grab",
             "presetCode": "GRB",
-            "presetName": "Grab",
+            "presetName": "Rock Sample",
             "notes": "collect rock/mineral sample",
             "duration": 1800
         },
