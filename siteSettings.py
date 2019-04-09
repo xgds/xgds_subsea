@@ -425,6 +425,8 @@ XGDS_PLANNER_PLAN_EXPORTERS = (
     ('lnw', '.lnw', 'xgds_subsea_app.linePlanExporter.LinePlanExporter'),
 )
 
+XGDS_PLANNER_PLAN_BEARING_HANDLEBAR_PATH = 'xgds_subsea_app/templates/xgds_planner2/bearingDistancePlan.handlebars'
+
 XGDS_CORE_FLIGHT_MONIKER = "Dive"
 XGDS_CORE_GROUP_FLIGHT_MONIKER = "Dive"
 XGDS_CORE_DEFAULT_VEHICLE_PK = 2  # Hercules

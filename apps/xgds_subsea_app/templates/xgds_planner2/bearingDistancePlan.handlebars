@@ -1,0 +1,88 @@
+<div> <strong>{{plan_moniker}}: {{plan.name}}</strong></div>
+
+	<table class="wiki">
+		<tr>
+			<th><label>Name:</label></th>
+			<td>{{plan.name}}</td>
+		</tr>
+		<tr>
+			<th><label>ID:</label></th>
+			<td>{{plan.id}}</td>
+		</tr>
+		<tr>
+			<th><label>Author:</label></th>
+			<td>{{plan.creator}}</td>
+		</tr>
+		<tr>
+			<th><label>Created:</label></th>
+			<td>{{prettyTime plan.dateCreated defaultTimeZone}}</td>
+		</tr>
+		<tr>
+			<th><label>Modified:</label></th>
+			<td>{{prettyTime plan.dateModified defaultTimeZone}}</td>
+		</tr>
+		<tr>
+			<th><label>Notes:</label></th>
+			<td>{{wrapURL plan.notes}}</td>
+		</tr>
+		<tr>
+			<th><label>Duration:</label></th>
+			<td id="plan_duration_value"></td>
+		</tr>
+		<tr>
+			<th><label>Distance:</label></th>
+			<td id="plan_distance_value"></td>
+		</tr>
+	</table>
+
+<table class="wiki" id="stable">
+ <thead>
+    <th id="colhead1" scope="col">Name</th>
+    <th id="colhead2" scope="col">{{# if crs }}X/Y{{else}}Lat/Long{{/if}}</th>
+    <th id="colhead4" scope="col">Depth</th>
+    <th id="colhead4" scope="col">Heading</th>
+    <th id="colhead4" scope="col">Bear/Dst</th>
+    <th id="colhead7" scope="col">Notes</th>
+    <th id="colhead5" scope="col">Duration(hh:mm:ss)</th>
+    <th id="colhead6" scope="col">Total(hh:mm:ss)</th>
+  </thead>
+  <tbody>
+   {{#each plan.sequence}}
+    <tr style='page-break-inside:avoid;'>
+	  	<td>{{type}}&nbsp;{{id}}: {{#if name}}{{name}}{{/if}}</td>
+	    <td align="right">{{#if geometry.coordinates}}{{vsprintf '%2$.06f, %1$.06f' geometry.coordinates}}{{/if}}</td>
+	    <td align="right">{{#if depth}}{{ sprintf '%.02f' depth}}m{{/if}}</td>
+	    <td align="right">{{#if heading}}{{ sprintf '%.02f' heading}}°{{/if}}</td>
+	    <td align="right">{{#if bearing}}{{ sprintf '%.02f' bearing}}°{{/if}}{{#if distanceMeters}}{{totalDistance distanceMeters}} m{{/if}}</td>
+	    <td>{{notes}}</td>
+	    <td align="right">{{#if durationSeconds}}+ {{formatDuration durationSeconds}}{{/if}}</td>
+	    <td align="right">{{#if durationSeconds}}{{totalDuration durationSeconds}}{{/if}}</td>
+	  </tr>
+	  {{#each commands}}
+	  <tr style='page-break-inside:avoid;'>
+	  	<td>&nbsp;&nbsp;&nbsp;{{type}}&nbsp;{{id}}: {{#if name}}{{name}}{{/if}}</td>
+	    <td align="right"></td>
+	    <td align="right"></td>
+	    <td align="right"></td>
+	    <td align="right"></td>
+	    <td>{{#if notes}}{{notes}}{{/if}}</td>
+	    <td align="right">{{#if duration}}+ {{formatDuration duration}}{{/if}}</td>
+	    <td align="right">{{#if duration}}{{totalDuration duration}}{{/if}}</td>
+	  </tr>
+	  {{/each}}
+	  {{#each sequence}}
+	  <tr style='page-break-inside:avoid;'>
+	  	<td>&nbsp;&nbsp;{{name}}</td>
+	    <td></td>
+	    <td></td>
+	    <td></td>
+	    <td></td>
+	    <td></td>
+	    <td align="right">{{#if durationSeconds}}+ {{formatDuration durationSeconds}}{{/if}}</td>
+	    <td align="right"></td>
+	    <td>{{notes}}</td>
+	  </tr>
+	  {{/each}}
+    {{/each}}
+  </tbody>
+</table>
