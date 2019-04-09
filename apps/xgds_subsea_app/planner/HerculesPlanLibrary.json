@@ -162,6 +162,13 @@
             "presetName": "Imaging",
             "notes": "optimize video and lighting for 60 s clips",
             "duration": 300
+        },
+        {
+            "type": "marker",
+            "presetCode": "MAR",
+            "presetName": "Deploy Marker",
+            "notes": "Place a marker on sea floor",
+            "duration": 900
         }
     ]
 }

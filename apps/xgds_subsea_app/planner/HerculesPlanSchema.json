@@ -298,6 +298,12 @@
             "parent": "VehicleCommand",
             "id": "imaging",
             "color": "#b0eab0"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "marker",
+            "color": "#d4d4aa"
         }
      ],
 
@@ -315,7 +321,8 @@
         "niskin",
         "temp_probe",
         "misc",
-        "imaging"
+        "imaging",
+        "marker"
     ],
 
     "segmentSequenceCommands": [
