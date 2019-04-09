@@ -16,6 +16,7 @@
 # __END_LICENSE__
 
 import django
+
 django.setup()
 
 import json
@@ -27,12 +28,13 @@ from uuid import uuid4
 VIDEO_INDEX_NAME = "prog_index.m3u8"
 VIDEO_SEGMENT_DIR_NAME = "Segment"
 
+
 def createEpisodeIfNeeded(groupFlightName, segmentMetadata):
-    flightInfo = Flight.objects.get(name = segmentMetadata["flight"])
-    startTime = dateparse.parse(segmentMetadata["episodeStart"]+"Z")
-    endTime = dateparse.parse(segmentMetadata["episodeEnd"]+"Z")
+    flightInfo = Flight.objects.get(name=segmentMetadata["flight"])
+    startTime = dateparse.parse(segmentMetadata["episodeStart"] + "Z")
+    endTime = dateparse.parse(segmentMetadata["episodeEnd"] + "Z")
     myEpisode, created = VideoEpisode.objects.get_or_create(
-        shortName = groupFlightName,
+        shortName=groupFlightName,
         defaults={'startTime': startTime,
                   'endTime': endTime,
                   'uuid': segmentMetadata["uuid"]})
@@ -48,19 +50,19 @@ def createSegmentRecord(index, seg, segMeta, videoEpisode):
     videoSource = VideoSource.objects.get(shortName=segMeta["vehicle"])
     videoSettings = VideoSettings.objects.get(name=getVideoResFromPath(segMeta["videoDir"]))
     # NOTE: Cinedek start/end times are unqualified but are in UTC by OET convention.
-    startTime = dateparse.parse(seg["startTime"]+"Z")
-    endTime = dateparse.parse(seg["endTime"]+"Z")
+    startTime = dateparse.parse(seg["startTime"] + "Z")
+    endTime = dateparse.parse(seg["endTime"] + "Z")
 
     seg = VideoSegment(
-        directoryName = VIDEO_SEGMENT_DIR_NAME,
-        segNumber = index,
-        indexFileName = VIDEO_INDEX_NAME,
-        startTime = startTime,
-        endTime = endTime,
-        settings = videoSettings,
-        source = videoSource,
-        episode = videoEpisode,
-        uuid = uuid4())
+        directoryName=VIDEO_SEGMENT_DIR_NAME,
+        segNumber=index,
+        indexFileName=VIDEO_INDEX_NAME,
+        startTime=startTime,
+        endTime=endTime,
+        settings=videoSettings,
+        source=videoSource,
+        episode=videoEpisode,
+        uuid=uuid4())
     seg.save()
 
     return seg
@@ -76,12 +78,13 @@ def main():
         parser.error('path to exactly one metadata JSON file is required')
 
     print 'processing %s' % args[0]
-    segmentMetadata = json.load(open(args[0],"r"))
+    segmentMetadata = json.load(open(args[0], "r"))
     groupFlightName = segmentMetadata["flight"].split("_")[0]
     print "  Flight: %s -- Group Flight: %s" % (segmentMetadata['flight'], groupFlightName)
     videoEpisode = createEpisodeIfNeeded(groupFlightName, segmentMetadata)
     for index, seg in enumerate(segmentMetadata["segments"]):
         createSegmentRecord(index, seg, segmentMetadata, videoEpisode)
-    
+
+
 if __name__ == '__main__':
     main()
