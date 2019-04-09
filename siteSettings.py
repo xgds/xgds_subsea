@@ -646,3 +646,6 @@ CONN_MAX_AGE = 30
 # override these in settings.py
 NAUTILUS_CHAT_URL = ''
 NAUTILUS_CHAT_AUTOJOIN = ''
+
+GEOCAM_UTIL_LIVE_MODE = True
+XGDS_SSE = True
