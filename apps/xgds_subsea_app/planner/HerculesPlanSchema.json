@@ -209,7 +209,7 @@
                     "type": "ParamSpec",
                     "id": "depth",
                     "parent": "depth",
-                    "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = (model.get('depth')/.15); model.set('duration', newDuration);}}"
+                    "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = 2400 + (model.get('depth')/.25); model.set('duration', newDuration);}}"
                 }
              ]
         },
@@ -223,7 +223,7 @@
                     "type": "ParamSpec",
                     "id": "depth",
                     "parent": "depth",
-                    "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = (model.get('depth')/.25); model.set('duration', newDuration);}}"
+                    "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = 4500 + (model.get('depth')/.41666667); model.set('duration', newDuration);}}"
                 }
              ]
         },
