@@ -108,18 +108,25 @@
             "duration": 900
         },
         {
-            "type": "SUPR_micro",
-            "presetCode": "SPM",
-            "presetName": "SUPR Micro",
+            "type": "SUPR_filter",
+            "presetCode": "SUF",
+            "presetName": "SUPR Filter",
             "notes": "conduct SUPR sampling",
-            "duration": 3600
+            "duration": 2400
         },
         {
-            "type": "SUPR_geochem",
-            "presetCode": "SPG",
-            "presetName": "SUPR Geochem",
+            "type": "SUPR_tube",
+            "presetCode": "SUT",
+            "presetName": "SUPR Tube",
             "notes": "conduct SUPR sampling",
             "duration": 900
+        },
+        {
+            "type": "SUPR_bag",
+            "presetCode": "SUB",
+            "presetName": "SUPR Bag",
+            "notes": "conduct SUPR bag",
+            "duration": 1200
         },
         {
             "type": "grab",

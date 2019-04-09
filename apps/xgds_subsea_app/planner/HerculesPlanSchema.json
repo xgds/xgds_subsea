@@ -203,7 +203,7 @@
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "ascent",
-            "color": "#98CED9",
+            "color": "#fff9e6",
              "params": [
                 {
                     "type": "ParamSpec",
@@ -217,7 +217,7 @@
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "descent",
-            "color": "#98CED9",
+            "color": "#fff9e6",
              "params": [
                 {
                     "type": "ParamSpec",
@@ -254,13 +254,19 @@
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
-            "id": "SUPR_micro",
+            "id": "SUPR_filter",
             "color": "#adfff4"
         },
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
-            "id": "SUPR_geochem",
+            "id": "SUPR_bag",
+            "color": "#adfff4"
+        },
+         {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "SUPR_tube",
             "color": "#adfff4"
         },
         {
@@ -302,8 +308,9 @@
         "mapping_setup",
         "sampling_setup",
         "IGT",
-        "SUPR_micro",
-        "SUPR_geochem",
+        "SUPR_filter",
+        "SUPR_tube",
+        "SUPR_bag",
         "grab",
         "niskin",
         "temp_probe",
