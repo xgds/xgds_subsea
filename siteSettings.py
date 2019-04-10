@@ -389,7 +389,7 @@ GEOSERVER_DEFAULT_WORKSPACE = 'xgds_subsea'
 
 # While you are modifying handlebars templates, this should be true.  Once they have been loaded
 # once they will be cached and you can set this to false.
-XGDS_CORE_TEMPLATE_DEBUG = True
+XGDS_CORE_TEMPLATE_DEBUG = False
 
 
 JWPLAYER_KEY = '***REMOVED***'
