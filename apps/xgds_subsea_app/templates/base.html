@@ -48,7 +48,7 @@
 					<a class="nav-link {% currentnav planner2* *video* %}" href="{% url 'group_flight_list' %}" title="{{ settings.XGDS_CORE_FLIGHT_MONIKER }}">{{ settings.XGDS_CORE_FLIGHT_MONIKER }}</a>
 				</li>
 				<li class='nav-item {% currentnav search_map* basalt_live_objects search_xgds_notes_map%}'>
-					<a class="nav-link {% currentnav search_map* basalt_live_objects search_xgds_notes_map %}" href="/xgds_map_server/search/{{settings.XGDS_IMAGE_IMAGE_MODEL_NAME}}" title="Search">Search</a>
+					<a class="nav-link {% currentnav search_map* basalt_live_objects search_xgds_notes_map %}" href="/xgds_map_server/search/{{settings.XGDS_NOTES_MODEL_NAME}}" title="Search">Search</a>
 				</li>
                 {% if settings.DIVE_MODE == 2 %}
 				<li class='nav-item {% currentnav science_chat%}'>

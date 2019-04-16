@@ -16,8 +16,8 @@
             "alternateCrs": {
                 "type": "roversw",
                 "properties": {
-                    "originNorthing": 4727781.5,
-                    "originEasting": 688597.0,
+                    "originNorthing": 4736249.5,
+                    "originEasting": 686930.0,
                     "projection": "utm",
                     "zone": 9,
                     "zoneLetter": "T",
@@ -30,8 +30,8 @@
                     "timezone": "Etc/UTC"
                 }
             },
-            "bbox": [42.80498568056246, -126.5397273094823,
-            		 42.55357154680716, -126.8559091144121]
+            "bbox": [42.74725263322662, -126.73480791615165,
+            		 42.764728826251854, -126.69663523318384]
         },
         {
             "type": "Site",
@@ -171,6 +171,20 @@
             "presetName": "Deploy Marker",
             "notes": "Place a marker on sea floor",
             "duration": 900
+        },
+        {
+            "duration": 1800,
+            "notes": "Deploy colonization experiment",
+            "presetCode": "CLD",
+            "presetName": "Col Expt: Deploy",
+            "type": "colonize_deploy"
+        },
+        {
+            "duration": 900,
+            "notes": "Recover colonization experiment",
+            "presetCode": "CLR",
+            "presetName": "Col Expt: Recover",
+            "type": "colonize_recover"
         }
     ]
 }

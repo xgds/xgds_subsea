@@ -304,6 +304,18 @@
             "parent": "VehicleCommand",
             "id": "marker",
             "color": "#d4d4aa"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "colonize_deploy",
+            "color": "#e2d7ef"
+        },
+        {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "colonize_recover",
+            "color": "#e2d7ef"
         }
      ],
 
@@ -311,6 +323,8 @@
     	"pause",
         "ascent",
         "descent",
+        "colonize_deploy",
+        "colonize_recover",
         "mapping_setup",
         "sampling_setup",
         "IGT",
