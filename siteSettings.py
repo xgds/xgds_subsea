@@ -360,7 +360,7 @@ XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_subsea_app.instrumentDataImporters'
 
 PYRAPTORD_SERVICE = True
 
-XGDS_CURRENT_SITEFRAME_ID = 2  # Currently Lo'ihi
+XGDS_CURRENT_SITEFRAME_ID = 3  # Currently GORDA RIDGE
 
 XGDS_CORE_LIVE_INDEX_URL = '/' + XGDS_SITE_APP + '/live'
 
@@ -538,7 +538,7 @@ XGDS_CORE_SHOW_CREATE_FLIGHTS = False
 XGDS_CORE_SHOW_FLIGHT_MANAGEMENT = False
 XGDS_CORE_ADD_GROUP_FLIGHT = False
 
-CRUISE_ID = 'NA100'
+CRUISE_ID = 'NA108' # TODO VERIFY
 DIVE_MODE = 1  # 1 OR 2, controls chat links
 
 XGDS_MAP_SERVER_REPLAY_HANDLEBARS_DIRS = [os.path.join('xgds_map_server', 'templates', 'handlebars'),
