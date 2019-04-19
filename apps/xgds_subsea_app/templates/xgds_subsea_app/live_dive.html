@@ -18,6 +18,11 @@
 
 {% endblock cssExtras %}
 
+{% block scripts %}
+    {{ block.super }}
+ 	<script type="text/javascript" src="{% static 'xgds_video/js/recordedVideoPlayer.js' %}"></script>
+{% endblock scripts %}
+
 {% block mapdiv %}
     <div id="map-gridstack-item" class="grid-stack-item"
     data-gs-x="0" data-gs-y="0"
@@ -59,3 +64,10 @@
 
 {% endblock postAppOptions %}
 
+{% block buttonrowRight %}
+    {% include 'xgds_notes2/notes_input_include_full.html' %}
+    {%  if live %}
+    <button id="frame_grab" class='btn btn-primary my-1' role='button' style="color:white; max-height:1.8rem; margin-left: 2px;" onclick="xgds_video.handleFrameGrab('{{ group_flight.name }}', 'HERC', {{ settings.XGDS_VIDEO_RECORDING_LAG_SECONDS }});">Frame Grab</button>
+    <button id="group_flight_video" class='btn btn-primary my-1' role='button' style="color:white; max-height:1.8rem; margin-left: 2px;" onclick="window.open('{% url 'map_replay_group_flight' group_flight.name %}')">Video</button>
+    {% endif %}
+{% endblock buttonrowRight %}
