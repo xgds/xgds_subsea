@@ -11,7 +11,7 @@
             "command": "/home/xgds/xgds_subsea/apps/xgds_status_board/scripts/updateLoadAverages.py -c /root/status_board/loadAverageConfig.json"
         },
         "sse": {
-            "command": "gunicorn sse:app -w 8 --worker-class gevent --bind 0.0.0.0:9191",
+	    "command": "/home/xgds/xgds_subsea/apps/xgds_core/sse/sseTornado.py --tornadoPort=9191 --redisUrl=redis://redis",
             "cwd": "/home/xgds/xgds_subsea/apps/xgds_core/sse/"
         },
         "sseHeartbeat": {
