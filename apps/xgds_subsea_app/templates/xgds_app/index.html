@@ -101,6 +101,11 @@
 </p>
 {% endblock content %}
 
+{% block scripts %}
+{{block.super}}
+	{% include "xgds_core/timeJS.html" %}
+{% endblock scripts %}
+
 {% block footer %}
 <div class="fixed-bottom container-fluid bg-primary d-flex justify-content-between py-2 ">
 			<a href="https://ti.arc.nasa.gov/tech/asr/intelligent-robotics/" target="_blank" title="IRG" >
