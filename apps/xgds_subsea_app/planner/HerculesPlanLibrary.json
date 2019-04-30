@@ -69,12 +69,6 @@
 
     "commands": [
         {
-            "type": "pause",
-            "presetName": "Station Keep",
-            "duration": 500,
-            "presetCode": "WAI"
-        },
-        {
             "type": "ascent",
             "presetCode": "ASC",
             "presetName": "Ascent",
@@ -96,6 +90,13 @@
             "duration": 5400
         },
         {
+            "type": "mapping_survey",
+            "presetCode": "SUR",
+            "presetName": "Survey: Map",
+            "notes": "Use Norbit to map a 50m x 50m box, once set up",
+            "duration": 1800
+        },
+        {
             "type": "sampling_setup",
             "presetName": "Setup: Sample",
             "presetCode": "SUS",
@@ -110,25 +111,39 @@
             "duration": 900
         },
         {
-            "type": "SUPR_filter",
+            "type": "SUPR_flush",
             "presetCode": "SUF",
-            "presetName": "SUPR Filter",
-            "notes": "conduct SUPR sampling",
-            "duration": 2400
-        },
-        {
-            "type": "SUPR_tube",
-            "presetCode": "SUT",
-            "presetName": "SUPR Tube",
-            "notes": "conduct SUPR sampling",
-            "duration": 900
+            "presetName": "SUPR Bag Flush",
+            "notes": "Flush the bag 3 x with vent fluid prior to filling",
+            "duration": 1200
         },
         {
             "type": "SUPR_bag",
             "presetCode": "SUB",
             "presetName": "SUPR Bag",
-            "notes": "conduct SUPR bag",
-            "duration": 1200
+            "notes": "Fill bag at 1L/min flow rate = 5 minutes",
+            "duration": 300
+        },
+        {
+            "type": "SUPR_filter",
+            "presetCode": "SUF",
+            "presetName": "SUPR Filter",
+            "notes": "Filter fluid at 1L/min flow rate",
+            "duration": 1800
+        },
+        {
+            "type": "SUPR_tube",
+            "presetCode": "SUT",
+            "presetName": "SUPR Tube",
+            "notes": "Fill SUPR Tube",
+            "duration": 900
+        },
+        {
+            "type": "mat_sampling",
+            "presetCode": "MSP",
+            "presetName": "Mat sampling",
+            "notes": "Mat sampling",
+            "duration": 1800
         },
         {
             "type": "grab",
@@ -155,36 +170,42 @@
             "type": "misc",
             "presetCode": "MSC",
             "presetName": "Misc",
-            "notes": "miscellaneous task to add custom time",
             "duration": 1
         },
         {
             "type": "imaging",
             "presetCode": "IMG",
             "presetName": "Imaging",
-            "notes": "optimize video and lighting for 60 s clips",
+            "notes": "optimize video and lighting for 60 sec clips",
+            "duration": 300
+        },
+        {
+            "type": "colonize_deploy",
+            "presetCode": "CLD",
+            "presetName": "Col Expt: Deploy",
+            "notes": "Deploy colonization experiment",
+            "duration": 1800
+        },
+        {
+            "type": "colonize_recover",
+            "presetCode": "CLR",
+            "presetName": "Col Expt: Recover",
+            "notes": "Recover colonization experiment",
+            "duration": 900
+        },
+        {
+            "type": "poke",
+            "presetCode": "POK",
+            "presetName": "Poke Seafloor",
+            "notes": "Estimate point depth of sediment using crowbar to poke ground",
             "duration": 300
         },
         {
             "type": "marker",
             "presetCode": "MAR",
             "presetName": "Deploy Marker",
-            "notes": "Place a marker on sea floor",
-            "duration": 900
-        },
-        {
-            "duration": 1800,
-            "notes": "Deploy colonization experiment",
-            "presetCode": "CLD",
-            "presetName": "Col Expt: Deploy",
-            "type": "colonize_deploy"
-        },
-        {
-            "duration": 900,
-            "notes": "Recover colonization experiment",
-            "presetCode": "CLR",
-            "presetName": "Col Expt: Recover",
-            "type": "colonize_recover"
+            "notes": "Put out a physical marker at the seafloor at a specific site",
+            "duration": 1800
         }
     ]
 }

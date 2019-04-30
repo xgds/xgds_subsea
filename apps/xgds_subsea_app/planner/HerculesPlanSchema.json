@@ -223,20 +223,20 @@
                     "type": "ParamSpec",
                     "id": "depth",
                     "parent": "depth",
-                    "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = 4500 + (model.get('depth')/.41666667); model.set('duration', newDuration);}}"
+                    "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = 4500 + (model.get('depth')/.416666666666667); model.set('duration', newDuration);}}"
                 }
              ]
         },
         {
             "type": "CommandSpec",
-            "id": "pause",
             "parent": "VehicleCommand",
-            "color": "#dcdcdc"
+            "id": "mapping_setup",
+            "color": "#fff5c1"
         },
         {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
-            "id": "mapping_setup",
+            "id": "mapping_survey",
             "color": "#fff5c1"
         },
         {
@@ -263,11 +263,23 @@
             "id": "SUPR_bag",
             "color": "#adfff4"
         },
+       {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "SUPR_flush",
+            "color": "#adfff4"
+        },
          {
             "type": "CommandSpec",
             "parent": "VehicleCommand",
             "id": "SUPR_tube",
             "color": "#adfff4"
+        },
+       {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "mat_sampling",
+            "color": "#c3f89c"
         },
         {
             "type": "CommandSpec",
@@ -316,27 +328,36 @@
             "parent": "VehicleCommand",
             "id": "colonize_recover",
             "color": "#e2d7ef"
+        },
+       {
+            "type": "CommandSpec",
+            "parent": "VehicleCommand",
+            "id": "poke",
+            "color": "#89af89"
         }
      ],
 
     "stationSequenceCommands": [
-    	"pause",
         "ascent",
         "descent",
         "colonize_deploy",
         "colonize_recover",
         "mapping_setup",
+        "mapping_survey",
         "sampling_setup",
         "IGT",
         "SUPR_filter",
         "SUPR_tube",
         "SUPR_bag",
+        "SUPR_flush",
+        "mat_sampling",
         "grab",
         "niskin",
         "temp_probe",
         "misc",
         "imaging",
-        "marker"
+        "marker",
+        "poke"
     ],
 
     "segmentSequenceCommands": [
