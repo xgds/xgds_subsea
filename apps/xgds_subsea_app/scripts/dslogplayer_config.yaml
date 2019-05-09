@@ -1,8 +1,43 @@
+# config notes from OET spreadsheet first tab:
+# BNAV ALL 31238
+# HER DEP 31236
+# HER O2S 31236
+# CTD ALL 31233
+# TEM ALL 31235
+# INNAV ALL 31232
+# EVENT ALL 31234
+# USBL ALL 31239
+# NAV ALL 31237
+# CPU ALL 31241
+# ENV ALL 31242
+# WNCH ALL 31245
+# WTHR ALL 31243
+# SSV ALL 31244
+# MDM ALL 13081
+
+# In "dsLog.ini on shore" tab:
+# DATA_TYPE="INNAV"  IN_SOCKET=31232
+# DATA_TYPE="CTD"    IN_SOCKET=31233
+# DATA_TYPE="EVENT"  IN_SOCKET=31234
+# DATA_TYPE="TEM"    IN_SOCKET=31235
+# DATA_TYPE="HER"    IN_SOCKET=31236
+# DATA_TYPE="NAV"    IN_SOCKET=31237
+# DATA_TYPE="BNAV"   IN_SOCKET=31238
+# DATA_TYPE="USBL"   IN_SOCKET=31239
+# DATA_TYPE="CPU"    IN_SOCKET=31241
+# DATA_TYPE="ENV"    IN_SOCKET=31242
+# DATA_TYPE="GRABHD" IN_SOCKET=60005
+# DATA_TYPE="WTHR"   IN_SOCKET=31243
+# DATA_TYPE="SSV"    IN_SOCKET=31244
+# DATA_TYPE="WNCH"   IN_SOCKET=31245
+# DATA_TYPE="CHAT"   IN_SOCKET=30100
+# DATA_TYPE="MDM"    IN_SOCKET=13081
+
 #fileExt: INNAV
 #outputs:
 #        - source: 
 #          address: 127.0.0.1
-#          port: 41235
+#          port: 31232
 #          term: \r\n
 #          headers: True
 #
@@ -12,7 +47,7 @@ fileExt: HER
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 41236
+          port: 31236
           term: \r\n
           headers: True
 
@@ -22,7 +57,7 @@ fileExt: NAV
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 41237
+          port: 31237
           term: \r\n
           headers: True
 
@@ -32,7 +67,7 @@ outputs:
 #outputs:
 #        - source: ~
 #          address: 127.0.0.1
-#          port: 41238
+#          port: 31239
 #          term: \r\n
 #          headers: True
 #
@@ -52,7 +87,7 @@ fileExt: TEM
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 41240
+          port: 31235
           term: \r\n
           headers: True
 
@@ -62,18 +97,18 @@ fileExt: CTD
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 41241
+          port: 31233
           term: \r\n
           headers: True
 ---
 
 fileExt: EVENT
 outputs:
-  - source: ~
-    address: 127.0.0.1
-    port: 41250
-    term: \r\n
-    headers: True
+        - source: ~
+          address: 127.0.0.1
+          port: 31234
+          term: \r\n
+          headers: True
 
 ---
 
@@ -81,7 +116,7 @@ fileExt: CHAT
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 41242
+          port: 30100
           term: \r\n
           headers: True
 
@@ -91,6 +126,6 @@ outputs:
 #outputs:
 #        - source: ~
 #          address: 127.0.0.1
-#          port: 41243
+#          port: 60005
 #          term: \r\n
 #          headers: True
