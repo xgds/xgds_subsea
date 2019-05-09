@@ -147,9 +147,10 @@
 	<script src="{% static 'xgds_core/js/helpPopup.js' %}"></script>
 	<script src="{{ EXTERNAL_URL }}tether/dist/js/tether.min.js"></script>
 	<script src="{{ EXTERNAL_URL }}bootstrap/dist/js/bootstrap.min.js"></script>
-        {% if settings.INCLUDE_OWA_TRACKING %}
-          <script src="{% static 'xgds_core/js/owaTrackingInclude.js' %}"></script>
-        {%  endif  %}
+	<script src="{% static 'xgds_core/js/analytics.js' %}"></script>
+    {% if settings.INCLUDE_OWA_TRACKING %}
+      <script src="{% static 'xgds_core/js/owaTrackingInclude.js' %}"></script>
+    {%  endif  %}
     {% endblock scripts %}
 
     {% block postscripts %}
