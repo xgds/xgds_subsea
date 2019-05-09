@@ -1,36 +1,45 @@
+# Empty string for host enables listening on all network interfaces rather than one specific interface
+
 bridges:
   her:
-    host: '127.0.0.1'
-    port: 41236
+    # DATA_TYPE="HER"    IN_SOCKET=31236
+    host: ''
+    port: 31236
     channel: 'xgds:her'
     verbose: false
   nav:
-    host: '127.0.0.1'
-    port: 41237
+    # DATA_TYPE="NAV"    IN_SOCKET=31237
+    host: ''
+    port: 31237
     channel: 'xgds:nav'
     verbose: false
   tem:
-    host: '127.0.0.1'
-    port: 41240
+    # DATA_TYPE="TEM"    IN_SOCKET=31235
+    host: ''
+    port: 31235
     channel: 'xgds:tem'
     verbose: false
   ctd:
-    host: '127.0.0.1'
-    port: 41241
+    # DATA_TYPE="CTD"    IN_SOCKET=31233
+    host: ''
+    port: 31233
     channel: 'xgds:ctd'
     verbose: false
   event:
-    host: '127.0.0.1'
-    port: 41250
+    # DATA_TYPE="EVENT"  IN_SOCKET=31234
+    host: ''
+    port: 31234
     channel: 'xgds:event'
     verbose: true
   chat:
-    host: '127.0.0.1'
-    port: 41242
+    # DATA_TYPE="CHAT"   IN_SOCKET=30100
+    host: ''
+    port: 30100
     channel: 'xgds:scichat'
     verbose: false
   grab:
-    host: '127.0.0.1'
-    port: 41243
+    # DATA_TYPE="GRABHD" IN_SOCKET=60005
+    host: ''
+    port: 60005
     channel: 'xgds:grab'
     verbose: false
