@@ -1,36 +1,45 @@
+# Empty string for host enables listening on all network interfaces rather than one specific interface
+
 bridges:
   her:
-    host: '127.0.0.1'
-    port: 41236
+    # HER   13060
+    host: ''
+    port: 13060
     channel: 'xgds:her'
     verbose: false
   nav:
-    host: '127.0.0.1'
-    port: 41237
+    # NAV   13069
+    host: ''
+    port: 13069
     channel: 'xgds:nav'
     verbose: false
   tem:
-    host: '127.0.0.1'
-    port: 41240
+    # TEM   13065
+    host: ''
+    port: 13065
     channel: 'xgds:tem'
     verbose: false
   ctd:
-    host: '127.0.0.1'
-    port: 41241
+    # CTD   13064
+    host: ''
+    port: 13064
     channel: 'xgds:ctd'
     verbose: false
   event:
-    host: '127.0.0.1'
-    port: 41250
+    # EVENT 13067
+    host: ''
+    port: 13067
     channel: 'xgds:event'
     verbose: true
   chat:
-    host: '127.0.0.1'
-    port: 41242
+    # TODO: update once Justin posts update
+    host: ''
+    port: 30100
     channel: 'xgds:scichat'
     verbose: false
   grab:
-    host: '127.0.0.1'
-    port: 41243
+    # TODO: update once Justin posts update
+    host: ''
+    port: 60005
     channel: 'xgds:grab'
     verbose: false

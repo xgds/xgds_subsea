@@ -1,8 +1,24 @@
+# shore side UDP repeater config from OET spreadsheet first tab:
+# BNAV  13076
+# HER   13060
+# CTD   13064
+# TEM   13065
+# INNAV 13066
+# EVENT 13067
+# USBL  13068
+# NAV   13069
+# CPU   13070
+# ENV   13071
+# WNCH  13072
+# WTHR  13073
+# SSV   13074
+# MDM   13075
+
 #fileExt: INNAV
 #outputs:
 #        - source: 
 #          address: 127.0.0.1
-#          port: 41235
+#          port: 13066
 #          term: \r\n
 #          headers: True
 #
@@ -12,7 +28,7 @@ fileExt: HER
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 41236
+          port: 13060
           term: \r\n
           headers: True
 
@@ -22,7 +38,7 @@ fileExt: NAV
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 41237
+          port: 13069
           term: \r\n
           headers: True
 
@@ -32,7 +48,7 @@ outputs:
 #outputs:
 #        - source: ~
 #          address: 127.0.0.1
-#          port: 41238
+#          port: 13068
 #          term: \r\n
 #          headers: True
 #
@@ -42,7 +58,7 @@ outputs:
 #outputs:
 #        - source: ~
 #          address: 127.0.0.1
-#          port: 41239
+#          port: 
 #          term: \r\n
 #          headers: True
 
@@ -52,7 +68,7 @@ fileExt: TEM
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 41240
+          port: 13065
           term: \r\n
           headers: True
 
@@ -62,18 +78,18 @@ fileExt: CTD
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 41241
+          port: 13064
           term: \r\n
           headers: True
 ---
 
 fileExt: EVENT
 outputs:
-  - source: ~
-    address: 127.0.0.1
-    port: 41250
-    term: \r\n
-    headers: True
+        - source: ~
+          address: 127.0.0.1
+          port: 13067
+          term: \r\n
+          headers: True
 
 ---
 
@@ -81,7 +97,7 @@ fileExt: CHAT
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 41242
+          port: 30100
           term: \r\n
           headers: True
 
@@ -91,6 +107,6 @@ outputs:
 #outputs:
 #        - source: ~
 #          address: 127.0.0.1
-#          port: 41243
+#          port: 60005
 #          term: \r\n
 #          headers: True
