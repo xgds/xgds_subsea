@@ -32,14 +32,14 @@ bridges:
     channel: 'xgds:event'
     verbose: true
   chat:
-    # TODO: update once Justin posts update
+    # CHAT  13077
     host: ''
-    port: 30100
+    port: 13077
     channel: 'xgds:scichat'
     verbose: false
   grab:
-    # TODO: update once Justin posts update
+    # GRABHD 13078
     host: ''
-    port: 60005
+    port: 13078
     channel: 'xgds:grab'
     verbose: false
