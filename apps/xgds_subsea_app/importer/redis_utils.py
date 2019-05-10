@@ -21,6 +21,7 @@ import threading
 import inspect
 import os
 from time import sleep
+import traceback
 
 import django
 
@@ -29,6 +30,7 @@ from django.conf import settings
 from django.db import connection, OperationalError
 
 from xgds_core.flightUtils import get_default_vehicle, get_vehicle, getActiveFlight
+from xgds_core.util import persist_error
 
 
 def reconnect_db():
@@ -129,7 +131,10 @@ class TelemetrySaver(object):
         print 'saving %d models from %s' % (len(self.buffer), self.channel_name)
         model = type(self.buffer[0])
         if model is not None:
-            model.objects.bulk_create(self.buffer)
+            try:
+                model.objects.bulk_create(self.buffer)
+            except Exception as e:
+                persist_error(e, traceback.format_exc())
             self.buffer = []
             self.last_write_time = datetime.datetime.utcnow()
 
