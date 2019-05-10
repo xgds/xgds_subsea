@@ -68,6 +68,6 @@
     {% include 'xgds_notes2/notes_input_include_full.html' %}
     {%  if live %}
     <button id="frame_grab" class='btn btn-primary my-1' role='button' style="color:white; max-height:1.8rem; margin-left: 2px;" onclick="xgds_video.handleFrameGrab('{{ group_flight.name }}', 'HERC', {{ settings.XGDS_VIDEO_RECORDING_LAG_SECONDS }});">Frame Grab</button>
-    <button id="group_flight_video" class='btn btn-primary my-1' role='button' style="color:white; max-height:1.8rem; margin-left: 2px;" onclick="window.open('{% url 'map_replay_group_flight' group_flight.name %}')">Video</button>
+    <button id="group_flight_video" class='btn btn-primary my-1' role='button' style="color:white; max-height:1.8rem; margin-left: 2px;" onclick="analytics.trackAction('playback', 'video_button', document.title);window.open('{% url 'map_replay_group_flight' group_flight.name %}')">Video</button>
     {% endif %}
 {% endblock buttonrowRight %}
