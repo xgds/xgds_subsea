@@ -1,43 +1,24 @@
-# config notes from OET spreadsheet first tab:
-# BNAV ALL 31238
-# HER DEP 31236
-# HER O2S 31236
-# CTD ALL 31233
-# TEM ALL 31235
-# INNAV ALL 31232
-# EVENT ALL 31234
-# USBL ALL 31239
-# NAV ALL 31237
-# CPU ALL 31241
-# ENV ALL 31242
-# WNCH ALL 31245
-# WTHR ALL 31243
-# SSV ALL 31244
-# MDM ALL 13081
-
-# In "dsLog.ini on shore" tab:
-# DATA_TYPE="INNAV"  IN_SOCKET=31232
-# DATA_TYPE="CTD"    IN_SOCKET=31233
-# DATA_TYPE="EVENT"  IN_SOCKET=31234
-# DATA_TYPE="TEM"    IN_SOCKET=31235
-# DATA_TYPE="HER"    IN_SOCKET=31236
-# DATA_TYPE="NAV"    IN_SOCKET=31237
-# DATA_TYPE="BNAV"   IN_SOCKET=31238
-# DATA_TYPE="USBL"   IN_SOCKET=31239
-# DATA_TYPE="CPU"    IN_SOCKET=31241
-# DATA_TYPE="ENV"    IN_SOCKET=31242
-# DATA_TYPE="GRABHD" IN_SOCKET=60005
-# DATA_TYPE="WTHR"   IN_SOCKET=31243
-# DATA_TYPE="SSV"    IN_SOCKET=31244
-# DATA_TYPE="WNCH"   IN_SOCKET=31245
-# DATA_TYPE="CHAT"   IN_SOCKET=30100
-# DATA_TYPE="MDM"    IN_SOCKET=13081
+# shore side UDP repeater config from OET spreadsheet first tab:
+# BNAV  13076
+# HER   13060
+# CTD   13064
+# TEM   13065
+# INNAV 13066
+# EVENT 13067
+# USBL  13068
+# NAV   13069
+# CPU   13070
+# ENV   13071
+# WNCH  13072
+# WTHR  13073
+# SSV   13074
+# MDM   13075
 
 #fileExt: INNAV
 #outputs:
 #        - source: 
 #          address: 127.0.0.1
-#          port: 31232
+#          port: 13066
 #          term: \r\n
 #          headers: True
 #
@@ -47,7 +28,7 @@ fileExt: HER
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 31236
+          port: 13060
           term: \r\n
           headers: True
 
@@ -57,7 +38,7 @@ fileExt: NAV
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 31237
+          port: 13069
           term: \r\n
           headers: True
 
@@ -67,7 +48,7 @@ outputs:
 #outputs:
 #        - source: ~
 #          address: 127.0.0.1
-#          port: 31239
+#          port: 13068
 #          term: \r\n
 #          headers: True
 #
@@ -77,7 +58,7 @@ outputs:
 #outputs:
 #        - source: ~
 #          address: 127.0.0.1
-#          port: 41239
+#          port: 
 #          term: \r\n
 #          headers: True
 
@@ -87,7 +68,7 @@ fileExt: TEM
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 31235
+          port: 13065
           term: \r\n
           headers: True
 
@@ -97,7 +78,7 @@ fileExt: CTD
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 31233
+          port: 13064
           term: \r\n
           headers: True
 ---
@@ -106,7 +87,7 @@ fileExt: EVENT
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 31234
+          port: 13067
           term: \r\n
           headers: True
 

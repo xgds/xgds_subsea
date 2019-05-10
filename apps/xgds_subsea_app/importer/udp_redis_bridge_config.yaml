@@ -2,43 +2,43 @@
 
 bridges:
   her:
-    # DATA_TYPE="HER"    IN_SOCKET=31236
+    # HER   13060
     host: ''
-    port: 31236
+    port: 13060
     channel: 'xgds:her'
     verbose: false
   nav:
-    # DATA_TYPE="NAV"    IN_SOCKET=31237
+    # NAV   13069
     host: ''
-    port: 31237
+    port: 13069
     channel: 'xgds:nav'
     verbose: false
   tem:
-    # DATA_TYPE="TEM"    IN_SOCKET=31235
+    # TEM   13065
     host: ''
-    port: 31235
+    port: 13065
     channel: 'xgds:tem'
     verbose: false
   ctd:
-    # DATA_TYPE="CTD"    IN_SOCKET=31233
+    # CTD   13064
     host: ''
-    port: 31233
+    port: 13064
     channel: 'xgds:ctd'
     verbose: false
   event:
-    # DATA_TYPE="EVENT"  IN_SOCKET=31234
+    # EVENT 13067
     host: ''
-    port: 31234
+    port: 13067
     channel: 'xgds:event'
     verbose: true
   chat:
-    # DATA_TYPE="CHAT"   IN_SOCKET=30100
+    # TODO: update once Justin posts update
     host: ''
     port: 30100
     channel: 'xgds:scichat'
     verbose: false
   grab:
-    # DATA_TYPE="GRABHD" IN_SOCKET=60005
+    # TODO: update once Justin posts update
     host: ''
     port: 60005
     channel: 'xgds:grab'
