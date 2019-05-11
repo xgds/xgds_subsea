@@ -41,6 +41,7 @@ fields:
   key_value_4:
     # can have RATING:#
     type: key_value
+    required: false
   key_value_5:
     # only found for DATA
     type: key_value
