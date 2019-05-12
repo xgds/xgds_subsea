@@ -1,18 +1,20 @@
 # shore side UDP repeater config from OET spreadsheet first tab:
-# BNAV  13076
-# HER   13060
-# CTD   13064
-# TEM   13065
-# INNAV 13066
-# EVENT 13067
-# USBL  13068
-# NAV   13069
-# CPU   13070
-# ENV   13071
-# WNCH  13072
-# WTHR  13073
-# SSV   13074
-# MDM   13075
+# BNAV   13076
+# HER    13060
+# CTD    13064
+# TEM    13065
+# INNAV  13066
+# EVENT  13067
+# USBL   13068
+# NAV    13069
+# CPU    13070
+# ENV    13071
+# WNCH   13072
+# WTHR   13073
+# SSV    13074
+# MDM    13075
+# CHAT   13077
+# GRABHD 13078
 
 #fileExt: INNAV
 #outputs:
@@ -97,7 +99,7 @@ fileExt: CHAT
 outputs:
         - source: ~
           address: 127.0.0.1
-          port: 30100
+          port: 13077
           term: \r\n
           headers: True
 
@@ -107,6 +109,6 @@ outputs:
 #outputs:
 #        - source: ~
 #          address: 127.0.0.1
-#          port: 60005
+#          port: 13078
 #          term: \r\n
 #          headers: True
