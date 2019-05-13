@@ -414,10 +414,11 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
 
         if 'group_flight_name' in row:
             if 'flight' not in row or row['flight'] is None:
-                flight_name = row['group_flight_name'] + '_' + vehicle_name
-                row['flight'] = lookup_flight(flight_name)
-                if row['flight']:
-                    print ('looked up flight %d %s' % (row['flight'].id, row['flight'].name))
+                if row['group_flight_name'] != 'NaN':
+                    flight_name = row['group_flight_name'] + '_' + vehicle_name
+                    row['flight'] = lookup_flight(flight_name)
+                    if row['flight']:
+                        print ('looked up flight %d %s' % (row['flight'].id, row['flight'].name))
             safe_delete_key(row, 'group_flight_name')
         return row
 

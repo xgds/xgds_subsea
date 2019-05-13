@@ -24,7 +24,7 @@ fields:
     regex: AUTHOR:([\w]+)
   group_flight_name:
     type: string
-    regex: DIVENUMBER:(H[\d]+)
+    regex: DIVENUMBER:([\w]+)
   site:
     type: key_value
   vehicle_name:
