@@ -4,6 +4,15 @@
     "LOG_FILE":"pyraptord_${unique}.txt",
 
     "SERVICES": {
+        "HERC_recorder": {
+            "command": " "
+        },
+        "ARGUS_recorder": {
+            "command": " "
+        },
+        "SAT3_recorder": {
+            "command": " "
+        },
         "pingSubsystems": {
             "command": "/home/xgds/xgds_subsea/apps/xgds_status_board/scripts/pingSubsystems.py -c /home/xgds/xgds_subsea/apps/xgds_subsea_app/scripts/status_board/pingConfig.json"
         },
