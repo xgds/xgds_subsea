@@ -354,8 +354,8 @@ XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_subsea_app.instrumentDataImporters'
 # XGDS_VIDEO_NOTE_EXTRAS_FUNCTION = 'xgds_baseline_app.views.getNoteExtras'
 # XGDS_VIDEO_NOTE_FILTER_FUNCTION = 'xgds_baseline_app.views.noteFilterFunction'
 
-# RECORDED_VIDEO_DIR_BASE = DATA_ROOT
-# RECORDED_VIDEO_URL_BASE = DATA_URL
+RECORDED_VIDEO_DIR_BASE = DATA_ROOT
+RECORDED_VIDEO_URL_BASE = DATA_URL
 
 
 
@@ -540,7 +540,7 @@ XGDS_CORE_SHOW_CREATE_FLIGHTS = False
 XGDS_CORE_SHOW_FLIGHT_MANAGEMENT = False
 XGDS_CORE_ADD_GROUP_FLIGHT = False
 
-CRUISE_ID = 'NA108' # TODO VERIFY
+CRUISE_ID = 'NA108'
 DIVE_MODE = 1  # 1 OR 2, controls chat links
 
 XGDS_MAP_SERVER_REPLAY_HANDLEBARS_DIRS = [os.path.join('xgds_map_server', 'templates', 'handlebars'),
