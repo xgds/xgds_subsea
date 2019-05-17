@@ -117,10 +117,14 @@ def add_notes_tag(row, value):
         return "NO VALUE"
     if 'Trash' in value:
         add_tag(row, 'Trash')
+    elif 'Microbiology' in value:
+        add_tag(row, 'Microbiology')
     elif 'Biology' in value:
         add_tag(row, 'Biology')
     elif 'Geology' in value:
         add_tag(row, 'Geology')
+    elif 'Geochemistry' in value:
+        add_tag(row, 'Geochemistry')
     elif 'T-ROV' in value:
         add_tag(row, 'TempProbe')
     elif 'T-IGT' in value:
@@ -151,6 +155,12 @@ def add_sample_type_tag(row, value):
             add_tag(row, 'SUPR-1')
         elif '2' in lower_value:
             add_tag(row, 'SUPR-2')
+        elif 'bag' in lower_value:
+            add_tag(row, 'SUPER-BAG')
+        elif 'filter' in lower_value:
+            add_tag(row, 'SUPER-FILTER')
+        elif 'tube' in lower_value:
+            add_tag(row, 'SUPER-TUBE')
     elif 'igt' in lower_value:
         add_tag(row, 'IGT')
     elif 'rovg' in lower_value:
@@ -161,6 +171,20 @@ def add_sample_type_tag(row, value):
         add_tag(row, 'Niskin')
     elif 'scoop' in lower_value:
         add_tag(row, 'Scoop')
+    elif 'mat' in lower_value:
+        add_tag(row, 'MicrobialMat')
+    elif 'colonizer' in lower_value:
+        add_tag(row, 'MicrobialColonizer')
+        if 'deployed' in lower_value:
+            add_tag(row, 'Deployed')
+        elif 'recovered' in lower_value:
+            add_tag(row, 'Recovered')
+    elif 'marker' in lower_value:
+        add_tag(row, 'Marker')
+        if 'deployed' in lower_value:
+            add_tag(row, 'Deployed')
+        elif 'recovered' in lower_value:
+            add_tag(row, 'Recovered')
     else:
         return False
     return True
@@ -422,6 +446,12 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
             safe_delete_key(row, 'group_flight_name')
         return row
 
+    def append_key_value_to_content(self, row, key, content):
+        if key in row:
+            inner_key, value = clean_key_value(row[key])
+            content = append_key_value(content, inner_key, value)
+        return content
+
     def clean_key_values(self, row):
         """
         Cleans the key/value pairs.
@@ -430,7 +460,10 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         :return: the updated row
         """
         key_1, value_1 = clean_key_value(row['key_value_1'])
-        key_2, value_2 = clean_key_value(row['key_value_2'])
+        key_2 = None
+        value_2 = None
+        if 'key_value_2' in row:
+            key_2, value_2 = clean_key_value(row['key_value_2'])
         key_3 = None
         value_3 = None
         if 'key_value_3' in row:
@@ -508,11 +541,14 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_4, str(row))
                 row['content'] = '%s\nRATING: %s' % (row['content'], value_4)
         elif event_type == 'DATA':
-            key_4, value_4 = clean_key_value(row['key_value_4'])
-            key_5, value_5 = clean_key_value(row['key_value_5'])
-            key_6, value_6 = clean_key_value(row['key_value_6'])
-            key_7, value_7 = clean_key_value(row['key_value_7'])
-            key_8, value_8 = clean_key_value(row['key_value_8'])
+            content = append_key_value(None, key_1, value_1)
+            content = append_key_value(content, key_2, value_2)
+            content = append_key_value(content, key_3, value_3)
+            self.append_key_value_to_content(row, 'key_value_4', content)
+            self.append_key_value_to_content(row, 'key_value_5', content)
+            self.append_key_value_to_content(row, 'key_value_6', content)
+            self.append_key_value_to_content(row, 'key_value_7', content)
+            self.append_key_value_to_content(row, 'key_value_8', content)
 
             if row['task_type'] == 'MULTIBEAMLINE':
                 add_tag(row, 'MultibeamLine')
@@ -520,14 +556,6 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 add_tag(row, 'Profiles')
             else:
                 print 'UNKOWN DATA TASK TYPE %s: %s' % (row['task_type'], str(row))
-            content = append_key_value(None, key_1, value_1)
-            content = append_key_value(content, key_2, value_2)
-            content = append_key_value(content, key_3, value_3)
-            content = append_key_value(content, key_4, value_4)
-            content = append_key_value(content, key_5, value_5)
-            content = append_key_value(content, key_6, value_6)
-            content = append_key_value(content, key_7, value_7)
-            content = append_key_value(content, key_8, value_8)
             row['content'] = content
 
         else:

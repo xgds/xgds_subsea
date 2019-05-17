@@ -35,9 +35,11 @@ fields:
   key_value_2:
     # can have OBSERVATIONS, LENGTH, TYPE
     type: key_value
+    required: false
   key_value_3:
     # can have DESCRIPTION, MARKER
     type: key_value
+    required: false
   key_value_4:
     # can have RATING:#
     type: key_value
