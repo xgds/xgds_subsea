@@ -61,6 +61,10 @@ def clean_key_value(dictionary):
     if value_string == 'NaN':
         return key, None
     value_string = value_string.replace('_', ' ')
+
+    # in case we have evilbad unicode characters that cannot be stored
+    value_string = unicode(value_string, errors='ignore')
+
     return key, value_string
 
 
