@@ -81,7 +81,6 @@ class SciChatCsvImporter(csvImporter.CsvImporter):
         :param row: the loaded row
         :return: the updated row, with timestamps and defaults
         """
-        print('UPDATING ROW')
         print(row)
         result = super(SciChatCsvImporter, self).update_row(row)
         result = clean_author(result)
