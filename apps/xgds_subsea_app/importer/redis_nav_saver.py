@@ -20,8 +20,6 @@ import sys
 import yaml
 import pytz
 import redis
-import heapq
-import bisect
 import pynmea2
 import datetime
 import threading
@@ -38,7 +36,7 @@ from xgds_core.models import Vehicle
 from xgds_core.util import persist_error
 from xgds_core.flightUtils import getActiveFlight
 from geocamTrack.models import ResourcePoseDepth, PastResourcePoseDepth
-from redis_utils import TelemetrySaver, TelemetryQueue, reconnect_db
+from redis_utils import TelemetrySaver, TelemetryQueue, TimestampedItemQueue, reconnect_db, interpolate
 
 
 def get_active_track(vehicle):
@@ -51,48 +49,6 @@ def get_active_track(vehicle):
     if flight:
         return flight.track
     return None
-
-
-def interpolate(t, t1, value1, t2, value2, unwrap=False):
-    if value1 is None or value2 is None:
-        return None
-    a = (t - t1).total_seconds() / (t2 - t1).total_seconds()
-    if unwrap:
-        diff = value2 - value1
-        if diff > 180:
-            diff -= 360
-        if diff < -180:
-            diff += 360
-        return (value1 + a * diff) % 360
-    else:
-        return value1 + a * (value2 - value1)
-
-
-class TimestampedItemQueue(object):
-    def __init__(self):
-        self.queue = []
-
-    def append(self, timestamp, item):
-        heapq.heappush(self.queue, (timestamp, item))
-
-    def get_closest_before(self, timestamp):
-        idx = bisect.bisect(self.queue, (timestamp, None))
-        if 0 == idx:
-            # throw an exception? this shouldn't happen given how we plan to use this
-            return None
-        (ts, item) = self.queue[idx - 1]
-        return item
-
-    def get_closest_after(self, timestamp):
-        idx = bisect.bisect(self.queue, (timestamp, None))
-        if idx > len(self.queue):
-            return None
-        (ts, item) = self.queue[idx]
-        return item
-
-    def delete_before(self, timestamp):
-        while len(self.queue) > 1 and self.queue[0][0] < timestamp:
-            heapq.heappop(self.queue)
 
 
 class NavSaver(TelemetrySaver):
@@ -110,7 +66,7 @@ class NavSaver(TelemetrySaver):
         self.current_position = None
         self.desired_pose_time = None
         self.latlon_queue = TimestampedItemQueue()
-        self.rypad_queue = TimestampedItemQueue()
+        self.rpyad_queue = TimestampedItemQueue()
         super(NavSaver, self).__init__(options)
 
     def interpolate(self):
@@ -126,19 +82,19 @@ class NavSaver(TelemetrySaver):
         for k in ['longitude', 'latitude']:
             params[k] = interpolate(t, t1, prev_latlon[k], t2, next_latlon[k])
 
-        prev_rypad = self.rypad_queue.get_closest_before(self.desired_pose_time)
-        next_rypad = self.rypad_queue.get_closest_after(self.desired_pose_time)
-        if prev_rypad is None or next_rypad is None:
+        prev_rpyad = self.rpyad_queue.get_closest_before(self.desired_pose_time)
+        next_rpyad = self.rpyad_queue.get_closest_after(self.desired_pose_time)
+        if prev_rpyad is None or next_rpyad is None:
             return None
-        t1 = prev_rypad['timestamp']
-        t2 = next_rypad['timestamp']
+        t1 = prev_rpyad['timestamp']
+        t2 = next_rpyad['timestamp']
         for k in ['altitude', 'depth']:
-            if k in prev_rypad and k in next_rypad:
-                params[k] = interpolate(t, t1, prev_rypad[k], t2, next_rypad[k])
+            if k in prev_rpyad and k in next_rpyad:
+                params[k] = interpolate(t, t1, prev_rpyad[k], t2, next_rpyad[k])
 
         for k in ['roll', 'pitch', 'yaw']:
-            if k in prev_rypad and k in next_rypad:
-                params[k] = interpolate(t, t1, prev_rypad[k], t2, next_rypad[k], unwrap=True)
+            if k in prev_rpyad and k in next_rpyad:
+                params[k] = interpolate(t, t1, prev_rpyad[k], t2, next_rpyad[k], unwrap=True)
 
         desired_pose = None
         current_pose = None
@@ -193,11 +149,11 @@ class NavSaver(TelemetrySaver):
                 self.latlon_queue.append(timestamp, latlon)
             elif nmea.sentence_type == 'HDG':
                 # heading fix
-                rypad = {'timestamp': timestamp,
+                rpyad = {'timestamp': timestamp,
                        'yaw': float(nmea.heading),
                        'pitch': None,
                        'roll': None}
-                self.rypad_queue.append(timestamp, rypad)
+                self.rpyad_queue.append(timestamp, rpyad)
             else:
                 # not an NMEA string we need
                 return None
@@ -208,13 +164,13 @@ class NavSaver(TelemetrySaver):
             # Argus APAS string: "APAS" <date> <time> <vehicle> <heading> <pitch> <roll> <altitude> <depth>
             subparts = parts[3].split()
             timestamp = dateparse('%sT%sZ' % (subparts[1], subparts[2]))
-            rypad = {'timestamp': timestamp,
+            rpyad = {'timestamp': timestamp,
                    'roll': float(subparts[6]),
                    'pitch': float(subparts[5]),
                    'yaw': float(subparts[4]),
                    'altitude': float(subparts[7]),
                    'depth': float(subparts[8])}
-            self.rypad_queue.append(timestamp, rypad)
+            self.rpyad_queue.append(timestamp, rpyad)
 
         elif 'JDS' in parts[3]:
             # Parse timestamp, orientation, depth, and altitude from the JDS string
@@ -223,23 +179,23 @@ class NavSaver(TelemetrySaver):
             # <roll> <pitch> <heading> <depth> <altitude> <elapsed_time> <tether_wraps>
             subparts = parts[3].split()
             timestamp = dateparse('%sT%sZ' % (subparts[1], subparts[2]))
-            rypad = {'timestamp': timestamp,
+            rpyad = {'timestamp': timestamp,
                    'roll': float(subparts[8]),
                    'pitch': float(subparts[9]),
                    'yaw': float(subparts[10]),
                    'altitude': float(subparts[12]),
                    'depth': float(subparts[11])}
-            self.rypad_queue.append(timestamp, rypad)
+            self.rpyad_queue.append(timestamp, rpyad)
 
         else:
             print 'Unknown message:', msg
             return None
 
         # Get interpolated values if we can
-        if len(self.rypad_queue.queue) > 1 and len(self.latlon_queue.queue) > 1:
+        if len(self.rpyad_queue.queue) > 1 and len(self.latlon_queue.queue) > 1:
             past_results = []
             current_results = []
-            while self.rypad_queue.queue[-1][0] > self.desired_pose_time \
+            while self.rpyad_queue.queue[-1][0] > self.desired_pose_time \
                     and self.latlon_queue.queue[-1][0] > self.desired_pose_time:
                 # We should have the information we need to interpolate
                 interpolated = self.interpolate()
@@ -255,7 +211,7 @@ class NavSaver(TelemetrySaver):
             # Get rid of older values we won't need again
             done_with = self.desired_pose_time - datetime.timedelta(seconds=1)
             self.latlon_queue.delete_before(done_with)
-            self.rypad_queue.delete_before(done_with)
+            self.rpyad_queue.delete_before(done_with)
             if len(past_results) > 0:
                 for pose in past_results:
                     print '%s pose at %s computed' % (self.vehicle, pose.timestamp)
@@ -270,8 +226,6 @@ class NavSaver(TelemetrySaver):
             return
 
         if self.current_position:
-            print 'saving current position from %s' % self.channel_name
-            print 'current position type %s' % self.current_position.__class__.__name__
             try:
                 self.current_position.saveCurrent()
             except OperationalError as oe:

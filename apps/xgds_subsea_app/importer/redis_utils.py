@@ -16,6 +16,8 @@
 # __END_LICENSE__
 
 import redis
+import heapq
+import bisect
 import datetime
 import threading
 import inspect
@@ -80,6 +82,32 @@ def lookup_active_flight(options):
     else:
         options['flight'] = flight.name
     return flight
+
+
+def interpolate(t, t1, value1, t2, value2, unwrap=False):
+    if value1 is None or value2 is None:
+        return None
+
+    a = (t - t1).total_seconds() / (t2 - t1).total_seconds()
+
+    if type(value1) is datetime.datetime and type(value2) is datetime.datetime:
+        return value1 + datetime.timedelta(seconds=a * (value2 - value1).total_seconds())
+
+    elif type(value1) is float and type(value2) is float:
+        if unwrap:
+            diff = value2 - value1
+            if diff > 180:
+                diff -= 360
+            if diff < -180:
+                diff += 360
+            return (value1 + a * diff) % 360
+        else:
+            return value1 + a * (value2 - value1)
+
+    else:
+        # TODO: define other types for which we can reasonably interpolate values (e.g. integers)
+        # TODO: figure out what to do for types where we can't reasonably interpolate values (boolean, string, classes, etc.)
+        return value1
 
 
 class TelemetryQueue:
@@ -207,4 +235,28 @@ class TelemetrySaver(object):
                     self.write_buffer()
 
 
+class TimestampedItemQueue(object):
+    def __init__(self):
+        self.queue = []
 
+    def append(self, timestamp, item):
+        heapq.heappush(self.queue, (timestamp, item))
+
+    def get_closest_before(self, timestamp):
+        idx = bisect.bisect(self.queue, (timestamp, None))
+        if 0 == idx:
+            # throw an exception? this shouldn't happen given how we plan to use this
+            return None
+        (ts, item) = self.queue[idx - 1]
+        return item
+
+    def get_closest_after(self, timestamp):
+        idx = bisect.bisect(self.queue, (timestamp, None))
+        if idx > len(self.queue):
+            return None
+        (ts, item) = self.queue[idx]
+        return item
+
+    def delete_before(self, timestamp):
+        while len(self.queue) > 1 and self.queue[0][0] < timestamp:
+            heapq.heappop(self.queue)

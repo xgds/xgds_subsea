@@ -1,0 +1,17 @@
+timezone: UTC
+savers:
+  temp:
+#    verbose: true
+    config_yaml: TempProbe_UDP.yaml
+    vehicle: Hercules
+    channel_name: 'xgds:tem'
+    resample_interval_sec: 1
+    buffer_time_sec: 5
+
+  ctd:
+#    verbose: true
+    config_yaml: CTD_UDP.yaml
+    vehicle: Hercules
+    channel_name: 'xgds:ctd'
+    resample_interval_sec: 1
+    buffer_time_sec: 5
