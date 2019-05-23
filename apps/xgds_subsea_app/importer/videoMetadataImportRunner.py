@@ -22,7 +22,7 @@ django.setup()
 import json
 import dateutil.parser as dateparse
 from xgds_video.models import VideoEpisode, VideoSegment, VideoSource, VideoSettings
-from xgds_core.models import Flight
+# from xgds_core.models import Flight
 from uuid import uuid4
 
 VIDEO_INDEX_NAME = "prog_index.m3u8"
