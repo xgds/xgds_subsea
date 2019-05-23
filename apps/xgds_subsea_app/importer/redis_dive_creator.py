@@ -32,6 +32,7 @@ from django.conf import settings
 
 from xgds_core.flightUtils import getFlight, getActiveFlight, create_group_flight, end_group_flight
 from xgds_core.util import persist_error
+from xgds_video.recordingUtil import startFlightRecording, stopFlightRecording
 from redis_utils import TelemetryQueue, reconnect_db
 from geocamUtil.loader import LazyGetModelByName
 from geocamTrack.utils import get_or_create_track
@@ -93,6 +94,9 @@ class DiveCreator(object):
         for flight in self.active_dive.flights:
             # create a track for each flight
             track = get_or_create_track(flight.name, flight.vehicle, flight)
+            # record video if enabled
+            if settings.XGDS_VIDEO_ON:
+                startFlightRecording(flight.name)
 
         if settings.XGDS_SSE:
             # publishing on sse with type group_flight
@@ -110,6 +114,17 @@ class DiveCreator(object):
         """
         group_flight_name = self.active_dive.name
         print('ending dive %s %s' % (group_flight_name, end_time))
+
+        # stop video recording once ROVs are on deck
+        if settings.XGDS_VIDEO_ON:
+            totalFlights = self.active_dive.flights.count()
+            flightCount = 0
+            endEpisode = False  # Flag to stopRecording to end video episode
+            for flight in self.active_dive.flights:
+                flightCount += 1
+                if flightCount == totalFlights:
+                    endEpisode = True  # End video episode when we stop last flight in list
+                stopFlightRecording(flight.name, endEpisode)
 
         # delay so other things have time to finish
         t = Timer(30, end_group_flight, [group_flight_name, end_time])

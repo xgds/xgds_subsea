@@ -24,7 +24,8 @@ django.setup()
 
 from xgds_subsea_app.importer.redis_dive_creator import DiveCreator
 from xgds_core.flightUtils import getActiveFlight, end_group_flight
-
+from xgds_video.recordingUtil import stopFlightRecording
+from django.conf import settings
 
 def get_active_dive():
     active_flight = getActiveFlight()
@@ -52,6 +53,19 @@ def create_dive(dive_name, dive_creator):
     dive_creator.start_dive(dive_name, timezone.now())
 
 
+def stop_video_recording(active_dive):
+    if not active_dive:
+        return
+    totalFlights = active_dive.flights.count()
+    flightCount = 0
+    endEpisode = False  # Flag to stopRecording to end video episode
+    for flight in active_dive.flights:
+        flightCount += 1
+        if flightCount == totalFlights:
+            endEpisode = True  # End video episode when we stop last flight in list
+        stopFlightRecording(flight.name, endEpisode)
+
+
 def stop_dive(dive_name):
     """
     Stop a dive
@@ -60,6 +74,8 @@ def stop_dive(dive_name):
     """
     print "Stopping dive %s" % dive_name
     end_group_flight(dive_name, timezone.now())
+    if settings.XGDS_VIDEO_ON:
+        stop_video_recording(get_active_dive())
 
 
 if __name__ == '__main__':
