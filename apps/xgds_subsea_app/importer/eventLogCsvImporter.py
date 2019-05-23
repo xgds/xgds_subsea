@@ -388,10 +388,10 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
         if 'author_name' in row:
             author_name = row['author_name']
             lower_name = author_name.lower()
-            if author_name.lower() == 'nav' or lower_name == 'navigator' or lower_name == 'navigation':
+            if lower_name == 'nav' or lower_name == 'navigator' or lower_name == 'navigation':
                 row['role'] = self.roles['NAVIGATOR']
                 row['author'] = self.navigator_user
-            elif author_name.lower() == 'default_scf_user':
+            elif lower_name == 'default_scf_user':
                 row['role'] = self.roles['SCF']
                 row['author'] = self.scf_user
             else:
@@ -400,6 +400,8 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 if len(splits) == 2:
                     try:
                         row['author'] = getUserByNames(splits[0], splits[1])
+                        if not row['author']:
+                            row['author'] = create_user(splits[0], splits[1])
                     except:
                         # TODO This happend for NA100 due to errors in cruise-record.xml
                         print 'COULD NOT FIND USER FOR %s' % author_name
