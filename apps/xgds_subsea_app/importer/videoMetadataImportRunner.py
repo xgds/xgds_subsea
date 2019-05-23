@@ -30,7 +30,7 @@ VIDEO_SEGMENT_DIR_NAME = "Segment"
 
 
 def createEpisodeIfNeeded(groupFlightName, segmentMetadata):
-    flightInfo = Flight.objects.get(name=segmentMetadata["flight"])
+    # flightInfo = Flight.objects.get(name=segmentMetadata["flight"])
     startTime = dateparse.parse(segmentMetadata["episodeStart"] + "Z")
     endTime = dateparse.parse(segmentMetadata["episodeEnd"] + "Z")
     myEpisode, created = VideoEpisode.objects.get_or_create(
