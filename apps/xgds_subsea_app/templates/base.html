@@ -132,6 +132,8 @@
 
   {% block prescripts %}
 	<script type="text/javascript">
+         image_model_name = '{{ settings.XGDS_IMAGE_IMAGE_MODEL_NAME }}';
+
          var useOWATracking = {{settings.INCLUDE_OWA_TRACKING|yesno:"true,false"}};
          var owaUrlFromTemplate = "{{ settings.OWA_SITE_URL }}";
          var owaSiteIdFromTemplate = "{{ settings.OWA_SITE_ID }}";
