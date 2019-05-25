@@ -226,10 +226,14 @@ class NavSaver(TelemetrySaver):
             done_with = self.desired_pose_time - datetime.timedelta(seconds=1)
             if verbose:
                 print('deleting before %s' % done_with)
-                print('len latlon %d' % len(self.latlon_queue))
-                print('len rpyad %d' % len(self.rpyad_queue))
+                print('len latlon %d' % self.latlon_queue.len())
+                print('len rpyad %d' % self.rpyad_queue.len())
             self.latlon_queue.delete_before(done_with)
             self.rpyad_queue.delete_before(done_with)
+            if verbose:
+                print('done deleting before %s' % done_with)
+                print('len latlon %d' % self.latlon_queue.len())
+                print('len rpyad %d' % self.rpyad_queue.len())
             if len(past_results) > 0:
                 for pose in past_results:
                     print '%s pose at %s computed' % (self.vehicle, pose.timestamp)

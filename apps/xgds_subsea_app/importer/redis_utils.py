@@ -260,3 +260,6 @@ class TimestampedItemQueue(object):
     def delete_before(self, timestamp):
         while len(self.queue) > 1 and self.queue[0][0] < timestamp:
             heapq.heappop(self.queue)
+
+    def len(self):
+        return len(self.queue)
