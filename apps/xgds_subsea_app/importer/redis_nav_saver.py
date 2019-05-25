@@ -39,6 +39,8 @@ from geocamTrack.models import ResourcePoseDepth, PastResourcePoseDepth
 from redis_utils import TelemetrySaver, TelemetryQueue, TimestampedItemQueue, reconnect_db, interpolate
 
 
+verbose = False
+
 def get_active_track(vehicle):
     """
     Get the active track for a vehicle
@@ -147,6 +149,8 @@ class NavSaver(TelemetrySaver):
                        'longitude': nmea.longitude,
                        'latitude': nmea.latitude}
                 self.latlon_queue.append(timestamp, latlon)
+                if verbose:
+                    print('%s: %s %s' % (timestamp, 'GGA', str(latlon)))
             elif nmea.sentence_type == 'HDG':
                 # heading fix
                 rpyad = {'timestamp': timestamp,
@@ -154,6 +158,8 @@ class NavSaver(TelemetrySaver):
                        'pitch': None,
                        'roll': None}
                 self.rpyad_queue.append(timestamp, rpyad)
+                if verbose:
+                    print('%s: %s %s' % (timestamp, 'HDG', nmea.heading))
             else:
                 # not an NMEA string we need
                 return None
@@ -171,6 +177,8 @@ class NavSaver(TelemetrySaver):
                    'altitude': float(subparts[7]),
                    'depth': float(subparts[8])}
             self.rpyad_queue.append(timestamp, rpyad)
+            if verbose:
+                print('%s: %s %s' % (timestamp, 'APAS', str(rpyad)))
 
         elif 'JDS' in parts[3]:
             # Parse timestamp, orientation, depth, and altitude from the JDS string
@@ -186,6 +194,8 @@ class NavSaver(TelemetrySaver):
                    'altitude': float(subparts[12]),
                    'depth': float(subparts[11])}
             self.rpyad_queue.append(timestamp, rpyad)
+            if verbose:
+                print('%s: %s %s' % (timestamp, 'JDS', str(rpyad)))
 
         else:
             print 'Unknown message:', msg
@@ -197,6 +207,8 @@ class NavSaver(TelemetrySaver):
             current_results = []
             while self.rpyad_queue.queue[-1][0] > self.desired_pose_time \
                     and self.latlon_queue.queue[-1][0] > self.desired_pose_time:
+                if verbose:
+                    print("interpolating")
                 # We should have the information we need to interpolate
                 interpolated = self.interpolate()
                 if interpolated:
@@ -205,13 +217,23 @@ class NavSaver(TelemetrySaver):
                         past_results.append(past_pos)
                     if current_pos is not None:
                         current_results.append(current_pos)
+                        if verbose:
+                            print(current_pos)
                 # Increment the next desired pose time
                 self.desired_pose_time += datetime.timedelta(seconds=1)
 
             # Get rid of older values we won't need again
             done_with = self.desired_pose_time - datetime.timedelta(seconds=1)
+            if verbose:
+                print('deleting before %s' % done_with)
+                print('len latlon %d' % self.latlon_queue.len())
+                print('len rpyad %d' % self.rpyad_queue.len())
             self.latlon_queue.delete_before(done_with)
             self.rpyad_queue.delete_before(done_with)
+            if verbose:
+                print('done deleting before %s' % done_with)
+                print('len latlon %d' % self.latlon_queue.len())
+                print('len rpyad %d' % self.rpyad_queue.len())
             if len(past_results) > 0:
                 for pose in past_results:
                     print '%s pose at %s computed' % (self.vehicle, pose.timestamp)
@@ -252,8 +274,8 @@ if __name__ == '__main__':
     with open(yaml_file, 'r') as fp:
         config = yaml.load(fp)
 
-    verbose = False
     if 'verbose' in config:
+        global verbose
         verbose = config['verbose']
 
     if 'savers' in config:
