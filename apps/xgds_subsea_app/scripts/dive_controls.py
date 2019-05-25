@@ -27,6 +27,7 @@ from xgds_core.flightUtils import getActiveFlight, end_group_flight
 from xgds_video.recordingUtil import stopFlightRecording
 from django.conf import settings
 
+
 def get_active_dive():
     active_flight = getActiveFlight()
     if active_flight is not None:
