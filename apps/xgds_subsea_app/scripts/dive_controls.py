@@ -74,9 +74,9 @@ def stop_dive(dive_name):
     :return:
     """
     print "Stopping dive %s" % dive_name
-    end_group_flight(dive_name, timezone.now())
     if settings.XGDS_VIDEO_ON:
         stop_video_recording(get_active_dive())
+    end_group_flight(dive_name, timezone.now())
 
 
 if __name__ == '__main__':
