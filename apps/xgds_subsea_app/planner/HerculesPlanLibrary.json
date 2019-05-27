@@ -115,7 +115,7 @@
             "presetCode": "SUF",
             "presetName": "SUPR Bag Flush",
             "notes": "Flush the bag 3 x with vent fluid prior to filling",
-            "duration": 1200
+            "duration": 180
         },
         {
             "type": "SUPR_bag",

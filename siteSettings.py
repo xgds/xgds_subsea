@@ -355,6 +355,7 @@ XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_subsea_app.instrumentDataImporters'
 # XGDS_VIDEO_NOTE_FILTER_FUNCTION = 'xgds_baseline_app.views.noteFilterFunction'
 
 XGDS_VIDEO_RECORDING_LAG_SECONDS = 40
+XGDS_VIDEO_EXPECTED_CHUNK_DURATION_SECONDS = 10  # MAY also have to be in settings.py to work
 
 
 RECORDED_VIDEO_DIR_BASE = DATA_ROOT
