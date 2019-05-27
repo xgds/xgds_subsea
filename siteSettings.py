@@ -109,7 +109,7 @@ if USING_DJANGO_DEV_SERVER:
 
 DEBUG = True
 # TEMPLATE_DEBUG was deprecated in Django 1.8 and moved inside TEMPLATES dictionary
-# TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DEBUG = DEBUG
 
     
 PROJ_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -354,6 +354,10 @@ XGDS_INSTRUMENT_IMPORT_MODULE_PATH = 'xgds_subsea_app.instrumentDataImporters'
 # XGDS_VIDEO_NOTE_EXTRAS_FUNCTION = 'xgds_baseline_app.views.getNoteExtras'
 # XGDS_VIDEO_NOTE_FILTER_FUNCTION = 'xgds_baseline_app.views.noteFilterFunction'
 
+XGDS_VIDEO_RECORDING_LAG_SECONDS = 40
+XGDS_VIDEO_EXPECTED_CHUNK_DURATION_SECONDS = 10  # MAY also have to be in settings.py to work
+
+
 RECORDED_VIDEO_DIR_BASE = DATA_ROOT
 RECORDED_VIDEO_URL_BASE = DATA_URL
 
@@ -572,6 +576,8 @@ if 'Science Instruments' in XGDS_DATA_IMPORTS:
 
 
 XGDS_VIDEO_DEFAULT_AUDIO_SOURCE = "Hercules"
+XGDS_VIDEO_INDEX_FILE_NAME = "playlist.m3u8"  # for vlc use prog_index.m3u8"
+
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
