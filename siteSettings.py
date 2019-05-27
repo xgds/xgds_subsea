@@ -635,6 +635,9 @@ CACHES = {
         'BACKEND': 'redis_cache.RedisCache',
         'LOCATION': '%s:6379' % XGDS_CORE_REDIS_HOST,
         'TIMEOUT': 604800,
+        "OPTIONS": {
+            "CONNECTION_POOL_KWARGS": {"max_connections": 256, "retry_on_timeout": True, "socket_keepalive": True}
+        },
         'KEY_FUNCTION': make_key
     },
 }
