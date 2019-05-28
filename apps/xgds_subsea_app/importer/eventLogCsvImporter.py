@@ -134,6 +134,10 @@ def add_notes_tag(row, value):
     elif 'T-IGT' in value:
         add_tag(row, 'TempIGT')
     elif 'T-SUPR' in value:
+        if 'SUPRa' in value:
+            add_tag(row, 'TempSUPRa')
+        elif 'SUPRb' in value:
+            add_tag(row, 'TempSUPRb')
         add_tag(row, 'TempSUPR')
     elif 'Laser Mapping' in value:
         add_tag(row, 'LaserMapping')
