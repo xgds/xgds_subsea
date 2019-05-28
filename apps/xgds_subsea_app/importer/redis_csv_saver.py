@@ -63,6 +63,7 @@ class CsvSaver(TelemetrySaver):
                 values = msg.split(self.delimiter)
                 row = {k: v for k, v in zip(self.keys, values)}
                 row = self.importer.update_row(row)
+                updated_row = True
                 if self.needs_flight:
                     flight = getActiveFlight()
                     row['flight'] = flight
@@ -74,13 +75,13 @@ class CsvSaver(TelemetrySaver):
                 reconnect_db()
                 if not updated_row:
                     row = self.importer.update_row(row)
-                    if self.needs_flight:
-                        flight = getActiveFlight()
-                        row['flight'] = flight
-                    result = self.model(**row)
-                    if self.verbose:
-                        print result
-                    return result
+                if self.needs_flight:
+                    flight = getActiveFlight()
+                    row['flight'] = flight
+                result = self.model(**row)
+                if self.verbose:
+                    print result
+                return result
         except Exception as e:
             print 'deserializing:', msg
             if row:
