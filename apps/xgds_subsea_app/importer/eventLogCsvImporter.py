@@ -159,16 +159,17 @@ def add_sample_type_tag(row, value):
         return "NO VALUE"
     lower_value = value.lower()
     if 'supr' in lower_value:
-        if '1' in lower_value:
-            add_tag(row, 'SUPR-1')
-        elif '2' in lower_value:
-            add_tag(row, 'SUPR-2')
-        elif 'bag' in lower_value:
+        if 'bag' in lower_value:
             add_tag(row, 'SUPER-BAG')
         elif 'filter' in lower_value:
             add_tag(row, 'SUPER-FILTER')
         elif 'tube' in lower_value:
             add_tag(row, 'SUPER-TUBE')
+        elif '1' in lower_value:
+            add_tag(row, 'SUPR-1')
+        elif '2' in lower_value:
+            add_tag(row, 'SUPR-2')
+
     elif 'igt' in lower_value:
         add_tag(row, 'IGT')
     elif 'rovg' in lower_value:
