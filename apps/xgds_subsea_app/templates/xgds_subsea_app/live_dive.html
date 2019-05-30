@@ -30,25 +30,23 @@
 {% endblock mapdiv %}
 
 {% block preMap %}
+    {% if settings.DIVE_MODE == 2 %}
     <div id="scichat-gridstack-item" class="grid-stack-item"
 		data-gs-x="3" data-gs-y="0"
         data-gs-width="4" data-gs-height="1" >
 			<div class="grid-stack-item-content" id="scichat-gridstack-item-content" >
 				<div id="scichat">
                     <div id="candy">
-                        {% if settings.DIVE_MODE == 1 %}
-                          <iframe class="chat" src="/data/chat/index_mute.html"></iframe>
-                        {%  else %}
                           <iframe class="chat" src="/data/chat/index.html"></iframe>
-                        {% endif %}
                     </div>
                 </div>
 			</div>
 		</div>
+    {% endif %}
 {% endblock preMap %}
 
 {% block tabsdiv %}
-<div id="tabs-gridstack-item" class="grid-stack-item"  data-gs-x="3" data-gs-y="1" data-gs-width="4" data-gs-height="3" >
+<div id="tabs-gridstack-item" class="grid-stack-item"  data-gs-x="3" data-gs-y="{% if settings.DIVE_MODE == 2 %}1{% else %}0{% endif %}" data-gs-width="4" data-gs-height="3" >
 {% endblock tabsdiv %}
 
 

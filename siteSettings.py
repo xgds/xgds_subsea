@@ -322,6 +322,7 @@ GEOCAM_TRACK_PAST_POSITION_MODEL = 'geocamTrack.PastResourcePoseDepth'
 GEOCAM_TRACK_CLOSEST_POSITION_MAX_DIFFERENCE_SECONDS = 2
 GEOCAM_TRACK_START_NEW_LINE_DISTANCE_METERS = 11
 GEOCAM_TRACK_HEADING_UNITS = 'degrees'
+GEOCAM_TRACK_HIDE_TRACKS = True
 
 GEOCAM_TRACK_PRELOAD_TRACK_IMAGES = ["/static/geocamTrack/icons/hercules_pointer.png",
                                      "/static/geocamTrack/icons/argus_pointer.png",
@@ -394,7 +395,7 @@ GEOSERVER_DEFAULT_WORKSPACE = 'xgds_subsea'
 
 # While you are modifying handlebars templates, this should be true.  Once they have been loaded
 # once they will be cached and you can set this to false.
-XGDS_CORE_TEMPLATE_DEBUG = False
+XGDS_CORE_TEMPLATE_DEBUG = True
 
 
 JWPLAYER_KEY = '***REMOVED***'

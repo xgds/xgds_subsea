@@ -69,6 +69,7 @@ class CsvResampleSaver(CsvSaver):
                 values = msg.split(self.delimiter)
                 row = {k: v for k, v in zip(self.keys, values)}
                 row = self.importer.update_row(row)
+                updated_row = True
                 if self.needs_flight:
                     flight = getActiveFlight()
                     row['flight'] = flight
@@ -79,12 +80,12 @@ class CsvResampleSaver(CsvSaver):
                 reconnect_db()
                 if not updated_row:
                     row = self.importer.update_row(row)
-                    if self.needs_flight:
-                        flight = getActiveFlight()
-                        row['flight'] = flight
-                    if self.verbose:
-                        print 'deserialized', row
-                    self.queue.append(row['timestamp'], row)
+                if self.needs_flight:
+                    flight = getActiveFlight()
+                    row['flight'] = flight
+                if self.verbose:
+                    print 'deserialized', row
+                self.queue.append(row['timestamp'], row)
 
             # On the first time through we need to set set up the first desired time to interpolate
             # It should be the first whole interval timestamp after the first timestamp we get

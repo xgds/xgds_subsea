@@ -18,16 +18,11 @@
 import traceback
 import sys
 import yaml
-import pytz
-import redis
 import pynmea2
 import datetime
-import threading
 from time import sleep
-from dateutil.parser import parse as dateparse
 
 import django
-
 django.setup()
 
 from django.db import OperationalError
@@ -35,11 +30,13 @@ from django.db import OperationalError
 from xgds_core.models import Vehicle
 from xgds_core.util import persist_error
 from xgds_core.flightUtils import getActiveFlight
+from xgds_core.importer.csvImporter import clean_time
 from geocamTrack.models import ResourcePoseDepth, PastResourcePoseDepth
 from redis_utils import TelemetrySaver, TelemetryQueue, TimestampedItemQueue, reconnect_db, interpolate
 
 
 verbose = False
+
 
 def get_active_track(vehicle):
     """
@@ -131,7 +128,7 @@ class NavSaver(TelemetrySaver):
         parts = msg.split('\t')
 
         # OET message timestamp
-        timestamp = dateparse(parts[1])
+        timestamp = clean_time(parts[1])
 
         # On the first time through need to set set up the time to interpolate
         # It should be the first integer second timestamp after the first timestamp we get
@@ -169,7 +166,7 @@ class NavSaver(TelemetrySaver):
             # Per Justin:
             # Argus APAS string: "APAS" <date> <time> <vehicle> <heading> <pitch> <roll> <altitude> <depth>
             subparts = parts[3].split()
-            timestamp = dateparse('%sT%sZ' % (subparts[1], subparts[2]))
+            timestamp = clean_time('%sT%sZ' % (subparts[1], subparts[2]))
             rpyad = {'timestamp': timestamp,
                    'roll': float(subparts[6]),
                    'pitch': float(subparts[5]),
@@ -186,7 +183,7 @@ class NavSaver(TelemetrySaver):
             # JDS lines contain: "JDS" <date> <time> <vehicle> <bad-lat> <bad-lon> <bad-easting> <bad-northing>
             # <roll> <pitch> <heading> <depth> <altitude> <elapsed_time> <tether_wraps>
             subparts = parts[3].split()
-            timestamp = dateparse('%sT%sZ' % (subparts[1], subparts[2]))
+            timestamp = clean_time('%sT%sZ' % (subparts[1], subparts[2]))
             rpyad = {'timestamp': timestamp,
                    'roll': float(subparts[8]),
                    'pitch': float(subparts[9]),
