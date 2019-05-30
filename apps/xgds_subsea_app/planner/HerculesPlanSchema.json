@@ -223,7 +223,7 @@
                     "type": "ParamSpec",
                     "id": "depth",
                     "parent": "depth",
-                    "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = 4500 + (model.get('depth')/.416666666666667); model.set('duration', newDuration);}}"
+                    "onChange": "if (app.currentPlan != undefined){ if ($.isNumeric(value)){ var newDuration = 900 + (model.get('depth')/.416666666666667); model.set('duration', newDuration);}}"
                 }
              ]
         },
