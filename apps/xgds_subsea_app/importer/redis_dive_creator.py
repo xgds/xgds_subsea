@@ -180,8 +180,9 @@ class DiveCreator(object):
             try:
                 data = msg['data']
                 print data
+                data = data.lower()
 
-                if 'DIVESTATUSEVENT:inwater' in data:
+                if 'divestatusevent:inwater' in data:
                     reconnect_db()
                     parsed_data = self.parse_data(data)
                     if self.active_dive:
@@ -195,7 +196,7 @@ class DiveCreator(object):
                     # make the dive and start it
                     self.start_dive(parsed_data['group_flight_name'], parsed_data['time'])
 
-                elif 'DIVESTATUSEVENT:ondeck' in data:
+                elif 'divestatusevent:ondeck' in data:
                     reconnect_db()
                     parsed_data = self.parse_data(data)
                     end_time = None
