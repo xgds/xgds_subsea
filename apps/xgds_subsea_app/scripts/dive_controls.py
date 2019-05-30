@@ -49,7 +49,7 @@ def create_dive(dive_name, dive_creator):
     # first check if there is an active dive
     active_dive = get_active_dive()
     if active_dive:
-        stop_dive(active_dive.name, dive_creator)
+        stop_dive(active_dive.name)
     print "Creating dive %s" % dive_name
     dive_creator.start_dive(dive_name, timezone.now())
 
