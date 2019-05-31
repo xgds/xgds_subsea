@@ -123,6 +123,8 @@ def add_notes_tag(row, value):
         add_tag(row, 'Trash')
     elif 'Microbiology' in value:
         add_tag(row, 'Microbiology')
+    elif 'Operations' in value:
+        add_tag(row, 'Operations')
     elif 'Biology' in value:
         add_tag(row, 'Biology')
     elif 'Geology' in value:
