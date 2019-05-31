@@ -1173,6 +1173,22 @@
     }
   },
   {
+    "model": "xgds_sample.sampletype",
+    "pk": 8,
+    "fields": {
+      "value": "SUPR-FILTER",
+      "display_name": "SUPR FILTER"
+    }
+  },
+  {
+    "model": "xgds_sample.sampletype",
+    "pk": 9,
+    "fields": {
+      "value": "SUPR-BAG",
+      "display_name": "SUPR BAG"
+    }
+  },
+  {
     "pk": "mg2",
     "model": "xgds_map_server.MapGroup",
     "fields": {
