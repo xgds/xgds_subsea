@@ -491,8 +491,9 @@ class EventLogCsvImporter(csvImporter.CsvImporter):
                 else:
                     prefix = '%s: %s\n' % (key_3, value_3)
                 row['content'] = clean_append(prefix, row['content'])
-            tag_added = add_notes_tag(row, value_1)
-            if not tag_added:
+            sample_type_tag_added = add_sample_type_tag(row, value_1)
+            notes_tag_added = add_notes_tag(row, value_1)
+            if not sample_type_tag_added and not notes_tag_added:
                 print 'MATCHING TAG NOT FOUND FOR %s IN %s' % (value_1, str(row))
                 row['content'] = '%s\n%s: %s' % (row['content'], key_1, value_1)
         elif event_type == 'SAMPLE':
