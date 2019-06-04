@@ -81,6 +81,7 @@ var Event = {
                 geometry: new ol.geom.Point(coords)
             });
             feature.setStyle(this.getStyles(noteJson));
+            feature.setId(noteJson.type + noteJson.pk);
             this.setupPopup(feature, noteJson);
             return feature;
         },

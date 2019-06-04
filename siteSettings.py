@@ -465,6 +465,8 @@ XGDS_PLANNER_SCHEMAS["Hercules"] = { "schemaSource": "apps/xgds_subsea_app/plann
 
 
 XGDS_MAP_SERVER_JS_MAP = getOrCreateDict('XGDS_MAP_SERVER_JS_MAP')
+
+XGDS_NOTES_NOTE_MODEL = 'xgds_notes2.LocatedNote'
 XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MODEL_NAME] = {'ol': 'xgds_notes2/js/olNoteMap.js',
                                                    'model': XGDS_NOTES_NOTE_MODEL,
                                                    'columns': ['checkbox', 'event_time', 'author_name', 'content', 'tag_names', 'content_url', 'content_thumbnail_url', 'content_name', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'depth', 'flight_name', 'object_type', 'object_id', 'creation_time','show_on_map', 'role_name', 'location_name', 'event_timezone',  'pk'],
@@ -481,6 +483,9 @@ XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MODEL_NAME] = {'ol': 'xgds_notes2/js/olNoteMap
                                                    'event_time_field': 'event_time',
                                                    'event_timezone_field': 'event_timezone',
                                                    'search_form_class': 'xgds_notes2.forms.SearchNoteForm'}
+
+XGDS_NOTES_MESSAGE_MODEL_NAME = 'Message' # used for building filters
+XGDS_NOTES_MESSAGE_MODEL = 'xgds_notes2.LocatedMessage'
 
 XGDS_MAP_SERVER_JS_MAP[XGDS_NOTES_MESSAGE_MODEL_NAME] = {'ol': 'xgds_notes2/js/olMessageMap.js',
                                                    'model': XGDS_NOTES_MESSAGE_MODEL,
@@ -514,20 +519,21 @@ if 'Note' in XGDS_MAP_SERVER_JS_MAP:
     del XGDS_MAP_SERVER_JS_MAP['Note']
 
 if 'Photo' in XGDS_MAP_SERVER_JS_MAP:
+    photo_dict = XGDS_MAP_SERVER_JS_MAP['Photo']
     XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME] = XGDS_MAP_SERVER_JS_MAP['Photo']
     del XGDS_MAP_SERVER_JS_MAP['Photo']
 
-XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['columns'] = ['checkbox', 'acquisition_time', 'author_name', 'name', 'description',
-                                                                  'thumbnail_image_url', 'pk', 'view_url',
-                                                                  'camera_name', 'raw_image_url', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'head',
-                                                                  'flight_name', 'deepzoom_file_url',
-                                                                  'rotation_degrees', 'originalImageResolutionString', 'originalImageFileSizeMB', 'create_deepzoom',
-                                                                  'vehicle_name', 'acquisition_timezone', 'DT_RowId']
-XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['hiddenColumns'] = ['pk', 'view_url', 'camera_name', 'raw_image_url', 'app_label', 'vehicle_name', 'model_type', 'type',
-                                                                        'lat', 'lon', 'alt', 'head', 'flight_name', 'deepzoom_file_url', 'rotation_degrees',
-                                                                        'originalImageResolutionString', 'originalImageFileSizeMB', 'create_deepzoom', 'acquisition_timezone','DT_RowId']
-XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['columnTitles'] = ['Time', 'Author', 'Name', 'Description', 'Image']
-XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME]['order_columns'] = ['pk', 'acquisition_time', 'author__first_name', 'name', 'description']
+    photo_dict['columns'] = ['checkbox', 'acquisition_time', 'author_name', 'name', 'description',
+                             'thumbnail_image_url', 'pk', 'view_url',
+                             'camera_name', 'raw_image_url', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'head',
+                             'flight_name', 'deepzoom_file_url',
+                             'rotation_degrees', 'originalImageResolutionString', 'originalImageFileSizeMB', 'create_deepzoom',
+                             'vehicle_name', 'acquisition_timezone', 'DT_RowId']
+    photo_dict['hiddenColumns'] = ['pk', 'view_url', 'camera_name', 'raw_image_url', 'app_label', 'vehicle_name', 'model_type', 'type',
+                                   'lat', 'lon', 'alt', 'head', 'flight_name', 'deepzoom_file_url', 'rotation_degrees',
+                                   'originalImageResolutionString', 'originalImageFileSizeMB', 'create_deepzoom', 'acquisition_timezone','DT_RowId']
+    photo_dict['columnTitles'] = ['Time', 'Author', 'Name', 'Description', 'Image']
+    photo_dict['order_columns'] = ['pk', 'acquisition_time', 'author__first_name', 'name', 'description']
 
 
 XGDS_MAP_SERVER_JS_MAP['Position'] = {'ol': 'geocamTrack/js/olPositionMap.js',
