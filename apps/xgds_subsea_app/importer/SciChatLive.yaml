@@ -2,6 +2,7 @@
 # CHAT 2019/06/04 17:15:58.256 SCIENCECHAT 1559668554	155	04Jun2019	17:15:54	CHAT	TamarCohen	test
 name: SciChat
 class: xgds_notes2.LocatedMessage
+bulk_create: false
 extension: txt
 delimiter: \t
 fields:

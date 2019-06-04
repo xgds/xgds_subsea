@@ -23,6 +23,7 @@ from dateutil.parser import parse as dateparser
 from geocamUtil.UserUtil import getUserByUsername, getUserByNames, create_user
 from xgds_core.importer import csvImporter
 from xgds_core.flightUtils import getFlight, get_default_vehicle
+from xgds_notes2.models import LocatedMessage
 
 
 def clean_author(row):
@@ -77,7 +78,40 @@ class SciChatCsvImporter(csvImporter.CsvImporter):
                  defaults=None, force=False, replace=False, skip_bad=False):
         self.hercules = get_default_vehicle()
         super(SciChatCsvImporter, self).__init__(yaml_file_path, csv_file_path, vehicle_name, flight_name,
-                                                  timezone_name, defaults, force, replace, skip_bad)
+                                                 timezone_name, defaults, force, replace, skip_bad)
+
+    def load_csv(self):
+        """
+        Load the CSV file according to the self.configuration, and store the values in the database using the
+        Django ORM.
+        Warning: the model's save method will not be called as we are using bulk_create.
+        :return: the newly created models, which may be an empty list
+        """
+        new_models = []
+
+        rows = self.load_to_list()
+        try:
+            for row in rows:
+                if not self.replace:
+                    new_models.append(LocatedMessage(**row))
+            if row:
+                self.update_flight_end(row[self.config['timefield_default']])
+            if not self.replace:
+                if 'bulk_create' in self.config and self.config['bulk_create']:
+                    LocatedMessage.objects.bulk_create(new_models)
+                else:
+                    for m in new_models:
+                        # we need to call broadcast for this model
+                        m.save()
+                print 'created %d records' % len(new_models)
+            else:
+                self.update_stored_data(LocatedMessage, rows)
+                print 'updated %d records' % len(new_models)
+            self.handle_last_row(row)
+        except Exception as e:
+            print e
+
+        return new_models
 
     def get_time(self, row, field_name=None):
         """
