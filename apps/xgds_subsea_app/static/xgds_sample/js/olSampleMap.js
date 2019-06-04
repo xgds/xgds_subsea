@@ -69,6 +69,7 @@ var Sample = {
                 geometry: new ol.geom.Point(coords)
             });
             feature.setStyle(this.getStyles(sampleJson));
+            feature.setId(sampleJson.type + sampleJson.pk);
             this.setupPopup(feature, sampleJson);
             return feature;
         },
