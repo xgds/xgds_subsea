@@ -1,0 +1,27 @@
+# This file describes the values from the temperature probe
+# CHAT 2019/06/04 17:15:58.256 SCIENCECHAT 1559668554	155	04Jun2019	17:15:54	CHAT	TamarCohen	test
+# CHAT 2019/06/04 17:46:49.868 SCIENCECHAT 1559670406	155	04Jun2019	17:46:46	CHAT	TamarCohen	test
+#  {'event_dslog_time': '04Jun2019', 'event_date': '155', 'col_1': 'CHAT 2019/06/04 17:46:49.868 SCIENCECHAT 1559670406',
+#   'col_6': 'TamarCohen', 'col_7': 'test', 'col_4': '17:46:46', 'col_5': 'CHAT'}
+name: SciChat
+class: xgds_notes2.LocatedMessage
+extension: txt
+delimiter: \t
+fields:
+  conglomerate:  # CHAT 2019/06/04 17:15:58.256 SCIENCECHAT 1559668554
+    type: string
+    required: true
+  col_2: # 155
+    skip: true
+  col_3: # 04Jun2019
+    skip: true
+    required: false
+  event_time: # 17:15:54
+    type: time
+  col_5: # CHAT
+    skip: true
+    required: false
+  author_name:
+    type: string
+  content:
+    type: string

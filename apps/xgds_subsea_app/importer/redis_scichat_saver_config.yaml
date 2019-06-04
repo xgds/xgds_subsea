@@ -2,7 +2,7 @@ verbose: False
 timezone: UTC
 savers:
   scichat:
-    config_yaml: SciChat.yaml
+    config_yaml: SciChatLive.yaml
     vehicle: Hercules
     channel_name: 'xgds:scichat'
     buffer_time_sec: 1

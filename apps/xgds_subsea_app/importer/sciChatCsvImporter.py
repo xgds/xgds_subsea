@@ -16,6 +16,10 @@
 
 import re
 
+import pytz
+from datetime import datetime
+from dateutil.parser import parse as dateparser
+
 from geocamUtil.UserUtil import getUserByUsername, getUserByNames, create_user
 from xgds_core.importer import csvImporter
 from xgds_core.flightUtils import getFlight, get_default_vehicle
@@ -74,6 +78,30 @@ class SciChatCsvImporter(csvImporter.CsvImporter):
         self.hercules = get_default_vehicle()
         super(SciChatCsvImporter, self).__init__(yaml_file_path, csv_file_path, vehicle_name, flight_name,
                                                   timezone_name, defaults, force, replace, skip_bad)
+
+    def get_time(self, row, field_name=None):
+        """
+        The data we get over UDP is inconsistent with the data we get from the import.
+        It will come in in two fields, event_date and event_time
+        :param row:
+        :param field_name:
+        :return:
+        """
+
+        if 'conglomerate' in row and 'event_time' in row:
+            # CHAT 2019/06/04 17:15:58.256 SCIENCECHAT 1559668554
+            conglomerate = row['conglomerate']
+            splits = conglomerate.split(' ')
+            date_value = splits[1]
+            time_value = row['event_time']
+            del row['conglomerate']
+            the_time = dateparser(date_value + ' ' + time_value)
+            if not the_time.tzinfo or the_time.tzinfo.utcoffset(the_time) is None:
+                the_time = self.timezone.localize(the_time)
+            the_time = the_time.astimezone(pytz.utc)
+            return the_time
+
+        return super(SciChatCsvImporter, self).get_time(row, field_name)
 
     def update_row(self, row):
         """
