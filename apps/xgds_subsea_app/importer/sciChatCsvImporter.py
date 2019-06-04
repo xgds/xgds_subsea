@@ -88,18 +88,21 @@ class SciChatCsvImporter(csvImporter.CsvImporter):
         :return:
         """
 
-        if 'conglomerate' in row and 'event_time' in row:
-            # CHAT 2019/06/04 17:15:58.256 SCIENCECHAT 1559668554
-            conglomerate = row['conglomerate']
-            splits = conglomerate.split(' ')
-            date_value = splits[1]
-            time_value = row['event_time']
-            del row['conglomerate']
-            the_time = dateparser(date_value + ' ' + time_value)
-            if not the_time.tzinfo or the_time.tzinfo.utcoffset(the_time) is None:
-                the_time = self.timezone.localize(the_time)
-            the_time = the_time.astimezone(pytz.utc)
-            return the_time
+        if 'event_time' in row:
+            if isinstance(row['event_time'], datetime):
+                return row['event_time']
+            if 'conglomerate' in row:
+                # CHAT 2019/06/04 17:15:58.256 SCIENCECHAT 1559668554
+                conglomerate = row['conglomerate']
+                splits = conglomerate.split(' ')
+                date_value = splits[1]
+                time_value = row['event_time']
+                del row['conglomerate']
+                the_time = dateparser(date_value + ' ' + time_value)
+                if not the_time.tzinfo or the_time.tzinfo.utcoffset(the_time) is None:
+                    the_time = self.timezone.localize(the_time)
+                the_time = the_time.astimezone(pytz.utc)
+                return the_time
 
         return super(SciChatCsvImporter, self).get_time(row, field_name)
 
