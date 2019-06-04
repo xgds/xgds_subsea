@@ -1,6 +1,7 @@
 # This file describes the values from the temperature probe
 name: SciChat
 class: xgds_notes2.LocatedMessage
+bulk_create: true
 extension: txt
 delimiter: \t
 fields:
