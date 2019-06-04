@@ -11,6 +11,7 @@ fields:
     required: true
   col_2: # 155
     skip: true
+    required: false
   col_3: # 04Jun2019
     skip: true
     required: false
