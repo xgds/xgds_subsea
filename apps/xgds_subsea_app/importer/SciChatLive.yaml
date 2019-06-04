@@ -1,0 +1,39 @@
+# This file describes the values from the temperature probe
+name: SciChat
+class: xgds_notes2.LocatedMessage
+extension: txt
+delimiter: \t
+fields:
+# CHAT 2019/06/04 17:15:58.256 SCIENCECHAT 1559668554	155	04Jun2019	17:15:54	CHAT	TamarCohen	test
+  col_1:
+    skip: true
+  event_date:
+    type: date
+    format: %Y/%m/%d
+  event_dslog_time:
+    type: time
+    format: %H:%m:%s.bla
+    skip: true
+    required: false
+  col_4:
+    skip: true
+    required: false
+  col_5:
+    skip: true
+    required: false
+  col_6:
+    skip: true
+    required: false
+  col_7:
+    skip: true
+    required: false
+  col_7:
+    skip: true
+    required: false
+  event_time:
+    type: time
+    format: %H:%M:%S
+  author_name:
+    type: string
+  content:
+    type: string
