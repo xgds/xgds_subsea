@@ -546,7 +546,7 @@ XGDS_CORE_SHOW_FLIGHT_MANAGEMENT = False
 XGDS_CORE_ADD_GROUP_FLIGHT = False
 
 CRUISE_ID = 'NA108'
-DIVE_MODE = 1  # 1 OR 2, controls chat links
+DIVE_MODE = 2  # 1 OR 2, controls chat links
 
 XGDS_MAP_SERVER_REPLAY_HANDLEBARS_DIRS = [os.path.join('xgds_map_server', 'templates', 'handlebars'),
                                           os.path.join('xgds_map_server', 'templates', 'handlebars', 'search'),
