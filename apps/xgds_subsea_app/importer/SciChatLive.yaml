@@ -7,7 +7,7 @@ delimiter: \t
 fields:
   conglomerate:  # CHAT 2019/06/04 17:15:58.256 SCIENCECHAT 1559668554
     type: string
-    required: true
+    required: false
   col_2: # 155
     skip: true
   col_3: # 04Jun2019
