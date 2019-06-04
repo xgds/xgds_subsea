@@ -94,6 +94,7 @@ class SciChatCsvImporter(csvImporter.CsvImporter):
             splits = conglomerate.split(' ')
             date_value = splits[1]
             time_value = row['event_time']
+            del row['conglomerate']
             the_time = dateparser(date_value + ' ' + time_value)
             if not the_time.tzinfo or the_time.tzinfo.utcoffset(the_time) is None:
                 the_time = self.timezone.localize(the_time)
