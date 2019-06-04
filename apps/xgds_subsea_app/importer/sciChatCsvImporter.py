@@ -91,7 +91,7 @@ class SciChatCsvImporter(csvImporter.CsvImporter):
         if 'conglomerate' in row and 'event_time' in row:
             # CHAT 2019/06/04 17:15:58.256 SCIENCECHAT 1559668554
             conglomerate = row['conglomerate']
-            splits = conglomerate.split[' ']
+            splits = conglomerate.split(' ')
             date_value = splits[1]
             time_value = row['event_time']
             the_time = dateparser(date_value + ' ' + time_value)
