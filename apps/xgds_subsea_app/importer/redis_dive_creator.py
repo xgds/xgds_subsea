@@ -151,10 +151,10 @@ class DiveCreator(object):
         group_flight_name = None
         values = data.split(self.delimiter)
 
-        if 'divenumber' in data:
+        if 'DIVENUMBER' in data:
             # Try to get the group flight name from the event message
             for v in values:
-                if v.startswith('divenumber'):
+                if v.startswith('DIVENUMBER'):
                     dive_number = v.split(':')[1]
                     group_flight_name = self.prefix + dive_number
                     break
@@ -179,9 +179,9 @@ class DiveCreator(object):
         for msg in self.tq.listen():
             try:
                 data = msg['data']
-                data = data.lower()
+                # data = data.lower()
 
-                if 'divestatusevent:inwater' in data:
+                if 'divestatusevent:inwater' in data.lower():
                     print data
                     reconnect_db()
                     parsed_data = self.parse_data(data)
@@ -196,7 +196,7 @@ class DiveCreator(object):
                     # make the dive and start it
                     self.start_dive(parsed_data['group_flight_name'], parsed_data['time'])
 
-                elif 'divestatusevent:ondeck' in data:
+                elif 'divestatusevent:ondeck' in data.lower():
                     print data
                     reconnect_db()
                     parsed_data = self.parse_data(data)
