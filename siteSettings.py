@@ -322,7 +322,8 @@ GEOCAM_TRACK_PAST_POSITION_MODEL = 'geocamTrack.PastResourcePoseDepth'
 GEOCAM_TRACK_CLOSEST_POSITION_MAX_DIFFERENCE_SECONDS = 2
 GEOCAM_TRACK_START_NEW_LINE_DISTANCE_METERS = 11
 GEOCAM_TRACK_HEADING_UNITS = 'degrees'
-GEOCAM_TRACK_HIDE_TRACKS = True
+GEOCAM_TRACK_HIDE_TRACKS = ['Hercules', 'Argus', 'Nautilus']
+
 
 GEOCAM_TRACK_PRELOAD_TRACK_IMAGES = ["/static/geocamTrack/icons/hercules_pointer.png",
                                      "/static/geocamTrack/icons/argus_pointer.png",
