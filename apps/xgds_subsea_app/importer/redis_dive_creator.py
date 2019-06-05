@@ -29,6 +29,7 @@ from geocamUtil.datetimeJsonEncoder import DatetimeJsonEncoder
 import django
 django.setup()
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 from xgds_core.flightUtils import getFlight, getActiveFlight, create_group_flight, end_group_flight
 from xgds_core.util import persist_error
@@ -185,13 +186,14 @@ class DiveCreator(object):
                     print data
                     reconnect_db()
                     parsed_data = self.parse_data(data)
-                    if self.active_dive:
-                        if parsed_data['dive_number']:
-                            if parsed_data['dive_number'] not in self.active_dive.name:
-                                # end that dive with no end time, the names do not match
-                                self.end_dive()
-                            else:
-                                return
+
+                    # see if we got an inwater with an invalid / completed dive
+                    try:
+                        GROUP_FLIGHT_MODEL.get().objects.get(name=parsed_data['dive_number'])
+                        # this group flight already exists so we do not want this script to create one.
+                        return
+                    except ObjectDoesNotExist:
+                        pass
 
                     # make the dive and start it
                     self.start_dive(parsed_data['group_flight_name'], parsed_data['time'])
