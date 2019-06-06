@@ -1189,6 +1189,22 @@
     }
   },
   {
+    "model": "xgds_sample.sampletype",
+    "pk": 11,
+    "fields": {
+      "value": "SUPR-TUBE",
+      "display_name": "SUPR TUBE"
+    }
+  },
+  {
+    "model": "xgds_sample.sampletype",
+    "pk": 13,
+    "fields": {
+      "value": "MicrobialColonizer",
+      "display_name": "Microbial Colonizer"
+    }
+  },
+  {
     "pk": "mg2",
     "model": "xgds_map_server.MapGroup",
     "fields": {
