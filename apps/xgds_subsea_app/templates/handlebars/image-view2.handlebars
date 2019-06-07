@@ -1,0 +1,120 @@
+<div>
+	<div class="image-name" ><strong> {{ name }} </strong></div>
+
+		<div id="image_overview">
+			<button id="edit_info_button" class="btn btn-primary" onClick="window.open('/xgds_image/edit/{{pk}}', '_blank');">Edit</button>
+			<a href="{{raw_image_url}}" class="btn btn-primary" download>Download</a>
+			<table>
+				<tr>
+					<td >{{ author_name }}</td>
+					<td colspan=3 >{{prettyTime acquisition_time acquisition_timezone}}</td>
+				</tr>
+				<tr>
+					<td >Heading:</td>
+				{{#if head}}
+					<td >{{ head }}&deg;</td>
+				{{else}}
+					<td >n/a</td>
+				{{/if}}
+					<td >Resolutions:</td>
+					<td >{{originalImageResolutionString}} | {{originalImageFileSizeMB}}</td>
+				</tr>
+				<tr>
+					<td colspan=4 id="overview_description">{{ description }}</td>
+				</tr>
+				<tr>
+                    <th><label for="id_latitude">Latitude:</label></th>
+                    <td>{{lat}}</td>
+                </tr>
+                <tr>
+                    <th><label for="id_longitude">Longitude:</label></th>
+                    <td>{{lon}}</td>
+                </tr>
+                <tr>
+                    <th><label for="id_altitude">Altitude:</label></th>
+                    <td>{{alt}}</td>
+                </tr>
+                {{#if depth}}
+                <tr>
+                    <th><label for="id_altitude">Depth:</label></th>
+                    <td>{{depth}}</td>
+                </tr>
+                {{/if}}
+			</table>
+		</div>
+
+
+		<div class="image-wrapper">
+			<img class="loading-image"></img>
+			<div id="display-image"></div>
+		</div>
+
+        <div id="annotationButtonWrapper" style="margin-bottom:4px;">
+            <button id="toggleImageAnnotationsMenu" class="btn btn-primary" onclick="xgds_image_annotation.toggleMenuBar()">Annotate Image</button>
+            <div class="btn-group" data-toggle="buttons" style="margin-bottom:0px;">
+                <label class="btn btn-primary active">
+                    <input type="radio" name="annotationsOnOrOff" id="on" autocomplete="off" value="on" checked>Show
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="annotationsOnOrOff" id="off" autocomplete="off" value="off">Hide
+                </label>
+            </div>
+            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="downloadScreenshot">Screenshot</button>
+        </div>
+
+        <div id="imageAnnotationToolbar">
+            <div id="imageToolbarRow1">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                        <input type="radio" name="cursorMode" id="navigateImage" autocomplete="off" value="OSD" checked>Navigate
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="cursorMode" id="addAnnotation" autocomplete="off" value="addAnnotation">Add
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="cursorMode" id="editAnnotation" autocomplete="off" value="editAnnotation">Edit
+                    </label>
+                </div>
+            </div>
+            <div id="imageToolbarRow2">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary active">
+                        <input type="radio" name="annotationType" id="rectangle" autocomplete="off" value="rectangle" checked>Rectangle
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="annotationType" id="ellipse" autocomplete="off" value="ellipse">Ellipse
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="annotationType" id="arrow" autocomplete="off" value="arrow">Arrow
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="annotationType" id="text" autocomplete="off" value="text">Text
+                    </label>
+                </div>
+            </div>
+            <div id="imageToolbarRow3">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary">
+                        <input type="radio" name="annotationSize" id="small" autocomplete="off" value="small">S
+                    </label>
+                    <label class="btn btn-primary active">
+                        <input type="radio" name="annotationSize" id="medium" autocomplete="off" value="medium" checked>M
+                    </label>
+                    <label class="btn btn-primary">
+                        <input type="radio" name="annotationSize" id="large" autocomplete="off" value="large">L
+                    </label>
+                </div>
+                <input type='text' id="colorPicker"/>
+            </div>
+
+            <div id="imageToolbarRow4">
+                <strong>Delete:</strong>
+                <div class="btn-group" >
+                <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="deleteSelected">Selected</button>
+                <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="deleteMine">Mine</button>
+                <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="deleteAll">All</button>
+                </div>
+            </div>
+            </br>
+        </div>
+</div>

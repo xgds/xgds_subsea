@@ -521,18 +521,20 @@ if 'Note' in XGDS_MAP_SERVER_JS_MAP:
 
 if 'Photo' in XGDS_MAP_SERVER_JS_MAP:
     photo_dict = XGDS_MAP_SERVER_JS_MAP['Photo']
-    XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME] = XGDS_MAP_SERVER_JS_MAP['Photo']
+    XGDS_MAP_SERVER_JS_MAP[XGDS_IMAGE_IMAGE_MODEL_NAME] = photo_dict
     del XGDS_MAP_SERVER_JS_MAP['Photo']
+
+    photo_dict['viewHandlebars'] = 'xgds_subsea_app/templates/handlebars/image-view2.handlebars'
 
     photo_dict['columns'] = ['checkbox', 'acquisition_time', 'author_name', 'name', 'description',
                              'thumbnail_image_url', 'pk', 'view_url',
                              'camera_name', 'raw_image_url', 'app_label', 'model_type', 'type', 'lat', 'lon', 'alt', 'head',
                              'flight_name', 'deepzoom_file_url',
                              'rotation_degrees', 'originalImageResolutionString', 'originalImageFileSizeMB', 'create_deepzoom',
-                             'vehicle_name', 'acquisition_timezone', 'DT_RowId']
+                             'vehicle_name', 'acquisition_timezone', 'depth', 'DT_RowId']
     photo_dict['hiddenColumns'] = ['pk', 'view_url', 'camera_name', 'raw_image_url', 'app_label', 'vehicle_name', 'model_type', 'type',
                                    'lat', 'lon', 'alt', 'head', 'flight_name', 'deepzoom_file_url', 'rotation_degrees',
-                                   'originalImageResolutionString', 'originalImageFileSizeMB', 'create_deepzoom', 'acquisition_timezone','DT_RowId']
+                                   'originalImageResolutionString', 'originalImageFileSizeMB', 'create_deepzoom', 'acquisition_timezone', 'depth', 'DT_RowId']
     photo_dict['columnTitles'] = ['Time', 'Author', 'Name', 'Description', 'Image']
     photo_dict['order_columns'] = ['pk', 'acquisition_time', 'author__first_name', 'name', 'description']
 
