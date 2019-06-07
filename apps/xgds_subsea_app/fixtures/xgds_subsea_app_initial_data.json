@@ -1214,6 +1214,15 @@
     }
   },
   {
+    "pk": "saved_selections",
+    "model": "xgds_map_server.MapGroup",
+    "fields": {
+      "name": "Saved Selections",
+      "description": "Default folder for saved selections",
+      "parent": "mg1"
+    }
+  },
+  {
     "pk": "maplink_completed_dives",
     "model": "xgds_map_server.MapLink",
     "fields": {
