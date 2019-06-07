@@ -189,7 +189,7 @@ class DiveCreator(object):
 
                     # see if we got an inwater with an invalid / completed dive
                     try:
-                        GROUP_FLIGHT_MODEL.get().objects.get(name=parsed_data['dive_number'])
+                        GROUP_FLIGHT_MODEL.get().objects.get(name=parsed_data['group_flight_name'])
                         # this group flight already exists so we do not want this script to create one.
                         return
                     except ObjectDoesNotExist:
@@ -223,11 +223,6 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--prefix', help='prefix for group flight name', default="")
     args, unknown = parser.parse_known_args()
 
-    # if len(sys.argv) < 2:
-    #     print "You must pass yaml file path as the first argument"
-    #     exit(1)
-    #
-    # yaml_file = sys.argv[1]
     with open(args.yaml_file, 'r') as fp:
         config = yaml.load(fp)
 
